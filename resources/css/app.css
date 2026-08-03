@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    
+    --color-bg-light: #f8fafc;
+    --color-bg-dark: #090f1d;
+    
+    --color-brand-blue: #2563eb;   /* Blue-600 */
+    --color-brand-light: #3b82f6;  /* Blue-500 */
+    
+    --color-brand-50: #eff6ff;
+    --color-brand-100: #dbeafe;
+    --color-brand-500: #3b82f6;
+    --color-brand-600: #2563eb;
+    --color-brand-700: #1d4ed8;
+    --color-brand-900: #1e3a8a;
+
+    /* Map Blue to Blue scale */
+    --color-blue-50: #eff6ff;
+    --color-blue-100: #dbeafe;
+    --color-blue-200: #bfdbfe;
+    --color-blue-300: #93c5fd;
+    --color-blue-400: #60a5fa;
+    --color-blue-500: #3b82f6;
+    --color-blue-600: #2563eb;
+    --color-blue-700: #1d4ed8;
+    --color-blue-800: #1e40af;
+    --color-blue-900: #1e3a8a;
+    --color-blue-950: #172554;
+
+    /* Map Indigo to Slate/Deep Navy Blue scale */
+    --color-indigo-50: #f8fafc;
+    --color-indigo-100: #f1f5f9;
+    --color-indigo-200: #e2e8f0;
+    --color-indigo-300: #cbd5e1;
+    --color-indigo-400: #94a3b8;
+    --color-indigo-500: #64748b;
+    --color-indigo-600: #475569;
+    --color-indigo-700: #334155;
+    --color-indigo-800: #1e293b;
+    --color-indigo-900: #0f172a;
+    --color-indigo-950: #090f1d;
+}
+
+@layer base {
+    body {
+        @apply bg-[#f8fafc] dark:bg-slate-950 text-slate-950 dark:text-white transition-colors duration-300;
+        scroll-behavior: smooth;
+        font-family: var(--font-sans);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-slate-950 dark:text-white;
+        font-weight: 900 !important;
+    }
+}
+
+/* Custom background glow spots matching MMI Red/Navy palette */
+.glow-bg {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.12;
+}
+.dark .glow-bg {
+    opacity: 0.22;
+}
+
+.glow-1 {
+    top: -100px;
+    left: -100px;
+    background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+}
+
+.glow-2 {
+    bottom: -150px;
+    right: -100px;
+    background: radial-gradient(circle, #0f172a 0%, transparent 70%);
+}
+
+/* Premium Hover Micro-Animations for All Buttons matching MMI style */
+button, 
+.btn, 
+a[class*="bg-"], 
+button[type="submit"], 
+input[type="submit"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+button:hover, 
+.btn:hover, 
+a[class*="bg-"]:hover, 
+button[type="submit"]:hover, 
+input[type="submit"]:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 25px -10px rgba(37, 99, 235, 0.45) !important;
+}
+
+button:active, 
+.btn:active, 
+a[class*="bg-"]:active, 
+button[type="submit"]:active, 
+input[type="submit"]:active {
+    transform: translateY(-1px) scale(0.98) !important;
+}
+
+/* Glass card styling customized for MMI style */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(148, 163, 184, 0.08);
+    transition: all 0.3s ease;
+}
+
+.dark .glass-card {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+}
+
+.glass-card:hover {
+    border-color: rgba(37, 99, 235, 0.25);
+    box-shadow: 0 12px 40px rgba(148, 163, 184, 0.15);
+}
+.dark .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Professional Table Styling matching MMI */
+.premium-table-container {
+    overflow-x: auto;
+    background-color: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 1);
+    box-shadow: 0 4px 6px -1px rgba(148, 163, 184, 0.05);
+}
+.dark .premium-table-container {
+    background-color: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+}
+.premium-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+.premium-table thead tr {
+    background-color: rgba(241, 245, 249, 0.6);
+    border-bottom: 1px solid rgba(226, 232, 240, 1);
+}
+.dark .premium-table thead tr {
+    background-color: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.premium-table th {
+    padding: 1rem;
+    font-size: 10px;
+    font-weight: 900;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+.dark .premium-table th {
+    color: #94a3b8;
+}
+.premium-table td {
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #334155;
+    border-bottom: 1px solid rgba(241, 245, 249, 1);
+    transition: all 0.3s ease;
+}
+.dark .premium-table td {
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.premium-table tr:hover td {
+    background-color: rgba(241, 245, 249, 0.4);
+    color: #0f172a;
+}
+.dark .premium-table tr:hover td {
+    background-color: rgba(220, 38, 38, 0.06);
+    color: #ffffff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom pulse for api line simulator */
+@keyframes apiPulse {
+    0% {
+        left: 0%;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+.api-pulse-active {
+    position: absolute;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(90deg, transparent, #2563eb, #3b82f6, transparent);
+    animation: apiPulse 1.2s infinite linear;
+}
+
+/* Certificate styling for light/dark mode */
+.certificate-badge {
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), rgba(248, 250, 252, 0.95)), #ffffff;
+    border: 2px solid #2563eb;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(148, 163, 184, 0.12);
+}
+
+.dark .certificate-badge {
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), rgba(15, 23, 42, 0.95)), #0f172a;
+    border: 2px solid #3b82f6;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.certificate-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(37, 99, 235, 0.1);
+    margin: 10px;
+    pointer-events: none;
+}
+.dark .certificate-badge::before {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Active tab navigation glow */
+.active-tab-nav {
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.35) !important;
+    border-color: rgba(37, 99, 235, 0.5) !important;
+    animation: activeGlow 3s infinite ease-in-out;
+}
+
+@keyframes activeGlow {
+    0%, 100% {
+        box-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
+        border-color: rgba(37, 99, 235, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(37, 99, 235, 0.6);
+        border-color: rgba(37, 99, 235, 0.8);
+    }
+}
+
+/* Shine animation for badge */
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+    50%, 100% {
+        transform: translateX(100%);
+    }
+}
+.animate-shine {
+    animation: shine 4s infinite ease-in-out;
+}
+
+/* Gradient flow for main heading */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.animate-gradient-flow {
+    background-size: 200% auto;
+    animation: gradientFlow 6s infinite ease-in-out;
+}
+
+/* Ambient soft breathing glow */
+@keyframes softPulse {
+    0%, 100% {
+        opacity: 0.15;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.35;
+        transform: scale(1.1);
+    }
+}
+.animate-soft-pulse {
+    animation: softPulse 5s infinite ease-in-out;
+}
+
+/* Strip all rounded corners globally */
+*, ::before, ::after {
+    border-radius: 0px !important;
+}
+
+/* Standardize small text sizes to standard readable web dimensions */
+.text-\[9px\] { font-size: 0.75rem !important; }
+.text-\[10px\] { font-size: 0.75rem !important; }
+.text-\[11px\] { font-size: 0.875rem !important; }

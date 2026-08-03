@@ -1,0 +1,50 @@
+========================================
+TARGET FILE: "d:\\APLIKASI RUNNING\\XAMPP\\htdocs\\APLIKASI\\LPK\\resources\\views\\layouts\\app.blade.php"
+========================================
+--- TARGET CONTENT ---
+"                <button id=\"theme-toggle\" class=\"bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 shadow-sm transition flex items
+<truncated 1676 bytes>
+--- REPLACEMENT CONTENT ---
+"                <button id=\"theme-toggle\" class=\"bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 shadow-sm transition flex items
+<truncated 844 bytes>
+
+========================================
+TARGET FILE: "d:\\APLIKASI RUNNING\\XAMPP\\htdocs\\APLIKASI\\LPK\\resources\\views\\pendaftaran.blade.php"
+========================================
+--- TARGET CONTENT ---
+"                <button id=\"theme-toggle\" class=\"bg-slate-150 dark:bg-slate-850 hover:bg-slate-200 dark:hover:bg-slate-805 text-slate-700 dark:text-slate-300 p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 shadow-sm transition flex items
+<truncated 734 bytes>
+--- REPLACEMENT CONTENT ---
+"                <button id=\"theme-toggle\" class=\"bg-slate-150 dark:bg-slate-850 hover:bg-slate-200 dark:hover:bg-slate-805 text-slate-700 dark:text-slate-300 p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 shadow-sm transition flex items
+<truncated 245 bytes>
+
+========================================
+TARGET FILE: "d:\\APLIKASI RUNNING\\XAMPP\\htdocs\\APLIKASI\\LPK\\resources\\views\\pendaftaran.blade.php"
+========================================
+--- TARGET CONTENT ---
+"        <div id=\"enrollment-success-card\" class=\"glass-card rounded-2xl max-w-3xl mx-auto text-center p-8 sm:p-10 border border-slate-200 dark:border-slate-800 hidden animate-fade-in\">\n            <div class=\"w-14 h-14 rounded-full bg-emerald-500/10
+<truncated 353 bytes>
+--- REPLACEMENT CONTENT ---
+"        <div id=\"enrollment-success-card\" class=\"glass-card rounded-2xl max-w-3xl mx-auto text-center p-8 sm:p-10 border border-slate-200 dark:border-slate-800 hidden animate-fade-in\">\n            <div class=\"w-14 h-14 rounded-full bg-emerald-500/10
+<truncated 187 bytes>
+
+========================================
+TARGET FILE: "d:\\APLIKASI RUNNING\\XAMPP\\htdocs\\APLIKASI\\LPK\\resources\\views\\dashboard\\asesor.blade.php"
+========================================
+--- TARGET CONTENT ---
+"                <button onclick=\"toggleAsrMenuGroup('group-menu-asesor', this)\" class=\"w-full flex justify-between items-center px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors duration-200\">
+<truncated 411 bytes>
+--- REPLACEMENT CONTENT ---
+"                <button onclick=\"toggleAsrMenuGroup('group-menu-asesor', this)\" class=\"w-full flex justify-between items-center px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors duration-200\">
+<truncated 213 bytes>
+
+========================================
+TARGET FILE: "d:\\APLIKASI RUNNING\\XAMPP\\htdocs\\APLIKASI\\LPK\\resources\\views\\dashboard\\superadmin.blade.php"
+========================================
+--- TARGET CONTENT ---
+"                                    <button type=\"button\" onclick=\"togglePasswordVisibility(this)\" class=\"absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors\">\n        
+<truncated 624 bytes>
+--- REPLACEMENT CONTENT ---
+"                                    <button type=\"button\" onclick=\"togglePasswordVisibility(this)\" class=\"absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors text-xs font
+<truncated 113 bytes>
+

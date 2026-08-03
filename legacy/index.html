@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPK Manajemen Industri & Kompetensi (LPK-MI)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Gradient Glows -->
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" id="nav-logo-btn">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <span>LPK-<span>MI</span></span>
+            </a>
+            <nav class="nav-menu">
+                <a href="#beranda" class="nav-link active" data-tab="beranda"><i class="fa-solid fa-house"></i> Beranda</a>
+                <a href="#program" class="nav-link" data-tab="program"><i class="fa-solid fa-book-open"></i> Program</a>
+                <a href="#pendaftaran" class="nav-link" data-tab="pendaftaran"><i class="fa-solid fa-file-signature"></i> Daftar</a>
+                <a href="#integrasi-lsp" class="nav-link" data-tab="integrasi-lsp"><i class="fa-solid fa-circle-nodes"></i> Integrasi LSP</a>
+                <a href="#admin-panel" class="nav-link" data-tab="admin-panel"><i class="fa-solid fa-user-shield"></i> Panel Admin</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-primary" id="cta-register-btn"><i class="fa-solid fa-right-to-bracket"></i> Masuk Kelas</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Section: Beranda -->
+        <section id="sec-beranda" class="tab-content active-tab">
+            <div class="hero">
+                <div class="hero-text">
+                    <span class="badge"><i class="fa-solid fa-award"></i> Lembaga Pelatihan Kerja Terakreditasi</span>
+                    <h1>Persiapkan Kompetensi Anda Untuk Sertifikasi Profesional</h1>
+                    <p>LPK-MI membantu calon asesi, guru, dosen, dan praktisi menguasai standar kompetensi nasional sebelum menempuh ujian sertifikasi resmi di LSP.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-gradient btn-lg" id="explore-programs-btn">Jelajahi Program <i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="btn btn-outline btn-lg" id="sim-bridge-btn">Simulator Integrasi LSP <i class="fa-solid fa-link"></i></button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="glass-card hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-num">98%</span>
+                            <span class="stat-lbl">Kelulusan LSP</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">12+</span>
+                            <span class="stat-lbl">Program Unggulan</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">2.5k+</span>
+                            <span class="stat-lbl">Alumni Pelatihan</span>
+                        </div>
+                    </div>
+                    <div class="interactive-flow-preview">
+                        <div class="flow-step current">
+                            <div class="step-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                            <span>1. Pelatihan LPK</span>
+                        </div>
+                        <div class="flow-arrow"><i class="fa-solid fa-angles-right"></i></div>
+                        <div class="flow-step">
+                            <div class="step-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                            <span>2. Sertifikat Pelatihan</span>
+                        </div>
+                        <div class="flow-arrow"><i class="fa-solid fa-angles-right"></i></div>
+                        <div class="flow-step highlight">
+                            <div class="step-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                            <span>3. Sertifikasi LSP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-section">
+                <h2 class="section-title">Mengapa Memilih LPK-MI?</h2>
+                <div class="features-grid">
+                    <div class="feature-card glass-card">
+                        <div class="feat-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <h3>Instruktur Praktisi</h3>
+                        <p>Belajar langsung dari asesor kompetensi aktif dan praktisi berpengalaman di bidangnya.</p>
+                    </div>
+                    <div class="feature-card glass-card">
+                        <div class="feat-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+                        <h3>Kurikulum Sinkron LSP</h3>
+                        <p>Silabus materi pelatihan disesuaikan 100% dengan skema SKKNI pada LSPMI mitra.</p>
+                    </div>
+                    <div class="feature-card glass-card">
+                        <div class="feat-icon"><i class="fa-solid fa-qrcode"></i></div>
+                        <h3>Sertifikat Terverifikasi</h3>
+                        <p>Lulusan mendapatkan sertifikat digital dengan QR Code unik yang terintegrasi langsung dengan database LSP.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Program Pelatihan -->
+        <section id="sec-program" class="tab-content">
+            <div class="section-header">
+                <h2 class="section-title">Program Pelatihan Unggulan</h2>
+                <p class="section-subtitle">Pelatihan intensif terstruktur yang disesuaikan dengan skema uji kompetensi LSPMI.</p>
+            </div>
+
+            <div class="programs-grid" id="programs-container">
+                <!-- Dynamically Rendered by app.js -->
+            </div>
+        </section>
+
+        <!-- Section: Pendaftaran -->
+        <section id="sec-pendaftaran" class="tab-content">
+            <div class="enrollment-container">
+                <div class="enrollment-info">
+                    <div class="glass-card">
+                        <h3><i class="fa-solid fa-circle-info"></i> Panduan Pendaftaran</h3>
+                        <ol class="guide-list">
+                            <li>Pilih program pelatihan yang sesuai dengan kompetensi yang ingin Anda sertifikasi.</li>
+                            <li>Lengkapi data diri, instansi, dan kontak aktif Anda.</li>
+                            <li>Unggah dokumen persyaratan (KTP, Ijazah terakhir).</li>
+                            <li>Kirim pendaftaran. Anda akan langsung menerima <strong>Sertifikat Pelatihan LPK Simulasi</strong> secara otomatis untuk dicoba pada website LSPMI.</li>
+                        </ol>
+                        <div class="integration-notice">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <p><strong>Note Integrasi:</strong> Sertifikat dari LPK ini dapat digunakan sebagai prasyarat wajib (dokumen bukti pelatihan) di formulir pendaftaran LSPMI Anda.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="enrollment-form-container glass-card">
+                    <h3>Formulir Pendaftaran Pelatihan</h3>
+                    <form id="enrollment-form">
+                        <div class="form-group">
+                            <label for="enroll-program"><i class="fa-solid fa-graduation-cap"></i> Program Pelatihan</label>
+                            <select id="enroll-program" required>
+                                <option value="" disabled selected>Pilih Program Pelatihan...</option>
+                                <!-- Rendered dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="enroll-name"><i class="fa-solid fa-user"></i> Nama Lengkap (Sesuai KTP)</label>
+                                <input type="text" id="enroll-name" placeholder="Contoh: Dr. Hamidun, M.Pd" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="enroll-nik"><i class="fa-solid fa-id-card"></i> NIK</label>
+                                <input type="text" id="enroll-nik" maxlength="16" placeholder="16 Digit NIK" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="enroll-email"><i class="fa-solid fa-envelope"></i> Email Aktif</label>
+                                <input type="email" id="enroll-email" placeholder="nama@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="enroll-phone"><i class="fa-solid fa-phone"></i> No. HP / WhatsApp</label>
+                                <input type="text" id="enroll-phone" placeholder="08xxxxxxxxx" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="enroll-education"><i class="fa-solid fa-school"></i> Pendidikan Terakhir</label>
+                                <select id="enroll-education" required>
+                                    <option value="" disabled selected>Pilih Pendidikan...</option>
+                                    <option value="S3">S3 / Doktor</option>
+                                    <option value="S2">S2 / Magister</option>
+                                    <option value="S1">S1 / Sarjana</option>
+                                    <option value="D4">D4 / Diploma IV</option>
+                                    <option value="D3">D3 / Diploma III</option>
+                                    <option value="SMA">SMA / SMK / MA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="enroll-category"><i class="fa-solid fa-briefcase"></i> Kategori Pekerjaan</label>
+                                <select id="enroll-category" required>
+                                    <option value="" disabled selected>Pilih Kategori...</option>
+                                    <option value="guru">Guru Madrasah</option>
+                                    <option value="mahasiswa">Mahasiswa / Dosen</option>
+                                    <option value="kerja">Praktisi / Umum</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="enroll-company"><i class="fa-solid fa-building"></i> Nama Instansi / Perusahaan</label>
+                                <input type="text" id="enroll-company" placeholder="Nama Madrasah / Kampus / Instansi" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="enroll-position"><i class="fa-solid fa-user-tie"></i> Jabatan saat ini</label>
+                                <input type="text" id="enroll-position" placeholder="Contoh: Kepala Madrasah / Waka / Dosen" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-gradient btn-block btn-lg"><i class="fa-solid fa-paper-plane"></i> Daftar Sekarang & Terbitkan Sertifikat Pelatihan</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Success Registration Modal / Card -->
+            <div id="enrollment-success-card" class="glass-card success-card hidden">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h3>Pendaftaran Pelatihan Berhasil!</h3>
+                <p>Selamat! Anda telah terdaftar dan sistem telah menerbitkan <strong>Sertifikat Pelatihan LPK</strong> sebagai bukti kompetensi untuk mendaftar sertifikasi di LSP.</p>
+                
+                <!-- Digital Certificate Preview -->
+                <div class="certificate-badge">
+                    <div class="cert-header">
+                        <h4>SERTIFIKAT KELULUSAN PELATIHAN</h4>
+                        <span>LPK MANAJEMEN INDUSTRI & KOMPETENSI (LPK-MI)</span>
+                    </div>
+                    <div class="cert-body">
+                        <p class="cert-given">Diberikan Kepada:</p>
+                        <h2 id="cert-holder-name">HAMIDUN</h2>
+                        <p class="cert-reason">Telah menyelesaikan pelatihan kompetensi dengan predikat <strong>KOMPETEN</strong> pada program:</p>
+                        <h3 id="cert-program-name">Okupasi Kepala Madrasah Ibtidaiyah</h3>
+                        
+                        <div class="cert-meta">
+                            <div>
+                                <span class="lbl">No. Sertifikat:</span>
+                                <span class="val" id="cert-number-val">LPK-MI-2026-0001</span>
+                            </div>
+                            <div>
+                                <span class="lbl">Tanggal Terbit:</span>
+                                <span class="val" id="cert-date-val">08 Juli 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cert-footer">
+                        <div class="signature">
+                            <span class="sign-title">Direktur LPK-MI</span>
+                            <div class="sign-line"></div>
+                            <span class="sign-name">H. Ahmad Fauzi, M.T.</span>
+                        </div>
+                        <div class="qr-code">
+                            <div class="mock-qr" id="cert-qr-visual">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </div>
+                            <span>PINDAI VERIFIKASI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-actions">
+                    <button class="btn btn-gradient" id="copy-cert-num-btn"><i class="fa-solid fa-copy"></i> Salin Nomor Sertifikat</button>
+                    <button class="btn btn-outline" id="goto-bridge-btn"><i class="fa-solid fa-circle-nodes"></i> Uji Integrasi di Simulator LSP</button>
+                    <button class="btn btn-outline" id="reset-enrollment-btn"><i class="fa-solid fa-rotate-left"></i> Daftar Lagi</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Integrasi LSP Bridge -->
+        <section id="sec-integrasi-lsp" class="tab-content">
+            <div class="bridge-header">
+                <h2><i class="fa-solid fa-circle-nodes"></i> Simulator Integrasi LSP & LPK</h2>
+                <p>Halaman ini mendemonstrasikan bagaimana website **LSPMI** Anda membutuhkan data/fitur dari website **LPK** untuk memverifikasi dokumen calon peserta secara otomatis.</p>
+            </div>
+
+            <div class="bridge-grid">
+                <!-- Left: LSP Form Simulation -->
+                <div class="glass-card bridge-card">
+                    <h3><span class="badge-role lsp-badge">WEBSITE LSPMI</span> Simulasi Form Pendaftaran LSP</h3>
+                    <p class="description">Simulasi ketika asesi mendaftar sertifikasi di website LSPMI Anda dan memasukkan berkas kelulusan LPK.</p>
+                    
+                    <div class="mock-form">
+                        <div class="form-group">
+                            <label>Nomor NIK Pendaftar</label>
+                            <div class="input-with-action">
+                                <input type="text" id="lsp-sim-nik" placeholder="Masukkan NIK atau isi dari daftar LPK...">
+                                <button class="btn btn-secondary btn-sm" id="btn-autofill-nik"><i class="fa-solid fa-magic"></i> Auto-fill</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nomor Sertifikat Pelatihan LPK (Syarat Bukti Pelatihan)</label>
+                            <input type="text" id="lsp-sim-cert-number" placeholder="Contoh: LPK-MI-2026-xxxx">
+                        </div>
+
+                        <button class="btn btn-gradient btn-block" id="btn-verify-lsp-registration"><i class="fa-solid fa-magnifying-glass"></i> Cek Keabsahan & Tarik Data LPK</button>
+                    </div>
+
+                    <div id="lsp-verification-result" class="verification-box hidden">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Visual API Pipeline -->
+                <div class="glass-card bridge-card console-card">
+                    <h3><i class="fa-solid fa-terminal"></i> Konsol API & Alur Pertukaran Data</h3>
+                    <p class="description">Visualisasi alur komunikasi data REST API di belakang layar saat verifikasi berjalan.</p>
+                    
+                    <div class="api-flow-visual">
+                        <div class="api-node node-lsp">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>LSPMI Web</span>
+                        </div>
+                        <div class="api-line">
+                            <div class="api-pulse" id="api-pulse-line"></div>
+                            <span class="api-method">GET /api/verify</span>
+                        </div>
+                        <div class="api-node node-lpk">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>LPK-MI API</span>
+                        </div>
+                    </div>
+
+                    <div class="terminal-container">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="term-title">lpk-api-debugger.log</span>
+                        </div>
+                        <div class="terminal-body" id="api-terminal-log">
+                            <span class="log-line text-muted">// Konsol siap. Jalankan simulasi di sebelah kiri untuk melihat aktivitas API...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Fitur Yang Dibutuhkan Oleh LPK dari LSP -->
+            <div class="feature-requirements-section glass-card">
+                <h3><i class="fa-solid fa-list-check"></i> Daftar Fitur Integrasi yang Dibutuhkan dari LSPMI ke LPK</h3>
+                <p class="info-text">Untuk menghubungkan sistem LPK (yang sedang dibuat ini) ke sistem LSPMI Anda, berikut adalah antarmuka (API) dan data yang saling dibutuhkan:</p>
+                
+                <div class="req-table-wrapper">
+                    <table class="req-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Fitur Integrasi</th>
+                                <th>Deskripsi Teknis</th>
+                                <th>Arah Data</th>
+                                <th>Status Simulasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>API Verifikasi Sertifikat</strong></td>
+                                <td>LSPMI mengirim request HTTP GET ke LPK dengan nomor sertifikat pelatihan untuk memeriksa validitas dan mencocokkan NIK peserta.</td>
+                                <td><span class="direction-badge">LSPMI <i class="fa-solid fa-arrow-right"></i> LPK</span></td>
+                                <td><span class="status-badge active"><i class="fa-solid fa-circle-check"></i> Siap Diuji</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Sinkronisasi Skema Kompetensi</strong></td>
+                                <td>LPK mengambil data daftar Skema Sertifikasi aktif dari database/API LSPMI agar pilihan program pelatihan LPK selalu selaras.</td>
+                                <td><span class="direction-badge">LPK <i class="fa-solid fa-arrow-left"></i> LSPMI</span></td>
+                                <td><span class="status-badge mock"><i class="fa-solid fa-circle"></i> Terpetakan</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Pendaftaran Jalur Cepat (Fast-track)</strong></td>
+                                <td>Setelah lulus LPK, sistem LPK mengirim data asesi secara langsung ke backend LSPMI via API POST sehingga asesi tidak perlu mengisi formulir LSP dari awal.</td>
+                                <td><span class="direction-badge">LPK <i class="fa-solid fa-arrow-right"></i> LSPMI</span></td>
+                                <td><span class="status-badge active"><i class="fa-solid fa-circle-check"></i> Demo Integrasi</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Pencocokan NIK Otomatis</strong></td>
+                                <td>Validasi silang NIK untuk menghindari pemalsuan identitas atau penggunaan sertifikat milik orang lain saat mengajukan uji kompetensi.</td>
+                                <td><span class="direction-badge">Dua Arah</span></td>
+                                <td><span class="status-badge active"><i class="fa-solid fa-circle-check"></i> Siap Diuji</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Panel Admin LPK -->
+        <section id="sec-admin-panel" class="tab-content">
+            <div class="admin-header">
+                <h2><i class="fa-solid fa-user-gear"></i> Panel Admin LPK-MI</h2>
+                <p>Gunakan panel ini untuk mengelola peserta pelatihan yang terdaftar dan melihat data sertifikat yang diterbitkan oleh LPK.</p>
+            </div>
+
+            <div class="admin-stats-grid">
+                <div class="stat-card glass-card">
+                    <div class="stat-icon bg-primary"><i class="fa-solid fa-users"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-val" id="admin-stat-total">0</span>
+                        <span class="stat-label">Total Peserta</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon bg-success"><i class="fa-solid fa-file-certificate"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-val" id="admin-stat-cert">0</span>
+                        <span class="stat-label">Sertifikat Terbit</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon bg-warning"><i class="fa-solid fa-link"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-val" id="admin-stat-api">0</span>
+                        <span class="stat-label">Hits API Verifikasi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-table-container glass-card">
+                <div class="table-header-actions">
+                    <h3>Data Registrasi Peserta & Sertifikat Kelulusan</h3>
+                    <button class="btn btn-secondary btn-sm" id="btn-seed-data"><i class="fa-solid fa-database"></i> Isi Data Sampel (Seeder)</button>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Peserta</th>
+                                <th>NIK</th>
+                                <th>Program Pelatihan</th>
+                                <th>No. Sertifikat</th>
+                                <th>Kategori</th>
+                                <th>Status Kelulusan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-trainee-table-body">
+                            <!-- Populated dynamically by app.js -->
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">Belum ada data pendaftar. Gunakan formulir pendaftaran atau isi data sampel.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 LPK-MI. Lembaga Pelatihan Kerja Manajemen Industri & Kompetensi. All Rights Reserved.</p>
+            <div class="footer-links">
+                <span>Simulasi Ekosistem LSPMI & LPK</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
