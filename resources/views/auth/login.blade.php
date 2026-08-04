@@ -1,103 +1,122 @@
 @php
-    $isIndo = (app()->getLocale() === 'id' || true); // Default to Indonesian
-    
-    // Translations
-    $t = [
-        'title' => $isIndo ? 'Portal Masuk | ' . ($siteTitle ?? 'LPK MMI') : 'Login Portal | ' . ($siteTitle ?? 'LPK MMI'),
-        'login_title' => $isIndo ? 'PORTAL MASUK' : 'LOGIN PORTAL',
-        'login_subtitle' => $isIndo ? 'Silakan masuk menggunakan nama pengguna & kata sandi atau akun Google Anda.' : 'Please sign in using your username & password or Google account.',
-        'login_username_label' => $isIndo ? 'Nama Pengguna (Username)' : 'Username',
-        'login_password_label' => $isIndo ? 'Kata Sandi' : 'Password',
-        'login_submit' => $isIndo ? 'MASUK' : 'LOG IN',
-        'login_or_divider' => $isIndo ? 'Atau masuk dengan' : 'Or sign in with',
-        'google_login' => $isIndo ? 'MASUK DENGAN GOOGLE' : 'SIGN IN WITH GOOGLE',
-        'back_home' => $isIndo ? ' Kembali ke Beranda' : ' Back to Homepage',
-        
-        // Register Card
-        'reg_badge' => $isIndo ? 'Formulir Registrasi' : 'Registration Form',
-        'reg_title' => $isIndo ? 'PENDAFTARAN PELATIHAN' : 'TRAINING ENROLLMENT',
-        'reg_subtitle' => $isIndo ? 'Lengkapi formulir di bawah ini untuk mendaftar program pelatihan kerja.' : 'Fill in the form below to register for a training program.',
-        'reg_program' => $isIndo ? 'Program Pelatihan' : 'Training Program',
-        'reg_choose_program' => $isIndo ? 'Pilih Program Pelatihan...' : 'Select Training Program...',
-        'reg_name' => $isIndo ? 'Nama Lengkap (Sesuai KTP)' : 'Full Name (as in Identity Card)',
-        'reg_nik' => $isIndo ? 'NIK (16 Digit)' : 'National ID / NIK (16 Digits)',
-        'reg_email' => $isIndo ? 'Email Aktif' : 'Active Email Address',
-        'reg_phone' => $isIndo ? 'No. HP / WhatsApp' : 'Phone / WhatsApp Number',
-        'reg_education' => $isIndo ? 'Pendidikan Terakhir' : 'Last Education',
-        'reg_choose_edu' => $isIndo ? 'Pilih Pendidikan...' : 'Select Education...',
-        'reg_edu_s3' => $isIndo ? 'S3 / Doktor' : 'Doctorate / S3',
-        'reg_edu_s2' => $isIndo ? 'S2 / Magister' : 'Master / S2',
-        'reg_edu_s1' => $isIndo ? 'S1 / Sarjana' : 'Bachelor / S1',
-        'reg_edu_d4' => $isIndo ? 'D4 / Diploma IV' : 'Diploma IV / D4',
-        'reg_edu_d3' => $isIndo ? 'D3 / Diploma III' : 'Diploma III / D3',
-        'reg_edu_sma' => $isIndo ? 'SMA / SMK / MA' : 'High School / SMA / SMK',
-        
-        'reg_job_cat' => $isIndo ? 'Kategori Pekerjaan' : 'Job Category',
-        'reg_choose_cat' => $isIndo ? 'Pilih Kategori...' : 'Select Category...',
-        'reg_cat_guru' => $isIndo ? 'Pencari Kerja / Magang' : 'Job Seeker / Intern',
-        'reg_cat_mhs' => $isIndo ? 'Pelajar / Mahasiswa' : 'Student',
-        'reg_cat_kerja' => $isIndo ? 'Umum / Pekerja' : 'General / Worker',
-        
-        'reg_company' => $isIndo ? 'Nama Sekolah / Perusahaan' : 'School / Company Name',
-        'reg_company_placeholder' => $isIndo ? 'Nama Sekolah / Perusahaan Asal' : 'School or Company Name',
-        'reg_position' => $isIndo ? 'Status / Jabatan' : 'Status / Position',
-        'reg_position_placeholder' => $isIndo ? 'Contoh: Siswa / Lulusan / Staf' : 'e.g. Student / Graduate / Staff',
-        
-        'reg_submit' => $isIndo ? 'DAFTAR SEKARANG' : 'REGISTER NOW',
-        
-        // Success Card
-        'success_title' => $isIndo ? 'Pendaftaran Berhasil!' : 'Registration Successful!',
-        'success_desc' => $isIndo ? 'Selamat! Anda telah terdaftar dan sistem telah menerbitkan Sertifikat Kelulusan Pelatihan LPK MMI.' : 'Congratulations! You have successfully registered and the system has issued a LPK MMI Training Graduation Certificate.',
-        'cert_title' => $isIndo ? 'Sertifikat Kelulusan Pelatihan' : 'Training Graduation Certificate',
-        'cert_awarded' => $isIndo ? 'Diberikan Kepada:' : 'Awarded To:',
-        'cert_competent' => $isIndo ? 'Telah menyelesaikan pelatihan kompetensi dengan predikat KOMPETEN pada program:' : 'Has successfully completed the competency training with a COMPETENT rating in:',
-        'cert_no' => $isIndo ? 'No. Sertifikat:' : 'Certificate No:',
-        'cert_date' => $isIndo ? 'Tanggal Terbit:' : 'Date of Issue:',
-        'btn_copy' => $isIndo ? 'Salin Nomor Sertifikat' : 'Copy Certificate Number',
-        'btn_again' => $isIndo ? 'Daftar Lagi' : 'Register Again',
-    ];
+$isIndo = (app()->getLocale() === 'id' || true); // Default to Indonesian
+
+// Translations
+$t = [
+'title' => $isIndo ? 'Portal Masuk | ' . ($siteTitle ?? 'LPK MMI') : 'Login Portal | ' . ($siteTitle ?? 'LPK MMI'),
+'login_title' => $isIndo ? 'PORTAL MASUK' : 'LOGIN PORTAL',
+'login_subtitle' => $isIndo ? 'Silakan masuk menggunakan nama pengguna dan kata sandi Anda.' : 'Please sign in using your username and password.',
+'login_username_label' => $isIndo ? 'Nama Pengguna (Username)' : 'Username',
+'login_password_label' => $isIndo ? 'Kata Sandi' : 'Password',
+'login_submit' => $isIndo ? 'MASUK' : 'LOG IN',
+'login_or_divider' => $isIndo ? 'Atau masuk dengan' : 'Or sign in with',
+'google_login' => $isIndo ? 'MASUK DENGAN GOOGLE' : 'SIGN IN WITH GOOGLE',
+'back_home' => $isIndo ? ' Kembali ke Beranda' : ' Back to Homepage',
+
+// Register Card
+'reg_badge' => $isIndo ? 'Formulir Registrasi' : 'Registration Form',
+'reg_title' => $isIndo ? 'PENDAFTARAN PELATIHAN' : 'TRAINING ENROLLMENT',
+'reg_subtitle' => $isIndo ? 'Lengkapi formulir di bawah ini untuk mendaftar program pelatihan kerja.' : 'Fill in the form below to register for a training program.',
+'reg_program' => $isIndo ? 'Program Pelatihan' : 'Training Program',
+'reg_choose_program' => $isIndo ? 'Pilih Program Pelatihan...' : 'Select Training Program...',
+'reg_name' => $isIndo ? 'Nama Lengkap (Sesuai KTP)' : 'Full Name (as in Identity Card)',
+'reg_nik' => $isIndo ? 'NIK (16 Digit)' : 'National ID / NIK (16 Digits)',
+'reg_email' => $isIndo ? 'Email Aktif' : 'Active Email Address',
+'reg_phone' => $isIndo ? 'No. HP / WhatsApp' : 'Phone / WhatsApp Number',
+'reg_education' => $isIndo ? 'Pendidikan Terakhir' : 'Last Education',
+'reg_choose_edu' => $isIndo ? 'Pilih Pendidikan...' : 'Select Education...',
+'reg_edu_s3' => $isIndo ? 'S3 / Doktor' : 'Doctorate / S3',
+'reg_edu_s2' => $isIndo ? 'S2 / Magister' : 'Master / S2',
+'reg_edu_s1' => $isIndo ? 'S1 / Sarjana' : 'Bachelor / S1',
+'reg_edu_d4' => $isIndo ? 'D4 / Diploma IV' : 'Diploma IV / D4',
+'reg_edu_d3' => $isIndo ? 'D3 / Diploma III' : 'Diploma III / D3',
+'reg_edu_sma' => $isIndo ? 'SMA / SMK / MA' : 'High School / SMA / SMK',
+
+'reg_job_cat' => $isIndo ? 'Kategori Pekerjaan' : 'Job Category',
+'reg_choose_cat' => $isIndo ? 'Pilih Kategori...' : 'Select Category...',
+'reg_cat_guru' => $isIndo ? 'Pencari Kerja / Magang' : 'Job Seeker / Intern',
+'reg_cat_mhs' => $isIndo ? 'Pelajar / Mahasiswa' : 'Student',
+'reg_cat_kerja' => $isIndo ? 'Umum / Pekerja' : 'General / Worker',
+
+'reg_company' => $isIndo ? 'Nama Sekolah / Perusahaan' : 'School / Company Name',
+'reg_company_placeholder' => $isIndo ? 'Nama Sekolah / Perusahaan Asal' : 'School or Company Name',
+'reg_position' => $isIndo ? 'Status / Jabatan' : 'Status / Position',
+'reg_position_placeholder' => $isIndo ? 'Contoh: Siswa / Lulusan / Staf' : 'e.g. Student / Graduate / Staff',
+
+'reg_submit' => $isIndo ? 'DAFTAR SEKARANG' : 'REGISTER NOW',
+
+// Success Card
+'success_title' => $isIndo ? 'Pendaftaran Berhasil!' : 'Registration Successful!',
+'success_desc' => $isIndo ? 'Selamat! Anda telah terdaftar dan sistem telah menerbitkan Sertifikat Kelulusan Pelatihan LPK MMI.' : 'Congratulations! You have successfully registered and the system has issued a LPK MMI Training Graduation Certificate.',
+'cert_title' => $isIndo ? 'Sertifikat Kelulusan Pelatihan' : 'Training Graduation Certificate',
+'cert_awarded' => $isIndo ? 'Diberikan Kepada:' : 'Awarded To:',
+'cert_competent' => $isIndo ? 'Telah menyelesaikan pelatihan kompetensi dengan predikat KOMPETEN pada program:' : 'Has successfully completed the competency training with a COMPETENT rating in:',
+'cert_no' => $isIndo ? 'No. Sertifikat:' : 'Certificate No:',
+'cert_date' => $isIndo ? 'Tanggal Terbit:' : 'Date of Issue:',
+'btn_copy' => $isIndo ? 'Salin Nomor Sertifikat' : 'Copy Certificate Number',
+'btn_again' => $isIndo ? 'Daftar Lagi' : 'Register Again',
+];
 @endphp
 @extends('layouts.app')
 
 @section('content')
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.78)), 
-                        url('{{ !empty($settings["login_bg_image"]) ? asset("storage/" . $settings["login_bg_image"]) : "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2000" }}') no-repeat center center fixed !important;
-            background-size: cover !important;
-        }
-        .outfit-font {
-            font-family: 'Outfit', sans-serif;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.3);
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(148, 163, 184, 0.5);
-        }
-        *, ::before, ::after { border-radius: 0px !important; }
-        .text-\[9px\] { font-size: 0.75rem !important; }
-        .text-\[10px\] { font-size: 0.75rem !important; }
-        .text-\[11px\] { font-size: 0.875rem !important; }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+    body {
+        background: linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.78)),
+        url('{{ !empty($settings["login_bg_image"]) ? asset("storage/" . $settings["login_bg_image"]) : "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2000" }}') no-repeat center center fixed !important;
+        background-size: cover !important;
+    }
 
-    <div class="flex items-center justify-center min-h-[70vh] py-8">
-        <!-- Main Container Card -->
-        <div class="w-full max-w-5xl bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row border border-slate-100 dark:border-slate-800/80 transition-all duration-300 min-h-[620px]">
-        
+    .outfit-font {
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.3);
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(148, 163, 184, 0.5);
+    }
+
+    *,
+    ::before,
+    ::after {
+        border-radius: 0px !important;
+    }
+
+    .text-\[9px\] {
+        font-size: 0.75rem !important;
+    }
+
+    .text-\[10px\] {
+        font-size: 0.75rem !important;
+    }
+
+    .text-\[11px\] {
+        font-size: 0.875rem !important;
+    }
+</style>
+
+<div class="flex items-center justify-center min-h-[70vh] py-8">
+    <!-- Main Container Card -->
+    <div class="w-full max-w-5xl bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row border border-slate-100 dark:border-slate-800/80 transition-all duration-300 min-h-[620px]">
+
         <!-- Left Side: Branding Panel -->
         <div class="w-full md:w-5/12 bg-[#1e5afb] p-12 md:p-14 flex flex-col justify-between text-white select-none relative overflow-hidden">
             <!-- Background Glow inside panel -->
             <div class="absolute -right-24 -top-24 w-48 h-48 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
-            
+
             <div class="relative z-10">
                 <h2 class="outfit-font text-[#facc15] font-black text-3xl tracking-wide uppercase leading-tight">
                     {{ $settings['login_left_title_1'] ?? 'LEMBAGA PELATIHAN' }}<br>{{ $settings['login_left_title_2'] ?? 'KERJA' }}
@@ -115,14 +134,14 @@
                     {{ $settings['login_left_footer_title'] ?? 'LPK MPI' }}
                 </h3>
                 <p class="text-white/80 text-xs mt-1.5 leading-relaxed font-medium">
-                    {{ $settings['login_left_footer_desc'] ?? 'Pusat Pelatihan & Sertifikasi Kompetensi Manajemen Pendidikan Islam Terintegrasi' }}
+                    {{ $settings['login_left_footer_desc'] ?? 'Pusat Pelatihan & Sertifikasi Kerja Manajemen Pendidikan Islam Terintegrasi' }}
                 </p>
             </div>
         </div>
 
         <!-- Right Side: Forms Container -->
         <div class="w-full md:w-7/12 p-12 md:p-14 flex flex-col justify-between bg-white dark:bg-slate-900 relative">
-            
+
             <!-- 1. LOGIN CARD VIEW -->
             <div id="login-card" class="flex flex-col justify-between h-full transition-all duration-300">
                 <div class="my-auto py-4">
@@ -137,11 +156,11 @@
 
                     <!-- Validation Errors -->
                     @if ($errors->any())
-                        <div class="mb-5 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-455 rounded-xl text-xs space-y-1">
-                            @foreach ($errors->all() as $error)
-                                <p>• {{ $error }}</p>
-                            @endforeach
-                        </div>
+                    <div class="mb-5 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-455 rounded-xl text-xs space-y-1">
+                        @foreach ($errors->all() as $error)
+                        <p>• {{ $error }}</p>
+                        @endforeach
+                    </div>
                     @endif
 
                     <form action="/login" method="POST" class="space-y-4">
@@ -172,39 +191,23 @@
                         </button>
                     </form>
 
-                    <div class="relative flex py-4 items-center">
-                        <div class="flex-grow border-t border-slate-100 dark:border-slate-800/80"></div>
-                        <span class="flex-shrink mx-4 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-widest">{{ $t['login_or_divider'] }}</span>
-                        <div class="flex-grow border-t border-slate-100 dark:border-slate-800/80"></div>
-                    </div>
 
-                    <div>
-                        <a href="{{ route('auth.google') }}" class="w-full bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-bold py-4.5 px-8 rounded-md shadow-sm transition duration-300 flex items-center justify-center gap-3.5 uppercase text-sm tracking-wider">
-                            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21.35,11.1H12v2.7h5.38c-0.24,1.28 -0.96,2.37 -2.04,3.1v2.6h3.3c1.93,-1.78 3.04,-4.4 3.04,-7.4C21.68,11.9 21.56,11.4 21.35,11.1z" fill="#4285F4" />
-                                <path d="M12,20.7c2.43,0 4.47,-0.8 5.96,-2.2l-3.3,-2.6c-0.92,0.6 -2.1,0.95 -3.38,0.95 -2.43,0 -4.5,-1.64 -5.23,-3.85H2.65v2.7C4.13,18.66 7.78,20.7 12,20.7z" fill="#34A853" />
-                                <path d="M6.77,13c-0.18,-0.55 -0.29,-1.14 -0.29,-1.75c0,-0.6 0.11,-1.2 0.29,-1.75V6.8H2.65C2.03,8.04 1.68,9.48 1.68,11c0,1.52 0.35,2.96 0.97,4.2l3.3,-2.7C6.42,14.33 6.55,13.67 6.77,13z" fill="#FBBC05" />
-                                <path d="M12,4.8c1.32,0 2.5,0.45 3.44,1.35l2.58,-2.6C16.46,2.16 14.43,1.3 12,1.3 7.78,1.3 4.13,3.34 2.65,6.3l4.12,3.2C7.5,7.31 9.57,4.8 12,4.8z" fill="#EA4335" />
-                            </svg>
-                            <span>{{ $t['google_login'] }}</span>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="mt-8 border-t border-slate-100 dark:border-slate-800/80 pt-6">
-                    <div class="flex flex-col sm:flex-row sm:justify-between items-center gap-3">
+                    <div class="flex flex-col items-center gap-3 text-center">
                         <p class="text-sm text-slate-500 dark:text-slate-400">
                             {{ $isIndo ? 'Belum terdaftar?' : 'Not registered?' }}
                             <button type="button" id="link-to-register" class="text-[#1e5afb] dark:text-blue-400 font-bold hover:underline ml-1">
                                 {{ $isIndo ? 'Daftar di sini' : 'Register here' }}
                             </button>
-                            <a href="/" class="text-sm text-slate-550 hover:text-[#1e5afb] dark:text-slate-400 dark:hover:text-blue-400 font-medium flex items-center gap-1 transition">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
-                                </svg>
-                                <span>{{ $t['back_home'] }}</span>
-                            </a>
                         </p>
+                        <a href="/" class="text-sm text-slate-500 hover:text-[#1e5afb] dark:text-slate-400 dark:hover:text-blue-400 font-medium flex items-center gap-1 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            <span>{{ $t['back_home'] }}</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -231,7 +234,7 @@
                             <select id="enroll-program" name="program_id" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all">
                                 <option value="" disabled selected class="dark:bg-slate-900">{{ $t['reg_choose_program'] }}</option>
                                 @foreach($programs as $prog)
-                                    <option value="{{ $prog->id }}" class="dark:bg-slate-900">{{ $prog->title }} ({{ $prog->price }})</option>
+                                <option value="{{ $prog->id }}" class="dark:bg-slate-900">{{ $prog->title }} ({{ $prog->price }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -314,10 +317,10 @@
                             <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                                 Kami telah mengirimkan 6-digit kode verifikasi ke email Anda. Silakan periksa kotak masuk (atau folder spam).
                             </p>
-                            
+
                             <!-- Local development debug helper -->
                             <div id="otp-debug-helper" class="hidden text-xs bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 p-3 rounded font-semibold leading-relaxed"></div>
-                            
+
                             <div class="flex flex-col sm:flex-row gap-2">
                                 <div class="flex-1">
                                     <input type="text" id="otp-code-input" name="otp_code" placeholder="Masukkan 6-digit kode" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-2.5 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 tracking-widest font-mono text-center text-lg">
@@ -373,10 +376,10 @@
 
                     <form id="payment-form" class="space-y-4">
                         <input type="hidden" id="checkout-enrollment-id" name="enrollment_id">
-                        
+
                         <div class="flex flex-col gap-1.5">
                             <label class="text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider">Pilih Metode Pembayaran</label>
-                            
+
                             <div class="grid grid-cols-1 gap-2.5 max-h-[220px] overflow-y-auto pr-1.5 custom-scrollbar">
                                 <!-- Bank Transfer -->
                                 <label class="payment-method-option flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-800 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
@@ -399,7 +402,7 @@
                                             <span class="text-[10px] text-slate-450">GoPay, OVO, DANA, LinkAja</span>
                                         </div>
                                     </div>
-                                    <span class="text-[10px] bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded font-bold">Otomatis</span>
+                                    <span class="text-[10px] bg-blue-500/10 text-blue-600 px-2 py-0.5 rounded font-bold">Otomatis</span>
                                 </label>
 
                                 <!-- Modern Retail -->
@@ -429,7 +432,7 @@
             <!-- 4. PAYMENT RECEIPT VIEW -->
             <div id="payment-receipt-card" class="hidden flex flex-col justify-between h-full transition-all duration-300 text-center">
                 <div class="my-auto py-2">
-                    <div class="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center mx-auto mb-4 shadow-sm text-emerald-600 dark:text-emerald-400">
+                    <div class="w-14 h-14 rounded-full bg-blue-500/10 border border-blue-500/25 flex items-center justify-center mx-auto mb-4 shadow-sm text-blue-600 dark:text-blue-400">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
                         </svg>
@@ -438,7 +441,7 @@
                     <p class="text-slate-600 dark:text-slate-400 text-xs mb-6 max-w-sm mx-auto leading-relaxed">
                         Terima kasih. Transaksi Anda telah berhasil diverifikasi. Detail pembayaran Anda tercantum di bawah ini.
                     </p>
-                    
+
                     <div class="rounded-xl p-5 text-left border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-slate-950/40 mb-6 max-w-md mx-auto text-xs space-y-3">
                         <div class="flex justify-between py-1.5 border-b border-slate-200/50 dark:border-white/5">
                             <span class="text-slate-400">Nomor Referensi</span>
@@ -465,7 +468,7 @@
                             <span class="font-semibold text-slate-900 dark:text-white" id="receipt-date">-</span>
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-center gap-3">
                         <button class="bg-[#1e5afb] hover:bg-[#1546cb] text-white font-bold py-2.5 px-5 rounded-md text-xs uppercase tracking-wider transition-all shadow-md" id="print-receipt-btn">
                             Cetak Kuitansi
@@ -476,20 +479,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Copyright footer at bottom of right column -->
-            <div class="mt-8 text-center">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block leading-relaxed">
-                    © 2026 COPYRIGHT © 2026 {{ $siteTitle ?? 'LPK MPI' }}. ALL RIGHTS RESERVED.<br>SISTEM PENDAFTARAN TERINTEGRASI
-                </span>
-            </div>
-
         </div>
     </div>
 
     <!-- WhatsApp Floating Notification Toast -->
     <div id="whatsapp-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-500 max-w-sm w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl overflow-hidden flex flex-col">
-        <div class="bg-emerald-600 text-white px-4 py-3 flex items-center justify-between">
+        <div class="bg-blue-600 text-white px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <div class="bg-white/20 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider">WA</div>
                 <span class="text-xs font-bold uppercase tracking-wider">Hotline LPK MPI</span>
@@ -497,7 +492,7 @@
             <button onclick="hideWAToast()" class="text-white/70 hover:text-white font-black text-sm">&times;</button>
         </div>
         <div class="p-4 flex gap-3 items-start">
-            <div class="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded-lg border border-emerald-500/20 shrink-0 text-xs font-bold uppercase tracking-wider">
+            <div class="bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-lg border border-blue-500/20 shrink-0 text-xs font-bold uppercase tracking-wider">
                 WA
             </div>
             <div class="flex-1 min-w-0 text-left">
@@ -511,7 +506,6 @@
 
     <!-- Theme Toggle logic & AJAX logic -->
     <script>
-
         // WhatsApp toast functions
         function showWAToast(message) {
             const toast = document.getElementById('whatsapp-toast');
@@ -522,6 +516,7 @@
                 hideWAToast();
             }, 10000);
         }
+
         function hideWAToast() {
             const toast = document.getElementById('whatsapp-toast');
             toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
@@ -612,12 +607,14 @@
             async function sendOtpRequest(email, csrfToken) {
                 const response = await fetch("{{ route('enroll.send-otp') }}", {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': csrfToken 
+                        'X-CSRF-TOKEN': csrfToken
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({
+                        email
+                    })
                 });
                 const data = await response.json();
                 if (!response.ok) {
@@ -658,7 +655,7 @@
                 const errorBox = document.getElementById('form-errors');
                 errorBox.classList.add('hidden');
                 errorBox.innerHTML = '';
-                
+
                 const emailInput = document.getElementById('enroll-email');
                 const email = emailInput.value;
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -684,17 +681,17 @@
                             </svg>
                             Mengirim Kode...
                         `;
-                        
+
                         const data = await sendOtpRequest(email, csrfToken);
-                        
+
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = 'Verifikasi &amp; Daftar';
                         otpSection.classList.remove('hidden');
                         otpCodeInput.required = true;
                         otpCodeInput.focus();
-                        
+
                         startCountdown();
-                        
+
                         if (data.debug_code) {
                             otpDebugHelper.classList.remove('hidden');
                             otpDebugHelper.innerHTML = `[Developer Mode] Kode verifikasi Anda adalah: <strong class="text-blue-700 dark:text-blue-400 font-mono text-sm underline">${data.debug_code}</strong>`;
@@ -733,11 +730,14 @@
                         </svg>
                         Memproses Pendaftaran...
                     `;
-                    
+
                     const response = await fetch(form.action, {
                         method: 'POST',
                         body: formData,
-                        headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': csrfToken }
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
                     });
                     const data = await response.json();
                     if (!response.ok) {
@@ -757,19 +757,19 @@
                         submitBtn.innerHTML = 'Verifikasi &amp; Daftar';
                         return;
                     }
-                    
+
                     // Initial registration successful, now show payment checkout!
                     const enrollment = data.enrollment;
                     document.getElementById('checkout-program-title').textContent = enrollment.program_title;
                     document.getElementById('checkout-amount').textContent = enrollment.payment_amount_formatted;
                     document.getElementById('checkout-enrollment-id').value = enrollment.id;
-                    
+
                     form.reset();
                     otpSection.classList.add('hidden');
                     otpCodeInput.required = false;
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalSubmitText;
-                    
+
                     showCheckoutView();
                 } catch (error) {
                     submitBtn.disabled = false;
@@ -789,7 +789,7 @@
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 const enrollmentId = document.getElementById('checkout-enrollment-id').value;
                 const paymentMethod = paymentForm.querySelector('input[name="payment_method"]:checked').value;
-                
+
                 try {
                     payBtn.disabled = true;
                     payBtn.innerHTML = `
@@ -799,7 +799,7 @@
                         </svg>
                         Memproses Transaksi...
                     `;
-                    
+
                     const response = await fetch("{{ route('enroll.payment') }}", {
                         method: 'POST',
                         headers: {
@@ -812,12 +812,12 @@
                             payment_method: paymentMethod
                         })
                     });
-                    
+
                     const data = await response.json();
                     if (!response.ok) {
                         throw new Error(data.message || 'Gagal memproses pembayaran.');
                     }
-                    
+
                     const receipt = data.receipt;
                     document.getElementById('receipt-ref').textContent = receipt.reference;
                     document.getElementById('receipt-name').textContent = receipt.name;
@@ -825,12 +825,12 @@
                     document.getElementById('receipt-amount').textContent = receipt.amount;
                     document.getElementById('receipt-method').textContent = receipt.method;
                     document.getElementById('receipt-date').textContent = receipt.date;
-                    
+
                     payBtn.disabled = false;
                     payBtn.innerHTML = originalPayText;
-                    
+
                     showReceiptView();
-                    
+
                     // Simulate Auto Confirmation Notification via WhatsApp Toast
                     const waMessage = `*Hotline LPK MPI*\n\nSelamat, Pembayaran pendaftaran Anda berhasil!\n\n*No. Transaksi:* ${receipt.reference}\n*Peserta:* ${receipt.name}\n*Skema:* ${receipt.program}\n*Metode:* ${receipt.method}\n*Status:* LUNAS (PAID)\n\nPendaftaran sedang diproses oleh admin. Kuitansi PDF resmi dikirimkan via email Anda.`;
                     showWAToast(waMessage);
@@ -867,4 +867,4 @@
             }
         }
     </script>
-@endsection
+    @endsection

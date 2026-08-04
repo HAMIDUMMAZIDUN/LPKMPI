@@ -1,563 +1,258 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Alert Messages -->
-@if(session('success'))
-<div class="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl text-sm flex items-center gap-3 animate-fade-in shadow-sm">
-    <svg class="h-5 w-5 text-emerald-550 dark:text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span>{{ session('success') }}</span>
-</div>
-@endif
+    <!-- CSS and Styling Overrides for LPK Manajemen Pendidikan Islam -->
+    <style>
+        /* Hide the default layout footer */
+        #pub-main-wrap > footer {
+            display: none !important;
+        }
 
-@if(session('error'))
-<div class="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-sm flex items-center gap-3 animate-fade-in shadow-sm">
-    <svg class="h-5 w-5 text-rose-550 dark:text-rose-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span>{{ session('error') }}</span>
-</div>
-@endif
+        /* Color custom utilities */
+        .text-mpi-blue { color: #155dfc; }
+        .bg-mpi-blue { background-color: #155dfc; }
+        .border-mpi-blue { border-color: #155dfc; }
+        
+        .btn-mpi {
+            background-color: #155dfc;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        .btn-mpi:hover {
+            background-color: #084be3;
+            transform: translateY(-1px);
+        }
 
-<!-- ========================================================================= -->
-<!-- SECTION 1: BERANDA -->
-<!-- ========================================================================= -->
-    <section id="sec-beranda" class="tab-content block animate-fade-in relative w-full pt-12 pb-20 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/40">
-    <div class="max-w-7xl mx-auto px-6">
-        <!-- Ambient Background Glow Orb -->
-        <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-blue-600/10 dark:bg-blue-500/25 blur-3xl pointer-events-none animate-soft-pulse"></div>
+        /* Custom scroll offset */
+        .scroll-mt-section {
+            scroll-margin-top: 100px;
+        }
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-6 relative z-10">
-            <div class="lg:col-span-7 flex flex-col items-start">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight text-slate-900 dark:text-white font-heading">
-                    <span class="bg-gradient-to-r from-blue-800 via-indigo-650 to-sky-600 dark:from-blue-400 dark:via-indigo-400 dark:to-sky-400 bg-clip-text text-transparent drop-shadow-[0_2px_15px_rgba(59,130,246,0.18)] animate-gradient-flow">
-                        {!! e($heroTitle) !!}
+        /* Laser Scanline animation */
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+        .animate-scanline {
+            animation: scan 3s linear infinite;
+        }
+    </style>
+
+    <!-- Alert Messages -->
+    @if(session('success'))
+        <div class="max-w-7xl mx-auto px-6 mt-6">
+            <div class="p-4 bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm flex items-center gap-3 animate-fade-in shadow-sm">
+                <span>✓</span>
+                <span>{{ session('success') }}</span>
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="max-w-7xl mx-auto px-6 mt-6">
+            <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-sm flex items-center gap-3 animate-fade-in shadow-sm">
+                <span>✗</span>
+                <span>{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: HERO & WELCOME (sec-beranda)    -->
+    <!-- ========================================== -->
+    <section id="sec-beranda" class="tab-content block animate-fade-in scroll-mt-section py-12 md:py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 flex flex-col items-start text-left">
+                    <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-4">
+                        HOME
                     </span>
-                </h1>
-                <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-8 max-w-xl leading-relaxed">
-                    {{ $heroSubtitle }}
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <button class="bg-gradient-to-r from-blue-700 to-sky-600 text-white font-bold py-3.5 px-7 rounded-lg shadow-lg shadow-blue-700/20 hover:brightness-110 transition-all duration-300 flex items-center gap-2 text-xs uppercase tracking-wider" onclick="navigateToSection('sec-program-manajemen', 'program')">
-                        Jelajahi Program
-                    </button>
-                    <button class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-750 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold py-3.5 px-7 rounded-lg text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-2 shadow-sm" onclick="navigateToSection('sec-pendaftaran-formulir', 'pendaftaran')">
-                        Daftar Online
-                    </button>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5 flex flex-col gap-6 relative">
-                @if($heroImage)
-                <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md h-72 relative">
-                    <img src="{{ asset('storage/' . $heroImage) }}" alt="Hero Image" class="w-full h-full object-cover">
-                </div>
-                @else
-                <!-- Stats Card -->
-                <div class="glass-card rounded-2xl p-6 flex justify-around items-center border border-slate-200 dark:border-slate-800 flex-wrap gap-4 sm:gap-0">
-                    @foreach($stats as $index => $stat)
-                    @if($index > 0)
-                    <div class="hidden sm:block w-px h-10 bg-slate-200 dark:bg-white/5"></div>
-                    @endif
-                    <div class="text-center flex-1 min-w-[80px]">
-                        <span class="block text-3xl font-black bg-gradient-to-r from-blue-700 to-sky-600 dark:from-blue-400 dark:to-sky-300 bg-clip-text text-transparent font-heading">{{ $stat['val'] }}</span>
-                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mt-1 block">{{ $stat['lbl'] }}</span>
-                    </div>
-                    @endforeach
-                </div>
-
-                <!-- Flow Preview -->
-                <div class="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-5 flex justify-between items-center gap-2 shadow-sm flex-wrap sm:flex-nowrap">
-                    @foreach($steps as $index => $step)
-                    @if($index > 0)
-                    <div class="text-slate-400 dark:text-slate-600 text-sm font-bold">→</div>
-                    @endif
-                    <div class="flex flex-col items-center gap-2 text-center flex-1 min-w-[70px]">
-                        <div class="w-9 h-9 rounded-full bg-blue-600/10 text-blue-700 dark:text-blue-400 border border-blue-600/25 flex items-center justify-center text-xs font-bold shadow-md shadow-blue-500/5">
-                            {{ sprintf("%02d", $index + 1) }}
-                        </div>
-                        <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-wider">{{ $step['title'] }}</span>
-                    </div>
-                    @endforeach
-                </div>
-                @endif
-            </div>
-        </div>
-
-        <!-- Features Grid -->
-        <div class="mt-20">
-            <h2 class="text-2xl sm:text-3xl font-black text-center mb-12 font-heading tracking-tight text-slate-900 dark:text-white">{{ $whyChooseTitle }}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($features as $index => $feature)
-                <div class="glass-card rounded-2xl p-8 flex flex-col items-start gap-4 border border-slate-200 dark:border-slate-800">
-                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-400 border border-blue-600/20 flex items-center justify-center text-sm font-black shadow-md">
-                        {{ sprintf("%02d", $index + 1) }}
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-1">{{ $feature['title'] }}</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        {{ $feature['desc'] }}
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                        Selamat Datang di LPK Manajemen Pendidikan Islam
+                    </h1>
+                    <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-8 max-w-2xl leading-relaxed">
+                        LPK Manajemen Pendidikan Islam merupakan salah satu Lembaga Penyelenggara Pemagangan Luar Negeri (Sending Organization - SO) yang berdiri sejak tahun 2012, dan telah menempatkan lebih dari 3,000 peserta di berbagai Perusahaan di Jepang.
                     </p>
                 </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ========================================================================= -->
-<!-- SECTION 2: TENTANG KAMI -->
-<!-- ========================================================================= --<section id="sec-tentang" class="tab-content py-20 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="max-w-3xl mx-auto text-center mb-16">
-            <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Profil Institusi</span>
-            <h2 class="text-3xl sm:text-4xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">LPK Manajemen Pendidikan Islam</h2>
-            <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
-                Membangun keterampilan kepemimpinan dan administrasi lembaga pendidikan Islam yang profesional.
-            </p>
-        </div>
-
-        <!-- Sub-section: Profil LPK -->
-        <div id="sec-tentang-profil" class="mb-20 scroll-mt-28">
-            <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div class="lg:col-span-7 space-y-4 text-left">
-                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Tentang Lembaga Kami</h3>
-                    <p class="text-slate-600 dark:text-slate-405 text-sm leading-relaxed">
-                        LPK Manajemen Pendidikan Islam (LPK MPI) didirikan untuk menjawab tantangan global akan pentingnya standarisasi keahlian di lingkungan madrasah, sekolah Islam terpadu, pondok pesantren, dan yayasan keagamaan. Sebagai Lembaga Pelatihan Kerja resmi, kami berfokus melatih serta membekali keterampilan kerja para pimpinan yayasan, pengelola keuangan pesantren, kepala sekolah, dan staf administrasi.
-                    </p>
-                    <p class="text-slate-605 dark:text-slate-405 text-sm leading-relaxed">
-                        Dengan kurikulum pelatihan yang terstruktur and dukungan jaringan instruktur yang ahli, kami memastikan setiap peserta didik memiliki bekal keahlian kerja yang unggul dan berdaya saing.
-                    </p>
-                </div>
-                <div class="lg:col-span-5 bg-gradient-to-br from-blue-700 to-indigo-900 rounded-xl p-8 text-white text-center shadow-md relative overflow-hidden h-64 flex flex-col justify-center items-center">
-                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                    <span class="text-4xl font-extrabold font-heading mb-2">LPK MPI</span>
-                    <p class="text-xs text-blue-200 leading-relaxed max-w-xs font-semibold">Lembaga Pelatihan Kerja (LPK) Resmi Terdaftar & Terakreditasi</p>
+                
+                <!-- Hero Illustration -->
+                <div class="lg:col-span-5 flex justify-center items-center">
+                    <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto max-w-md mx-auto">
+                        <circle cx="250" cy="200" r="160" fill="#eef2ff" class="dark:fill-blue-950/15" />
+                        <circle cx="380" cy="120" r="40" fill="#ffe0cc" class="dark:fill-blue-900/10" opacity="0.6"/>
+                        <path d="M100 280C100 220 150 180 180 180C160 220 140 260 100 280Z" fill="#155dfc" opacity="0.8"/>
+                        <path d="M130 320C130 270 170 230 200 230C180 270 160 300 130 320Z" fill="#ea580c" opacity="0.9"/>
+                        <path d="M380 280C380 220 330 180 300 180C320 220 340 260 380 280Z" fill="#155dfc" opacity="0.8"/>
+                        <path d="M350 320C350 270 310 230 280 230C300 270 320 300 350 320Z" fill="#ea580c" opacity="0.9"/>
+                        <circle cx="250" cy="120" r="24" fill="#ffdbca"/>
+                        <path d="M226 120C226 95 274 95 274 120C274 125 226 125 226 120Z" fill="#2d3748"/>
+                        <path d="M226 120C226 135 235 140 235 140L230 145" stroke="#2d3748" stroke-width="4"/>
+                        <path d="M274 120C274 135 265 140 265 140L270 145" stroke="#2d3748" stroke-width="4"/>
+                        <path d="M225 170C225 150 275 150 275 170V230H225V170Z" fill="#155dfc"/>
+                        <path d="M240 150H260V170H240V150Z" fill="#ffdbca"/>
+                        <path d="M220 235H280L290 255H210L220 235Z" fill="#718096"/>
+                        <path d="M225 235V205H275V235" fill="#e2e8f0" stroke="#718096" stroke-width="2"/>
+                        <path d="M235 212H265" stroke="#cbd5e0" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M235 218H265" stroke="#cbd5e0" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M225 180L205 215L225 230" stroke="#ffdbca" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M275 180L295 215L275 230" stroke="#ffdbca" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M180 270C180 250 220 240 250 240C280 240 320 250 320 270C320 290 290 300 250 300C210 300 180 290 180 270Z" fill="#1a202c"/>
+                    </svg>
                 </div>
             </div>
-        </div>
-
-        <!-- Sub-section: Visi & Misi -->
-        <div id="sec-tentang-visimisi" class="mb-20 scroll-mt-28">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 text-left">
-                <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2.5">
-                        <span class="w-1.5 h-6 bg-blue-700 rounded-full"></span>
-                        Visi &amp; Tujuan Utama
-                    </h3>
-                    <div class="space-y-4">
-                        <div>
-                            <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest block mb-1">Visi Strategis</span>
-                            <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed font-semibold">
-                                "Menjadi lembaga sertifikasi profesi terpercaya dan unggul dalam menciptakan manajemen pendidikan Islam yang kompeten dan profesional dalam menghadapi tantangan global."
-                            </p>
-                        </div>
-                        <div class="h-px bg-slate-200 dark:bg-white/5 my-4"></div>
-                        <div>
-                            <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest block mb-1">Tujuan Lembaga</span>
-                            <p class="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
-                                Mewujudkan standar tata kelola madrasah dan pesantren yang akuntabel, meningkatkan kualitas sumber daya manusia (SDM) pendidik dan tenaga kependidikan Islam, serta menjamin kompetensi kerja peserta didik melalui program pelatihan yang terstruktur.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2.5">
-                        <span class="w-1.5 h-6 bg-emerald-600 rounded-full"></span>
-                        Misi Utama Lembaga
-                    </h3>
-                    <ul class="space-y-3.5 text-slate-600 dark:text-slate-400 text-xs">
-                        <li class="flex gap-2">
-                            <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">•</span>
-                            <span>Menyelenggarakan program pelatihan kerja manajemen pendidikan Islam yang berkualitas.</span>
-                        </li>
-                        <li class="flex gap-2">
-                            <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">•</span>
-                            <span>Menyelenggarakan evaluasi pelatihan secara independen, objektif, jujur, transparan, dan profesional.</span>
-                        </li>
-                        <li class="flex gap-2">
-                            <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">•</span>
-                            <span>Memformulasikan program pelatihan baru sesuai dengan tren dan kebutuhan operasional sekolah Islam terkini.</span>
-                        </li>
-                        <li class="flex gap-2">
-                            <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">•</span>
-                            <span>Menjalin kemitraan erat dengan lembaga pendidikan, organisasi kemasyarakatan, dunia usaha, dan regulator ketenagakerjaan.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sub-section: Legalitas -->
-        <div id="sec-tentang-legalitas" class="mb-20 scroll-mt-28">
-            <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 text-left">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Legalitas Hukum &amp; Perizinan</h3>
-                <p class="text-slate-600 dark:text-slate-400 text-xs mb-6">
-                    Lembaga Pelatihan Kerja (LPK) MPI beroperasi secara sah berdasarkan keputusan instansi terkait dan regulasi ketenagakerjaan berikut:
+            
+            <!-- Partners Logo row -->
+            <div class="mt-16 pt-8 border-t border-slate-100 dark:border-slate-800/60 text-center">
+                <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">
+                    Kami berkolaborasi dengan Asosiasi & Perusahaan Terpercaya Jepang
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5 text-xs">
-                            <span class="text-slate-400 font-semibold">SK Kemenkumham RI</span>
-                            <span class="font-mono text-slate-800 dark:text-slate-200 font-bold">AHU-0012345.AH.01.04</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5 text-xs">
-                            <span class="text-slate-400 font-semibold">NIB (Nomor Induk Berusaha)</span>
-                            <span class="font-mono text-slate-800 dark:text-slate-200 font-bold">9120304958372</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5 text-xs">
-                            <span class="text-slate-400 font-semibold">Izin Operasional LPK</span>
-                            <span class="font-mono text-slate-800 dark:text-slate-200 font-bold">No. LPK-1294-ID</span>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5 text-xs">
-                            <span class="text-slate-400 font-semibold">Status Akreditasi</span>
-                            <span class="text-emerald-700 dark:text-emerald-455 font-bold bg-emerald-500/10 px-2 py-0.5 rounded text-[10px]">TERAKREDITASI A</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5 text-xs">
-                            <span class="text-slate-400 font-semibold">Mitra Regulator Utama</span>
-                            <span class="text-slate-800 dark:text-slate-200 font-semibold">Kementerian Agama &amp; Kemnaker</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5 text-xs">
-                            <span class="text-slate-400 font-semibold">Izin Wilayah Kerja</span>
-                            <span class="text-slate-800 dark:text-slate-200 font-semibold">Seluruh Wilayah Indonesia</span>
-                        </div>
-                    </div>
+                <div class="flex flex-wrap justify-center items-center gap-10 opacity-60 dark:opacity-40">
+                    <svg class="h-8 w-auto" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="15" fill="#155dfc"/>
+                        <path d="M45 15H60V20H45V15ZM45 25H65V30H45V25Z" fill="currentColor" class="text-slate-900 dark:text-white"/>
+                    </svg>
+                    <svg class="h-8 w-auto" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 10H30L20 30L10 10Z" fill="#155dfc"/>
+                        <rect x="40" y="15" width="40" height="6" fill="currentColor" class="text-slate-900 dark:text-white"/>
+                        <rect x="40" y="25" width="25" height="6" fill="currentColor" class="text-slate-900 dark:text-white"/>
+                    </svg>
+                    <svg class="h-8 w-auto" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="12" stroke="currentColor" class="text-slate-900 dark:text-white" stroke-width="6"/>
+                        <circle cx="20" cy="20" r="4" fill="#155dfc"/>
+                        <path d="M45 15H65V30H45V15Z" fill="currentColor" class="text-slate-900 dark:text-white" opacity="0.8"/>
+                    </svg>
+                    <svg class="h-8 w-auto" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="10" width="20" height="20" rx="4" fill="#155dfc"/>
+                        <path d="M15 15L25 25M25 15L15 25" stroke="white" stroke-width="4"/>
+                        <path d="M45 15H65V20H45V15Z" fill="currentColor" class="text-slate-900 dark:text-white"/>
+                    </svg>
+                    <svg class="h-8 w-auto" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 20C10 12 17 5 25 5C33 5 40 12 40 20C40 28 33 35 25 35C17 35 10 28 10 20Z" stroke="#155dfc" stroke-width="4"/>
+                        <path d="M20 20H30" stroke="currentColor" class="text-slate-900 dark:text-white" stroke-width="4"/>
+                    </svg>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Sub-section: Struktur Organisasi -->
-        <div id="sec-tentang-organisasi" class="scroll-mt-28">
-            <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 text-center">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-8">Struktur Organisasi LPK MPI</h3>
-
-                @if(!empty($settings['org_image']))
-                    <div class="mb-8 max-w-xl mx-auto border border-slate-200 dark:border-slate-800 p-2 bg-white dark:bg-slate-900 rounded-2xl">
-                        <img src="{{ asset('storage/' . $settings['org_image']) }}" class="w-full h-auto rounded-xl" alt="Bagan Struktur Organisasi">
-                    </div>
-                @endif
-
-                <!-- Tree Organization Structure Map -->
-                <div class="flex flex-col gap-6 max-w-2xl mx-auto text-xs font-semibold text-slate-700 dark:text-slate-355 font-sans">
-                    <!-- Level 1 -->
-                    <div class="flex justify-center">
-                        <div class="bg-slate-100 dark:bg-slate-850 border border-slate-250 dark:border-slate-800 rounded-xl p-4 w-60 shadow-sm">
-                            <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest block mb-1">Ketua Dewan Pengarah</span>
-                            <strong class="text-slate-900 dark:text-white font-black">{{ $settings['org_director_dewan'] ?? 'Prof. Dr. H. Badrudin, M.Ag.' }}</strong>
-                        </div>
-                    </div>
-
-                    <!-- Line -->
-                    <div class="w-px h-6 bg-slate-300 dark:bg-slate-800 mx-auto"></div>
-
-                    <!-- Level 2 -->
-                    <div class="flex justify-center">
-                        <div class="bg-blue-600/5 dark:bg-blue-500/10 border border-blue-600/20 rounded-xl p-4 w-64 shadow-md">
-                            <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest block mb-1">Direktur Utama LPK</span>
-                            <strong class="text-slate-900 dark:text-white font-black">{{ $settings['org_director_lpk'] ?? 'Dr. H. Ahmad Fauzi, M.T.' }}</strong>
-                        </div>
-                    </div>
-
-                    <!-- Line -->
-                    <div class="w-px h-6 bg-slate-300 dark:bg-slate-800 mx-auto"></div>
-
-                    <!-- Level 3 -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
-                            <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-1">Manajer Pelatihan</span>
-                            <strong class="text-slate-850 dark:text-slate-200">{{ $settings['org_manager_pelatihan'] ?? 'Chyril Futuhana Ahmad, M.Pd.' }}</strong>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
-                            <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-1">Komite Program</span>
-                            <strong class="text-slate-850 dark:text-slate-200">{{ $settings['org_komite_program'] ?? 'Dr. Atep Suherman, M.Pd.' }}</strong>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
-                            <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-1">Manajer Penjaminan Mutu</span>
-                            <strong class="text-slate-850 dark:text-slate-200">{{ $settings['org_manager_mutu'] ?? 'Dr. Hj. Atiyah Suharti, M.Pd.' }}</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- ========================================================================= -->
-    <!-- SECTION 3: PROGRAM PELATIHAN -->
-    <!-- ========================================================================= -->
-    <section id="sec-program" class="tab-content py-20 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-            <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Program Unggulan</span>
-            <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Katalog Program Pelatihan Kerja</h2>
-            <p class="text-slate-500 dark:text-slate-400 text-sm">Pelatihan intensif terstruktur yang dirancang untuk membekali keterampilan dunia kerja.</p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-12 max-w-5xl mx-auto text-left">
-            <!-- Program 1: Manajemen Yayasan/Pesantren -->
-            <div id="sec-program-manajemen" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 border-b border-slate-100 dark:border-white/5 pb-4">
-                    <div>
-                        <span class="text-xs font-bold uppercase text-blue-700 dark:text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md">Program Pelatihan Pimpinan</span>
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-2">{{ $settings['prog_manajemen_title'] ?? 'Manajemen Yayasan & Pesantren' }}</h3>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs text-slate-400 font-semibold block">Durasi: {{ $settings['prog_manajemen_durasi'] ?? '32 JP' }}</span>
-                        <span class="text-xl font-black text-blue-700 dark:text-blue-450 block mt-1">{{ $settings['prog_manajemen_harga'] ?? 'Rp 1.500.000' }}</span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm">
-                    <div class="space-y-4">
-                        <div>
-                            <strong class="text-slate-900 dark:text-white block mb-1">Deskripsi Program:</strong>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                {{ $settings['prog_manajemen_desc'] ?? 'Pelatihan ini dirancang untuk membekali ketua yayasan dan pimpinan pondok pesantren dengan kompetensi tata kelola aset (wakaf), manajemen kurikulum kepesantrenan, dan sistem tata pamong keuangan syariah yang akuntabel.' }}
-                            </p>
-                        </div>
-                        <div>
-                            <strong class="text-slate-900 dark:text-white block mb-1">Materi Silabus Utama:</strong>
-                            <ul class="space-y-1 text-slate-650 dark:text-slate-400 pl-4 list-disc">
-                                @php
-                                    $silabusManajemen = array_filter(array_map('trim', explode("\n", $settings['prog_manajemen_silabus'] ?? "Regulasi Wakaf & Pengelolaan Aset Yayasan\nManuangan Syariah Pesantren\nPenyusunan Rencana Strategis (Renstra) Lembaga")));
-                                @endphp
-                                @foreach($silabusManajemen as $item)
-                                    <li>{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div>
-                            <strong class="text-emerald-700 dark:text-emerald-450 block mb-1">Prospek Karir &amp; Output Kompetensi:</strong>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                {{ $settings['prog_manajemen_prospek'] ?? 'Menjadi Pimpinan Yayasan/Pesantren yang memiliki bekal kompetensi resmi Pimpinan Unit LPK, Auditor Internal Lembaga Keagamaan, atau Konsultan Tata Pamong Madrasah.' }}
-                            </p>
-                        </div>
-                        <div class="pt-4">
-                            <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all" onclick="selectProgramAndRegister('ginou_prog')">
-                                Daftar Kelas Manajemen Yayasan
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Program 2: Administrasi Sekolah Islam -->
-            <div id="sec-program-administrasi" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 border-b border-slate-100 dark:border-white/5 pb-4">
-                    <div>
-                        <span class="text-xs font-bold uppercase text-sky-700 dark:text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-md">Program Pelatihan Administrasi</span>
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-2">{{ $settings['prog_administrasi_title'] ?? 'Administrasi & Tata Usaha Sekolah Islam' }}</h3>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs text-slate-400 font-semibold block">Durasi: {{ $settings['prog_administrasi_durasi'] ?? '40 JP' }}</span>
-                        <span class="text-xl font-black text-blue-700 dark:text-blue-450 block mt-1">{{ $settings['prog_administrasi_harga'] ?? 'Rp 1.250.000' }}</span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm">
-                    <div class="space-y-4">
-                        <div>
-                            <strong class="text-slate-900 dark:text-white block mb-1">Deskripsi Program:</strong>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                {{ $settings['prog_administrasi_desc'] ?? 'Pelatihan khusus bagi tenaga kependidikan (tata usaha) di sekolah Islam terpadu atau madrasah. Fokus pada pengelolaan persuratan digital, penginputan data Dapodik/EMIS, dan manajemen sarana prasarana.' }}
-                            </p>
-                        </div>
-                        <div>
-                            <strong class="text-slate-900 dark:text-white block mb-1">Materi Silabus Utama:</strong>
-                            <ul class="space-y-1 text-slate-650 dark:text-slate-400 pl-4 list-disc">
-                                @php
-                                    $silabusAdministrasi = array_filter(array_map('trim', explode("\n", $settings['prog_administrasi_silabus'] ?? "Manajemen Kearsipan Digital Sekolah\nSistem Informasi EMIS & Dapodik\nEtika Layanan Prima (Excellent Service) Pendidikan")));
-                                @endphp
-                                @foreach($silabusAdministrasi as $item)
-                                    <li>{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div>
-                            <strong class="text-emerald-700 dark:text-emerald-455 block mb-1">Prospek Karir &amp; Output Kompetensi:</strong>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                {{ $settings['prog_administrasi_prospek'] ?? 'Lulusan kompeten sebagai Kepala Tata Usaha Madrasah, Staf Admin Sekolah Dasar/Menengah Islam, atau Pengelola Database Pendidikan.' }}
-                            </p>
-                        </div>
-                        <div class="pt-4">
-                            <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all" onclick="selectProgramAndRegister('ssw_prog')">
-                                Daftar Kelas Administrasi
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Program 3: Kepemimpinan Kepala Sekolah -->
-            <div id="sec-program-kepemimpinan" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 border-b border-slate-100 dark:border-white/5 pb-4">
-                    <div>
-                        <span class="text-xs font-bold uppercase text-purple-750 dark:text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-md">Program Pelatihan Kepemimpinan</span>
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-2">{{ $settings['prog_kepemimpinan_title'] ?? 'Kepemimpinan Kepala Sekolah & Madrasah' }}</h3>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs text-slate-400 font-semibold block">Durasi: {{ $settings['prog_kepemimpinan_durasi'] ?? '48 JP' }}</span>
-                        <span class="text-xl font-black text-blue-700 dark:text-blue-455 block mt-1">{{ $settings['prog_kepemimpinan_harga'] ?? 'Rp 1.800.000' }}</span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm">
-                    <div class="space-y-4">
-                        <div>
-                            <strong class="text-slate-900 dark:text-white block mb-1">Deskripsi Program:</strong>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                {{ $settings['prog_kepemimpinan_desc'] ?? 'Bimbingan kompetensi kepemimpinan transformasional untuk kepala madrasah dan sekolah Islam. Menyangkut supervisi akademik guru, manajemen mutu lulusan, dan kepemimpinan kewirausahaan madrasah.' }}
-                            </p>
-                        </div>
-                        <div>
-                            <strong class="text-slate-900 dark:text-white block mb-1">Materi Silabus Utama:</strong>
-                            <ul class="space-y-1 text-slate-650 dark:text-slate-400 pl-4 list-disc">
-                                @php
-                                    $silabusKepemimpinan = array_filter(array_map('trim', explode("\n", $settings['prog_kepemimpinan_silabus'] ?? "Supervisi Akademik & Penilaian Kinerja Guru (PKG)\nKepemimpinan Kewirausahaan Madrasah Mandiri\nPengembangan Mutu Lulusan Berkarakter Islami")));
-                                @endphp
-                                @foreach($silabusKepemimpinan as $item)
-                                    <li>{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div>
-                            <strong class="text-emerald-700 dark:text-emerald-455 block mb-1">Prospek Karir &amp; Output Kompetensi:</strong>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                {{ $settings['prog_kepemimpinan_prospek'] ?? 'Kepala Madrasah Ibtidaiyah/Tsanawiyah/Aliyah Kompeten dengan Sertifikat Kelulusan LPK, Pengawas Sekolah Yayasan, atau Konsultan Akreditasi Sekolah.' }}
-                            </p>
-                        </div>
-                        <div class="pt-4">
-                            <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all" onclick="selectProgramAndRegister('kaigo_prog')">
-                                Daftar Kelas Kepemimpinan
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Program 4: Jadwal Diklat -->
-            <div id="sec-program-jadwal" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Jadwal Diklat &amp; Pelatihan Terdekat</h3>
-                <p class="text-slate-600 dark:text-slate-400 text-xs mb-6">
-                    Berikut rincian jadwal pelaksanaan pelatihan, batas pendaftaran, dan metode belajar yang tersedia:
-                </p>
-                <div class="premium-table-container border-none shadow-none overflow-x-auto w-full">
-                    <table class="premium-table text-xs">
-                        <thead>
-                            <tr>
-                                <th>Nama Pelatihan</th>
-                                <th>Batas Pendaftaran</th>
-                                <th>Waktu Pelaksanaan</th>
-                                <th>Metode Pelaksanaan</th>
-                                <th>Status Quota</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-                            <tr>
-                                <td class="font-bold text-slate-900 dark:text-white">{{ $settings['jadwal_1_nama'] ?? 'Manajemen Yayasan/Pesantren' }}</td>
-                                <td>{{ $settings['jadwal_1_batas'] ?? '15 Agustus 2026' }}</td>
-                                <td>{{ $settings['jadwal_1_waktu'] ?? '22 - 25 Agustus 2026' }}</td>
-                                <td>{{ $settings['jadwal_1_metode'] ?? 'Hybrid (Zoom & Bandung Offline)' }}</td>
-                                <td>
-                                    @php $q1 = $settings['jadwal_1_quota'] ?? 'Sisa 5 Kursi'; @endphp
-                                    <span class="{{ stripos($q1, 'sisa') !== false ? 'text-amber-700 dark:text-amber-450' : 'text-emerald-700 dark:text-emerald-455' }} font-bold">{{ $q1 }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-slate-900 dark:text-white">{{ $settings['jadwal_2_nama'] ?? 'Administrasi Sekolah Islam' }}</td>
-                                <td>{{ $settings['jadwal_2_batas'] ?? '1 September 2026' }}</td>
-                                <td>{{ $settings['jadwal_2_waktu'] ?? '7 - 11 September 2026' }}</td>
-                                <td>{{ $settings['jadwal_2_metode'] ?? 'Online Classroom (LMS & Zoom)' }}</td>
-                                <td>
-                                    @php $q2 = $settings['jadwal_2_quota'] ?? 'Tersedia'; @endphp
-                                    <span class="{{ stripos($q2, 'sisa') !== false ? 'text-amber-700 dark:text-amber-450' : 'text-emerald-700 dark:text-emerald-455' }} font-bold">{{ $q2 }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-slate-900 dark:text-white">{{ $settings['jadwal_3_nama'] ?? 'Kepemimpinan Kepala Sekolah' }}</td>
-                                <td>{{ $settings['jadwal_3_batas'] ?? '18 September 2026' }}</td>
-                                <td>{{ $settings['jadwal_3_waktu'] ?? '24 - 28 September 2026' }}</td>
-                                <td>{{ $settings['jadwal_3_metode'] ?? 'Tatap Muka (Full Boarding Bandung)' }}</td>
-                                <td>
-                                    @php $q3 = $settings['jadwal_3_quota'] ?? 'Tersedia'; @endphp
-                                    <span class="{{ stripos($q3, 'sisa') !== false ? 'text-amber-700 dark:text-amber-455' : 'text-emerald-700 dark:text-emerald-455' }} font-bold">{{ $q3 }}</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-</section>
-
-    <!-- ========================================================================= -->
-    <!-- SECTION 4: INSTRUKTUR -->
-    <!-- ========================================================================= -->
-    <section id="sec-instruktur" class="tab-content py-20 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
+    <!-- ========================================== -->
+    <!-- SECTION 2: COMPARISON TABLE (sec-tentang)  -->
+    <!-- ========================================== -->
+    <section id="sec-tentang" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-white border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Fasilitator Utama</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Instruktur &amp; Pengajar Profesional</h2>
-                <p class="text-slate-655 dark:text-slate-400 text-sm leading-relaxed">
-                    Setiap instruktur dan pemateri di LPK MPI merupakan praktisi bersertifikat kompetensi dan berpengalaman.
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Jalur Karir</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    3 Jalur Berkarir di Jepang
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    Pahami rincian persyaratan dan perbandingan setiap program karir yang diselenggarakan oleh LPK Manajemen Pendidikan Islam.
                 </p>
             </div>
 
-            <div class="max-w-5xl mx-auto px-4">
-                <div class="premium-table-container border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto w-full">
-                    <table class="premium-table text-xs">
+            <!-- Comparison Table Container -->
+            <div class="max-w-6xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full min-w-[800px] border-collapse text-xs sm:text-sm text-left">
                         <thead>
-                            <tr>
-                                <th>Foto</th>
-                                <th>Nama Lengkap</th>
-                                <th>Jabatan / Peran</th>
-                                <th>Bidang Keahlian</th>
-                                <th>Pengalaman Kerja / Akademik</th>
+                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 font-extrabold">
+                                <th class="p-4 sm:p-6 font-bold text-slate-900 dark:text-white w-1/4">Kategori Perbandingan</th>
+                                <th class="p-4 sm:p-6 font-bold text-slate-900 dark:text-white w-1/4">Peserta Magang (Ginou Jisshusei)</th>
+                                <!-- Highlighted Column Header -->
+                                <th class="p-4 sm:p-6 font-bold text-[#155dfc] w-1/4 bg-[#eef2ff] dark:bg-blue-950/15 border-x border-blue-200 dark:border-blue-900/30 relative">
+                                    Visa Kerja Keahlian Khusus (Tokutei Ginou)
+                                    <span class="absolute top-0 right-4 transform -translate-y-1/2 bg-[#155dfc] text-white text-[9px] uppercase font-black px-2.5 py-0.5 rounded-full tracking-wider shadow">Paling Diminati</span>
+                                </th>
+                                <th class="p-4 sm:p-6 font-bold text-slate-900 dark:text-white w-1/4">Program Internship (Internship)</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-                            @for($i = 1; $i <= 4; $i++)
-                                @php
-                                    $iNameKey = "instruktur_{$i}_nama";
-                                    $iJabKey  = "instruktur_{$i}_jabatan";
-                                    $iKeahKey = "instruktur_{$i}_keahlian";
-                                    $iPengKey = "instruktur_{$i}_pengalaman";
-                                    $iFotoKey = "instruktur_{$i}_foto";
-
-                                    $defName = $i == 1 ? 'Prof. Dr. H. Badrudin, M.Ag.' : ($i == 2 ? 'Dr. Atep Suherman, M.Pd.' : ($i == 3 ? 'Chyril Futuhana Ahmad, M.Pd.' : ''));
-                                    $defJab  = $i == 1 ? 'Instruktur Kepala / Dewan Pengarah' : ($i == 2 ? 'Instruktur Mutu & Organisasi' : ($i == 3 ? 'Instruktur Tenaga Kependidikan' : ''));
-                                    $defKeah = $i == 1 ? 'Manajemen Mutu Pendidikan & Akreditasi Madrasah' : ($i == 2 ? 'Tata Pamong Keuangan Pesantren & Organisasi Yayasan' : ($i == 3 ? 'Administrasi EMIS, Dapodik & Manajemen Sarpras' : ''));
-                                    $defPeng = $i == 1 ? 'Guru Besar UIN SGD Bandung & Instruktur Lembaga Internasional' : ($i == 2 ? 'Trainer Bidang Kebijakan Publik Pendidikan & Pengawas Yayasan' : ($i == 3 ? 'Kepala Bidang Uji Kompetensi LPK Ketenagakerjaan' : ''));
-
-                                    $name = $settings[$iNameKey] ?? $defName;
-                                    $jab  = $settings[$iJabKey] ?? $defJab;
-                                    $keah = $settings[$iKeahKey] ?? $defKeah;
-                                    $peng = $settings[$iPengKey] ?? $defPeng;
-                                    $foto = $settings[$iFotoKey] ?? '';
-                                @endphp
-
-                                @if(!empty($name))
-                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors">
-                                        <td class="w-16 py-3">
-                                            @if($foto)
-                                                <img src="{{ asset('storage/' . $foto) }}" class="w-12 h-12 object-cover rounded-none border border-slate-250 dark:border-slate-800" alt="{{ $name }}">
-                                            @else
-                                                <div class="w-12 h-12 bg-blue-700/10 border border-blue-750/20 text-blue-700 dark:text-blue-400 flex items-center justify-center font-bold text-xs uppercase rounded-none">
-                                                    {{ implode('', array_map(fn($part) => $part[0] ?? '', explode(' ', $name))) }}
-                                                </div>
-                                            @endif
-                                        </td>
-                                        <td class="font-bold text-slate-900 dark:text-white py-3">{{ $name }}</td>
-                                        <td class="text-blue-700 dark:text-blue-400 font-semibold py-3">{{ $jab }}</td>
-                                        <td class="py-3 text-slate-600 dark:text-slate-400">{{ $keah }}</td>
-                                        <td class="py-3 text-slate-600 dark:text-slate-400">{{ $peng }}</td>
-                                    </tr>
-                                @endif
-                            @endfor
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80">
+                            <!-- Row 1: Biaya -->
+                            <tr class="align-top">
+                                <td class="p-4 sm:p-6 font-bold text-slate-800 dark:text-slate-200 bg-white/50 dark:bg-slate-900/20">Biaya-biaya</td>
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-650 dark:text-slate-400 leading-relaxed font-semibold">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Biaya pelatihan bahasa dan keterampilan sebelum keberangkatan ditanggung mandiri/dana talangan.</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Biaya pengurusan dokumen visa dan COE ditanggung perusahaan penerima.</span>
+                                    </div>
+                                </td>
+                                <!-- Highlighted Column cell -->
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-655 dark:text-slate-400 leading-relaxed bg-[#eef2ff] dark:bg-blue-950/20 border-x border-blue-200 dark:border-blue-900/30 font-semibold">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Biaya pengurusan dokumen kerja & visa ditanggung oleh perusahaan penerima (Accepting Organization) di Jepang.</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Pemeriksaan medis awal (Medical Check-up) ditanggung mandiri.</span>
+                                    </div>
+                                </td>
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-655 dark:text-slate-400 leading-relaxed font-semibold">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Biaya penempatan magang/internship ditanggung mandiri oleh mahasiswa atau disubsidi kampus asal.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <!-- Row 2: Persyaratan -->
+                            <tr class="align-top">
+                                <td class="p-4 sm:p-6 font-bold text-slate-800 dark:text-slate-200 bg-white/50 dark:bg-slate-900/20">Persyaratan Calon Kandidat</td>
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Pendidikan Minimal SMA/SMK sederajat.</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Pengalaman kerja sesuai bidang pemagangan (minimal 1 tahun).</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Belum pernah ke Jepang dengan program apapun.</span>
+                                    </div>
+                                </td>
+                                <!-- Highlighted Column cell -->
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-600 dark:text-slate-400 leading-relaxed bg-[#eef2ff] dark:bg-blue-950/20 border-x border-blue-200 dark:border-blue-900/30 font-semibold">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Alumni peserta magang (ginou jisshusei) yang bersertifikat minimal program technical intern training 2B (3 tahun).</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Untuk non alumni peserta magang:</span>
+                                    </div>
+                                    <div class="pl-6 space-y-1 font-semibold">
+                                        <p>1. Memiliki sertifikat kemampuan bahasa Jepang minimal N4,</p>
+                                        <p>2. Pendidikan minimal SMA/SMK sederajat, &amp;</p>
+                                        <p>3. Lulus ujian kompetensi sesuai bidang pekerjaan.</p>
+                                    </div>
+                                </td>
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Calon Peserta Internsip merupakan Mahasiswa Aktif di salah satu Kampus/Universitas di Indonesia dan sudah bekerjasama dengan pihak Perusahaan di Jepang.</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Jurusan perkuliahan harus relevan dengan penempatan pekerjaan di Jepang.</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Calon Peserta Internsip ditentukan oleh Pihak Kampus.</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-[#155dfc] font-bold">✔</span>
+                                        <span>Peserta Internship yang telah menyelesaikan program magang...</span>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -565,892 +260,609 @@
         </div>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- SECTION 5: FASILITAS -->
-    <!-- ========================================================================= -->
-    <section id="sec-fasilitas" class="tab-content py-20 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
+    <!-- ========================================== -->
+    <!-- SECTION 3: PROGRAMS (sec-program)          -->
+    <!-- ========================================== -->
+    <section id="sec-program" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Sarana Fisik</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Fasilitas &amp; Prasarana Pembelajaran</h2>
-                <p class="text-slate-605 dark:text-slate-400 text-sm leading-relaxed">
-                    Kami menyediakan sarana fisik pendukung untuk kenyamanan dan keefektifan belajar peserta diklat.
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Program Unggulan</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    Pilih Program Karir Anda
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    LPK Manajemen Pendidikan Islam menyelenggarakan berbagai program pelatihan kerja dan magang terakreditasi menuju Jepang.
                 </p>
             </div>
-            <div class="grid grid-cols-1 gap-8 max-w-5xl mx-auto text-left">
-                <!-- Sub-section: Ruang Belajar -->
-                <div id="sec-fasilitas-belajar" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-3 w-20 h-20 bg-blue-700/10 text-blue-700 dark:text-blue-400 border border-blue-700/20 flex items-center justify-center text-xs font-black shadow-sm mx-auto md:mx-0 overflow-hidden">
-                        @if(!empty($settings['fasilitas_belajar_foto']))
-                            <img src="{{ asset('storage/' . $settings['fasilitas_belajar_foto']) }}" class="w-full h-full object-cover" alt="Fasilitas Belajar">
-                        @else
-                            CLASS
-                        @endif
-                    </div>
-                    <div class="md:col-span-9">
-                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2">{{ $settings['fasilitas_belajar_judul'] ?? 'Ruang Belajar & Teori Ergonomis' }}</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
+                <!-- Program 1: Pemagangan -->
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
+                    <div class="space-y-6">
+                        <!-- Custom illustration -->
+                        <div class="w-full h-36 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-24 h-24">
+                                <circle cx="100" cy="60" r="40" fill="#ffe0cc" class="dark:fill-blue-900/10"/>
+                                <path d="M70 90C70 70 85 55 100 55C115 55 130 70 130 90H70Z" fill="#155dfc"/>
+                                <circle cx="100" cy="40" r="12" fill="#ffdbca"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-xl">Pemagangan ke Jepang</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-                            {{ $settings['fasilitas_belajar_desc'] ?? 'Kami memiliki ruang kelas berkapasitas 25 orang yang sejuk (AC penuh) dengan tata pencahayaan yang nyaman, papan tulis kaca interaktif, serta sound system nirkabel untuk presentasi materi ajar secara optimal.' }}
+                            Program pelatihan intensif bahasa dan budaya Jepang untuk mempersiapkan Anda bekerja sebagai tenaga magang resmi di sektor industri permesinan, konstruksi, dan pertanian Jepang.
                         </p>
                     </div>
+                    <button onclick="window.location.href='#pendaftaran'" class="w-full mt-8 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi">
+                        Learn More
+                    </button>
                 </div>
 
-                <!-- Sub-section: Perpustakaan -->
-                <div id="sec-fasilitas-perpustakaan" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-3 w-20 h-20 bg-emerald-500/10 text-emerald-650 dark:text-emerald-450 border border-emerald-500/20 flex items-center justify-center text-xs font-black shadow-sm mx-auto md:mx-0 overflow-hidden">
-                        @if(!empty($settings['fasilitas_perpustakaan_foto']))
-                            <img src="{{ asset('storage/' . $settings['fasilitas_perpustakaan_foto']) }}" class="w-full h-full object-cover" alt="Fasilitas Perpustakaan">
-                        @else
-                            BOOKS
-                        @endif
-                    </div>
-                    <div class="md:col-span-9">
-                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2">{{ $settings['fasilitas_perpustakaan_judul'] ?? 'Perpustakaan & Pusat Referensi Digital' }}</h3>
+                <!-- Program 2: Internship -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
+                    <div class="space-y-6">
+                        <!-- Custom illustration -->
+                        <div class="w-full h-36 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-24 h-24">
+                                <rect x="60" y="30" width="80" height="50" rx="4" fill="#155dfc" opacity="0.8"/>
+                                <path d="M80 80L100 100L120 80H80Z" fill="#ea580c"/>
+                                <circle cx="100" cy="55" r="8" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-xl">Program Internship</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-                            {{ $settings['fasilitas_perpustakaan_desc'] ?? 'Menyediakan koleksi buku panduan fisik mengenai tata kelola madrasah, undang-undang yayasan, kitab-kitab tata kelola syariah, serta akses ke e-library jurnal riset manajemen pendidikan nasional.' }}
+                            Program magang kerja khusus yang diperuntukkan bagi mahasiswa aktif perguruan tinggi Indonesia untuk mendapatkan pengalaman kerja global dan mengaplikasikan ilmu perkuliahan langsung di Jepang.
                         </p>
                     </div>
+                    <button onclick="window.location.href='#pendaftaran'" class="w-full mt-8 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi">
+                        Learn More
+                    </button>
                 </div>
 
-                <!-- Sub-section: Asrama / Penginapan -->
-                <div id="sec-fasilitas-asrama" class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 scroll-mt-28 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-3 w-20 h-20 bg-amber-500/10 text-amber-600 dark:text-amber-450 border border-amber-500/20 flex items-center justify-center text-xs font-black shadow-sm mx-auto md:mx-0 overflow-hidden">
-                        @if(!empty($settings['fasilitas_asrama_foto']))
-                            <img src="{{ asset('storage/' . $settings['fasilitas_asrama_foto']) }}" class="w-full h-full object-cover" alt="Fasilitas Asrama">
-                        @else
-                            ROOMS
-                        @endif
-                    </div>
-                    <div class="md:col-span-9">
-                        <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-2">{{ $settings['fasilitas_asrama_judul'] ?? 'Asrama & Penginapan Peserta Diklat' }}</h3>
+                <!-- Program 3: Mandiri -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
+                    <div class="space-y-6">
+                        <!-- Custom illustration -->
+                        <div class="w-full h-36 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
+                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-24 h-24">
+                                <circle cx="80" cy="60" r="25" fill="#155dfc"/>
+                                <circle cx="120" cy="60" r="25" fill="#ea580c" opacity="0.7"/>
+                                <rect x="90" y="50" width="20" height="20" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-xl">Program Usaha Mandiri</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-                            {{ $settings['fasilitas_asrama_desc'] ?? 'Bagi peserta diklat dari luar daerah kota Bandung, tersedia asrama eksklusif dengan fasilitas kamar mandi dalam, akses WiFi berkecepatan 100 Mbps, ruang makan/dapur bersama, dan area santai semi-outdoor.' }}
+                            Dukungan permodalan, pembinaan wirausaha, serta pendampingan karir bagi alumni LPK Manajemen Pendidikan Islam sekembalinya dari Jepang untuk mendirikan bisnis mandiri yang sukses.
                         </p>
                     </div>
+                    <button onclick="window.location.href='#pendaftaran'" class="w-full mt-8 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi">
+                        Learn More
+                    </button>
                 </div>
             </div>
         </div>
-</section>
+    </section>
 
-<!-- ========================================================================= -->
-    <!-- SECTION 6: BERITA & ARTIKEL -->
-    <!-- ========================================================================= -->
-    <section id="sec-berita" class="tab-content py-20 bg-slate-50 dark:bg-slate-955 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
+    <!-- ========================================== -->
+    <!-- SECTION 4: INSTRUKTUR (sec-instruktur)     -->
+    <!-- ========================================== -->
+    <section id="sec-instruktur" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-950/40 border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Berita &amp; Artikel</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Kabar Informasi LPK MPI</h2>
-                <p class="text-slate-600 dark:text-slate-400 text-sm">
-                    Temukan berita kegiatan, artikel edukasi manajemen sekolah, dan galeri dokumentasi kami.
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Fasilitator Utama</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    Instruktur & Pengajar Profesional
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    Setiap instruktur dan pemateri di LPK Manajemen Pendidikan Islam merupakan praktisi bersertifikat kompetensi dan berpengalaman di bidangnya masing-masing.
                 </p>
             </div>
 
-            <!-- Sub-section: Berita Kegiatan & Artikel Edukasi -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto text-left mb-16">
-                <!-- Sub-tab ID: berita-kegiatan -->
-                <div id="sec-berita-kegiatan" class="lg:col-span-2 scroll-mt-28 space-y-6">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">Berita &amp; Artikel Terkini</h3>
-                    @if($articles->isEmpty())
-                    <div class="glass-card rounded-2xl p-12 text-center border border-slate-200 dark:border-slate-800">
-                        <span class="text-slate-400 dark:text-slate-500 text-3xl block mb-3">📰</span>
-                        <h3 class="font-bold text-slate-850 dark:text-slate-200 text-xs mb-1">Belum Ada Artikel</h3>
-                        <p class="text-slate-500 dark:text-slate-450 text-[11px]">Silakan kembali beberapa saat lagi untuk mendapatkan berita terbaru.</p>
-                    </div>
-                    @else
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach($articles as $article)
-                        <div class="glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:scale-[1.01] transition-all cursor-pointer shadow-sm group" onclick="openArticleModal('{{ $article->title }}', '{{ $article->author }}', '{{ $article->published_at ? $article->published_at->format('d M Y') : '-' }}', '{{ $article->image_path ? asset('storage/' . $article->image_path) : '' }}', '{{ addslashes(str_replace(["\r", "\n"], ["", " "], $article->content)) }}')">
-                            <div>
-                                <div class="h-40 w-full bg-slate-100 dark:bg-slate-950 relative overflow-hidden">
-                                    @if($article->image_path)
-                                    <img src="{{ asset('storage/' . $article->image_path) }}" alt="{{ $article->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                                    @else
-                                    <div class="w-full h-full bg-gradient-to-br from-blue-700/80 to-indigo-800/80 flex items-center justify-center text-white text-2xl font-black">
-                                        MPI
-                                    </div>
-                                    @endif
-                                </div>
-                                <div class="p-5">
-                                    <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-wider block mb-2">{{ $article->author }} • {{ $article->published_at ? $article->published_at->format('d M Y') : '-' }}</span>
-                                    <h4 class="text-sm font-extrabold text-slate-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">{{ $article->title }}</h4>
-                                    <p class="text-slate-650 dark:text-slate-400 text-[11px] leading-relaxed line-clamp-2">{{ Str::limit(strip_tags($article->content), 80) }}</p>
-                                </div>
-                            </div>
-                            <div class="px-5 pb-5 text-left">
-                                <span class="text-blue-700 dark:text-blue-450 font-bold text-xs hover:underline inline-flex items-center gap-1">Baca Selengkapnya</span>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                    @endif
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                @for($i = 1; $i <= 3; $i++)
+                    @php
+                        $iNameKey = "instruktur_{$i}_nama";
+                        $iJabKey  = "instruktur_{$i}_jabatan";
+                        $iKeahKey = "instruktur_{$i}_keahlian";
+                        $iPengKey = "instruktur_{$i}_pengalaman";
+                        $iFotoKey = "instruktur_{$i}_foto";
 
-                <!-- Sub-tab ID: artikel-edukasi -->
-                <div id="sec-artikel-edukasi" class="lg:col-span-1 scroll-mt-28 space-y-6">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">Artikel Edukasi Pilihan</h3>
-                    <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
-                        <div>
-                            <span class="text-[9px] text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest block mb-1">01. Kebijakan</span>
-                            <h4 class="text-xs font-black text-slate-850 dark:text-slate-250 mb-1">Pentingnya Akreditasi &amp; Standardisasi Madrasah</h4>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Penjelasan tentang regulasi terbaru BAN-PDM dan kaitan pelatihan LPK dalam audit.</p>
-                        </div>
-                        <div class="h-px bg-slate-100 dark:bg-white/5"></div>
-                        <div>
-                            <span class="text-[9px] text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest block mb-1">02. Tata Kelola</span>
-                            <h4 class="text-xs font-black text-slate-850 dark:text-slate-250 mb-1">Manajemen Wakaf Produktif Yayasan Islam</h4>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Strategi pimpinan yayasan mengembangkan aset sekolah tanpa membebani biaya SPP.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        $defName = $i == 1 ? 'Prof. Dr. H. Badrudin, M.Ag.' : ($i == 2 ? 'Dr. Atep Suherman, M.Pd.' : ($i == 3 ? 'Chyril Futuhana Ahmad, M.Pd.' : ''));
+                        $defJab  = $i == 1 ? 'Instruktur Kepala / Dewan Pengarah' : ($i == 2 ? 'Instruktur Mutu & Organisasi' : ($i == 3 ? 'Instruktur Tenaga Kependidikan' : ''));
+                        $defKeah = $i == 1 ? 'Manajemen Mutu Pendidikan & Akreditasi' : ($i == 2 ? 'Tata Pamong Keuangan & Organisasi Yayasan' : ($i == 3 ? 'Administrasi EMIS & Manajemen Sarpras' : ''));
+                        $defPeng = $i == 1 ? 'Guru Besar UIN SGD Bandung & Trainer Internasional' : ($i == 2 ? 'Trainer Kebijakan Publik & Pengawas Yayasan' : ($i == 3 ? 'Kepala Bidang Uji Kompetensi LPK' : ''));
 
-            <!-- Sub-section: Galeri Media -->
-            <div id="sec-galeri-media" class="scroll-mt-28 max-w-6xl mx-auto">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-8 text-left">Galeri Foto &amp; Media Kegiatan</h3>
-                @php
-                $defaultGallery = [
-                1 => [
-                'category' => 'Pelatihan Kepemimpinan',
-                'title' => 'Pelatihan Kepemimpinan Kepala Sekolah',
-                'desc' => 'Pelatihan kepemimpinan lisan dan pengisian portofolio para kepala madrasah se-Jawa Barat.',
-                'gradient' => 'from-blue-700 to-sky-500',
-                ],
-                2 => [
-                'category' => 'Pelatihan Administrasi',
-                'title' => 'Bimtek EMIS & Dapodik Guru',
-                'desc' => 'Pelatihan digital bagi para staf tata usaha guna meningkatkan keakuratan data dindikbud.',
-                'gradient' => 'from-sky-600 to-emerald-500',
-                ],
-                3 => [
-                'category' => 'Kerjasama Kelembagaan',
-                'title' => 'MoU Bersama UIN Bandung',
-                'desc' => 'Kemitraan program pelatihan kerja mahasiswa prodi Manajemen Pendidikan Islam.',
-                'gradient' => 'from-indigo-700 to-purple-500',
-                ]
-                ];
-                @endphp
+                        $name = $settings[$iNameKey] ?? $defName;
+                        $jab  = $settings[$iJabKey] ?? $defJab;
+                        $keah = $settings[$iKeahKey] ?? $defKeah;
+                        $peng = $settings[$iPengKey] ?? $defPeng;
+                        $foto = $settings[$iFotoKey] ?? '';
+                    @endphp
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                    @for($i = 1; $i <= 6; $i++)
-                        @php
-                            $gCategory = $settings["gallery_item_{$i}_category"] ?? ($defaultGallery[$i]['category'] ?? '');
-                            $gTitle = $settings["gallery_item_{$i}_title"] ?? ($defaultGallery[$i]['title'] ?? '');
-                            $gDesc = $settings["gallery_item_{$i}_desc"] ?? ($defaultGallery[$i]['desc'] ?? '');
-                            $gImage = $settings["gallery_item_{$i}_image"] ?? '';
-                            $gVideo = $settings["gallery_item_{$i}_video_url"] ?? '';
-                            $gGradient = $defaultGallery[$i]['gradient'] ?? 'from-indigo-600 to-pink-500';
-                        @endphp
-                        @if(!empty($gTitle))
-                        <div class="glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col hover:scale-[1.02] transition-all relative group/gal">
-                            <div class="h-44 w-full bg-slate-100 dark:bg-slate-955 relative overflow-hidden flex items-center justify-center">
-                                @if(!empty($gImage))
-                                    <img src="{{ asset('storage/' . $gImage) }}" class="w-full h-full object-cover group-hover/gal:scale-105 transition-transform duration-300" alt="{{ $gTitle }}">
+                    @if(!empty($name))
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-300">
+                            <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-600/20 mb-6 shrink-0 relative bg-white dark:bg-slate-850 flex items-center justify-center">
+                                @if($foto)
+                                    <img src="{{ asset('storage/' . $foto) }}" class="w-full h-full object-cover" alt="{{ $name }}">
                                 @else
-                                    <div class="w-full h-full bg-gradient-to-br {{ $gGradient }} flex items-center justify-center text-white text-xs font-black tracking-widest uppercase p-4 text-center">
-                                        {{ $gCategory }}
-                                    </div>
-                                @endif
-
-                                @if(!empty($gVideo))
-                                    <button onclick="openVideoModal('{{ $gVideo }}')" class="absolute inset-0 bg-black/40 hover:bg-black/50 transition-colors flex items-center justify-center group-hover/gal:opacity-100 duration-300">
-                                        <div class="w-12 h-12 rounded-full bg-white/95 text-blue-700 hover:scale-110 transition-transform flex items-center justify-center shadow-lg">
-                                            <svg class="w-6 h-6 fill-current ml-0.5" viewBox="0 0 24 24">
-                                                <path d="M8 5v14l11-7z"/>
-                                            </svg>
-                                        </div>
-                                        <span class="absolute bottom-3 text-[10px] text-white font-bold tracking-wider uppercase bg-black/60 px-2.5 py-0.5 rounded">Tonton Video</span>
-                                    </button>
-                                @endif
-                            </div>
-                            <div class="p-5 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <span class="text-[9px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-wider block mb-2">{{ $gCategory }}</span>
-                                    <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1 line-clamp-1">{{ $gTitle }}</h4>
-                                    <p class="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed line-clamp-3">
-                                        {{ $gDesc }}
-                                    </p>
-                                </div>
-                                @if(!empty($gVideo) && empty($gImage))
-                                    <div class="mt-4 text-left">
-                                        <button onclick="openVideoModal('{{ $gVideo }}')" class="text-xs font-bold text-blue-700 dark:text-blue-450 hover:underline flex items-center gap-1">
-                                            ▶ Putar Video
-                                        </button>
+                                    <div class="w-full h-full bg-gradient-to-br from-[#155dfc]/25 to-blue-700/10 text-[#155dfc] flex items-center justify-center font-bold text-xl uppercase">
+                                        {{ implode('', array_map(fn($part) => $part[0] ?? '', explode(' ', $name))) }}
                                     </div>
                                 @endif
                             </div>
-                        </div>
-                        @endif
-                    @endfor
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- SECTION 7: ALUMNI & TESTIMONI -->
-    <!-- ========================================================================= -->
-    <section id="sec-alumni" class="tab-content py-20 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Jejak Lulusan</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Kisah Alumni &amp; Testimoni</h2>
-                <p class="text-slate-600 dark:text-slate-400 text-sm">
-                    Melihat kesuksesan lulusan kompeten yang kini berkarir di berbagai instansi pendidikan Islam.
-                </p>
-            </div>
-
-            <!-- Sub-section: Kisah Sukses -->
-            <div id="sec-alumni-kisah" class="scroll-mt-28 max-w-5xl mx-auto text-left mb-16">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-8">Kisah Sukses Alumni</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Testimonial 1 -->
-                    <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between relative shadow-sm">
-                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic mb-6">
-                            "Setelah mendapatkan pelatihan kepemimpinan Kepala Sekolah dari LPK MPI, tata kelola yayasan kami mendapatkan nilai akreditasi A. Sertifikat LPK sangat bernilai tinggi dalam membuktikan kapabilitas saya."
-                        </p>
-                        <div class="flex items-center gap-3 border-t border-slate-100 dark:border-white/5 pt-4">
-                            <div class="w-9 h-9 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 flex items-center justify-center font-bold text-xs uppercase">
-                                HW
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-black text-slate-900 dark:text-white uppercase">H. Wawan Hermawan, M.Ag.</h4>
-                                <span class="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Kepala MA Darul Qur'an • Lulusan 2025</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial 2 -->
-                    <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between relative shadow-sm">
-                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic mb-6">
-                            "Pelatihan administrasi TU di madrasah membantu saya mempercepat data EMIS Kemenag 100% akurat. Penjelasan instrukturnya sangat aplikatif dengan sistem kerja tata usaha digital."
-                        </p>
-                        <div class="flex items-center gap-3 border-t border-slate-100 dark:border-white/5 pt-4">
-                            <div class="w-9 h-9 rounded-full bg-emerald-500/10 text-emerald-650 dark:text-emerald-450 flex items-center justify-center font-bold text-xs uppercase">
-                                NS
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-black text-slate-900 dark:text-white uppercase">Nurul Sofia, S.Pd.</h4>
-                                <span class="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Staf TU MTs Al-Falah Bandung • Lulusan 2026</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial 3 -->
-                    <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between relative shadow-sm">
-                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic mb-6">
-                            "Pelatihan pengurus yayasan di LPK MPI meluruskan pemahaman kami mengenai regulasi pembagian harta wakaf dan operasional yayasan. Pelayanannya profesional, cepat, dan transparan."
-                        </p>
-                        <div class="flex items-center gap-3 border-t border-slate-100 dark:border-white/5 pt-4">
-                            <div class="w-9 h-9 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-450 flex items-center justify-center font-bold text-xs uppercase">
-                                AS
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-black text-slate-900 dark:text-white uppercase">Ahmad Solihin</h4>
-                                <span class="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Ketua Yayasan Bina Insan Mulia • Lulusan 2024</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sub-section: Daftar Jaringan Alumni -->
-            <div id="sec-alumni-jaringan" class="scroll-mt-28 max-w-5xl mx-auto text-left">
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Placements &amp; Jaringan Akreditasi Alumni</h3>
-                    <p class="text-slate-500 dark:text-slate-405 text-xs mb-6">Lulusan kami telah tersertifikasi aktif dan mengabdi di berbagai instansi di Indonesia:</p>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                        <div class="bg-white/20 dark:bg-slate-900/30 p-4 border border-slate-100 dark:border-slate-800 rounded-xl">
-                            <span class="block text-2xl font-black text-blue-700 dark:text-blue-400">120+</span>
-                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Yayasan Islam</span>
-                        </div>
-                        <div class="bg-white/20 dark:bg-slate-900/30 p-4 border border-slate-100 dark:border-slate-800 rounded-xl">
-                            <span class="block text-2xl font-black text-blue-700 dark:text-blue-400">340+</span>
-                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Madrasah Aliyah</span>
-                        </div>
-                        <div class="bg-white/20 dark:bg-slate-900/30 p-4 border border-slate-100 dark:border-slate-800 rounded-xl">
-                            <span class="block text-2xl font-black text-blue-700 dark:text-blue-400">85+</span>
-                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Pondok Pesantren</span>
-                        </div>
-                        <div class="bg-white/20 dark:bg-slate-900/30 p-4 border border-slate-100 dark:border-slate-800 rounded-xl">
-                            <span class="block text-2xl font-black text-blue-700 dark:text-blue-400">2,500+</span>
-                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Alumni Terlatih</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- SECTION 8: PENDAFTARAN ONLINE -->
-    <!-- =======================================================    <section id="sec-pendaftaran" class="tab-content py-20 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-16">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Portal Penerimaan</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Sistem Registrasi Online</h2>
-                <p class="text-slate-600 dark:text-slate-400 text-sm">
-                    Prosedur pendaftaran pelatihan kerja LPK MPI secara digital.
-                </p>
-            </div>
-
-            <!-- Sub-section: Syarat & Ketentuan -->
-            <div id="sec-pendaftaran-syarat" class="scroll-mt-28 max-w-5xl mx-auto text-left mb-12">
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Persyaratan Dokumen Pendaftar</h3>
-                    <p class="text-slate-500 dark:text-slate-450 text-xs mb-4">Calon peserta wajib mengunggah pindaian berkas persyaratan berikut saat melakukan pengisian formulir:</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                        <div class="bg-white/20 dark:bg-slate-900/40 p-4 border border-slate-100 dark:border-slate-800 rounded-lg">
-                            <strong class="text-blue-705 dark:text-blue-400 block mb-1">1. KTP Asli</strong>
-                            Format gambar (JPG, PNG) dengan resolusi jelas dan NIK terbaca.
-                        </div>
-                        <div class="bg-white/20 dark:bg-slate-900/40 p-4 border border-slate-100 dark:border-slate-800 rounded-lg">
-                            <strong class="text-blue-705 dark:text-blue-400 block mb-1">2. Ijazah Terakhir</strong>
-                            Pendidikan minimal SMA/SMK/MA untuk memenuhi persyaratan awal skema.
-                        </div>
-                        <div class="bg-white/20 dark:bg-slate-900/40 p-4 border border-slate-100 dark:border-slate-800 rounded-lg">
-                            <strong class="text-blue-705 dark:text-blue-400 block mb-1">3. Surat Rekomendasi</strong>
-                            Dari sekolah/yayasan asal (opsional, dilampirkan jika ada beasiswa).
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sub-section: Rincian Biaya -->
-            <div id="sec-pendaftaran-biaya" class="scroll-mt-28 max-w-5xl mx-auto text-left mb-12">
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Rincian Investasi &amp; Biaya</h3>
-                    <div class="premium-table-container border-none shadow-none overflow-x-auto w-full">
-                        <table class="premium-table text-xs">
-                            <thead>
-                                <tr>
-                                    <th>Program Pelatihan</th>
-                                    <th>Biaya Investasi</th>
-                                    <th>Fasilitas Termasuk</th>
-                                    <th>Sertifikat Diterbitkan</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-100 dark:divide-white/5">
-                                <tr>
-                                    <td class="font-bold">Manajemen Yayasan/Pesantren</td>
-                                    <td class="text-blue-700 dark:text-blue-400 font-bold">Rp 1.500.000</td>
-                                    <td>Buku Materi, Hybrid Zoom, Asrama (2 Hari)</td>
-                                    <td>Sertifikat Diklat LPK &amp; Uji Kompetensi LPK</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">Administrasi Sekolah Islam</td>
-                                    <td class="text-blue-700 dark:text-blue-400 font-bold">Rp 1.250.000</td>
-                                    <td>Akses LMS Selamanya, Modul Softcopy, E-Certificate</td>
-                                    <td>Sertifikat Diklat LPK</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">Kepemimpinan Kepala Sekolah</td>
-                                    <td class="text-blue-700 dark:text-blue-400 font-bold">Rp 1.800.000</td>
-                                    <td>Full Boarding Hotel, Tas &amp; ATK Diklat, Sertifikat Fisik</td>
-                                    <td>Sertifikat Diklat LPK &amp; Uji Kompetensi LPK</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sub-section: Formulir Pendaftaran -->
-            <div id="sec-pendaftaran-formulir" class="scroll-mt-28 max-w-3xl mx-auto text-left">
-                <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Formulir Pendaftaran &amp; Unggah Berkas</h3>
-                    <p class="text-slate-500 dark:text-slate-450 text-xs mb-6">Pastikan mengisi data diri yang valid. Akun Anda untuk portal LMS &amp; ujian LPK akan dibuat otomatis.</p>
-
-                    <div id="landing-form-errors" class="hidden mb-6 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-705 dark:text-rose-400 rounded-xl text-xs space-y-1"></div>
-
-                    <!-- Registration Success Output (Hidden initially) -->
-                    <div id="landing-enrollment-success-card" class="hidden text-center py-6">
-                        <div class="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 flex items-center justify-center mx-auto mb-4">
-                            ✓
-                        </div>
-                        <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Pendaftaran Berhasil Terkirim!</h4>
-                        <p class="text-slate-655 dark:text-slate-400 text-xs mb-6">Pendaftaran Anda telah berhasil terverifikasi. Kami telah menerbitkan lembar kuitansi serta sertifikat kelulusan sementara LPK Anda.</p>
-
-                        <div class="border-[4px] border-double border-blue-900/20 dark:border-blue-500/20 rounded-xl p-6 bg-slate-50/50 dark:bg-slate-955 max-w-md mx-auto text-left mb-6">
-                            <span class="text-[9px] text-slate-455 uppercase font-black tracking-widest block mb-0.5">Nama Peserta:</span>
-                            <strong class="text-slate-905 dark:text-white text-base block font-black uppercase" id="landing-cert-name">-</strong>
-
-                            <div class="grid grid-cols-2 gap-4 mt-3 pt-3 border-t border-slate-200 dark:border-white/5 text-xs">
+                            
+                            <h3 class="font-extrabold text-slate-900 dark:text-white text-base leading-tight mb-2">{{ $name }}</h3>
+                            <span class="text-[#155dfc] dark:text-blue-500 font-bold text-xs uppercase tracking-wider mb-4 block">{{ $jab }}</span>
+                            
+                            <div class="border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-2 w-full text-left space-y-3">
                                 <div>
-                                    <span class="text-[9px] text-slate-455 uppercase font-black block tracking-wider">No. Sertifikat:</span>
-                                    <span class="font-mono text-slate-805 dark:text-slate-205 font-bold" id="landing-cert-number">-</span>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Keahlian</span>
+                                    <p class="text-xs text-slate-650 dark:text-slate-400 mt-0.5 leading-relaxed">{{ $keah }}</p>
                                 </div>
                                 <div>
-                                    <span class="text-[9px] text-slate-455 uppercase font-black block tracking-wider">Metode Uji:</span>
-                                    <span class="text-blue-700 dark:text-blue-400 font-bold">PORTFOLIO</span>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pengalaman</span>
+                                    <p class="text-xs text-slate-655 dark:text-slate-400 mt-0.5 leading-relaxed font-semibold">{{ $peng }}</p>
                                 </div>
                             </div>
                         </div>
-
-                        <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 px-6 rounded-lg text-xs uppercase tracking-wider transition-all" id="btn-landing-reset-form">
-                            Daftar Peserta Lain
-                        </button>
-                    </div>
-
-                    <form id="landing-enrollment-form" action="{{ route('enroll') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-                        @csrf
-                        <div class="flex flex-col gap-1.5">
-                            <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Pilih Program Pelatihan</label>
-                            <select name="program_id" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                                <option value="" disabled selected>Pilih Program Pelatihan...</option>
-                                @foreach($programs as $prog)
-                                <option value="{{ $prog->id }}">{{ $prog->title }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nama Lengkap (Gelar Lengkap)</label>
-                                <input type="text" name="name" required placeholder="Contoh: Dr. Hamidun, M.Pd." class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nomor Induk Kependudukan (NIK)</label>
-                                <input type="text" name="nik" maxlength="16" required placeholder="16-Digit NIK" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 font-mono">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Alamat Email (Gmail Aktif)</label>
-                                <input type="email" id="landing-enroll-email" name="email" required placeholder="nama@gmail.com" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">No. WhatsApp/HP Aktif</label>
-                                <input type="tel" name="phone" required placeholder="Contoh: 0812XXXXXXXX" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Pendidikan Terakhir</label>
-                                <select name="education" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-950 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                                    <option value="" disabled selected>Pilih Pendidikan...</option>
-                                    <option value="S3">S3 / Doktor</option>
-                                    <option value="S2">S2 / Magister</option>
-                                    <option value="S1">S1 / Sarjana</option>
-                                    <option value="D3">D3 / Diploma III</option>
-                                    <option value="SMA">SMA / SMK / MA</option>
-                                </select>
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Kategori Keanggotaan</label>
-                                <select name="category" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-955 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                                    <option value="" disabled selected>Pilih Kategori...</option>
-                                    <option value="guru">Guru Madrasah</option>
-                                    <option value="mahasiswa">Dosen / Mahasiswa</option>
-                                    <option value="kerja">Praktisi Lembaga / Umum</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nama Instansi / Sekolah</label>
-                                <input type="text" name="company" required placeholder="Nama Madrasah / Pesantren" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Jabatan Saat Ini</label>
-                                <input type="text" name="position" required placeholder="Contoh: Staf Administrasi / Kepala TU" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Unggah Scan KTP (Gambar, maks 2MB)</label>
-                                <input type="file" name="ktp" accept="image/*" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Unggah Scan Ijazah (Gambar, maks 2MB)</label>
-                                <input type="file" name="ijazah" accept="image/*" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                        </div>
-
-                        <!-- OTP Code Container (Hidden initially) -->
-                        <div id="landing-otp-section" class="hidden border border-blue-500/20 bg-blue-500/5 dark:bg-blue-950/20 p-4 rounded-lg space-y-3 transition-all duration-300">
-                            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-                                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Email OTP Verification Required</span>
-                                <span class="text-[9px] text-blue-705 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded font-black">OTP</span>
-                            </div>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400">Kami telah mengirimkan 6-digit kode verifikasi ke email Anda. Periksa kotak masuk Gmail Anda.</p>
-
-                            <div id="landing-otp-debug" class="hidden text-xs bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-450 p-2.5 rounded font-bold font-mono"></div>
-
-                            <div class="flex gap-3">
-                                <input type="text" id="landing-otp-code-input" name="otp_code" placeholder="Kode OTP" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 text-center tracking-widest font-mono font-bold">
-                                <button type="button" id="btn-landing-resend-otp" class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-[10px] uppercase px-4 rounded-lg">Resend (<span id="landing-otp-timer">60</span>s)</button>
-                            </div>
-                        </div>
-
-                        <button type="submit" id="btn-landing-enroll-submit" class="w-full bg-[#1e5afb] hover:bg-[#1546cb] text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center">
-                            Kirim Pendaftaran &amp; Generate OTP
-                        </button>
-                    </form>
-                </div>
+                    @endif
+                @endfor
             </div>
         </div>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- SECTION 9: HUBUNGI KAMI (KONTAK) -->
-    <!-- =====================================================    <section id="sec-kontak" class="tab-content py-20 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
+    <!-- ========================================== -->
+    <!-- SECTION 5: FASILITAS (sec-fasilitas)       -->
+    <!-- ========================================== -->
+    <section id="sec-fasilitas" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-12">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Hubungi Kami</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Informasi Kantor &amp; Layanan Pelanggan</h2>
-                <p class="text-slate-606 dark:text-slate-400 text-base leading-relaxed">
-                    Staf admin LPK MPI siap melayani pendaftaran pelatihan, konsultasi, dan pengaduan.
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Sarana Fisik</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    Fasilitas & Prasarana Pembelajaran
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    Kami menyediakan sarana fisik pendukung untuk kenyamanan dan keefektifan belajar peserta diklat selama masa persiapan kerja.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
-                <!-- Col 1: Kontak Info -->
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between bg-white/40 dark:bg-slate-900/40 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
+                <!-- Fasilitas 1: Ruang Belajar -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/5 pb-3">Kantor Pusat LPK</h3>
+                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
+                            {{ $settings['fasilitas_belajar_judul'] ?? 'Ruang Belajar & Teori Ergonomis' }}
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            {{ $settings['fasilitas_belajar_desc'] ?? 'Kami memiliki ruang kelas berkapasitas 25 orang yang sejuk (AC penuh) dengan tata pencahayaan yang nyaman, papan tulis interaktif, serta sound system nirkabel untuk presentasi materi ajar.' }}
+                        </p>
+                    </div>
+                </div>
 
-                        <div class="space-y-5 text-xs sm:text-sm text-slate-750 dark:text-slate-300">
+                <!-- Fasilitas 2: Perpustakaan -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
+                            {{ $settings['fasilitas_perpustakaan_judul'] ?? 'Pusat Referensi & E-Learning' }}
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            {{ $settings['fasilitas_perpustakaan_desc'] ?? 'Menyediakan koleksi lengkap buku modul pembelajaran Bahasa Jepang (Minna no Nihongo), tata kelola bisnis, regulasi imigrasi Jepang, serta akses portal referensi digital.' }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Fasilitas 3: Asrama -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
+                            {{ $settings['fasilitas_asrama_judul'] ?? 'Asrama & Penginapan Peserta' }}
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            {{ $settings['fasilitas_asrama_desc'] ?? 'Bagi peserta dari luar kota, tersedia asrama eksklusif ber-AC dengan fasilitas kamar mandi dalam, akses internet WiFi 100 Mbps, dapur bersama, serta area olahraga semi-outdoor.' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 6: PUBLICATIONS (sec-berita)       -->
+    <!-- ========================================== -->
+    <section id="sec-berita" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-white border-b border-slate-100 dark:border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Kabar & Publikasi</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold font-extrabold">
+                    Instagram & Youtube Terbaru
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    Ikuti kegiatan pelatihan harian, dokumentasi kelulusan, serta tips karir di Jepang melalui media sosial resmi kami.
+                </p>
+            </div>
+
+            <!-- YouTube Featured Video -->
+            <div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm mb-16">
+                <div class="grid grid-cols-1 md:grid-cols-12 items-stretch">
+                    <div class="md:col-span-7 bg-slate-950 aspect-video relative flex items-center justify-center group cursor-pointer" onclick="openVideoModal('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">
+                        <!-- Play Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/10 transition z-10"></div>
+                        <div class="w-16 h-16 rounded-full bg-[#155dfc] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition z-20">
+                            <span class="ml-1 text-lg">▶</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover absolute inset-0" alt="Video Cover">
+                    </div>
+                    <div class="md:col-span-5 p-6 flex flex-col justify-between text-left">
+                        <div>
+                            <span class="bg-red-500/10 text-red-600 dark:text-red-400 font-extrabold text-[9px] px-2.5 py-0.5 rounded-full border border-red-500/20 uppercase tracking-widest">Featured Video</span>
+                            <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mt-3 leading-tight font-heading">Persiapan Calon Tenaga Kerja LPK Manajemen Pendidikan Islam</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs mt-3 leading-relaxed font-semibold">
+                                Tonton dokumentasi simulasi seleksi fisik, wawancara kerja (mensetsu) dengan user perusahaan Jepang, dan pelepasan keberangkatan angkatan 2026.
+                            </p>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-400 mt-6 font-bold block font-semibold">DURASI: 12 MENIT • YOUTUBE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media grids -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto text-left">
+                <!-- Instagram Column -->
+                <div>
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-black text-slate-900 dark:text-white text-lg font-heading">Dari Akun Instagram Kami</h3>
+                        <a href="https://instagram.com" target="_blank" class="text-[#155dfc] hover:underline text-xs font-bold uppercase tracking-wider font-semibold">Kunjungi @lpk_mpi</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Instagram post cards -->
+                        <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://instagram.com/p/123')">
+                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="IG 1">
+                        </div>
+                        <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://instagram.com/p/456')">
+                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
+                            <img src="https://images.unsplash.com/photo-1531535934200-873499955726?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="IG 2">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YouTube Grid -->
+                <div>
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-black text-slate-900 dark:text-white text-lg font-heading">Dari Kanal YouTube Kami</h3>
+                        <a href="https://youtube.com" target="_blank" class="text-[#155dfc] hover:underline text-xs font-bold uppercase tracking-wider font-semibold">Kunjungi LPK Manajemen Pendidikan Islam TV</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- YouTube post cards -->
+                        <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://youtube.com/watch?v=1')">
+                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
+                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="YT 1">
+                        </div>
+                        <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://youtube.com/watch?v=2')">
+                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="YT 2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 7: KISAH ALUMNI (sec-alumni)       -->
+    <!-- ========================================== -->
+    <section id="sec-alumni" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Jejak Sukses</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    Kisah Sukses Alumni di Jepang
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    Melihat kisah inspiratif para alumni LPK Manajemen Pendidikan Islam yang kini telah sukses bekerja di berbagai sektor industri di Jepang.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+                <!-- Alumni 1 -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed mb-6 font-semibold">
+                        "Pelatihan di LPK Manajemen Pendidikan Islam sangat ketat tapi sangat membantu membentuk mental disiplin yang dibutuhkan di Jepang. Sekarang saya bekerja sebagai CNC Programmer di Prefektur Chiba dengan gaji yang sangat baik."
+                    </p>
+                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-850 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#155dfc] to-blue-700 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 font-extrabold">
+                            HW
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase font-extrabold">Wawan Hermawan</h4>
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase mt-0.5">CNC Programmer • Chiba, Japan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni 2 -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed mb-6 font-semibold">
+                        "Saya bersyukur mengikuti program Visa Kerja Khusus (Tokutei Ginou) melalui LPK Manajemen Pendidikan Islam. Selain diajarkan bahasa Jepang tingkat N4, kami juga diberikan sertifikat SSW Caregiver sehingga penempatan kerjanya lancar."
+                    </p>
+                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-850 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#155dfc] to-blue-700 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 font-extrabold">
+                            NS
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase font-extrabold">Nurul Sofia</h4>
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase mt-0.5">Caregiver (Kaigo) • Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alumni 3 -->
+                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed mb-6 font-semibold">
+                        "Program Internship LPK membantu saya melakukan magang sambil kuliah. Hubungan kerjasama LPK Manajemen Pendidikan Islam dengan perusahaan manufaktur di Nagoya sangat kuat sehingga kepastian kontrak kerjanya terjamin."
+                    </p>
+                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-850 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#155dfc] to-blue-700 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 font-extrabold">
+                            AS
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-extrabold text-slate-900 dark:text-white uppercase font-extrabold">Ahmad Solihin</h4>
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase mt-0.5">Staf Magang Manufaktur • Nagoya, Japan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="bg-[#eef2ff] dark:bg-blue-950/10 border border-blue-200 dark:border-blue-900/30 rounded-3xl p-8 max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <span class="block text-3xl font-black text-[#155dfc] font-extrabold">120+</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Perusahaan Mitra</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-black text-[#155dfc] font-extrabold">3,000+</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Alumni di Jepang</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-black text-[#155dfc] font-extrabold">98%</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Tingkat Kelulusan</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-black text-[#155dfc] font-extrabold">24/7</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Support di Jepang</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 8: CONTACT INFO (sec-kontak)       -->
+    <!-- ========================================== -->
+    <section id="sec-kontak" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    Hubungi Kami
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3">
+                    Staf admin LPK Manajemen Pendidikan Islam siap melayani pendaftaran pelatihan dan konsultasi.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto text-left">
+                <!-- Col 1: Contact Details Card -->
+                <div class="bg-white dark:bg-slate-950/40 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-3 font-heading">Informasi Kontak</h3>
+                        
+                        <div class="space-y-5 text-sm text-slate-700 dark:text-slate-300">
                             <div class="flex gap-3">
-                                <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center font-bold text-xs uppercase shrink-0">A</div>
-                                <p class="text-xs leading-relaxed">
-                                    <strong>Alamat Kantor Resmi:</strong><br>
-                                    Jl. Gedebage Selatan No.137, Kel. Cisaranten Kidul, Kec. Gedebage, Kota Bandung, Jawa Barat 40295.
+                                <span class="font-extrabold text-[#155dfc] shrink-0">📍</span>
+                                <p class="text-xs leading-relaxed font-semibold">
+                                    <strong>Kantor Pusat:</strong><br>
+                                    Jl. Ciragil II No.6;RT/RW 001/001 Kel. Rawa Barat, Kec.Kebayoran Baru Jakarta Selatan 12180.
                                 </p>
                             </div>
-
+                            
                             <div class="flex gap-3">
-                                <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-650 dark:text-emerald-450 border border-emerald-500/20 flex items-center justify-center font-bold text-xs uppercase shrink-0">W</div>
-                                <p class="text-xs leading-relaxed">
-                                    <strong>WhatsApp Hotline:</strong><br>
-                                    +62 812-3456-7890 (Administrasi Pendaftaran &amp; Pelatihan)
+                                <span class="font-extrabold text-[#155dfc] shrink-0">📞</span>
+                                <p class="text-xs font-semibold">
+                                    <strong>Telepon Hotline:</strong><br>
+                                    +62 21 38808080
                                 </p>
                             </div>
-
+                            
                             <div class="flex gap-3">
-                                <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-650 dark:text-purple-400 border border-purple-500/20 flex items-center justify-center font-bold text-xs uppercase shrink-0">E</div>
-                                <p class="text-xs leading-relaxed">
+                                <span class="font-extrabold text-[#155dfc] shrink-0">✉</span>
+                                <p class="text-xs font-semibold">
                                     <strong>E-mail Layanan:</strong><br>
-                                    info@lpk-mpi.com / helpdesk@lpk-mpi.com
+                                    mail@lpk-mpi.org / info@lpk-mpi.org
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="space-y-3 mt-6">
-                        <a href="https://wa.me/6281234567890?text=Halo%20LPK%20MPI%2C%20saya%20ingin%20tanya%20tentang%20pelatihan" target="_blank" class="w-full bg-emerald-655 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl text-center shadow-md transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
-                            Hubungi via WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Col 2: Pesan Direct Form -->
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between bg-white/40 dark:bg-slate-900/40 text-left">
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-white/5 pb-3">Kirim Pesan (Mailable)</h3>
-
-                        <form id="contact-us-form" class="space-y-3.5">
-                            <div class="flex flex-col gap-1">
-                                <label class="text-[9px] font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider">Nama Pengirim</label>
-                                <input type="text" name="contact_name" required placeholder="Nama Lengkap" class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                            <div class="flex flex-col gap-1">
-                                <label class="text-[9px] font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Alamat Email</label>
-                                <input type="email" name="contact_email" required placeholder="nama@gmail.com" class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
-                            </div>
-                            <div class="flex flex-col gap-1">
-                                <label class="text-[9px] font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Isi Pertanyaan / Pesan</label>
-                                <textarea name="contact_message" required placeholder="Tuliskan isi pesan Anda..." class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 h-16 resize-none"></textarea>
-                            </div>
-                            <div id="contact-status-div" class="hidden text-[10px] p-2.5 rounded font-bold border"></div>
-                            <button type="submit" class="w-full bg-[#1e5afb] hover:bg-[#1546cb] text-white font-bold py-2.5 px-4 rounded-lg text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center">
-                                Kirim Pertanyaan
-                            </button>
-                        </form>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex gap-2.5 mt-8 shadow-inner">
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                            <strong>Jam Layanan Administrasi:</strong><br>
+                            Senin s.d. Jumat pukul 08.00 - 17.00 WIB | Sabtu pukul 08.00 - 12.00 WIB (Minggu Libur).
+                        </p>
                     </div>
                 </div>
 
                 <!-- Col 3: Google Map -->
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between bg-white/40 dark:bg-slate-900/40 text-left">
+                <div class="bg-white dark:bg-slate-950/40 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Peta Lokasi Kantor</h3>
-                        <p class="text-slate-500 dark:text-slate-405 text-[11px] leading-relaxed mb-4">
-                            Peta penunjuk arah resmi kantor sekretariat LPK MPI di Bandung.
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 font-heading">Peta Lokasi &amp; Denah</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed mb-6">
+                            Navigasikan kendaraan Anda langsung menggunakan rute GPS yang telah terintegrasi dengan Google Maps.
                         </p>
-
-                        <!-- Peta Map -->
-                        <div class="w-full h-36 bg-slate-200 dark:bg-slate-950/60 rounded-xl border border-slate-300 dark:border-slate-800/80 flex items-center justify-center relative overflow-hidden shadow-inner">
-                            <div class="absolute inset-0 opacity-20 dark:opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                            <div class="relative z-10 flex flex-col items-center gap-1 text-center p-2">
-                                <span class="w-7 h-7 rounded-full bg-blue-700/10 text-blue-700 dark:text-blue-400 border border-blue-700/20 flex items-center justify-center text-[10px] font-black">
-                                    MAP
-                                </span>
-                                <span class="text-[9px] text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">Gedebage Selatan, Kota Bandung</span>
-                            </div>
+                        
+                        <div class="w-full h-40 rounded-xl border border-slate-300 dark:border-slate-800 overflow-hidden shadow-inner">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2483861271167!2d106.8122393!3d-6.2309503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1687f893e15%3A0xe54e6ffbcad3eb9a!2sJl.%20Ciragil%20II%20No.6%2C%20RT.1%2FRW.1%2C%20Rawa%20Barat%2C%20Kebayoran%20Baru%2C%20Jakarta%20Selatan%2C%2012180!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" class="w-full h-full border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
 
-                    <a href="https://maps.google.com" target="_blank" class="w-full bg-gradient-to-r from-blue-700 to-sky-600 text-white font-bold py-3 px-4 rounded-xl text-center hover:brightness-110 shadow-lg shadow-blue-700/20 transition-all duration-300 text-xs uppercase tracking-wider mt-6">
-                        Buka Rute Navigasi
+                    <a href="https://maps.google.com/?q=Jl.+Ciragil+II+No.6+Jakarta+Selatan" target="_blank" class="w-full py-3 rounded-xl text-center font-extrabold text-xs uppercase tracking-wider btn-mpi shadow-lg shadow-blue-600/10 mt-6 font-extrabold">
+                        Buka Google Maps
                     </a>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- ========================================================================= -->
-    <!-- SECTION 10: SCAN QR & VERIFIKASI -->
-    <!-- =====================================================    <section id="sec-scan-qr" class="tab-content py-20 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
+    <section id="sec-faq" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-10">
-                <span class="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3.5 py-1 rounded-full border border-blue-550/15">Validitas Data</span>
-                <h2 class="text-3xl font-black mt-4 mb-4 font-heading text-slate-900 dark:text-white tracking-tight">Scan QR Buku Tamu &amp; Sertifikat</h2>
-                <p class="text-slate-655 dark:text-slate-400 text-xs leading-relaxed max-w-2xl mx-auto">
-                    Silakan lakukan pengisian Buku Tamu Resepsionis melalui pemindaian QR kunjungan atau verifikasi status legal sertifikat Anda.
-                </p>
-
-                <div class="flex justify-center gap-2 mt-6">
-                    <button type="button" id="btn-subtab-guestbook" class="px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-blue-700 text-white shadow-md" onclick="switchSubTab('guestbook')">
-                        Buku Tamu Resepsionis
-                    </button>
-                    <button type="button" id="btn-subtab-verify" class="px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700" onclick="switchSubTab('verify')">
-                        Verifikasi Sertifikat
-                    </button>
-                </div>
-            </div>
-
-            <!-- Subtab: Guestbook -->
-            <div id="subtab-content-guestbook" class="space-y-12">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto text-left">
-                    <div class="lg:col-span-5 glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 text-center flex flex-col justify-between h-full bg-white/40 dark:bg-slate-900/40">
-                        <div>
-                            <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Simulasi Scan Resepsionis</h3>
-                            <p class="text-slate-500 dark:text-slate-450 text-[11px] leading-relaxed mb-4">
-                                Pindai QR Code di meja resepsionis LPK MPI atau klik tombol simulasi di bawah.
-                            </p>
-
-                            <div class="relative w-full aspect-square max-w-[240px] mx-auto bg-slate-950 rounded-xl overflow-hidden border-2 border-slate-800/80 flex flex-col items-center justify-center shadow-inner group">
-                                <div id="scan-laser" class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 via-rose-500 to-red-500 opacity-80 animate-scanline z-20"></div>
-
-                                <div class="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-blue-500 z-10"></div>
-                                <div class="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-blue-500 z-10"></div>
-                                <div class="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-blue-500 z-10"></div>
-                                <div class="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-blue-500 z-10"></div>
-
-                                <div id="scanner-view-content" class="relative z-10 flex flex-col items-center gap-3 p-4 text-center">
-                                    <svg class="w-12 h-12 text-slate-500 animate-pulse" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"></path>
-                                    </svg>
-                                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest" id="scanner-status-text">Kamera Siap Memindai</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="button" id="btn-simulate-scan" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md mt-6 flex items-center justify-center gap-2">
-                            Simulasi Scan QR
-                        </button>
-                    </div>
-
-                    <div class="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40">
-                        <h3 class="text-lg font-black text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-white/5 pb-3">Form Kehadiran Resepsionis</h3>
-
-                        <form id="guest-book-form" class="space-y-4">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="flex flex-col gap-1.5">
-                                    <label class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Nama Lengkap</label>
-                                    <input type="text" name="name" required placeholder="Contoh: Dr. Budi, M.Pd" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none">
-                                </div>
-                                <div class="flex flex-col gap-1.5">
-                                    <label class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">No. WhatsApp</label>
-                                    <input type="tel" name="phone" required placeholder="Contoh: 081234567890" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="flex flex-col gap-1.5">
-                                    <label class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Nama Instansi</label>
-                                    <input type="text" name="institution" required placeholder="Contoh: UIN Bandung" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none">
-                                </div>
-                                <div class="flex flex-col gap-1.5">
-                                    <label class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Jabatan</label>
-                                    <input type="text" name="position" required placeholder="Contoh: Dosen MPI" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="flex flex-col gap-1.5">
-                                    <label class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Tujuan</label>
-                                    <select name="purpose" required class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-xs text-slate-950 dark:text-slate-200 focus:outline-none">
-                                        <option value="">-- Pilih Tujuan --</option>
-                                        <option value="Konsultasi Pelatihan Kerja">Konsultasi Pelatihan Kerja</option>
-                                        <option value="Silaturahmi / Kunjungan Kerja">Silaturahmi / Kunjungan Kerja</option>
-                                        <option value="Pengurusan Surat & Administrasi">Pengurusan Surat & Administrasi</option>
-                                    </select>
-                                </div>
-                                <div class="flex flex-col gap-1.5">
-                                    <label class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Bertemu Dengan</label>
-                                    <select name="meet_with" required class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-xs text-slate-950 dark:text-slate-200 focus:outline-none">
-                                        <option value="">-- Pilih Personil --</option>
-                                        <option value="Prof. Dr. H. Badrudin, M.Ag. (Direktur)">Prof. Dr. H. Badrudin, M.Ag. (Direktur)</option>
-                                        <option value="Chyril Futuhana Ahmad, M.Pd. (Sertifikasi)">Chyril Futuhana Ahmad, M.Pd. (Sertifikasi)</option>
-                                        <option value="Petugas Resepsionis / Staf Adm">Petugas Resepsionis / Staf Adm</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div id="guest-book-status" class="hidden text-xs py-3 px-4 rounded-lg font-bold"></div>
-
-                            <button type="submit" class="w-full bg-[#1e5afb] hover:bg-[#1546cb] text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all flex items-center justify-center">
-                                Kirim Kehadiran
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Feed tamus -->
-                <div class="max-w-4xl mx-auto border border-slate-200 dark:border-slate-800 rounded-2xl p-6 bg-slate-50/50 dark:bg-slate-950/20 shadow-sm text-left">
-                    <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4 border-b border-slate-200 dark:border-slate-800 pb-2">
-                        Pengunjung Resepsionis Hari Ini
-                    </h4>
-                    <div class="space-y-3" id="guest-feed-list">
-                        <div class="text-center text-slate-400 py-6 text-xs font-semibold">Memuat daftar pengunjung...</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Subtab: Verify Certificate -->
-            <div id="subtab-content-verify" class="hidden">
-                <div class="max-w-xl mx-auto text-left">
-                    <div class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40">
-                        <form id="verify-form" class="space-y-4">
-                            <div class="flex flex-col gap-1.5">
-                                <label for="verify-number" class="text-xs font-bold text-slate-655 dark:text-slate-400 uppercase tracking-wider">Masukkan Nomor Sertifikat</label>
-                                <div class="flex flex-col sm:flex-row gap-3">
-                                    <input type="text" id="verify-number" placeholder="Contoh: LPK-MPI-2026-0812" required class="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none font-mono font-bold">
-                                    <button type="submit" id="btn-verify-submit" class="bg-[#1e5afb] hover:bg-[#1546cb] text-white font-bold py-3.5 px-6 rounded-md text-xs uppercase tracking-wider transition-all flex items-center justify-center shrink-0">
-                                        Cari Data
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                        <!-- Verification Output -->
-                        <div id="verify-result-container" class="hidden mt-8 transition-all">
-                            <div class="w-full h-px bg-slate-200 dark:bg-white/5 mb-6"></div>
-
-                            <div id="verify-error-box" class="hidden p-5 bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-455 rounded-xl text-xs flex gap-3">
-                                <div>
-                                    <strong class="block mb-1">Verifikasi Gagal</strong>
-                                    <span id="verify-error-msg">Sertifikat tidak terdaftar atau tidak valid.</span>
-                                </div>
-                            </div>
-
-                            <div id="verify-cert-box" class="hidden text-center animate-fade-in relative overflow-hidden">
-                                <div class="border-[6px] border-double border-blue-900/20 dark:border-blue-500/20 rounded-xl p-6 sm:p-8 bg-white/70 dark:bg-slate-955 shadow-lg relative text-left">
-                                    <div class="text-center mb-6">
-                                        <h4 class="text-blue-800 dark:text-blue-400 text-xs font-black tracking-[3px] uppercase">SERTIFIKAT KELULUSAN</h4>
-                                        <span class="text-[9px] text-slate-500 uppercase tracking-widest block mt-0.5 font-bold">LPK MANAJEMEN PENDIDIKAN ISLAM</span>
-                                        <div class="w-20 h-0.5 bg-blue-700 mx-auto mt-2.5"></div>
-                                    </div>
-                                    <div class="space-y-4 text-xs text-slate-700 dark:text-slate-350">
-                                        <div>
-                                            <span class="text-[9px] text-slate-400 uppercase font-black block tracking-wider">Nama Pemegang:</span>
-                                            <strong class="text-slate-900 dark:text-white text-base font-black uppercase" id="v-cert-name">-</strong>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-4 border-t border-slate-100 dark:border-white/5 pt-3">
-                                            <div>
-                                                <span class="text-[9px] text-slate-400 uppercase font-black block tracking-wider">NIK (Masked)</span>
-                                                <span id="v-cert-nik">-</span>
-                                            </div>
-                                            <div>
-                                                <span class="text-[9px] text-slate-400 uppercase font-black block tracking-wider">Status Kelulusan</span>
-                                                <span class="text-emerald-700 dark:text-emerald-455 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">KOMPETEN</span>
-                                            </div>
-                                        </div>
-                                        <div class="border-t border-slate-100 dark:border-white/5 pt-3">
-                                            <span class="text-[9px] text-slate-400 uppercase font-black block tracking-wider">Program Pelatihan</span>
-                                            <span class="text-blue-700 dark:text-blue-400 font-bold" id="v-cert-program">-</span>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-4 border-t border-slate-100 dark:border-white/5 pt-3">
-                                            <div>
-                                                <span class="text-[9px] text-slate-400 uppercase font-black block tracking-wider">Nomor Registrasi</span>
-                                                <span class="font-mono text-slate-800 dark:text-slate-200" id="v-cert-number">-</span>
-                                            </div>
-                                            <div>
-                                                <span class="text-[9px] text-slate-400 uppercase font-black block tracking-wider">Tanggal Terbit</span>
-                                                <span id="v-cert-date">-</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- SECTION 11: FAQ -->
-    <!-- ========================================================================= -->
-    <section id="sec-faq" class="tab-content py-20 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/40 animate-fade-in hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center mb-12">
-                <h2 class="text-3xl font-black mb-4 font-heading text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3">
-                    FAQ (Tanya Jawab Umum)
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Pertanyaan Umum</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white font-heading font-extrabold">
+                    Frequently Asked Questions
                 </h2>
-                <p class="text-slate-606 dark:text-slate-400 text-base leading-relaxed text-center">
-                    Beberapa pertanyaan umum seputar biaya, kelulusan, dan masa berlaku sertifikat kompetensi.
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    Jawaban resmi atas pertanyaan yang paling sering diajukan mengenai program diklat LPK Manajemen Pendidikan Islam.
                 </p>
             </div>
 
-            <div class="max-w-3xl mx-auto text-left space-y-4">
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Apakah sertifikat LPK MPI diakui secara nasional?</h4>
-                    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">Ya, LPK MPI adalah Lembaga Pelatihan Kerja (LPK) resmi terdaftar. Sertifikat kelulusan yang diterbitkan diakui secara luas oleh instansi pendidikan dan dunia kerja.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-6xl mx-auto text-left">
+                <!-- FAQ Accordion List -->
+                <div class="lg:col-span-7 space-y-4">
+                    <!-- FAQ 1 -->
+                    <div id="faq-item-1" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300">
+                        <button onclick="toggleAccordion('faq-item-1')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
+                            <span>Bagaimana prosedur pendaftaran untuk program pemagangan ke Jepang?</span>
+                            <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
+                        </button>
+                        <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
+                            Calon peserta mendaftar online melalui portal pendaftaran, mengunggah scan KTP &amp; Ijazah, kemudian admin LPK akan melakukan verifikasi berkas dan menjadwalkan wawancara awal. Setelah lolos seleksi berkas, peserta mengikuti diklat bahasa Jepang di pusdiklat LPK Manajemen Pendidikan Islam.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div id="faq-item-2" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300">
+                        <button onclick="toggleAccordion('faq-item-2')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
+                            <span>Berapa lama durasi pelatihan bahasa Jepang pra-keberangkatan?</span>
+                            <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
+                        </button>
+                        <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
+                            Pelatihan bahasa Jepang pra-keberangkatan berlangsung selama 3 hingga 6 bulan (tergantung kesiapan peserta) untuk mencapai kompetensi setingkat N4/N5 yang dipersyaratkan oleh COE/Imigrasi Jepang.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div id="faq-item-3" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300">
+                        <button onclick="toggleAccordion('faq-item-3')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
+                            <span>Apakah ada batasan usia untuk mendaftar program Tokutei Ginou?</span>
+                            <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
+                        </button>
+                        <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
+                            Program Tokutei Ginou (Specified Skilled Worker - SSW) menerima pendaftar dengan batas usia produktif berkisar antara 18 hingga 35 tahun pada saat pendaftaran, berbadan sehat, serta bebas tato/tindik.
+                        </div>
+                    </div>
                 </div>
-                <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Berapa lama masa berlaku sertifikat kelulusan LPK?</h4>
-                    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">Sertifikat kelulusan program LPK berlaku sebagai bukti kompetensi kerja yang sah dan tidak memiliki batas kedaluwarsa umum, namun disarankan melakukan penyegaran keahlian secara berkala.</p>
+
+                <!-- FAQ Illustration -->
+                <div class="lg:col-span-5 flex justify-center items-center">
+                    <svg viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto max-w-sm mx-auto">
+                        <circle cx="200" cy="175" r="130" fill="#eef2ff" class="dark:fill-blue-950/15" />
+                        <path d="M120 250C120 200 150 160 200 160C250 160 280 200 280 250H120Z" fill="#2d3748"/>
+                        <circle cx="200" cy="110" r="28" fill="#ffdbca"/>
+                        <path d="M170 110C170 80 230 80 230 110H170Z" fill="#155dfc"/>
+                        <path d="M160 170H240L250 190H150L160 170Z" fill="#718096"/>
+                        <!-- Question Bubble Speech -->
+                        <path d="M220 70C220 40 260 30 290 30C320 30 340 50 340 70C340 90 320 110 290 110C270 110 265 115 260 120C260 110 220 100 220 70Z" fill="#155dfc"/>
+                        <!-- White Question Mark inside bubble -->
+                        <path d="M285 55C285 50 295 50 295 55C295 60 290 62 290 65M290 75H291" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal Detail Artikel -->
-    <div id="article-modal" class="fixed inset-0 z-50 overflow-y-auto hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-all duration-300">
-        <div class="glass-card w-full max-w-2xl border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="p-6 border-b border-slate-200 dark:border-white/5 flex justify-between items-center bg-white/20 dark:bg-slate-900/20">
-                <h3 class="font-bold text-slate-900 dark:text-white text-sm uppercase">Detail Berita &amp; Informasi</h3>
-                <button onclick="closeArticleModal()" class="text-slate-450 hover:text-slate-600 dark:hover:text-white font-black text-xl">&times;</button>
+    <!-- ========================================== -->
+    <!-- CUSTOM FOOTER FOR LPK Manajemen Pendidikan Islam INDONESIA      -->
+    <!-- ========================================== -->
+    <footer class="w-full bg-[#111827] border-t border-slate-800 py-16 text-xs text-slate-400 text-left">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <!-- Col 1: Logo & Jakarta Office -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#155dfc] flex items-center justify-center text-white font-black text-xs">
+                        MPI
+                    </div>
+                    <span class="font-extrabold text-sm text-white tracking-tight uppercase">LPK Manajemen Pendidikan Islam</span>
+                </div>
+                <p class="font-semibold text-slate-350">Kantor Pusat:</p>
+                <p class="leading-relaxed">
+                    Jl. Ciragil II No.6; RT/RW 001/001 Kel. Rawa Barat, Kec.Kebayoran Baru Jakarta Selatan 12180
+                </p>
+                <div class="space-y-1 font-mono text-[10px]">
+                    <p>Phone: +62 21 38808080</p>
+                    <p>Email: mail@lpk-mpi.org</p>
+                </div>
             </div>
-            <div class="p-6 overflow-y-auto space-y-4 text-left">
-                <div class="h-64 w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-950 relative hidden" id="modal-art-image-container">
-                    <img id="modal-art-image" class="w-full h-full object-cover" alt="Article image">
-                </div>
-                <div class="flex items-center gap-3 text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                    <span id="modal-art-author">-</span>
-                    <span>•</span>
-                    <span id="modal-art-date">-</span>
-                </div>
-                <h2 id="modal-art-title" class="text-2xl font-black text-slate-900 dark:text-white leading-tight">-</h2>
-                <div id="modal-art-content" class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-                    -
+
+            <!-- Col 2: Bandung Pusdiklat -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white uppercase tracking-wider font-heading">Pusdiklat Bandung</h4>
+                <p class="leading-relaxed">
+                    Jl. Arcamanik Sindanglaya, KP. Sekesalam RT/RW 001/008, DS.Sindanglaya, Kec. Cimenyan, Kab. Bandung, Jawa Barat 40195
+                </p>
+            </div>
+
+            <!-- Col 3: Follow Us -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white uppercase tracking-wider font-heading">Follow Us</h4>
+                <ul class="space-y-2 font-medium">
+                    <li><a href="#" class="hover:text-[#155dfc] transition">Facebook</a></li>
+                    <li><a href="#" class="hover:text-[#155dfc] transition">Twitter</a></li>
+                    <li><a href="#" class="hover:text-[#155dfc] transition">Youtube</a></li>
+                    <li><a href="#" class="hover:text-[#155dfc] transition">Instagram</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Partnership & Logos -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white uppercase tracking-wider font-heading">Partnership</h4>
+                <div class="flex flex-wrap gap-4 opacity-70 font-semibold">
+                    <div class="w-8 h-8 rounded bg-white/10 flex items-center justify-center text-[10px] font-black text-[#155dfc]">c</div>
+                    <div class="w-8 h-8 rounded bg-white/10 flex items-center justify-center text-[10px] font-black">IGS</div>
+                    <div class="w-8 h-8 rounded bg-white/10 flex items-center justify-center text-[10px] font-black">F</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Video Preview -->
-    <div id="video-modal" class="fixed inset-0 z-50 overflow-y-auto hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm transition-all duration-300">
-        <div class="glass-card w-full max-w-3xl border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
-            <div class="p-4 border-b border-slate-200 dark:border-white/5 flex justify-between items-center bg-white/20 dark:bg-slate-900/20">
-                <h3 class="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider">Video Preview</h3>
+        <div class="max-w-7xl mx-auto px-6 border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-slate-500 font-semibold">&copy; Copyright 2010 - LPK Manajemen Pendidikan Islam All Rights Reserved.</p>
+            <div class="flex gap-4 text-slate-500 font-semibold">
+                <a href="#" class="hover:text-[#155dfc] transition">Terms</a>
+                <span>•</span>
+                <a href="#" class="hover:text-[#155dfc] transition">Privacy</a>
+                <span>•</span>
+                <a href="#" class="hover:text-[#155dfc] transition">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 z-50 overflow-y-auto hidden items-center justify-center p-4 bg-slate-955/85 backdrop-blur-sm transition-all duration-300">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-3xl border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900/60">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-heading">Video Preview</h3>
                 <button onclick="closeVideoModal()" class="text-slate-450 hover:text-slate-600 dark:hover:text-white font-black text-xl">&times;</button>
             </div>
             <div class="p-2 bg-black aspect-video relative">
@@ -1459,102 +871,56 @@
         </div>
     </div>
 
-    <!-- Scripts for QR Guestbook and Enrollment -->
+    <!-- Scripts for QR, Accordion, Guestbook, Enrollment & Verification -->
     <script>
-        // Tab switching for Scan QR / Guestbook / Verify
-        function switchSubTab(subTabId) {
-            const guestbookContent = document.getElementById('subtab-content-guestbook');
-            const verifyContent = document.getElementById('subtab-content-verify');
-            const btnGuestbook = document.getElementById('btn-subtab-guestbook');
-            const btnVerify = document.getElementById('btn-subtab-verify');
-
-            if (!guestbookContent || !verifyContent) return;
-
-            if (subTabId === 'guestbook') {
-                guestbookContent.classList.remove('hidden');
-                verifyContent.classList.add('hidden');
-                btnGuestbook.className = "px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-blue-700 text-white shadow-md";
-                btnVerify.className = "px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700";
-            } else {
-                guestbookContent.classList.add('hidden');
-                verifyContent.classList.remove('hidden');
-                btnGuestbook.className = "px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700";
-                btnVerify.className = "px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 bg-blue-700 text-white shadow-md";
-            }
-        }
-
-        // Live Visitors Feed Fetch
-        async function fetchRecentVisitors() {
-            const feedList = document.getElementById('guest-feed-list');
-            if (!feedList) return;
-
-            try {
-                const response = await fetch("{{ route('api.guest-book.list') }}");
-                const result = await response.json();
-
-                if (result.success && result.data.length > 0) {
-                    feedList.innerHTML = '';
-                    result.data.forEach(g => {
-                        const item = document.createElement('div');
-                        item.className = "flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl hover:border-blue-500/30 transition-all duration-300";
-                        item.innerHTML = `
-                            <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center font-bold text-xs uppercase">
-                                    ${g.name.charAt(0)}
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-xs font-black text-slate-900 dark:text-white uppercase">${g.name}</div>
-                                    <div class="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">${g.institution} • ${g.position}</div>
-                                </div>
-                            </div>
-                            <div class="text-left sm:text-right shrink-0">
-                                <div class="text-[10px] font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded inline-block uppercase tracking-wider">${g.purpose}</div>
-                                <div class="text-[9px] text-slate-400 dark:text-slate-500 mt-1 font-bold font-mono uppercase">${g.time} • Bertemu: ${g.meet_with}</div>
-                            </div>
-                        `;
-                        feedList.appendChild(item);
-                    });
-                } else {
-                    feedList.innerHTML = `
-                        <div class="text-center text-slate-400 py-6 text-xs font-semibold">Belum ada daftar kunjungan tamu hari ini.</div>
-                    `;
+        // Accordion script
+        function toggleAccordion(id) {
+            const item = document.getElementById(id);
+            if (!item) return;
+            const content = item.querySelector('.accordion-content');
+            const icon = item.querySelector('.accordion-icon');
+            const isExpanded = !content.classList.contains('hidden');
+            
+            // Close all other accordions
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                if (acc.id !== id) {
+                    acc.querySelector('.accordion-content').classList.add('hidden');
+                    const otherIcon = acc.querySelector('.accordion-icon');
+                    if (otherIcon) {
+                        otherIcon.style.transform = 'rotate(0deg)';
+                        otherIcon.textContent = '▼';
+                    }
+                    acc.querySelector('.accordion-header').classList.remove('text-[#155dfc]');
+                    acc.querySelector('.accordion-header').classList.add('text-slate-900', 'dark:text-white');
                 }
-            } catch (err) {
-                console.error('Error fetching visitors:', err);
-            }
-        }
+            });
 
-        // Article Modal logic
-        function openArticleModal(title, author, date, imageUrl, content) {
-            document.getElementById('modal-art-title').textContent = title;
-            document.getElementById('modal-art-author').textContent = 'Oleh: ' + author;
-            document.getElementById('modal-art-date').textContent = date;
-            document.getElementById('modal-art-content').innerHTML = content.replace(/\n/g, '<br>');
-
-            const imgContainer = document.getElementById('modal-art-image-container');
-            const imgEl = document.getElementById('modal-art-image');
-            if (imageUrl) {
-                imgEl.src = imageUrl;
-                imgContainer.classList.remove('hidden');
+            if (isExpanded) {
+                content.classList.add('hidden');
+                if (icon) {
+                    icon.style.transform = 'rotate(0deg)';
+                    icon.textContent = '▼';
+                }
+                item.querySelector('.accordion-header').classList.remove('text-[#155dfc]');
+                item.querySelector('.accordion-header').classList.add('text-slate-900', 'dark:text-white');
             } else {
-                imgContainer.classList.add('hidden');
+                content.classList.remove('hidden');
+                if (icon) {
+                    icon.style.transform = 'rotate(180deg)';
+                    icon.textContent = '▲';
+                }
+                item.querySelector('.accordion-header').classList.add('text-[#155dfc]');
+                item.querySelector('.accordion-header').classList.remove('text-slate-900', 'dark:text-white');
             }
-
-            const modal = document.getElementById('article-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
         }
 
-        function closeArticleModal() {
-            const modal = document.getElementById('article-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
 
-        // Video Modal logic
+
+        // Video modal functions
         function openVideoModal(url) {
             const modal = document.getElementById('video-modal');
             const iframe = document.getElementById('video-modal-iframe');
+            if (!modal || !iframe) return;
             
             let embedUrl = url;
             if (url.includes('youtube.com/watch') || url.includes('youtu.be/')) {
@@ -1571,7 +937,6 @@
                 if (!cleanUrl.endsWith('/')) cleanUrl += '/';
                 embedUrl = `${cleanUrl}embed`;
             }
-            
             iframe.src = embedUrl;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -1580,330 +945,199 @@
         function closeVideoModal() {
             const modal = document.getElementById('video-modal');
             const iframe = document.getElementById('video-modal-iframe');
+            if (!modal || !iframe) return;
             iframe.src = '';
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
 
-        // On DOM Load
+        // On DOM Load setup
         document.addEventListener('DOMContentLoaded', () => {
-            fetchRecentVisitors();
-
-            // Simulate scanner button
-            const btnSimulateScan = document.getElementById('btn-simulate-scan');
-            if (btnSimulateScan) {
-                btnSimulateScan.addEventListener('click', () => {
-                    const statusText = document.getElementById('scanner-status-text');
-                    const viewContent = document.getElementById('scanner-view-content');
-
-                    if (statusText) {
-                        statusText.textContent = "MEMINDAI QR CODE...";
-                        statusText.className = "text-[10px] font-mono text-yellow-500 uppercase tracking-widest font-bold animate-pulse";
-                    }
-
-                    setTimeout(() => {
-                        if (statusText) {
-                            statusText.textContent = "SCAN BERHASIL!";
-                            statusText.className = "text-[10px] font-mono text-emerald-500 uppercase tracking-widest font-black";
-                        }
-
-                        if (viewContent) {
-                            viewContent.innerHTML = `
-                                <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 text-xl font-bold animate-bounce">
-                                    ✓
-                                </div>
-                                <span class="text-[9px] font-bold text-emerald-500 uppercase tracking-widest">LPK MPI RECEPTION VERIFIED</span>
-                            `;
-                        }
-
-                        const purposeSelect = document.querySelector('#guest-book-form select[name="purpose"]');
-                        if (purposeSelect) {
-                            purposeSelect.value = "Konsultasi Pelatihan Kerja";
-                        }
-                        const nameInput = document.querySelector('#guest-book-form input[name="name"]');
-                        if (nameInput) {
-                            nameInput.focus();
-                        }
-
-                        const statusDiv = document.getElementById('guest-book-status');
-                        if (statusDiv) {
-                            statusDiv.className = "block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs py-3 px-4 rounded-lg font-bold";
-                            statusDiv.textContent = "QR Code Resepsionis berhasil dipindai. Silakan lengkapi biodata kunjungan Anda di form.";
-                        }
-                    }, 1500);
-                });
-            }
-
-            // Guest Book Form Submission
-            const guestBookForm = document.getElementById('guest-book-form');
-            if (guestBookForm) {
-                guestBookForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const formData = new FormData(guestBookForm);
-                    const statusDiv = document.getElementById('guest-book-status');
-                    const submitBtn = guestBookForm.querySelector('button[type="submit"]');
-
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = 'Mengirim...';
-
-                    try {
-                        const response = await fetch("{{ route('api.guest-book.store') }}", {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Accept': 'application/json'
-                            },
-                            body: formData
-                        });
-                        const data = await response.json();
-
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = 'Kirim Kehadiran';
-
-                        if (response.ok) {
-                            statusDiv.className = "block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs py-3 px-4 rounded-lg font-bold";
-                            statusDiv.textContent = data.message || 'Kehadiran Anda berhasil disimpan!';
-                            guestBookForm.reset();
-                            fetchRecentVisitors();
-                        } else {
-                            throw new Error(data.message || 'Gagal menyimpan.');
-                        }
-                    } catch (err) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = 'Kirim Kehadiran';
-                        statusDiv.className = "block bg-rose-500/10 text-rose-700 border border-rose-500/20 text-xs py-3 px-4 rounded-lg font-bold";
-                        statusDiv.textContent = err.message;
-                    }
-                });
-            }
-
-            // Contact Us Form Submission
-            const contactForm = document.getElementById('contact-us-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const statusDiv = document.getElementById('contact-status-div');
-                    const submitBtn = contactForm.querySelector('button[type="submit"]');
-
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = 'Mengirim...';
-
-                    setTimeout(() => {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = 'Kirim Pertanyaan';
-                        statusDiv.className = "block bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 border border-emerald-500/20 text-[10px] p-2.5 rounded font-bold mb-3";
-                        statusDiv.textContent = "Pesan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda melalui email.";
-                        statusDiv.classList.remove('hidden');
-                        contactForm.reset();
-                    }, 1200);
-                });
-            }
+            // Placeholder for initial setup if needed
         });
 
-        // Ajax Certificate Verification
-        const verifyForm = document.getElementById('verify-form');
-        if (verifyForm) {
-            verifyForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const num = document.getElementById('verify-number').value;
-                const submitBtn = document.getElementById('btn-verify-submit');
-                const resultContainer = document.getElementById('verify-result-container');
-                const errorBox = document.getElementById('verify-error-box');
-                const certBox = document.getElementById('verify-cert-box');
 
-                resultContainer.classList.remove('hidden');
-                errorBox.classList.add('hidden');
-                certBox.classList.add('hidden');
+        // ==========================================
+        // 💬 FLOATING WHATSAPP CHAT WIDGET LOGIC
+        // ==========================================
+        let floatUserName = 'Tamu LPK MPI';
+        let floatUserEmail = 'tamu@lpk-mpi.org';
 
-                try {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = 'Mencari...';
-
-                    const response = await fetch(`/api/verify-certificate?number=${encodeURIComponent(num)}`);
-                    const data = await response.json();
-
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Cari Data';
-
-                    if (!response.ok) {
-                        throw new Error(data.message || 'Sertifikat tidak ditemukan.');
-                    }
-
-                    const c = data.certificate;
-                    document.getElementById('v-cert-name').textContent = c.name;
-                    document.getElementById('v-cert-nik').textContent = c.nik;
-                    document.getElementById('v-cert-program').textContent = c.program;
-                    document.getElementById('v-cert-number').textContent = c.number;
-                    document.getElementById('v-cert-date').textContent = c.date;
-
-                    certBox.classList.remove('hidden');
-                } catch (error) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Cari Data';
-                    errorBox.classList.remove('hidden');
-                    document.getElementById('verify-error-msg').textContent = error.message;
-                }
-            });
+        function toggleFloatingChat() {
+            const popup = document.getElementById('floating-chat-popup');
+            const iconMsg = document.getElementById('float-chat-icon-msg');
+            const iconClose = document.getElementById('float-chat-icon-close');
+            
+            if (popup.classList.contains('hidden')) {
+                popup.classList.remove('hidden');
+                popup.classList.add('flex');
+                iconMsg.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+            } else {
+                popup.classList.add('hidden');
+                popup.classList.remove('flex');
+                iconMsg.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            }
         }
 
-        // AJAX ENROLLMENT PORTAL LOGIC
-        const lForm = document.getElementById('landing-enrollment-form');
-        const lOtpSection = document.getElementById('landing-otp-section');
-        const lOtpInput = document.getElementById('landing-otp-code-input');
-        const lOtpDebug = document.getElementById('landing-otp-debug');
-        const btnLResendOtp = document.getElementById('btn-landing-resend-otp');
-        const lTimerSpan = document.getElementById('landing-otp-timer');
-        const lSubmitBtn = document.getElementById('btn-landing-enroll-submit');
-
-        let lCountdown = null;
-
-        function startLCountdown() {
-            let sec = 60;
-            btnLResendOtp.disabled = true;
-            lTimerSpan.textContent = sec;
-            clearInterval(lCountdown);
-            lCountdown = setInterval(() => {
-                sec--;
-                lTimerSpan.textContent = sec;
-                if (sec <= 0) {
-                    clearInterval(lCountdown);
-                    btnLResendOtp.disabled = false;
-                    btnLResendOtp.innerHTML = 'Resend OTP';
-                } else {
-                    btnLResendOtp.innerHTML = `Resend (${sec}s)`;
-                }
-            }, 1000);
+        function appendFloatBubble(sender, text, type) {
+            const container = document.getElementById('float-messages-container');
+            const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            
+            let bubbleHtml = '';
+            if (type === 'user') {
+                bubbleHtml = `
+                    <div class="bg-[#d9fdd3] dark:bg-emerald-950 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tr-none p-3 text-xs max-w-[85%] self-end shadow-sm leading-relaxed relative animate-fade-in">
+                        <p class="font-semibold text-[10px] text-[#128c7e] mb-1">Anda</p>
+                        ${text}
+                        <div class="flex items-center justify-end gap-1 mt-1">
+                            <span class="text-[8px] text-slate-400 font-mono">${time}</span>
+                            <span class="text-[10px] text-blue-500 font-bold leading-none">✓✓</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                bubbleHtml = `
+                    <div class="bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative animate-fade-in">
+                        <p class="font-semibold text-[10px] text-[#155dfc] mb-1">${sender}</p>
+                        ${text}
+                        <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">${time}</span>
+                    </div>
+                `;
+            }
+            
+            const indicator = document.getElementById('float-typing-indicator');
+            if (indicator) {
+                indicator.insertAdjacentHTML('beforebegin', bubbleHtml);
+            } else {
+                container.insertAdjacentHTML('beforeend', bubbleHtml);
+            }
+            
+            container.scrollTop = container.scrollHeight;
         }
 
-        async function sendLOtpRequest(email, csrf) {
-            const res = await fetch("{{ route('enroll.send-otp') }}", {
-                method: 'POST',
+        function showFloatTypingIndicator() {
+            const container = document.getElementById('float-messages-container');
+            if (document.getElementById('float-typing-indicator')) return;
+            
+            const html = `
+                <div id="float-typing-indicator" class="bg-white/80 dark:bg-slate-800/80 text-slate-550 dark:text-slate-400 rounded-2xl rounded-tl-none px-3 py-2.5 text-[10px] max-w-[85%] self-start shadow-sm italic flex items-center gap-1.5 animate-pulse">
+                    <span>Admin sedang mengetik</span>
+                    <span class="flex gap-0.5 items-center">
+                        <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms">.</span>
+                        <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms">.</span>
+                        <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms">.</span>
+                    </span>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeFloatTypingIndicator() {
+            const el = document.getElementById('float-typing-indicator');
+            if (el) el.remove();
+        }
+
+        function handleFloatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendFloatMessage();
+            }
+        }
+
+        function sendFloatMessage() {
+            const input = document.getElementById('float-input-field');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            input.value = '';
+            appendFloatBubble('Anda', message, 'user');
+            
+            showFloatTypingIndicator();
+            
+            fetch("{{ route('contact.send') }}", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': csrf
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
                 body: JSON.stringify({
-                    email: email
+                    contact_name: floatUserName,
+                    contact_email: floatUserEmail,
+                    contact_message: message
                 })
+            })
+            .then(res => res.json())
+            .then(data => {
+                setTimeout(() => {
+                    removeFloatTypingIndicator();
+                    appendFloatBubble('Bantuan LPK MPI', `Terima kasih! Pesan Anda: "${message}" telah kami catat. Kami akan membalas secepatnya. 👍`, 'admin');
+                }, 1200);
+            })
+            .catch(err => {
+                setTimeout(() => {
+                    removeFloatTypingIndicator();
+                    appendFloatBubble('Bantuan LPK MPI', `Maaf, terjadi kesalahan pengiriman. Silakan coba lagi nanti.`, 'admin');
+                }, 1000);
             });
-            const data = await res.json();
-            if (!res.ok) {
-                throw new Error(data.message || 'Gagal mengirim OTP.');
-            }
-            return data;
         }
-
-        btnLResendOtp.addEventListener('click', async () => {
-            const email = document.getElementById('landing-enroll-email').value;
-            const csrf = document.querySelector('input[name="_token"]').value;
-            if (!email) return alert('Email wajib diisi.');
-
-            try {
-                btnLResendOtp.disabled = true;
-                btnLResendOtp.innerHTML = 'Resending...';
-                const data = await sendLOtpRequest(email, csrf);
-                alert(data.message || 'OTP berhasil dikirim.');
-                startLCountdown();
-                if (data.debug_code) {
-                    lOtpDebug.classList.remove('hidden');
-                    lOtpDebug.innerHTML = `DEBUG OTP: ${data.debug_code}`;
-                }
-            } catch (e) {
-                alert(e.message);
-                btnLResendOtp.disabled = false;
-                btnLResendOtp.innerHTML = 'Resend OTP';
-            }
-        });
-
-        lForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const errBox = document.getElementById('landing-form-errors');
-            errBox.classList.add('hidden');
-            errBox.innerHTML = '';
-
-            const csrf = document.querySelector('input[name="_token"]').value;
-            const email = document.getElementById('landing-enroll-email').value;
-
-            if (lOtpSection.classList.contains('hidden')) {
-                try {
-                    lSubmitBtn.disabled = true;
-                    lSubmitBtn.innerHTML = 'Mengirim OTP...';
-                    const data = await sendLOtpRequest(email, csrf);
-
-                    lOtpSection.classList.remove('hidden');
-                    lOtpInput.required = true;
-                    lSubmitBtn.disabled = false;
-                    lSubmitBtn.innerHTML = 'Verifikasi &amp; Konfirmasi Pendaftaran';
-                    startLCountdown();
-                    if (data.debug_code) {
-                        lOtpDebug.classList.remove('hidden');
-                        lOtpDebug.innerHTML = `DEBUG OTP: ${data.debug_code}`;
-                    }
-                } catch (err) {
-                    lSubmitBtn.disabled = false;
-                    lSubmitBtn.innerHTML = 'Kirim Pendaftaran &amp; Generate OTP';
-                    errBox.classList.remove('hidden');
-                    errBox.innerHTML = `<p>• ${err.message}</p>`;
-                }
-                return;
-            }
-
-            const formData = new FormData(lForm);
-            try {
-                lSubmitBtn.disabled = true;
-                lSubmitBtn.innerHTML = 'Memproses Pendaftaran...';
-
-                const response = await fetch(lForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': csrf
-                    }
-                });
-                const data = await response.json();
-
-                if (!response.ok) {
-                    if (data.errors) {
-                        errBox.classList.remove('hidden');
-                        Object.values(data.errors).forEach(errArray => {
-                            errArray.forEach(err => {
-                                const p = document.createElement('p');
-                                p.innerHTML = `• ${err}`;
-                                errBox.appendChild(p);
-                            });
-                        });
-                    } else {
-                        throw new Error(data.message || 'Terjadi kesalahan.');
-                    }
-                    lSubmitBtn.disabled = false;
-                    lSubmitBtn.innerHTML = 'Verifikasi &amp; Konfirmasi Pendaftaran';
-                    return;
-                }
-
-                // Success
-                document.getElementById('landing-cert-name').textContent = data.enrollment.name.toUpperCase();
-                document.getElementById('landing-cert-number').textContent = 'UNPAID (Pending Payment)';
-
-                lForm.reset();
-                lOtpSection.classList.add('hidden');
-                lOtpInput.required = false;
-                lSubmitBtn.disabled = false;
-                lSubmitBtn.innerHTML = 'Kirim Pendaftaran &amp; Generate OTP';
-
-                lForm.classList.add('hidden');
-                document.getElementById('landing-enrollment-success-card').classList.remove('hidden');
-
-                document.getElementById('btn-landing-reset-form').onclick = () => {
-                    document.getElementById('landing-enrollment-success-card').classList.add('hidden');
-                    lForm.classList.remove('hidden');
-                };
-            } catch (err) {
-                lSubmitBtn.disabled = false;
-                lSubmitBtn.innerHTML = 'Verifikasi &amp; Konfirmasi Pendaftaran';
-                alert(err.message);
-            }
-        });
     </script>
-    @endsection
+
+    <!-- ======= FLOATING WHATSAPP CHAT WIDGET HTML ======= -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 font-sans">
+        <!-- Floating Chat Popup -->
+        <div id="floating-chat-popup" class="hidden w-[330px] h-[440px] bg-[#efeae2] dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex-col animate-fade-in">
+            <!-- Header -->
+            <div class="bg-[#155dfc] p-4 flex items-center justify-between text-white shrink-0 shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg font-bold text-white overflow-hidden animate-pulse">
+                            <span>💬</span>
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-[#155dfc] rounded-full"></span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-black tracking-wide">Bantuan LPK MPI</h4>
+                        <p class="text-[9px] text-blue-100 font-bold flex items-center gap-1">
+                            <span class="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span> Online
+                        </p>
+                    </div>
+                </div>
+                <button onclick="toggleFloatingChat()" class="text-white hover:text-slate-200 text-lg font-extrabold">&times;</button>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="float-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3.5 flex flex-col min-h-0" style="background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); background-size: cover; background-repeat: repeat; background-blend-mode: overlay; background-color: rgba(239, 234, 226, 0.95);">
+                <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative">
+                    <p class="font-semibold text-[10px] text-[#155dfc] mb-1">Admin</p>
+                    Halo! Ada yang bisa kami bantu? Silakan sampaikan pesan Anda di bawah ya.
+                    <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">Sekarang</span>
+                </div>
+            </div>
+
+            <!-- Input Bar -->
+            <div id="float-input-bar" class="bg-[#f0f0f0] dark:bg-slate-950 p-2.5 flex items-center gap-2 border-t border-slate-200 dark:border-slate-800 shrink-0">
+                <input type="text" id="float-input-field" onkeypress="handleFloatKeyPress(event)" placeholder="Ketik pesan..." class="flex-1 bg-white dark:bg-slate-900 border-0 rounded-full px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none shadow-sm font-semibold">
+                <button onclick="sendFloatMessage()" class="w-9 h-9 rounded-full bg-[#155dfc] hover:bg-blue-700 text-white flex items-center justify-center shrink-0 shadow-md">
+                    <svg class="w-4 h-4 transform rotate-45 -translate-x-0.5 translate-y-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Chat Button (Matches user image exactly) -->
+        <button onclick="toggleFloatingChat()" class="w-14 h-14 rounded-full bg-[#155dfc] hover:bg-blue-700 text-white flex items-center justify-center shadow-2xl relative transition-all active:scale-95 border-2 border-white/20">
+            <!-- Closed state: Chat Bubble icon -->
+            <svg id="float-chat-icon-msg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            <!-- Open state: Cross icon (matches user screenshot with cross symbol overlaying bubble) -->
+            <div id="float-chat-icon-close" class="hidden items-center justify-center gap-0.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                <span class="text-xs font-black select-none">✕</span>
+            </div>
+        </button>
+    </div>
+@endsection

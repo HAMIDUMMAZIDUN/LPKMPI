@@ -44,7 +44,7 @@
                     $roleConfig = [
                         'superadmin' => ['bg' => 'bg-indigo-500/10', 'text' => 'text-indigo-400', 'border' => 'border-indigo-500/20', 'dot' => 'bg-indigo-500'],
                         'admin'      => ['bg' => 'bg-blue-500/10',   'text' => 'text-blue-400',   'border' => 'border-blue-500/20',   'dot' => 'bg-blue-500'],
-                        'asesor'     => ['bg' => 'bg-emerald-500/10','text' => 'text-emerald-400','border' => 'border-emerald-500/20','dot' => 'bg-emerald-500'],
+                        'asesor'     => ['bg' => 'bg-blue-500/10','text' => 'text-blue-400','border' => 'border-blue-500/20','dot' => 'bg-blue-500'],
                         'asesi'      => ['bg' => 'bg-violet-500/10', 'text' => 'text-violet-400', 'border' => 'border-violet-500/20', 'dot' => 'bg-violet-500'],
                     ];
                     $rc = $roleConfig[$admin->role] ?? ['bg'=>'bg-slate-500/10','text'=>'text-slate-400','border'=>'border-slate-500/20','dot'=>'bg-slate-500'];

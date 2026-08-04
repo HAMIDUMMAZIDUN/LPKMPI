@@ -74,7 +74,7 @@
 
         {{-- Score Card --}}
         <div class="glass rounded-3xl p-8 text-center">
-            <div class="text-7xl font-black mb-2 {{ $isPass ? 'text-emerald-400' : 'text-rose-400' }}">{{ $score }}%</div>
+            <div class="text-7xl font-black mb-2 {{ $isPass ? 'text-blue-400' : 'text-rose-400' }}">{{ $score }}%</div>
             <div class="text-slate-400 text-sm mb-6">Nilai Akhir</div>
             <div class="grid grid-cols-3 gap-4">
                 <div class="bg-slate-900/60 rounded-xl p-3">
@@ -82,7 +82,7 @@
                     <div class="text-[10px] text-slate-500 font-bold uppercase">Total Soal</div>
                 </div>
                 <div class="bg-slate-900/60 rounded-xl p-3">
-                    <div class="text-lg font-black {{ $isPass ? 'text-emerald-400' : 'text-rose-400' }}">{{ $isPass ? 'Lulus' : 'Belum Lulus' }}</div>
+                    <div class="text-lg font-black {{ $isPass ? 'text-blue-400' : 'text-rose-400' }}">{{ $isPass ? 'Lulus' : 'Belum Lulus' }}</div>
                     <div class="text-[10px] text-slate-500 font-bold uppercase">Status</div>
                 </div>
                 <div class="bg-slate-900/60 rounded-xl p-3">
@@ -110,16 +110,16 @@
                             $isCorrect = true;
                         }
                     @endphp
-                    <div class="glass rounded-2xl p-5 border {{ $q->question_type === 'multiple_choice' ? ($isCorrect ? 'border-emerald-500/30' : 'border-rose-500/30') : 'border-slate-800' }}">
+                    <div class="glass rounded-2xl p-5 border {{ $q->question_type === 'multiple_choice' ? ($isCorrect ? 'border-blue-500/30' : 'border-rose-500/30') : 'border-slate-800' }}">
                         <div class="flex items-start gap-3 mb-3">
-                            <span class="shrink-0 w-7 h-7 rounded-lg {{ $q->question_type === 'multiple_choice' ? ($isCorrect ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400') : 'bg-slate-800 text-slate-400' }} text-xs font-black flex items-center justify-center">
+                            <span class="shrink-0 w-7 h-7 rounded-lg {{ $q->question_type === 'multiple_choice' ? ($isCorrect ? 'bg-blue-500/20 text-blue-400' : 'bg-rose-500/20 text-rose-400') : 'bg-slate-800 text-slate-400' }} text-xs font-black flex items-center justify-center">
                                 {{ $idx + 1 }}
                             </span>
                             <div class="flex-1">
                                 <p class="text-white text-sm font-medium">{{ $q->question_text }}</p>
                             </div>
                             @if($q->question_type === 'multiple_choice')
-                                <span class="shrink-0 text-[10px] font-black uppercase {{ $isCorrect ? 'text-emerald-400' : 'text-rose-400' }}">
+                                <span class="shrink-0 text-[10px] font-black uppercase {{ $isCorrect ? 'text-blue-400' : 'text-rose-400' }}">
                                     {{ $isCorrect ? '✓ Benar' : '✕ Salah' }}
                                 </span>
                             @endif
@@ -133,14 +133,14 @@
                                         $isCorrOpt = $opt->is_correct;
                                     @endphp
                                     <div class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs
-                                        {{ $isCorrOpt ? 'bg-emerald-500/10 border border-emerald-500/20' : ($isSelected && !$isCorrOpt ? 'bg-rose-500/10 border border-rose-500/20' : 'bg-slate-900/40 border border-slate-800') }}">
-                                        <span class="w-5 h-5 rounded-full border {{ $isCorrOpt ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400' : ($isSelected ? 'border-rose-500 bg-rose-500/20 text-rose-400' : 'border-slate-700 text-slate-500') }} flex items-center justify-center text-[9px] font-black shrink-0">
+                                        {{ $isCorrOpt ? 'bg-blue-500/10 border border-blue-500/20' : ($isSelected && !$isCorrOpt ? 'bg-rose-500/10 border border-rose-500/20' : 'bg-slate-900/40 border border-slate-800') }}">
+                                        <span class="w-5 h-5 rounded-full border {{ $isCorrOpt ? 'border-blue-500 bg-blue-500/20 text-blue-400' : ($isSelected ? 'border-rose-500 bg-rose-500/20 text-rose-400' : 'border-slate-700 text-slate-500') }} flex items-center justify-center text-[9px] font-black shrink-0">
                                             {{ chr(65 + $oi) }}
                                         </span>
-                                        <span class="{{ $isCorrOpt ? 'text-emerald-300' : ($isSelected && !$isCorrOpt ? 'text-rose-300' : 'text-slate-400') }}">
+                                        <span class="{{ $isCorrOpt ? 'text-blue-300' : ($isSelected && !$isCorrOpt ? 'text-rose-300' : 'text-slate-400') }}">
                                             {{ $opt->option_text }}
                                         </span>
-                                        @if($isCorrOpt) <span class="ml-auto text-emerald-400 font-bold">✓ Benar</span> @endif
+                                        @if($isCorrOpt) <span class="ml-auto text-blue-400 font-bold">✓ Benar</span> @endif
                                         @if($isSelected && !$isCorrOpt) <span class="ml-auto text-rose-400 font-bold">Jawaban Anda</span> @endif
                                     </div>
                                 @endforeach

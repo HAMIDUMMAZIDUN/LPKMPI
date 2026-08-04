@@ -8,8 +8,8 @@
 
         <!-- Page Title -->
         <div class="text-center mb-10">
-            <span class="inline-flex items-center gap-2 bg-blue-600/10 text-blue-700 dark:text-blue-300 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider mb-4 border border-blue-600/20">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span>
+            <span class="inline-flex items-center gap-2 bg-blue-500/10 text-blue-700 dark:text-blue-300 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider mb-4 border border-blue-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping"></span>
                 Pendaftaran Pelatihan
             </span>
             <h1 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">Formulir Pendaftaran Pelatihan</h1>
@@ -18,7 +18,7 @@
 
         <!-- Alert Messages -->
         @if(session('success'))
-            <div class="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl text-sm flex items-center gap-3">
+            <div class="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm flex items-center gap-3">
                 <span>✓</span><span>{{ session('success') }}</span>
             </div>
         @endif
@@ -70,7 +70,7 @@
                     @csrf
                     <div class="flex flex-col gap-2">
                         <label for="enroll-program" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Program Pelatihan</label>
-                        <select id="enroll-program" name="program_id" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all">
+                        <select id="enroll-program" name="program_id" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all">
                             <option value="" disabled selected class="dark:bg-slate-900">Pilih Program Pelatihan...</option>
                             @foreach($programs as $prog)
                                 <option value="{{ $prog->id }}" class="dark:bg-slate-900">{{ $prog->title }}</option>
@@ -81,29 +81,29 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label for="enroll-name" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nama Lengkap (Sesuai KTP)</label>
-                            <input type="text" id="enroll-name" name="name" placeholder="Contoh: Dr. Hamidun, M.Pd" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="text" id="enroll-name" name="name" placeholder="Contoh: Dr. Hamidun, M.Pd" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                         <div class="flex flex-col gap-2">
                             <label for="enroll-nik" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">NIK</label>
-                            <input type="text" id="enroll-nik" name="nik" maxlength="16" placeholder="16 Digit NIK" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700 font-mono">
+                            <input type="text" id="enroll-nik" name="nik" maxlength="16" placeholder="16 Digit NIK" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700 font-mono">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label for="enroll-email" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Email Aktif</label>
-                            <input type="email" id="enroll-email" name="email" placeholder="nama@email.com" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="email" id="enroll-email" name="email" placeholder="nama@email.com" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                         <div class="flex flex-col gap-2">
                             <label for="enroll-phone" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">No. HP / WhatsApp</label>
-                            <input type="text" id="enroll-phone" name="phone" placeholder="08xxxxxxxxx" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="text" id="enroll-phone" name="phone" placeholder="08xxxxxxxxx" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label for="enroll-education" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Pendidikan Terakhir</label>
-                            <select id="enroll-education" name="education" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all">
+                            <select id="enroll-education" name="education" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all">
                                 <option value="" disabled selected class="dark:bg-slate-900">Pilih Pendidikan...</option>
                                 <option value="S3" class="dark:bg-slate-900">S3 / Doktor</option>
                                 <option value="S2" class="dark:bg-slate-900">S2 / Magister</option>
@@ -115,7 +115,7 @@
                         </div>
                         <div class="flex flex-col gap-2">
                             <label for="enroll-category" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Kategori Pekerjaan</label>
-                            <select id="enroll-category" name="category" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all">
+                            <select id="enroll-category" name="category" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all">
                                 <option value="" disabled selected class="dark:bg-slate-900">Pilih Kategori...</option>
                                 <option value="guru" class="dark:bg-slate-900">Guru Madrasah</option>
                                 <option value="mahasiswa" class="dark:bg-slate-900">Mahasiswa / Dosen</option>
@@ -127,11 +127,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label for="enroll-company" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nama Instansi / Perusahaan</label>
-                            <input type="text" id="enroll-company" name="company" placeholder="Nama Madrasah / Kampus" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="text" id="enroll-company" name="company" placeholder="Nama Madrasah / Kampus" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                         <div class="flex flex-col gap-2">
                             <label for="enroll-position" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Jabatan Saat Ini</label>
-                            <input type="text" id="enroll-position" name="position" placeholder="Contoh: Kepala Madrasah / Dosen" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="text" id="enroll-position" name="position" placeholder="Contoh: Kepala Madrasah / Dosen" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                     </div>
 
@@ -139,11 +139,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label for="enroll-ktp" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Unggah KTP (Gambar/Foto, maks 2MB)</label>
-                            <input type="file" id="enroll-ktp" name="ktp" accept="image/*" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
+                            <input type="file" id="enroll-ktp" name="ktp" accept="image/*" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400">
                         </div>
                         <div class="flex flex-col gap-2">
                             <label for="enroll-ijazah" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Unggah Ijazah Terakhir (Gambar/Foto, maks 2MB)</label>
-                            <input type="file" id="enroll-ijazah" name="ijazah" accept="image/*" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400">
+                            <input type="file" id="enroll-ijazah" name="ijazah" accept="image/*" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400">
                         </div>
                     </div>
 
@@ -162,7 +162,7 @@
                         
                         <div class="flex flex-col sm:flex-row gap-3">
                             <div class="flex-1">
-                                <input type="text" id="otp-code-input" name="otp_code" placeholder="Masukkan 6-digit kode" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-700 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-700/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700 tracking-widest font-mono text-center text-lg">
+                                <input type="text" id="otp-code-input" name="otp_code" placeholder="Masukkan 6-digit kode" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700 tracking-widest font-mono text-center text-lg">
                             </div>
                             <button type="button" id="btn-resend-otp" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition-all flex items-center justify-center gap-2">
                                 Kirim Ulang (<span id="otp-countdown">60</span>s)
@@ -170,7 +170,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-gradient-to-r from-blue-700 to-sky-600 text-white font-bold py-3.5 px-6 rounded-lg hover:brightness-110 shadow-lg shadow-blue-700/20 transition-all duration-300 flex items-center justify-center gap-2 text-xs uppercase tracking-wider mt-2">
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3.5 px-6 rounded-lg hover:brightness-110 shadow-lg shadow-blue-600/20 transition-all duration-300 flex items-center justify-center gap-2 text-xs uppercase tracking-wider mt-2">
                         Daftar Sekarang &amp; Terbitkan Sertifikat Pelatihan
                     </button>
                 </form>
@@ -179,7 +179,7 @@
 
         <!-- Success Card -->
         <div id="enrollment-success-card" class="glass-card rounded-2xl max-w-3xl mx-auto text-center p-8 sm:p-10 border border-slate-200 dark:border-slate-800 hidden animate-fade-in">
-            <div class="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 flex items-center justify-center mx-auto mb-5 shadow-sm">
+            <div class="w-14 h-14 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/25 flex items-center justify-center mx-auto mb-5 shadow-sm">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">Pendaftaran Pelatihan Berhasil!</h3>
@@ -194,8 +194,8 @@
                 <div class="cert-body my-8">
                     <p class="text-[10px] sm:text-xs text-slate-500 italic">Diberikan Kepada:</p>
                     <h2 id="cert-holder-name" class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white my-3 tracking-wide uppercase font-black">-</h2>
-                    <p class="text-[10px] sm:text-xs text-slate-400 max-w-md mx-auto leading-relaxed">Telah menyelesaikan pelatihan kompetensi dengan predikat <strong class="text-emerald-600 dark:text-emerald-400">KOMPETEN</strong> pada program:</p>
-                    <h3 id="cert-program-name" class="text-base sm:text-xl text-blue-700 dark:text-sky-400 font-bold mt-3 mb-6 tracking-wide">-</h3>
+                    <p class="text-[10px] sm:text-xs text-slate-400 max-w-md mx-auto leading-relaxed">Telah menyelesaikan pelatihan kompetensi dengan predikat <strong class="text-blue-600 dark:text-blue-400">KOMPETEN</strong> pada program:</p>
+                    <h3 id="cert-program-name" class="text-base sm:text-xl text-blue-700 dark:text-teal-400 font-bold mt-3 mb-6 tracking-wide">-</h3>
                     <div class="flex justify-center gap-8 sm:gap-12 text-xs border-t border-slate-200 dark:border-white/5 pt-6 max-w-sm mx-auto">
                         <div class="flex flex-col text-left">
                             <span class="text-[10px] text-slate-500">No. Sertifikat:</span>
@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap justify-center gap-4">
-                <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all shadow-lg shadow-blue-700/10" id="copy-cert-num-btn">Salin Nomor Sertifikat</button>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all shadow-lg shadow-blue-600/10" id="copy-cert-num-btn">Salin Nomor Sertifikat</button>
                 <button class="bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all" id="reset-enrollment-btn">Daftar Lagi</button>
             </div>
         </div>

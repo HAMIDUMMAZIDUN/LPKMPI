@@ -17,9 +17,10 @@ Route::get('/pendaftaran', [LandingController::class, 'pendaftaran'])->name('pen
 Route::post('/enroll', [EnrollmentController::class, 'enroll'])->name('enroll');
 Route::post('/enroll/send-otp', [EnrollmentController::class, 'sendOtp'])->name('enroll.send-otp');
 Route::post('/enroll/payment', [EnrollmentController::class, 'processPayment'])->name('enroll.payment');
-Route::get('/api/verify-certificate', [LandingController::class, 'verifyCertificate'])->name('api.verify-certificate');
+Route::get('/landing/verify-certificate', [LandingController::class, 'verifyCertificate'])->name('api.verify-certificate');
 Route::post('/api/guest-book', [LandingController::class, 'storeGuestBook'])->name('api.guest-book.store');
 Route::get('/api/guest-book', [LandingController::class, 'getGuestBooks'])->name('api.guest-book.list');
+Route::post('/contact/send', [LandingController::class, 'sendContact'])->name('contact.send');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -46,6 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/superadmin/users/{id}', [SuperadminController::class, 'destroyUser'])->name('superadmin.user.destroy');
     Route::post('/dashboard/superadmin/articles', [SuperadminController::class, 'storeArticle'])->name('superadmin.articles.store');
     Route::delete('/dashboard/superadmin/articles/{id}', [SuperadminController::class, 'destroyArticle'])->name('superadmin.articles.destroy');
+    Route::post('/dashboard/superadmin/programs', [SuperadminController::class, 'storeProgram'])->name('superadmin.programs.store');
+    Route::put('/dashboard/superadmin/programs/{id}', [SuperadminController::class, 'updateProgram'])->name('superadmin.programs.update');
+    Route::delete('/dashboard/superadmin/programs/{id}', [SuperadminController::class, 'destroyProgram'])->name('superadmin.programs.destroy');
+    Route::post('/dashboard/superadmin/trainees/{id}/approve', [SuperadminController::class, 'approveTrainee'])->name('superadmin.trainees.approve');
+    Route::post('/dashboard/superadmin/trainees/{id}/verify-payment', [SuperadminController::class, 'verifyPayment'])->name('superadmin.trainees.verify-payment');
+    Route::delete('/dashboard/superadmin/trainees/{id}', [SuperadminController::class, 'destroyTrainee'])->name('superadmin.trainees.destroy');
 
     // ── Admin Dashboard ───────────────────────────────────────────────────
     Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');

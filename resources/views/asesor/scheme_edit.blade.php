@@ -75,7 +75,7 @@
         <form action="{{ route('asesor.scheme.toggle-publish', $scheme->id) }}" method="POST">
             @csrf
             @if($scheme->status === 'draft')
-                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-2 rounded-lg transition-all">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-2 rounded-lg transition-all">
                     Publikasikan Skema
                 </button>
             @else
@@ -89,7 +89,7 @@
     <div class="max-w-5xl mx-auto p-6 space-y-8">
         {{-- Flash --}}
         @if(session('success'))
-            <div class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl text-sm">✓ {{ session('success') }}</div>
+            <div class="bg-blue-500/10 border border-blue-500/30 text-blue-400 px-4 py-3 rounded-xl text-sm">✓ {{ session('success') }}</div>
         @endif
         @if(session('error'))
             <div class="bg-rose-500/10 border border-rose-500/30 text-rose-400 px-4 py-3 rounded-xl text-sm">✕ {{ session('error') }}</div>
@@ -98,7 +98,7 @@
         {{-- Scheme Status Badge --}}
         <div class="flex items-center gap-3">
             @if($scheme->status === 'published')
-                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full text-xs font-black uppercase">🟢 Published — Asesi dapat mengerjakan skema ini</span>
+                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full text-xs font-black uppercase">🟢 Published — Asesi dapat mengerjakan skema ini</span>
             @else
                 <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1 rounded-full text-xs font-black uppercase">🟡 Draft — Belum bisa dikerjakan asesi</span>
             @endif
@@ -111,15 +111,15 @@
                 @csrf @method('PUT')
                 <div class="md:col-span-2">
                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Judul Skema</label>
-                    <input type="text" name="title" value="{{ $scheme->title }}" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <input type="text" name="title" value="{{ $scheme->title }}" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Durasi (menit)</label>
-                    <input type="number" name="duration_minutes" value="{{ $scheme->duration_minutes }}" min="5" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <input type="number" name="duration_minutes" value="{{ $scheme->duration_minutes }}" min="5" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
                 </div>
                 <div class="md:col-span-3">
                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Deskripsi (Opsional)</label>
-                    <textarea name="description" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500 resize-none">{{ $scheme->description }}</textarea>
+                    <textarea name="description" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 resize-none">{{ $scheme->description }}</textarea>
                 </div>
                 <div><button type="submit" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs uppercase tracking-wider px-5 py-2 rounded-lg transition-all">Simpan Detail</button></div>
             </form>
@@ -134,19 +134,19 @@
                     <div class="md:col-span-2">
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pertanyaan</label>
                         <textarea name="question_text" rows="2" required placeholder="Tulis pertanyaan di sini..."
-                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500 resize-none"></textarea>
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 resize-none"></textarea>
                     </div>
                     <div class="space-y-3">
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tipe Soal</label>
-                            <select name="question_type" id="q-type" onchange="toggleOptions()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            <select name="question_type" id="q-type" onchange="toggleOptions()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
                                 <option value="multiple_choice">Pilihan Ganda</option>
                                 <option value="essay">Esai</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nilai Poin</label>
-                            <input type="number" name="points" value="10" min="1" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            <input type="number" name="points" value="10" min="1" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
                         </div>
                     </div>
                 </div>
@@ -156,16 +156,16 @@
                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pilihan Jawaban <span class="text-slate-600">(Tandai pilihan yang benar)</span></label>
                     @foreach(['A','B','C','D'] as $i => $ltr)
                     <div class="flex items-center gap-3">
-                        <input type="radio" name="correct_option" value="{{ $i }}" {{ $i === 0 ? 'required' : '' }} class="text-emerald-500 w-4 h-4 shrink-0">
+                        <input type="radio" name="correct_option" value="{{ $i }}" {{ $i === 0 ? 'required' : '' }} class="text-blue-500 w-4 h-4 shrink-0">
                         <span class="text-xs font-bold text-slate-400 w-4">{{ $ltr }}</span>
                         <input type="text" name="options[]" required placeholder="Pilihan {{ $ltr }}"
-                            class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500">
                     </div>
                     @endforeach
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-2.5 rounded-lg transition-all">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-2.5 rounded-lg transition-all">
                         + Tambah Soal
                     </button>
                 </div>
@@ -195,8 +195,8 @@
                                 @if($q->question_type === 'multiple_choice')
                                     <div class="space-y-1.5">
                                         @foreach($q->options as $oi => $opt)
-                                        <div class="flex items-center gap-2 text-xs {{ $opt->is_correct ? 'text-emerald-400 font-bold' : 'text-slate-400' }}">
-                                            <span class="w-5 h-5 rounded-full border {{ $opt->is_correct ? 'border-emerald-500 bg-emerald-500/20' : 'border-slate-700' }} flex items-center justify-center text-[9px] font-black shrink-0">
+                                        <div class="flex items-center gap-2 text-xs {{ $opt->is_correct ? 'text-blue-400 font-bold' : 'text-slate-400' }}">
+                                            <span class="w-5 h-5 rounded-full border {{ $opt->is_correct ? 'border-blue-500 bg-blue-500/20' : 'border-slate-700' }} flex items-center justify-center text-[9px] font-black shrink-0">
                                                 {{ chr(65 + $oi) }}
                                             </span>
                                             {{ $opt->option_text }}

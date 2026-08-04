@@ -20,8 +20,11 @@ class SuperadminController extends Controller
         $admins   = User::where('role', 'admin')->latest()->get();
         $asesors  = User::where('role', 'asesor')->latest()->get();
         $articles = \App\Models\Article::latest()->get();
+        
+        $programs = \App\Models\TrainingProgram::all();
+        $trainees = \App\Models\TraineeEnrollment::with('trainingProgram')->latest()->get();
 
-        return view('dashboard.superadmin', compact('settings', 'admins', 'asesors', 'articles'));
+        return view('dashboard.superadmin', compact('settings', 'admins', 'asesors', 'articles', 'programs', 'trainees'));
     }
 
     public function storeUser(Request $request)
@@ -337,5 +340,146 @@ class SuperadminController extends Controller
         auth()->user()->update($data);
 
         return redirect()->route('superadmin.dashboard', ['open' => 'panel-profile'])->with('success', 'Profil berhasil diperbarui!');
+    }
+
+    public function storeProgram(Request $request)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $request->validate([
+            'id' => 'required|string|unique:training_programs,id|max:100',
+            'title' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'duration' => 'required|string|max:255',
+            'description' => 'required|string',
+            'benefits' => 'nullable|string',
+            'price' => 'required|string|max:255',
+            'lsp_keyword' => 'required|string|max:255',
+        ]);
+
+        $benefitsArray = [];
+        if ($request->filled('benefits')) {
+            $benefitsArray = array_map('trim', explode(',', $request->benefits));
+        }
+
+        \App\Models\TrainingProgram::create([
+            'id' => $request->id,
+            'title' => $request->title,
+            'category' => $request->category,
+            'duration' => $request->duration,
+            'description' => $request->description,
+            'benefits' => $benefitsArray,
+            'price' => $request->price,
+            'lsp_keyword' => $request->lsp_keyword,
+        ]);
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-programs-db'])
+            ->with('success', 'Program pelatihan berhasil ditambahkan!');
+    }
+
+    public function updateProgram(Request $request, $id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $program = \App\Models\TrainingProgram::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'duration' => 'required|string|max:255',
+            'description' => 'required|string',
+            'benefits' => 'nullable|string',
+            'price' => 'required|string|max:255',
+            'lsp_keyword' => 'required|string|max:255',
+        ]);
+
+        $benefitsArray = [];
+        if ($request->filled('benefits')) {
+            $benefitsArray = array_map('trim', explode(',', $request->benefits));
+        }
+
+        $program->update([
+            'title' => $request->title,
+            'category' => $request->category,
+            'duration' => $request->duration,
+            'description' => $request->description,
+            'benefits' => $benefitsArray,
+            'price' => $request->price,
+            'lsp_keyword' => $request->lsp_keyword,
+        ]);
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-programs-db'])
+            ->with('success', 'Program pelatihan berhasil diperbarui!');
+    }
+
+    public function destroyProgram($id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $program = \App\Models\TrainingProgram::findOrFail($id);
+        $program->delete();
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-programs-db'])
+            ->with('success', 'Program pelatihan berhasil dihapus!');
+    }
+
+    public function approveTrainee($id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $trainee = \App\Models\TraineeEnrollment::findOrFail($id);
+        if ($trainee->status !== 'LULUS') {
+            do {
+                $certNumber = 'LPK-MPI-' . date('Y') . '-' . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            } while (\App\Models\TraineeEnrollment::where('certificate_number', $certNumber)->exists());
+            $trainee->update([
+                'certificate_number' => $certNumber, 
+                'certificate_date' => now()->toDateString(), 
+                'status' => 'LULUS'
+            ]);
+        }
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-trainees-db'])
+            ->with('success', 'Sertifikat ' . $trainee->name . ' berhasil diterbitkan!');
+    }
+
+    public function verifyPayment($id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $trainee = \App\Models\TraineeEnrollment::findOrFail($id);
+        
+        $refNumber = 'MPI-PAY-' . strtoupper(\Illuminate\Support\Str::random(10));
+        
+        $trainee->update([
+            'payment_status' => 'PAID',
+            'payment_method' => 'Manual Transfer (Verified by Superadmin)',
+            'payment_reference' => $refNumber,
+        ]);
+        
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-trainees-db'])
+            ->with('success', 'Pembayaran untuk ' . $trainee->name . ' berhasil diverifikasi!');
+    }
+
+    public function destroyTrainee($id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $trainee = \App\Models\TraineeEnrollment::findOrFail($id);
+        $trainee->delete();
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-trainees-db'])
+            ->with('success', 'Pendaftaran/peserta berhasil dihapus!');
     }
 }

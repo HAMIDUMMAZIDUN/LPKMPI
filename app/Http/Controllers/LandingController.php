@@ -178,4 +178,28 @@ class LandingController extends Controller
             'data' => $guests
         ]);
     }
+
+    public function sendContact(Request $request)
+    {
+        $validated = $request->validate([
+            'contact_name'    => 'required|string|max:255',
+            'contact_email'   => 'required|email|max:255',
+            'contact_message' => 'required|string',
+        ]);
+
+        // Simulating the actual sending of an email by logging to Laravel logs
+        \Illuminate\Support\Facades\Log::info("Mailable Sim: Contact message from " . $validated['contact_name'] . " (" . $validated['contact_email'] . "): " . $validated['contact_message']);
+
+        // We could also send a real mail here in production:
+        // \Illuminate\Support\Facades\Mail::raw($validated['contact_message'], function($message) use ($validated) {
+        //     $message->to('admin@lpk-mpi.org')
+        //             ->subject('Pesan Kontak Baru dari ' . $validated['contact_name'])
+        //             ->from($validated['contact_email']);
+        // });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pesan mailable Anda telah terkirim ke Admin!'
+        ]);
+    }
 }

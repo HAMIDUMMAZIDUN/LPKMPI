@@ -1,5 +1,6 @@
 @php
     $isHome = Request::routeIs('home');
+    $isAuthPage = Request::routeIs('login', 'register', 'password.*');
     $dashboardUrl = '#';
     if (Auth::check()) {
         $dashboardUrl = match(Auth::user()->role) {
@@ -87,6 +88,24 @@
         .dark .pub-nav-item:hover, .dark .pub-nav-item.active {
             background: rgba(59,130,246,0.12); color: #60a5fa;
         }
+        .pub-nav-item.nav-btn-pendaftaran {
+            background: linear-gradient(135deg, #155dfc, #084be3) !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            margin: 6px 8px !important;
+            padding: 10px 14px !important;
+            width: calc(100% - 16px) !important;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2) !important;
+            transition: all 0.2s ease-in-out !important;
+        }
+        .pub-nav-item.nav-btn-pendaftaran:hover {
+            background: linear-gradient(135deg, #084be3, #0238b1) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 12px -2px rgba(16, 185, 129, 0.3) !important;
+        }
+        .pub-nav-item.nav-btn-pendaftaran .pni svg {
+            stroke: #ffffff !important;
+        }
         .pub-nav-item .pni { flex-shrink: 0; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
         .pub-nav-item .pnl { opacity: 0; transition: opacity 0.2s ease 0.05s; overflow: hidden; }
         #pub-sidebar:hover .pnl { opacity: 1; }
@@ -119,8 +138,13 @@
         @endif
         @endauth
 
+        @if($isAuthPage)
+        #pub-main-wrap { margin-left: 0 !important; }
+        @endif
+
     </style>
 
+    @if(!$isAuthPage)
     <aside id="pub-sidebar" @auth @if(auth()->user()->role === 'superadmin' && !request()->has('preview')) style="display:none" @endif @endauth>
         <!-- Logo -->
         <div class="pub-logo" id="nav-logo-btn" style="cursor: pointer;">
@@ -173,7 +197,7 @@
                 <span class="pnl">Alumni</span>
             </a>
 
-            <a href="{{ $isHome ? '#' : route('home') . '#pendaftaran' }}" onclick="{{ $isHome ? "event.preventDefault();switchTab('pendaftaran')" : "" }}" class="pub-nav-item" data-tab="pendaftaran">
+            <a href="{{ route('pendaftaran') }}" target="_blank" class="pub-nav-item nav-btn-pendaftaran" data-tab="pendaftaran">
                 <span class="pni"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></span>
                 <span class="pnl">Pendaftaran</span>
             </a>
@@ -224,11 +248,13 @@
             <button class="theme-toggle-btn" style="display:none;"></button>
         </div>
     </aside>
+    @endif
 
     <!-- Wrapper: push content right of sidebar -->
     <div id="pub-main-wrap">
 
     <!-- Mobile Top Header Bar (ratio kecil/layar HP/Tablet) -->
+    @if(!$isAuthPage)
     <header class="md:hidden sticky top-0 left-0 w-full z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 px-4 py-3 flex items-center justify-between shadow-sm">
         <div class="flex items-center gap-3">
             <button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-700 dark:text-slate-200 focus:outline-none" aria-label="Toggle Navigation">
@@ -251,8 +277,10 @@
             <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
     </header>
+    @endif
 
     <!-- Drawer Mobile Overlay -->
+    @if(!$isAuthPage)
     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm" onclick="toggleMobileMenu()">
         <div class="w-64 bg-white dark:bg-slate-900 h-full shadow-2xl p-5 flex flex-col justify-between overflow-y-auto" onclick="event.stopPropagation()">
             <div>
@@ -273,7 +301,7 @@
                     <a href="{{ $isHome ? '#' : route('home') . '#fasilitas' }}" onclick="{{ $isHome ? "event.preventDefault(); switchTab('fasilitas'); toggleMobileMenu();" : "toggleMobileMenu();" }}" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-tab="fasilitas">Fasilitas</a>
                     <a href="{{ $isHome ? '#' : route('home') . '#berita' }}" onclick="{{ $isHome ? "event.preventDefault(); switchTab('berita'); toggleMobileMenu();" : "toggleMobileMenu();" }}" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-tab="berita">Berita &amp; Artikel</a>
                     <a href="{{ $isHome ? '#' : route('home') . '#alumni' }}" onclick="{{ $isHome ? "event.preventDefault(); switchTab('alumni'); toggleMobileMenu();" : "toggleMobileMenu();" }}" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-tab="alumni">Alumni</a>
-                    <a href="{{ $isHome ? '#' : route('home') . '#pendaftaran' }}" onclick="{{ $isHome ? "event.preventDefault(); switchTab('pendaftaran'); toggleMobileMenu();" : "toggleMobileMenu();" }}" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-tab="pendaftaran">Pendaftaran</a>
+                    <a href="{{ route('pendaftaran') }}" target="_blank" onclick="toggleMobileMenu();" class="block px-3 py-2.5 rounded-lg text-xs font-bold text-center text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:brightness-110 transition shadow-sm mt-3" data-tab="pendaftaran">Pendaftaran</a>
                     <a href="{{ $isHome ? '#' : route('home') . '#kontak' }}" onclick="{{ $isHome ? "event.preventDefault(); switchTab('kontak'); toggleMobileMenu();" : "toggleMobileMenu();" }}" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-tab="kontak">Kontak</a>
                 </nav>
             </div>
@@ -286,14 +314,16 @@
             </div>
         </div>
     </div>
+    @endif
 
 
-    <main id="main-content-container" class="min-h-[70vh] {{ $isHome ? 'w-full' : 'max-w-7xl mx-auto mt-8 mb-10 px-6' }} @auth @if(auth()->user()->role === 'superadmin' && !request()->has('preview')) !max-w-full !w-full !m-0 !p-0 !min-h-screen @endif @endauth">
+    <main id="main-content-container" class="min-h-[70vh] {{ $isAuthPage ? 'w-full' : ($isHome ? 'w-full' : 'max-w-7xl mx-auto mt-8 mb-10 px-6') }} @auth @if(auth()->user()->role === 'superadmin' && !request()->has('preview')) !max-w-full !w-full !m-0 !p-0 !min-h-screen @endif @endauth">
 
         @yield('content')
     </main>
 
     <!-- Footer -->
+    @if(!$isAuthPage)
     <footer class="w-full bg-slate-900 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-850/80 py-16 mt-20 text-xs text-slate-400 transition-colors duration-300 @auth @if(auth()->user()->role === 'superadmin' && !request()->has('preview')) hidden @endif @endauth">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 text-left">
             <div>
@@ -340,6 +370,7 @@
             </div>
         </div>
     </footer>
+    @endif
 
     <!-- App Scripts -->
     <script>
