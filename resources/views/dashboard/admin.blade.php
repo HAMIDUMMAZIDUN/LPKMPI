@@ -64,7 +64,7 @@
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
             <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -112,12 +112,12 @@
                     </div>
                 </div>
 
-                <!-- Accordion: Administrasi -->
+                <!-- Accordion: Administrasi & Data -->
                 <div class="accordion-group">
                     <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            <span>Administrasi</span>
+                            <span>Administrasi & Data</span>
                         </span>
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
@@ -128,7 +128,48 @@
                         </button>
                         <button onclick="showPanel('users')" id="btn-users" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                            Kelola Pengguna & Artikel
+                            Kelola Pengguna
+                        </button>
+                        <button onclick="showPanel('programs-db')" id="btn-programs-db" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Data Program Pelatihan
+                        </button>
+                        <button onclick="showPanel('trainees-db')" id="btn-trainees-db" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Data Pendaftaran Peserta
+                        </button>
+                        <button onclick="showPanel('chats')" id="btn-chats" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Live Chat Bantuan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Accordion: CMS Landing Page -->
+                <div class="accordion-group">
+                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                        <span class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4a2 2 0 012 2v6a2 2 0 01-2 2h-2m-4-6l3-3m0 0l3 3m-3-3v12"/></svg>
+                            <span>CMS Landing Page</span>
+                        </span>
+                        <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
+                        <button onclick="showPanel('program')" id="btn-program" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Program Pelatihan
+                        </button>
+                        <button onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Jadwal Pelatihan
+                        </button>
+                        <button onclick="showPanel('fasilitas')" id="btn-fasilitas" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Fasilitas LPK
+                        </button>
+                        <button onclick="showPanel('articles')" id="btn-articles" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Kabar & Artikel
                         </button>
                     </div>
                 </div>
@@ -164,7 +205,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -276,14 +317,60 @@
                             Ekspor Data Pendaftar
                         </a>
                     </div>
-                </div>
-            </div>
-
-            <!-- PANEL: VERIFIKASI PENDAFTARAN -->
+                          <!-- PANEL: VERIFIKASI PENDAFTARAN -->
             <div id="panel-verifikasi" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Verifikasi Berkas &amp; Pembayaran Asesi</h2>
                     <p class="text-slate-500 text-xs">Verifikasi pembayaran dan berkas data pendaftaran (APL-01) asesi.</p>
+                </div>
+
+                <!-- Form Edit Peserta -->
+                <div id="form-edit-trainee" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Data Peserta</h3>
+                    <form id="edit-trainee-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                                <input type="text" name="name" id="edit-trainee-name" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">NIK (Nomor Induk Kependudukan)</label>
+                                <input type="text" name="nik" id="edit-trainee-nik" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email</label>
+                                <input type="email" name="email" id="edit-trainee-email" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">No. Handphone / WhatsApp</label>
+                                <input type="text" name="phone" id="edit-trainee-phone" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Pendaftaran</label>
+                                <select name="status" id="edit-trainee-status" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="MENUNGGU UJIAN">Menunggu Ujian / Kelulusan</option>
+                                    <option value="LULUS">Lulus (Kompeten)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Pembayaran</label>
+                                <select name="payment_status" id="edit-trainee-payment-status" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="UNPAID">Belum Lunas</option>
+                                    <option value="PAID">Lunas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
@@ -295,7 +382,8 @@
                                     <th class="px-5 py-3 text-left">Skema / Program</th>
                                     <th class="px-5 py-3 text-left">Tanggal Daftar</th>
                                     <th class="px-5 py-3 text-left">Status Dokumen</th>
-                                    <th class="px-5 py-3 text-center">Verifikasi Pembayaran / Berkas</th>
+                                    <th class="px-5 py-3 text-left">Verifikasi Pembayaran</th>
+                                    <th class="px-5 py-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -303,9 +391,9 @@
                                     <tr>
                                         <td class="px-5 py-4">
                                             <div class="font-bold text-slate-850 dark:text-white">{{ $t->name }}</div>
-                                            <div class="text-slate-450 text-xs font-mono mt-0.5">NIK: {{ $t->nik }}</div>
+                                            <div class="text-slate-455 text-xs font-mono mt-0.5">NIK: {{ $t->nik }}</div>
                                         </td>
-                                        <td class="px-5 py-4 text-xs font-bold text-slate-700 dark:text-slate-300">
+                                        <td class="px-5 py-4 text-xs font-bold text-slate-705 dark:text-slate-300">
                                             {{ $t->trainingProgram?->title ?? '-' }}
                                         </td>
                                         <td class="px-5 py-4 text-xs text-slate-500 font-mono">
@@ -314,8 +402,8 @@
                                         <td class="px-5 py-4 text-xs">
                                             <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded-full font-bold uppercase text-[9px]">Lengkap</span>
                                         </td>
-                                        <td class="px-5 py-4 text-center">
-                                            <div class="flex items-center justify-center gap-2">
+                                        <td class="px-5 py-4">
+                                            <div class="flex items-center gap-2">
                                                 @if($t->payment_status !== 'PAID')
                                                     <form action="{{ route('admin.trainees.verify-payment', $t->id) }}" method="POST">
                                                         @csrf
@@ -326,9 +414,18 @@
                                                 @endif
                                             </div>
                                         </td>
+                                        <td class="px-5 py-4">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <button type="button" onclick='editTrainee({!! json_encode($t) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <form action="{{ route('admin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">Belum ada asesi mendaftar.</td></tr>
+                                    <tr><td colspan="6" class="px-5 py-8 text-center text-slate-500">Belum ada asesi mendaftar.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -486,9 +583,84 @@
                             </div>
                             <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Daftarkan Asesor</button>
                         </form>
-                    </div>
+                                    <!-- Form Edit User -->
+                <div id="form-edit-user" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Akun Pengguna</h3>
+                    <form id="edit-user-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Username / Nama</label>
+                                <input type="text" name="username" id="edit-user-username" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email</label>
+                                <input type="email" name="email" id="edit-user-email" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono font-semibold">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Password Baru (Kosongkan jika tidak diubah)</label>
+                            <input type="password" name="password" placeholder="Minimal 6 karakter" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelEditUser()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                        </div>
+                    </form>
                 </div>
 
+                <!-- Daftar Admin & Asesor & Asesi -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Daftar Akun Pengguna</h3>
+                    <div class="space-y-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2">Asesor</span>
+                        @foreach($asetors as $asesor)
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                                <div>
+                                    <div class="font-bold text-slate-800 dark:text-white">{{ $asesor->name }}</div>
+                                    <div class="text-slate-400 font-mono">{{ $asesor->email }}</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesor</span>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" onclick='showUserDetail({!! json_encode($asesor) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" onclick='editUser({!! json_encode($asesor) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('admin.user.destroy', $asesor->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block mt-4 mb-2">Asesi</span>
+                        @foreach($asesis as $asesi)
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                                <div>
+                                    <div class="font-bold text-slate-800 dark:text-white">{{ $asesi->name }}</div>
+                                    <div class="text-slate-400 font-mono">{{ $asesi->email }}</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesi</span>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" onclick='showUserDetail({!! json_encode($asesi) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" onclick='editUser({!! json_encode($asesi) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('admin.user.destroy', $asesi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: KABAR & ARTIKEL -->
+            <div id="panel-articles" class="role-panel hidden space-y-6">
                 <!-- CMS Artikel Form -->
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Tulis Artikel / Kabar Terbaru LPK</h3>
@@ -508,6 +680,483 @@
                         </div>
                         <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Terbitkan Artikel</button>
                     </form>
+                </div>
+
+                <!-- Form Edit Artikel -->
+                <div id="form-edit-article" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Artikel</h3>
+                    <form id="edit-article-form-action" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Artikel</label>
+                            <input type="text" name="title" id="edit-article-title" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Konten / Isi Artikel</label>
+                            <textarea name="content" id="edit-article-content" rows="6" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Cover Baru (Opsional)</label>
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="cancelEditArticle()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Daftar Artikel Aktif -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider mb-4">Daftar Artikel Aktif</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        @forelse($articles as $art)
+                            <div class="bg-white dark:bg-slate-950 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col justify-between p-4">
+                                <div class="space-y-2">
+                                    <h4 class="font-bold text-slate-850 dark:text-white text-xs">{{ $art->title }}</h4>
+                                    <p class="text-slate-500 text-[11px] line-clamp-2">{{ Str::limit(strip_tags($art->content), 80) }}</p>
+                                </div>
+                                <div class="flex items-center justify-between border-t border-slate-200/55 dark:border-slate-800/80 pt-3 mt-3">
+                                    <span class="text-[10px] text-slate-400 font-mono">{{ $art->created_at->format('d M Y') }}</span>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-850 text-[10px] font-bold uppercase font-bold">Edit</button>
+                                        <form action="{{ route('admin.articles.destroy', $art->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase font-bold">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-slate-500 text-xs py-4 font-semibold">Belum ada artikel diterbitkan.</p>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: PROGRAM PELATIHAN (CMS) -->
+            <div id="panel-program" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">CMS Program Pelatihan</h2>
+                    <p class="text-slate-500 text-xs">Ubah judul, harga, durasi, dan materi program pelatihan yang tampil di halaman depan.</p>
+                </div>
+                <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-6">
+                    @csrf
+                    <input type="hidden" name="active_panel" value="panel-program">
+                    @foreach([
+                        ['key'=>'manajemen','label'=>'Program Management Yayasan/Pesantren'],
+                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Islam'],
+                        ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
+                    ] as $prog)
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
+                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
+                                    <input type="text" name="prog_{{ $prog['key'] }}_title" value="{{ $settings['prog_'.$prog['key'].'_title'] ?? $prog['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
+                                        <input type="text" name="prog_{{ $prog['key'] }}_durasi" value="{{ $settings['prog_'.$prog['key'].'_durasi'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
+                                        <input type="text" name="prog_{{ $prog['key'] }}_harga" value="{{ $settings['prog_'.$prog['key'].'_harga'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                                <textarea name="prog_{{ $prog['key'] }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_desc'] ?? '' }}</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi Silabus</label>
+                                <textarea name="prog_{{ $prog['key'] }}_silabus" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_silabus'] ?? '' }}</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Prospek Karir / Output</label>
+                                <textarea name="prog_{{ $prog['key'] }}_prospek" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_prospek'] ?? '' }}</textarea>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Program Pelatihan</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PANEL: JADWAL DIKLAT (CMS) -->
+            <div id="panel-jadwal" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">CMS Jadwal Pelatihan</h2>
+                    <p class="text-slate-500 text-xs">Atur jadwal pelatihan terdekat, kuota, dan metode pelaksanaan yang tampil di halaman depan.</p>
+                </div>
+                <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-6">
+                    @csrf
+                    <input type="hidden" name="active_panel" value="panel-jadwal">
+                    @for($i = 1; $i <= 3; $i++)
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
+                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
+                                    <input type="text" name="jadwal_{{ $i }}_nama" value="{{ $settings['jadwal_'.$i.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Batas Pendaftaran</label>
+                                    <input type="text" name="jadwal_{{ $i }}_batas" value="{{ $settings['jadwal_'.$i.'_batas'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Waktu Pelaksanaan</label>
+                                    <input type="text" name="jadwal_{{ $i }}_waktu" value="{{ $settings['jadwal_'.$i.'_waktu'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Metode Pelaksanaan</label>
+                                    <input type="text" name="jadwal_{{ $i }}_metode" value="{{ $settings['jadwal_'.$i.'_metode'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Kuota / Batas</label>
+                                    <input type="text" name="jadwal_{{ $i }}_quota" value="{{ $settings['jadwal_'.$i.'_quota'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                    @endfor
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Jadwal Diklat</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PANEL: FASILITAS (CMS) -->
+            <div id="panel-fasilitas" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">CMS Fasilitas LPK</h2>
+                    <p class="text-slate-500 text-xs">Ubah rincian fasilitas belajar, perpustakaan, dan asrama yang tampil di halaman depan.</p>
+                </div>
+                <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+                    <input type="hidden" name="active_panel" value="panel-fasilitas">
+                    @foreach([
+                        ['key'=>'belajar','label'=>'Ruang Belajar'],
+                        ['key'=>'perpustakaan','label'=>'Perpustakaan'],
+                        ['key'=>'asrama','label'=>'Asrama / Penginapan'],
+                    ] as $fas)
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
+                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Fasilitas</label>
+                                <input type="text" name="fasilitas_{{ $fas['key'] }}_judul" value="{{ $settings['fasilitas_'.$fas['key'].'_judul'] ?? $fas['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                                <textarea name="fasilitas_{{ $fas['key'] }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['fasilitas_'.$fas['key'].'_desc'] ?? '' }}</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto</label>
+                                @if(!empty($settings['fasilitas_'.$fas['key'].'_foto']))
+                                    <img src="{{ asset('storage/' . $settings['fasilitas_'.$fas['key'].'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
+                                @endif
+                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Fasilitas</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PANEL: DATA PROGRAM PELATIHAN (DATABASE CRUD) -->
+            <div id="panel-programs-db" class="role-panel hidden space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="space-y-1">
+                        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Program Pelatihan</h2>
+                        <p class="text-slate-500 text-xs">Kelola data program pelatihan yang aktif di database.</p>
+                    </div>
+                    <button onclick="toggleAddProgramForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md shadow-blue-500/10 font-bold">
+                        + Tambah Program
+                    </button>
+                </div>
+
+                <!-- Form Tambah Program -->
+                <div id="form-add-program" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Program Pelatihan Baru</h3>
+                    <form action="{{ route('admin.programs.store') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">ID / Slug Unik (misal: ssw_prog)</label>
+                                <input type="text" name="id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
+                                <input type="text" name="title" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kategori</label>
+                                <input type="text" name="category" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
+                                <input type="text" name="duration" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
+                                <input type="text" name="price" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kata Kunci LSP (LSP Keyword)</label>
+                                <input type="text" name="lsp_keyword" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                            <textarea name="description" required rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Manfaat / Fasilitas Tambahan (Pisahkan dengan koma)</label>
+                            <input type="text" name="benefits" placeholder="Sertifikat LPK, Modul Pembelajaran, Konsultasi" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="toggleAddProgramForm()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10 font-bold">Simpan Program</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Form Edit Program -->
+                <div id="form-edit-program" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Program Pelatihan</h3>
+                    <form id="edit-program-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">ID (Tidak Dapat Diubah)</label>
+                                <input type="text" id="edit-program-id" disabled class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-450 font-bold font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
+                                <input type="text" name="title" id="edit-program-title" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kategori</label>
+                                <input type="text" name="category" id="edit-program-category" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
+                                <input type="text" name="duration" id="edit-program-duration" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
+                                <input type="text" name="price" id="edit-program-price" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kata Kunci LSP (LSP Keyword)</label>
+                                <input type="text" name="lsp_keyword" id="edit-program-lsp-keyword" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                            <textarea name="description" id="edit-program-description" required rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Manfaat / Fasilitas Tambahan (Pisahkan dengan koma)</label>
+                            <input type="text" name="benefits" id="edit-program-benefits" placeholder="Sertifikat LPK, Modul Pembelajaran, Konsultasi" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="cancelEditProgram()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabel List Program -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-400 text-[10px] uppercase font-extrabold">
+                                    <th class="px-5 py-3 text-left">ID / Slug</th>
+                                    <th class="px-5 py-3 text-left">Nama Program</th>
+                                    <th class="px-5 py-3 text-left">Kategori</th>
+                                    <th class="px-5 py-3 text-left">Durasi &amp; Harga</th>
+                                    <th class="px-5 py-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                                @forelse($programs as $prog)
+                                    <tr>
+                                        <td class="px-5 py-4 font-mono font-bold text-slate-500">{{ $prog->id }}</td>
+                                        <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $prog->title }}</td>
+                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-350">{{ $prog->category }}</td>
+                                        <td class="px-5 py-4 text-slate-650 dark:text-slate-300">
+                                            <div class="font-bold text-blue-600 dark:text-blue-400 font-bold">{{ $prog->price }}</div>
+                                            <div class="text-[10px] text-slate-400 font-semibold">{{ $prog->duration }}</div>
+                                        </td>
+                                        <td class="px-5 py-4">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <button onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <form action="{{ route('admin.programs.destroy', $prog->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="px-5 py-8 text-center text-slate-500 font-semibold">Belum ada program pelatihan di database.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: DATA PENDAFTARAN PESERTA (DATABASE CRUD) -->
+            <div id="panel-trainees-db" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Pendaftaran &amp; Peserta</h2>
+                    <p class="text-slate-500 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
+                </div>
+
+                <!-- Form Edit Peserta -->
+                <div id="form-edit-trainee" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Data Peserta</h3>
+                    <form id="edit-trainee-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                                <input type="text" name="name" id="edit-trainee-name" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">NIK (Nomor Induk Kependudukan)</label>
+                                <input type="text" name="nik" id="edit-trainee-nik" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email</label>
+                                <input type="email" name="email" id="edit-trainee-email" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">No. Handphone / WhatsApp</label>
+                                <input type="text" name="phone" id="edit-trainee-phone" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Pendaftaran</label>
+                                <select name="status" id="edit-trainee-status" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    <option value="MENUNGGU UJIAN">Menunggu Ujian / Kelulusan</option>
+                                    <option value="LULUS">Lulus (Kompeten)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Pembayaran</label>
+                                <select name="payment_status" id="edit-trainee-payment-status" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    <option value="UNPAID">Belum Lunas</option>
+                                    <option value="PAID">Lunas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabel List Pendaftaran -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+                    <div class="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Semua Pendaftaran</h3>
+                        <input type="text" id="trainee-search" onkeyup="filterTrainees()" placeholder="Cari nama, NIK, atau program..." class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 w-64 font-semibold">
+                    </div>
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-sm" id="trainees-table">
+                            <thead>
+                                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-400 text-[10px] uppercase font-extrabold">
+                                    <th class="px-5 py-3 text-left">Nama &amp; NIK</th>
+                                    <th class="px-5 py-3 text-left">Kontak</th>
+                                    <th class="px-5 py-3 text-left">Program</th>
+                                    <th class="px-5 py-3 text-left">Pembayaran</th>
+                                    <th class="px-5 py-3 text-left">Sertifikat / Status</th>
+                                    <th class="px-5 py-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                                @forelse($trainees as $t)
+                                    <tr class="trainee-row">
+                                        <td class="px-5 py-4">
+                                            <div class="font-bold text-slate-800 dark:text-white trainee-name">{{ $t->name }}</div>
+                                            <div class="text-[10px] text-slate-400 font-mono trainee-nik">NIK: {{ $t->nik }}</div>
+                                        </td>
+                                        <td class="px-5 py-4">
+                                            <div class="text-slate-600 dark:text-slate-350 font-semibold">{{ $t->email }}</div>
+                                            <div class="text-[10px] text-slate-400 font-mono">{{ $t->phone }}</div>
+                                        </td>
+                                        <td class="px-5 py-4 trainee-program">
+                                            <span class="font-semibold text-slate-700 dark:text-slate-300">{{ $t->trainingProgram?->title ?? '-' }}</span>
+                                        </td>
+                                        <td class="px-5 py-4">
+                                            @if($t->payment_status === 'PAID')
+                                                <span class="bg-blue-50 text-blue-600 border border-blue-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Lunas</span>
+                                                <div class="text-[9px] text-slate-400 mt-1 font-mono font-bold">{{ $t->payment_method }}</div>
+                                            @else
+                                                <span class="bg-amber-50 text-amber-600 border border-amber-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Belum Lunas</span>
+                                                <form action="{{ route('admin.trainees.verify-payment', $t->id) }}" method="POST" class="mt-2">
+                                                    @csrf
+                                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[9px] uppercase px-2 py-1 rounded transition-all shadow-md font-bold">Verifikasi Lunas</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                        <td class="px-5 py-4">
+                                            @if($t->status === 'LULUS')
+                                                <span class="bg-blue-50 text-blue-605 border border-blue-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Kompeten (Lulus)</span>
+                                                <div class="text-[9px] text-slate-455 mt-1 font-mono font-bold">{{ $t->certificate_number }}</div>
+                                            @else
+                                                <span class="bg-slate-105 text-slate-655 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
+                                                <form action="{{ route('admin.trainees.approve', $t->id) }}" method="POST" class="mt-2">
+                                                    @csrf
+                                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[9px] uppercase px-2 py-1 rounded transition-all shadow-md font-bold">Terbitkan Sertifikat</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                        <td class="px-5 py-4">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <button type="button" onclick='editTrainee({!! json_encode($t) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <form action="{{ route('admin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="px-5 py-8 text-center text-slate-500 font-semibold">Belum ada data pendaftaran di database.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -544,12 +1193,159 @@
                 </div>
             </div>
 
+            <!-- PANEL: LIVE CHAT BANTUAN -->
+            <div id="panel-chats" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Live Chat Bantuan</h2>
+                    <p class="text-slate-500 text-xs">Kelola dan tangani pesan bantuan/pertanyaan masuk dari calon asesi secara real-time.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch min-h-[500px]">
+                    <!-- Left: Chat List (4 cols) -->
+                    <div class="lg:col-span-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+                        <div class="p-4 border-b border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
+                            <span class="font-extrabold text-slate-900 dark:text-white text-xs uppercase tracking-wider">Daftar Percakapan</span>
+                        </div>
+                        <div id="admin-chat-threads-container" class="flex-1 divide-y divide-slate-100 dark:divide-slate-800 overflow-y-auto max-h-[480px]">
+                            <div class="p-6 text-center text-slate-400 font-semibold text-xs">Memuat daftar percakapan...</div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Chat Box (8 cols) -->
+                    <div class="lg:col-span-8 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-sm relative">
+                        <!-- Chat Box Header -->
+                        <div id="admin-chat-header" class="p-4 border-b border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 flex justify-between items-center hidden">
+                            <div>
+                                <h4 id="admin-chat-header-name" class="font-bold text-slate-900 dark:text-white text-sm">Nama Tamu</h4>
+                                <p id="admin-chat-header-email" class="text-[10px] text-slate-400 font-mono">email@gmail.com</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="admin-chat-header-status-badge" class="px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-wide">Status</span>
+                                <button id="btn-admin-claim-chat" onclick="claimActiveChat()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[9px] uppercase px-3 py-1.5 rounded-lg transition-all hidden">Ambil Chat</button>
+                            </div>
+                        </div>
+
+                        <!-- Chat Box Messages Container -->
+                        <div id="admin-chat-messages-container" class="flex-1 p-4 space-y-4 overflow-y-auto max-h-[380px] bg-slate-50/50 dark:bg-slate-900/10 flex flex-col min-h-[300px]">
+                            <!-- Placeholder -->
+                            <div class="my-auto text-center text-slate-400 text-xs py-8">
+                                <svg class="w-12 h-12 mx-auto text-slate-300 dark:text-slate-700 mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+                                <span class="font-bold">Pilih percakapan di sebelah kiri untuk mulai mengobrol</span>
+                            </div>
+                        </div>
+
+                        <!-- Chat Box Input Bar -->
+                        <div id="admin-chat-input-bar" class="p-3 border-t border-slate-150 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-955/20 flex gap-2 items-center hidden">
+                            <input type="text" id="admin-chat-input-field" onkeypress="handleAdminChatKeyPress(event)" placeholder="Ketik balasan Anda..." class="flex-1 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            <button onclick="sendAdminChatMessage()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md transition-all">Kirim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
     <!-- SCRIPTS -->
     <script>
-        const panels = ['dasbor', 'verifikasi', 'plotting', 'sertifikat', 'users', 'profil'];
+        const panels = [
+            'dasbor', 'verifikasi', 'plotting', 'sertifikat', 'users', 'profil',
+            'program', 'jadwal', 'fasilitas', 'programs-db', 'trainees-db', 'articles', 'chats'
+        ];
+
+        // Program DB panel helpers
+        function toggleAddProgramForm() {
+            const form = document.getElementById('form-add-program');
+            form.classList.toggle('hidden');
+            document.getElementById('form-edit-program').classList.add('hidden');
+        }
+
+        function editProgram(prog) {
+            document.getElementById('form-add-program').classList.add('hidden');
+            const editDiv = document.getElementById('form-edit-program');
+            editDiv.classList.remove('hidden');
+            
+            // Populate fields
+            document.getElementById('edit-program-id').value = prog.id;
+            document.getElementById('edit-program-title').value = prog.title;
+            document.getElementById('edit-program-category').value = prog.category;
+            document.getElementById('edit-program-duration').value = prog.duration;
+            document.getElementById('edit-program-price').value = prog.price;
+            document.getElementById('edit-program-lsp-keyword').value = prog.lsp_keyword;
+            document.getElementById('edit-program-description').value = prog.description;
+            document.getElementById('edit-program-benefits').value = Array.isArray(prog.benefits) ? prog.benefits.join(', ') : '';
+            
+            // Set action URL
+            document.getElementById('edit-program-form-action').action = `/dashboard/admin/programs/${prog.id}`;
+            
+            // Scroll to form
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditProgram() {
+            document.getElementById('form-edit-program').classList.add('hidden');
+        }
+
+        function filterTrainees() {
+            const input = document.getElementById('trainee-search');
+            const filter = input.value.toLowerCase();
+            const rows = document.querySelectorAll('#trainees-table .trainee-row');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('.trainee-name').textContent.toLowerCase();
+                const nik = row.querySelector('.trainee-nik').textContent.toLowerCase();
+                const prog = row.querySelector('.trainee-program').textContent.toLowerCase();
+                
+                if (name.includes(filter) || nik.includes(filter) || prog.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function editUser(user) {
+            const editDiv = document.getElementById('form-edit-user');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-user-username').value = user.username;
+            document.getElementById('edit-user-email').value = user.email;
+            document.getElementById('edit-user-form-action').action = `/dashboard/admin/users/${user.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditUser() {
+            document.getElementById('form-edit-user').classList.add('hidden');
+        }
+
+        function editArticle(art) {
+            const editDiv = document.getElementById('form-edit-article');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-article-title').value = art.title;
+            document.getElementById('edit-article-content').value = art.content;
+            document.getElementById('edit-article-form-action').action = `/dashboard/admin/articles/${art.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditArticle() {
+            document.getElementById('form-edit-article').classList.add('hidden');
+        }
+
+        function editTrainee(t) {
+            const editDiv = document.getElementById('form-edit-trainee');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-trainee-name').value = t.name;
+            document.getElementById('edit-trainee-nik').value = t.nik;
+            document.getElementById('edit-trainee-email').value = t.email;
+            document.getElementById('edit-trainee-phone').value = t.phone;
+            document.getElementById('edit-trainee-status').value = t.status;
+            document.getElementById('edit-trainee-payment-status').value = t.payment_status;
+            document.getElementById('edit-trainee-form-action').action = `/dashboard/admin/trainees/${t.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditTrainee() {
+            document.getElementById('form-edit-trainee').classList.add('hidden');
+        }
 
         function showPanel(id) {
             panels.forEach(p => {
@@ -572,8 +1368,209 @@
 
             localStorage.setItem('admin_active_panel', id);
 
+            if (id === 'chats') {
+                loadChatThreads();
+                if (window.threadPollInterval) clearInterval(window.threadPollInterval);
+                window.threadPollInterval = setInterval(loadChatThreads, 5000);
+            } else {
+                if (window.threadPollInterval) {
+                    clearInterval(window.threadPollInterval);
+                    window.threadPollInterval = null;
+                }
+                if (window.chatPollInterval) {
+                    clearInterval(window.chatPollInterval);
+                    window.chatPollInterval = null;
+                }
+            }
+
             if (window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        let activeChatSessionId = null;
+
+        function loadChatThreads() {
+            const container = document.getElementById('admin-chat-threads-container');
+            fetch("{{ route('admin.chats.list') }}", {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        if (data.chats.length === 0) {
+                            container.innerHTML = `<div class="p-6 text-center text-slate-400 font-semibold text-xs">Belum ada percakapan masuk.</div>`;
+                            return;
+                        }
+                        
+                        const currentAdminId = Number({{ auth()->id() ?? 0 }});
+                        let html = '';
+                        data.chats.forEach(chat => {
+                            const isActive = chat.session_id === activeChatSessionId;
+                            const isClaimedByMe = chat.claimed_by_admin_id === currentAdminId;
+                            let statusText = '';
+                            let statusColorClass = '';
+                            
+                            if (chat.claimed_by) {
+                                statusText = isClaimedByMe ? 'Anda' : chat.claimed_by;
+                                statusColorClass = isClaimedByMe 
+                                    ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400 border border-emerald-500/20' 
+                                    : 'bg-blue-50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 border border-blue-500/20';
+                            } else {
+                                statusText = 'Belum Diambil';
+                                statusColorClass = 'bg-amber-50 text-amber-600 dark:bg-amber-950/20 dark:text-amber-400 border border-amber-500/20';
+                            }
+
+                            html += `
+                                <div onclick="selectChatSession('${chat.session_id}')" class="p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/40 transition flex flex-col gap-2 ${isActive ? 'bg-blue-50/50 dark:bg-blue-950/10 border-l-4 border-blue-600' : ''}">
+                                    <div class="flex justify-between items-start gap-2">
+                                        <div class="truncate">
+                                            <span class="font-extrabold text-xs text-slate-800 dark:text-white block truncate">${chat.name}</span>
+                                            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono block truncate">${chat.email}</span>
+                                        </div>
+                                        <span class="text-[9px] font-bold px-2 py-0.5 rounded ${statusColorClass} shrink-0 max-w-[100px] truncate" title="${chat.claimed_by ? 'Ditangani oleh ' + chat.claimed_by : 'Belum ditangani'}">
+                                            ${chat.claimed_by ? '👤 ' + statusText : '⚠️ ' + statusText}
+                                        </span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-1">${chat.last_message}</p>
+                                </div>
+                            `;
+                        });
+                        container.innerHTML = html;
+                    } else {
+                        container.innerHTML = `<div class="p-6 text-center text-rose-400 font-semibold text-xs">Gagal memuat data: ${data.message || 'Unknown error'}</div>`;
+                    }
+                })
+                .catch(err => {
+                    console.error("Error loading chats:", err);
+                    container.innerHTML = `<div class="p-6 text-center text-rose-400 font-semibold text-xs">Error: ${err.message}</div>`;
+                });
+        }
+
+        function selectChatSession(sessionId) {
+            activeChatSessionId = sessionId;
+            
+            document.getElementById('admin-chat-header').classList.remove('hidden');
+            document.getElementById('admin-chat-input-bar').classList.remove('hidden');
+            
+            loadChatDetails();
+            loadChatThreads();
+            
+            if (window.chatPollInterval) clearInterval(window.chatPollInterval);
+            window.chatPollInterval = setInterval(loadChatDetails, 3000);
+        }
+
+        function loadChatDetails() {
+            if (!activeChatSessionId) return;
+
+            fetch(`/dashboard/admin/chats/${activeChatSessionId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const headerName = document.getElementById('admin-chat-header-name');
+                        const headerEmail = document.getElementById('admin-chat-header-email');
+                        const statusBadge = document.getElementById('admin-chat-header-status-badge');
+                        const claimBtn = document.getElementById('btn-admin-claim-chat');
+
+                        const activeThread = document.querySelector(`[onclick="selectChatSession('${activeChatSessionId}')"]`);
+                        if (activeThread) {
+                            const nameText = activeThread.querySelector('.font-extrabold').textContent;
+                            const emailText = activeThread.querySelector('.font-mono').textContent;
+                            headerName.textContent = nameText;
+                            headerEmail.textContent = emailText;
+                        }
+
+                        if (data.claimed_by) {
+                            claimBtn.classList.add('hidden');
+                            statusBadge.classList.remove('hidden');
+                            statusBadge.textContent = `Ditangani oleh: ${data.claimed_by}`;
+                            statusBadge.className = "px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-wide bg-blue-50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 border border-blue-500/20";
+                        } else {
+                            claimBtn.classList.remove('hidden');
+                            statusBadge.classList.add('hidden');
+                        }
+
+                        const messagesContainer = document.getElementById('admin-chat-messages-container');
+                        let html = '';
+                        data.messages.forEach(msg => {
+                            const isAdmin = msg.sender_role === 'admin';
+                            const bubbleClass = isAdmin 
+                                ? 'bg-blue-600 text-white rounded-l-2xl rounded-tr-2xl ml-auto text-right' 
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-150 rounded-r-2xl rounded-tl-2xl mr-auto';
+                            
+                            html += `
+                                <div class="max-w-[75%] p-3.5 shadow-sm text-xs leading-relaxed ${bubbleClass}">
+                                    <p class="whitespace-pre-wrap">${msg.message}</p>
+                                    <span class="block text-[8px] opacity-75 mt-1 font-semibold">${msg.time}</span>
+                                </div>
+                            `;
+                        });
+                        
+                        const isNearBottom = messagesContainer.scrollHeight - messagesContainer.clientHeight - messagesContainer.scrollTop < 100;
+                        const originalHtml = messagesContainer.innerHTML;
+                        
+                        messagesContainer.innerHTML = html;
+                        
+                        if (isNearBottom || originalHtml.includes('Pilih percakapan')) {
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        }
+                    }
+                })
+                .catch(err => console.error("Error loading chat detail:", err));
+        }
+
+        function claimActiveChat() {
+            if (!activeChatSessionId) return;
+
+            fetch(`/dashboard/admin/chats/${activeChatSessionId}/claim`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    loadChatDetails();
+                    loadChatThreads();
+                }
+            })
+            .catch(err => console.error("Error claiming chat:", err));
+        }
+
+        function sendAdminChatMessage() {
+            if (!activeChatSessionId) return;
+            const input = document.getElementById('admin-chat-input-field');
+            const message = input.value.trim();
+            if (!message) return;
+
+            input.value = '';
+
+            fetch(`/dashboard/admin/chats/${activeChatSessionId}/reply`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    loadChatDetails();
+                    loadChatThreads();
+                }
+            })
+            .catch(err => console.error("Error sending reply:", err));
+        }
+
+        function handleAdminChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendAdminChatMessage();
             }
         }
 
@@ -615,8 +1612,57 @@
             }
         }
 
+        let currentDetailUser = null;
+        let isPassVisible = false;
+
+        function showUserDetail(user) {
+            currentDetailUser = user;
+            isPassVisible = false;
+            
+            const modal = document.getElementById('user-detail-modal');
+            const badge = document.getElementById('detail-user-role-badge');
+            const username = document.getElementById('detail-user-username');
+            const email = document.getElementById('detail-user-email');
+            const passSpan = document.getElementById('detail-user-password');
+            const created = document.getElementById('detail-user-created');
+
+            badge.textContent = user.role.toUpperCase();
+            username.textContent = user.username || user.name;
+            email.textContent = user.email;
+            
+            const rawPass = user.password_plain || '• • • • • • • • (Hashed)';
+            passSpan.setAttribute('data-raw', rawPass);
+            passSpan.textContent = '• • • • • • • •';
+            
+            created.textContent = new Date(user.created_at).toLocaleString('id-ID', {
+                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeUserDetailModal() {
+            const modal = document.getElementById('user-detail-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function togglePasswordVisibility() {
+            const passSpan = document.getElementById('detail-user-password');
+            const raw = passSpan.getAttribute('data-raw');
+            if (isPassVisible) {
+                passSpan.textContent = '• • • • • • • •';
+                isPassVisible = false;
+            } else {
+                passSpan.textContent = raw;
+                isPassVisible = true;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            const activePanel = localStorage.getItem('admin_active_panel') || 'dasbor';
+            const urlParams = new URLSearchParams(window.location.search);
+            const activePanel = urlParams.get('open') || localStorage.getItem('admin_active_panel') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
             // Auto-open accordion group that contains the active panel button
@@ -632,5 +1678,46 @@
             }
         });
     </script>
+
+    <!-- User Detail Modal -->
+    <div id="user-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-sm p-6 space-y-6 shadow-2xl relative animate-fade-in">
+            <button onclick="closeUserDetailModal()" class="absolute top-4 right-4 text-slate-450 hover:text-slate-655 dark:hover:text-white transition duration-205 text-lg font-bold">
+                ✕
+            </button>
+            <div class="space-y-1">
+                <span id="detail-user-role-badge" class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px] inline-block">Role</span>
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white font-heading">Detail Akun Pengguna</h3>
+            </div>
+            
+            <div class="space-y-4 text-xs">
+                <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Username</span>
+                    <span id="detail-user-username" class="font-semibold text-slate-800 dark:text-white font-mono text-sm">username</span>
+                </div>
+                <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Email</span>
+                    <span id="detail-user-email" class="font-semibold text-slate-800 dark:text-white font-mono font-semibold">email@gmail.com</span>
+                </div>
+                <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Password Terdaftar</span>
+                    <div class="flex items-center justify-between mt-1">
+                        <span id="detail-user-password" class="font-bold text-slate-800 dark:text-white font-mono bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded select-all font-semibold">password</span>
+                        <button onclick="togglePasswordVisibility()" class="text-blue-600 hover:underline font-bold uppercase text-[10px]">Tampilkan/Sembunyikan</button>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Akun Dibuat Pada</span>
+                    <span id="detail-user-created" class="font-semibold text-slate-600 dark:text-slate-350">date</span>
+                </div>
+            </div>
+            
+            <div class="flex justify-end pt-2">
+                <button onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

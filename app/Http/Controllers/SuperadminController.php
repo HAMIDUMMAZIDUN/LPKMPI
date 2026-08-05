@@ -47,6 +47,7 @@ class SuperadminController extends Controller
             'username' => $request->username,
             'email'    => $request->email,
             'password' => $request->password, // auto-hashed by model cast
+            'password_plain' => $request->password,
             'role'     => $request->role,
         ]);
 
@@ -82,7 +83,7 @@ class SuperadminController extends Controller
             return redirect()->back()->with('error', 'Akses Ditolak.');
         }
 
-        $request->validate([
+        $validationRules = [
             'site_title'         => 'nullable|string|max:100',
             'site_logo'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
             'hero_title'         => 'nullable|string|max:255',
@@ -101,22 +102,33 @@ class SuperadminController extends Controller
             'stat_count'         => 'nullable|integer',
             'step_count'         => 'nullable|integer',
             'feature_count'      => 'nullable|integer',
+            'instruktur_count'   => 'nullable|integer',
+            'gallery_count'      => 'nullable|integer',
+            'faq_count'          => 'nullable|integer',
             'org_image'          => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
-            'instruktur_1_foto'  => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'instruktur_2_foto'  => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'instruktur_3_foto'  => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'instruktur_4_foto'  => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'fasilitas_belajar_foto'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'fasilitas_perpustakaan_foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'fasilitas_asrama_foto'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
+        ];
+
+        $instrukturCount = (int) $request->input('instruktur_count', 4);
+        for ($i = 1; $i <= $instrukturCount; $i++) {
+            $validationRules["instruktur_{$i}_foto"] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
+        }
+
+        $galleryCount = (int) $request->input('gallery_count', 6);
+        for ($i = 1; $i <= $galleryCount; $i++) {
+            $validationRules["gallery_item_{$i}_image"] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
+        }
+
+        $request->validate($validationRules);
 
         $keys = [
             'site_title', 'hero_title', 'hero_subtitle',
             'why_choose_title',
             'gallery_title', 'gallery_subtitle',
             'login_left_title_1', 'login_left_title_2', 'login_left_sub', 'login_left_main', 'login_left_footer_title', 'login_left_footer_desc',
-            'stat_count', 'step_count', 'feature_count',
+            'stat_count', 'step_count', 'feature_count', 'instruktur_count', 'gallery_count', 'faq_count',
             
             // Tentang Kami
             'tentang_profil_1', 'tentang_profil_2', 'tentang_visi', 'tentang_misi',
@@ -161,22 +173,23 @@ class SuperadminController extends Controller
             $keys[] = "feature_{$i}_desc";
         }
 
-        // Instruktur keys (1 to 4)
-        for ($i = 1; $i <= 4; $i++) {
+        // Instruktur keys
+        for ($i = 1; $i <= $instrukturCount; $i++) {
             $keys[] = "instruktur_{$i}_nama";
             $keys[] = "instruktur_{$i}_jabatan";
             $keys[] = "instruktur_{$i}_keahlian";
             $keys[] = "instruktur_{$i}_pengalaman";
         }
 
-        // FAQ keys (1 to 6)
-        for ($i = 1; $i <= 6; $i++) {
+        // FAQ keys
+        $faqCount = (int) $request->input('faq_count', 6);
+        for ($i = 1; $i <= $faqCount; $i++) {
             $keys[] = "faq_{$i}_q";
             $keys[] = "faq_{$i}_a";
         }
 
-        // Gallery item text keys (1 to 6)
-        for ($i = 1; $i <= 6; $i++) {
+        // Gallery item text keys
+        for ($i = 1; $i <= $galleryCount; $i++) {
             $keys[] = "gallery_item_{$i}_category";
             $keys[] = "gallery_item_{$i}_title";
             $keys[] = "gallery_item_{$i}_desc";
@@ -229,8 +242,8 @@ class SuperadminController extends Controller
             LandingSetting::updateOrCreate(['key' => 'org_image'], ['value' => $path]);
         }
 
-        // Instruktur photos upload (1 to 4)
-        for ($i = 1; $i <= 4; $i++) {
+        // Instruktur photos upload
+        for ($i = 1; $i <= $instrukturCount; $i++) {
             if ($request->hasFile("instruktur_{$i}_foto")) {
                 $oldPath = LandingSetting::getValue("instruktur_{$i}_foto");
                 if ($oldPath && Storage::disk('public')->exists($oldPath)) {
@@ -254,7 +267,7 @@ class SuperadminController extends Controller
         }
 
         // Gallery item image uploads
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= $galleryCount; $i++) {
             if ($request->hasFile("gallery_item_{$i}_image")) {
                 $oldPath = LandingSetting::getValue("gallery_item_{$i}_image");
                 if ($oldPath && Storage::disk('public')->exists($oldPath)) {
@@ -481,5 +494,96 @@ class SuperadminController extends Controller
 
         return redirect()->route('superadmin.dashboard', ['open' => 'panel-trainees-db'])
             ->with('success', 'Pendaftaran/peserta berhasil dihapus!');
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
+            'email'    => ['required', 'email', 'unique:users,email,' . $id, 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i'],
+            'password' => 'nullable|string|min:8',
+            'role'     => 'required|in:admin,asesor',
+        ], [
+            'email.regex' => 'Alamat email harus menggunakan domain @gmail.com.',
+        ]);
+
+        $data = [
+            'name'     => $request->username,
+            'username' => $request->username,
+            'email'    => $request->email,
+            'role'     => $request->role,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+            $data['password_plain'] = $request->password;
+        }
+
+        $user->update($data);
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-users'])
+            ->with('success', "Akun '{$user->username}' berhasil diperbarui!");
+    }
+
+    public function updateArticle(Request $request, $id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $article = \App\Models\Article::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        $data = [
+            'title' => $request->title,
+            'slug' => \Illuminate\Support\Str::slug($request->title),
+            'content' => $request->content,
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($article->image_path && Storage::disk('public')->exists($article->image_path)) {
+                Storage::disk('public')->delete($article->image_path);
+            }
+            $data['image_path'] = $request->file('image')->store('articles', 'public');
+        }
+
+        $article->update($data);
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-articles'])
+            ->with('success', 'Artikel berhasil diperbarui!');
+    }
+
+    public function updateTrainee(Request $request, $id)
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return redirect()->back()->with('error', 'Akses Ditolak.');
+        }
+
+        $trainee = \App\Models\TraineeEnrollment::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nik' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:255',
+            'status' => 'required|string',
+            'payment_status' => 'required|string',
+        ]);
+
+        $trainee->update($request->only('name', 'nik', 'email', 'phone', 'status', 'payment_status'));
+
+        return redirect()->route('superadmin.dashboard', ['open' => 'panel-trainees-db'])
+            ->with('success', 'Data pendaftaran ' . $trainee->name . ' berhasil diperbarui!');
     }
 }

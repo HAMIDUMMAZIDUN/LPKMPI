@@ -211,7 +211,30 @@ class AsesorController extends Controller
             'location'            => $request->location,
         ]);
 
-        return redirect()->route('asesor.dashboard')->with('success', 'Jadwal kelas baru berhasil ditambahkan!');
+        return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', 'Jadwal kelas baru berhasil ditambahkan!');
+    }
+
+    /** Update jadwal kelas */
+    public function updateSchedule(Request $request, $id)
+    {
+        $this->checkRole();
+        $schedule = ClassSchedule::where('asesor_id', auth()->id())->findOrFail($id);
+
+        $request->validate([
+            'training_program_id' => 'required|exists:training_programs,id',
+            'topic'               => 'required|string|max:255',
+            'scheduled_at'        => 'required|date',
+            'location'            => 'required|string|max:255',
+        ]);
+
+        $schedule->update([
+            'training_program_id' => $request->training_program_id,
+            'topic'               => $request->topic,
+            'scheduled_at'        => $request->scheduled_at,
+            'location'            => $request->location,
+        ]);
+
+        return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', 'Jadwal kelas berhasil diperbarui!');
     }
 
     /** Hapus jadwal kelas */
@@ -221,7 +244,7 @@ class AsesorController extends Controller
         $schedule = ClassSchedule::where('asesor_id', auth()->id())->findOrFail($id);
         $schedule->delete();
 
-        return redirect()->route('asesor.dashboard')->with('success', 'Jadwal kelas berhasil dihapus.');
+        return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', 'Jadwal kelas berhasil dihapus.');
     }
 
     /** Update silabus/program deskripsi */
@@ -246,6 +269,6 @@ class AsesorController extends Controller
             'benefits'    => $benefitsArray,
         ]);
 
-        return redirect()->route('asesor.dashboard')->with('success', 'Silabus program ' . $program->title . ' berhasil diperbarui!');
+        return redirect()->route('asesor.dashboard', ['open' => 'panel-kelola'])->with('success', 'Silabus program ' . $program->title . ' berhasil diperbarui!');
     }
 }

@@ -21,6 +21,8 @@ Route::get('/landing/verify-certificate', [LandingController::class, 'verifyCert
 Route::post('/api/guest-book', [LandingController::class, 'storeGuestBook'])->name('api.guest-book.store');
 Route::get('/api/guest-book', [LandingController::class, 'getGuestBooks'])->name('api.guest-book.list');
 Route::post('/contact/send', [LandingController::class, 'sendContact'])->name('contact.send');
+Route::post('/api/chat/send', [LandingController::class, 'sendChatMessage'])->name('api.chat.send');
+Route::get('/api/chat/messages', [LandingController::class, 'getChatMessages'])->name('api.chat.list');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -44,14 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/superadmin/settings', [SuperadminController::class, 'updateSettings'])->name('superadmin.settings.update');
     Route::post('/dashboard/superadmin/profile', [SuperadminController::class, 'updateProfile'])->name('superadmin.profile.update');
     Route::post('/dashboard/superadmin/users', [SuperadminController::class, 'storeUser'])->name('superadmin.user.store');
+    Route::put('/dashboard/superadmin/users/{id}', [SuperadminController::class, 'updateUser'])->name('superadmin.user.update');
     Route::delete('/dashboard/superadmin/users/{id}', [SuperadminController::class, 'destroyUser'])->name('superadmin.user.destroy');
     Route::post('/dashboard/superadmin/articles', [SuperadminController::class, 'storeArticle'])->name('superadmin.articles.store');
+    Route::put('/dashboard/superadmin/articles/{id}', [SuperadminController::class, 'updateArticle'])->name('superadmin.articles.update');
     Route::delete('/dashboard/superadmin/articles/{id}', [SuperadminController::class, 'destroyArticle'])->name('superadmin.articles.destroy');
     Route::post('/dashboard/superadmin/programs', [SuperadminController::class, 'storeProgram'])->name('superadmin.programs.store');
     Route::put('/dashboard/superadmin/programs/{id}', [SuperadminController::class, 'updateProgram'])->name('superadmin.programs.update');
     Route::delete('/dashboard/superadmin/programs/{id}', [SuperadminController::class, 'destroyProgram'])->name('superadmin.programs.destroy');
     Route::post('/dashboard/superadmin/trainees/{id}/approve', [SuperadminController::class, 'approveTrainee'])->name('superadmin.trainees.approve');
     Route::post('/dashboard/superadmin/trainees/{id}/verify-payment', [SuperadminController::class, 'verifyPayment'])->name('superadmin.trainees.verify-payment');
+    Route::put('/dashboard/superadmin/trainees/{id}', [SuperadminController::class, 'updateTrainee'])->name('superadmin.trainees.update');
     Route::delete('/dashboard/superadmin/trainees/{id}', [SuperadminController::class, 'destroyTrainee'])->name('superadmin.trainees.destroy');
 
     // ── Admin Dashboard ───────────────────────────────────────────────────
@@ -59,14 +64,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/admin/report', [DashboardAdminController::class, 'generateReport'])->name('admin.report');
     Route::post('/dashboard/admin/asesor', [DashboardAdminController::class, 'storeAsesor'])->name('admin.asesor.store');
     Route::post('/dashboard/admin/asesi', [DashboardAdminController::class, 'storeAsesi'])->name('admin.asesi.store');
+    Route::put('/dashboard/admin/user/{id}', [DashboardAdminController::class, 'updateUser'])->name('admin.user.update');
     Route::delete('/dashboard/admin/user/{id}', [DashboardAdminController::class, 'destroyUser'])->name('admin.user.destroy');
     Route::post('/dashboard/admin/assign-scheme', [DashboardAdminController::class, 'assignScheme'])->name('admin.scheme.assign');
     Route::delete('/dashboard/admin/assignment/{id}', [DashboardAdminController::class, 'revokeAssignment'])->name('admin.scheme.revoke');
     Route::post('/dashboard/admin/profile', [DashboardAdminController::class, 'updateProfile'])->name('admin.profile.update');
     Route::post('/dashboard/admin/trainees/{id}/approve', [DashboardAdminController::class, 'approveTrainee'])->name('admin.trainees.approve');
     Route::post('/dashboard/admin/trainees/{id}/verify-payment', [DashboardAdminController::class, 'verifyPayment'])->name('admin.trainees.verify-payment');
+    Route::put('/dashboard/admin/trainees/{id}', [DashboardAdminController::class, 'updateTrainee'])->name('admin.trainees.update');
+    Route::delete('/dashboard/admin/trainees/{id}', [DashboardAdminController::class, 'destroyTrainee'])->name('admin.trainees.destroy');
     Route::post('/dashboard/admin/articles', [DashboardAdminController::class, 'storeArticle'])->name('admin.articles.store');
+    Route::put('/dashboard/admin/articles/{id}', [DashboardAdminController::class, 'updateArticle'])->name('admin.articles.update');
     Route::delete('/dashboard/admin/articles/{id}', [DashboardAdminController::class, 'destroyArticle'])->name('admin.articles.destroy');
+    Route::post('/dashboard/admin/settings', [DashboardAdminController::class, 'updateSettings'])->name('admin.settings.update');
+    Route::post('/dashboard/admin/programs', [DashboardAdminController::class, 'storeProgram'])->name('admin.programs.store');
+    Route::put('/dashboard/admin/programs/{id}', [DashboardAdminController::class, 'updateProgram'])->name('admin.programs.update');
+    Route::delete('/dashboard/admin/programs/{id}', [DashboardAdminController::class, 'destroyProgram'])->name('admin.programs.destroy');
+    Route::get('/dashboard/admin/chats', [DashboardAdminController::class, 'getChats'])->name('admin.chats.list');
+    Route::get('/dashboard/admin/chats/{sessionId}', [DashboardAdminController::class, 'getChatDetail'])->name('admin.chats.detail');
+    Route::post('/dashboard/admin/chats/{sessionId}/claim', [DashboardAdminController::class, 'claimChat'])->name('admin.chats.claim');
+    Route::post('/dashboard/admin/chats/{sessionId}/reply', [DashboardAdminController::class, 'replyChat'])->name('admin.chats.reply');
 
     // ── Asesor Dashboard & Scheme Builder ────────────────────────────────
     Route::get('/dashboard/asesor', [AsesorController::class, 'index'])->name('asesor.dashboard');

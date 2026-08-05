@@ -64,7 +64,7 @@
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sa-sidebar" class="fixed lg:static inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
+    <aside id="sa-sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div class="flex flex-col">
             <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -221,7 +221,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden lg:pl-[280px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -473,7 +473,11 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 shadow-sm">
                     @csrf
                     <input type="hidden" name="stat_count" id="stat_count_input" value="{{ $settings['stat_count'] ?? 3 }}">
-                    <div id="stats-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="adjustCount('stat', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah Statistik</button>
+                        <button type="button" onclick="adjustCount('stat', -1)" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">－ Hapus Terakhir</button>
+                    </div>
+                    <div id="stat-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         @php $statCount = (int) ($settings['stat_count'] ?? 3); @endphp
                         @for($i = 1; $i <= $statCount; $i++)
                             <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-3 stat-card" data-index="{{ $i }}">
@@ -504,7 +508,11 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
                     <input type="hidden" name="step_count" id="step_count_input" value="{{ $settings['step_count'] ?? 3 }}">
-                    <div id="steps-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <button type="button" onclick="adjustCount('step', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah Langkah</button>
+                        <button type="button" onclick="adjustCount('step', -1)" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">－ Hapus Terakhir</button>
+                    </div>
+                    <div id="step-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         @php $stepCount = (int) ($settings['step_count'] ?? 3); @endphp
                         @for($i = 1; $i <= $stepCount; $i++)
                             <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 step-card" data-index="{{ $i }}">
@@ -532,7 +540,11 @@
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Utama Seksi Keunggulan</label>
                         <input type="text" name="why_choose_title" value="{{ $settings['why_choose_title'] ?? 'Mengapa Memilih LPK-MI?' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                     </div>
-                    <div id="features-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <button type="button" onclick="adjustCount('feature', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah Fitur</button>
+                        <button type="button" onclick="adjustCount('feature', -1)" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">－ Hapus Terakhir</button>
+                    </div>
+                    <div id="feature-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         @php $featureCount = (int) ($settings['feature_count'] ?? 3); @endphp
                         @for($i = 1; $i <= $featureCount; $i++)
                             <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 feature-card" data-index="{{ $i }}">
@@ -558,11 +570,12 @@
             <div id="panel-gallery" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Galeri Kegiatan</h2>
-                    <p class="text-slate-500 text-xs">Ubah judul, sub-judul, dan 6 item galeri (foto/video) beranda.</p>
+                    <p class="text-slate-500 text-xs">Ubah judul, sub-judul, dan item galeri (foto/video) beranda.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-gallery">
+                    <input type="hidden" name="gallery_count" id="gallery_count_input" value="{{ $settings['gallery_count'] ?? 6 }}">
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Header Seksi</h3>
                         <div>
@@ -574,36 +587,43 @@
                             <textarea name="gallery_subtitle" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">{{ $settings['gallery_subtitle'] ?? '' }}</textarea>
                         </div>
                     </div>
-                    @for($i = 1; $i <= 6; $i++)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">Item Galeri #{{ $i }}</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kategori</label>
-                                    <input type="text" name="gallery_item_{{ $i }}_category" value="{{ $settings['gallery_item_'.$i.'_category'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="adjustCount('gallery', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah Item Galeri</button>
+                        <button type="button" onclick="adjustCount('gallery', -1)" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">－ Hapus Terakhir</button>
+                    </div>
+                    <div id="gallery-container" class="space-y-4">
+                        @php $galleryCount = (int) ($settings['gallery_count'] ?? 6); @endphp
+                        @for($i = 1; $i <= $galleryCount; $i++)
+                            <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm gallery-card" data-index="{{ $i }}">
+                                <h3 class="font-extrabold text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">Item Galeri #{{ $i }}</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kategori</label>
+                                        <input type="text" name="gallery_item_{{ $i }}_category" value="{{ $settings['gallery_item_'.$i.'_category'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Item</label>
+                                        <input type="text" name="gallery_item_{{ $i }}_title" value="{{ $settings['gallery_item_'.$i.'_title'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Item</label>
-                                    <input type="text" name="gallery_item_{{ $i }}_title" value="{{ $settings['gallery_item_'.$i.'_title'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                                    <textarea name="gallery_item_{{ $i }}_desc" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['gallery_item_'.$i.'_desc'] ?? '' }}</textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Link Video (YouTube / Dll - Opsional)</label>
+                                    <input type="text" name="gallery_item_{{ $i }}_video_url" value="{{ $settings['gallery_item_'.$i.'_video_url'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Galeri</label>
+                                    @if(!empty($settings['gallery_item_'.$i.'_image']))
+                                        <img src="{{ asset('storage/' . $settings['gallery_item_'.$i.'_image']) }}" class="h-16 w-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
+                                    @endif
+                                    <input type="file" name="gallery_item_{{ $i }}_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
-                                <textarea name="gallery_item_{{ $i }}_desc" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['gallery_item_'.$i.'_desc'] ?? '' }}</textarea>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Link Video (YouTube / Dll - Opsional)</label>
-                                <input type="text" name="gallery_item_{{ $i }}_video_url" value="{{ $settings['gallery_item_'.$i.'_video_url'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Galeri</label>
-                                @if(!empty($settings['gallery_item_'.$i.'_image']))
-                                    <img src="{{ asset('storage/' . $settings['gallery_item_'.$i.'_image']) }}" class="h-16 w-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
-                                @endif
-                                <input type="file" name="gallery_item_{{ $i }}_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                            </div>
-                        </div>
-                    @endfor
+                        @endfor
+                    </div>
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan Galeri</button>
                     </div>
@@ -772,38 +792,46 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-instruktur-landing">
-                    @for($i = 1; $i <= 4; $i++)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">Instruktur #{{ $i }}</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
-                                    <input type="text" name="instruktur_{{ $i }}_nama" value="{{ $settings['instruktur_'.$i.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    <input type="hidden" name="instruktur_count" id="instruktur_count_input" value="{{ $settings['instruktur_count'] ?? 4 }}">
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="adjustCount('instruktur', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah Instruktur</button>
+                        <button type="button" onclick="adjustCount('instruktur', -1)" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">－ Hapus Terakhir</button>
+                    </div>
+                    <div id="instruktur-container" class="space-y-4">
+                        @php $instrukturCount = (int) ($settings['instruktur_count'] ?? 4); @endphp
+                        @for($i = 1; $i <= $instrukturCount; $i++)
+                            <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm instruktur-card" data-index="{{ $i }}">
+                                <h3 class="font-extrabold text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">Instruktur #{{ $i }}</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                                        <input type="text" name="instruktur_{{ $i }}_nama" value="{{ $settings['instruktur_'.$i.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jabatan / Spesialisasi</label>
+                                        <input type="text" name="instruktur_{{ $i }}_jabatan" value="{{ $settings['instruktur_'.$i.'_jabatan'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Keahlian</label>
+                                        <input type="text" name="instruktur_{{ $i }}_keahlian" value="{{ $settings['instruktur_'.$i.'_keahlian'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pengalaman</label>
+                                        <input type="text" name="instruktur_{{ $i }}_pengalaman" value="{{ $settings['instruktur_'.$i.'_pengalaman'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    </div>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jabatan / Spesialisasi</label>
-                                    <input type="text" name="instruktur_{{ $i }}_jabatan" value="{{ $settings['instruktur_'.$i.'_jabatan'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Instruktur</label>
+                                    @if(!empty($settings['instruktur_'.$i.'_foto']))
+                                        <img src="{{ asset('storage/'.$settings['instruktur_'.$i.'_foto']) }}" class="h-16 w-16 object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
+                                    @endif
+                                    <input type="file" name="instruktur_{{ $i }}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Keahlian</label>
-                                    <input type="text" name="instruktur_{{ $i }}_keahlian" value="{{ $settings['instruktur_'.$i.'_keahlian'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pengalaman</label>
-                                    <input type="text" name="instruktur_{{ $i }}_pengalaman" value="{{ $settings['instruktur_'.$i.'_pengalaman'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Instruktur</label>
-                                @if(!empty($settings['instruktur_'.$i.'_foto']))
-                                    <img src="{{ asset('storage/'.$settings['instruktur_'.$i.'_foto']) }}" class="h-16 w-16 object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
-                                @endif
-                                <input type="file" name="instruktur_{{ $i }}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                            </div>
-                        </div>
-                    @endfor
+                        @endfor
+                    </div>
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Instruktur</button>
                     </div>
@@ -858,19 +886,27 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-4">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-faq">
-                    @for($i = 1; $i <= 6; $i++)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
-                            <span class="text-[10px] font-bold text-blue-650 uppercase tracking-widest">FAQ #{{ $i }}</span>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pertanyaan</label>
-                                <input type="text" name="faq_{{ $i }}_q" value="{{ $settings['faq_'.$i.'_q'] ?? '' }}" placeholder="Tulis pertanyaan..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    <input type="hidden" name="faq_count" id="faq_count_input" value="{{ $settings['faq_count'] ?? 6 }}">
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="adjustCount('faq', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah FAQ</button>
+                        <button type="button" onclick="adjustCount('faq', -1)" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">－ Hapus Terakhir</button>
+                    </div>
+                    <div id="faq-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        @php $faqCount = (int) ($settings['faq_count'] ?? 6); @endphp
+                        @for($i = 1; $i <= $faqCount; $i++)
+                            <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm faq-card" data-index="{{ $i }}">
+                                <span class="text-[10px] font-bold text-blue-650 uppercase tracking-widest">FAQ #{{ $i }}</span>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pertanyaan</label>
+                                    <input type="text" name="faq_{{ $i }}_q" value="{{ $settings['faq_'.$i.'_q'] ?? '' }}" placeholder="Tulis pertanyaan..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jawaban</label>
+                                    <textarea name="faq_{{ $i }}_a" rows="2" placeholder="Tulis jawaban..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none font-semibold">{{ $settings['faq_'.$i.'_a'] ?? '' }}</textarea>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jawaban</label>
-                                <textarea name="faq_{{ $i }}_a" rows="2" placeholder="Tulis jawaban..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none font-semibold">{{ $settings['faq_'.$i.'_a'] ?? '' }}</textarea>
-                            </div>
-                        </div>
-                    @endfor
+                        @endfor
+                    </div>
                     <div class="flex justify-end pt-2">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan FAQ</button>
                     </div>
@@ -905,6 +941,31 @@
                     </form>
                 </div>
 
+                <!-- Form Edit Artikel -->
+                <div id="form-edit-article" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 mb-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Artikel</h3>
+                    <form id="edit-article-form-action" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Artikel</label>
+                            <input type="text" name="title" id="edit-article-title" required placeholder="Tulis judul artikel..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Konten / Isi Artikel</label>
+                            <textarea name="content" id="edit-article-content" rows="6" required placeholder="Tulis isi berita lengkap..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Cover Baru (Opsional, kosongkan jika tidak diubah)</label>
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="cancelEditArticle()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider mb-4">Daftar Artikel Aktif</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -916,10 +977,13 @@
                                 </div>
                                 <div class="flex items-center justify-between border-t border-slate-200/55 dark:border-slate-800/80 pt-3 mt-3">
                                     <span class="text-[10px] text-slate-400 font-mono">{{ $art->created_at->format('d M Y') }}</span>
-                                    <form action="{{ route('superadmin.articles.destroy', $art->id) }}" method="POST">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase">Hapus</button>
-                                    </form>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-850 text-[10px] font-bold uppercase">Edit</button>
+                                        <form action="{{ route('superadmin.articles.destroy', $art->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase">Hapus</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @empty
@@ -1012,6 +1076,42 @@
                     </form>
                 </div>
 
+                <!-- Form Edit User -->
+                <div id="form-edit-user" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Akun Pengguna</h3>
+                    <form id="edit-user-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Username</label>
+                                <input type="text" name="username" id="edit-user-username" required placeholder="Contoh: admin_baru" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email</label>
+                                <input type="email" name="email" id="edit-user-email" required placeholder="email@gmail.com" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Role / Peran</label>
+                                <select name="role" id="edit-user-role" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="admin">Admin LPK</option>
+                                    <option value="asesor">Asesor</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Password Baru (Kosongkan jika tidak diubah)</label>
+                                <input type="password" name="password" placeholder="Minimal 8 karakter" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelEditUser()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Daftar Admin &amp; Asesor</h3>
                     <div class="space-y-2">
@@ -1023,10 +1123,14 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Admin</span>
-                                    <form action="{{ route('superadmin.user.destroy', $admin->id) }}" method="POST">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold">Hapus</button>
-                                    </form>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" onclick='showUserDetail({!! json_encode($admin) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" onclick='editUser({!! json_encode($admin) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('superadmin.user.destroy', $admin->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -1039,10 +1143,14 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesor</span>
-                                    <form action="{{ route('superadmin.user.destroy', $asesor->id) }}" method="POST">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold">Hapus</button>
-                                    </form>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" onclick='showUserDetail({!! json_encode($asesor) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" onclick='editUser({!! json_encode($asesor) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('superadmin.user.destroy', $asesor->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -1204,14 +1312,60 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-
-            <!-- PANEL: DATA PENDAFTARAN PESERTA -->
+                <!-- PANEL: DATA PENDAFTARAN PESERTA -->
             <div id="panel-trainees-db" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Pendaftaran &amp; Peserta</h2>
                     <p class="text-slate-500 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
+                </div>
+
+                <!-- Form Edit Peserta -->
+                <div id="form-edit-trainee" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Data Peserta</h3>
+                    <form id="edit-trainee-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                                <input type="text" name="name" id="edit-trainee-name" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">NIK (Nomor Induk Kependudukan)</label>
+                                <input type="text" name="nik" id="edit-trainee-nik" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email</label>
+                                <input type="email" name="email" id="edit-trainee-email" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">No. Handphone / WhatsApp</label>
+                                <input type="text" name="phone" id="edit-trainee-phone" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Pendaftaran</label>
+                                <select name="status" id="edit-trainee-status" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="MENUNGGU UJIAN">Menunggu Ujian / Kelulusan</option>
+                                    <option value="LULUS">Lulus (Kompeten)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Pembayaran</label>
+                                <select name="payment_status" id="edit-trainee-payment-status" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="UNPAID">Belum Lunas</option>
+                                    <option value="PAID">Lunas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Tabel List Pendaftaran -->
@@ -1260,10 +1414,10 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             @if($t->status === 'LULUS')
-                                                <span class="bg-blue-50 text-blue-600 border border-blue-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Kompeten (Lulus)</span>
+                                                <span class="bg-blue-50 text-blue-605 border border-blue-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Kompeten (Lulus)</span>
                                                 <div class="text-[9px] text-slate-450 mt-1 font-mono font-bold">{{ $t->certificate_number }}</div>
                                             @else
-                                                <span class="bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
+                                                <span class="bg-slate-100 text-slate-655 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
                                                 <form action="{{ route('superadmin.trainees.approve', $t->id) }}" method="POST" class="mt-2">
                                                     @csrf
                                                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[9px] uppercase px-2 py-1 rounded">Terbitkan Sertifikat</button>
@@ -1271,7 +1425,8 @@
                                             @endif
                                         </td>
                                         <td class="px-5 py-4">
-                                            <div class="flex items-center justify-center">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <button type="button" onclick='editTrainee({!! json_encode($t) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('superadmin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1367,6 +1522,200 @@
             document.getElementById('form-edit-program').classList.add('hidden');
         }
 
+        // Dynamic items count modifier and templates
+        function getInstrukturHtml(index) {
+            return `
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm instruktur-card" data-index="${index}">
+                    <h3 class="font-extrabold text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">Instruktur #${index}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                            <input type="text" name="instruktur_${index}_nama" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jabatan / Spesialisasi</label>
+                            <input type="text" name="instruktur_${index}_jabatan" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Keahlian</label>
+                            <input type="text" name="instruktur_${index}_keahlian" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pengalaman</label>
+                            <input type="text" name="instruktur_${index}_pengalaman" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Instruktur</label>
+                        <input type="file" name="instruktur_${index}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                </div>
+            `;
+        }
+
+        function getGalleryHtml(index) {
+            return `
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm gallery-card" data-index="${index}">
+                    <h3 class="font-extrabold text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">Item Galeri #${index}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kategori</label>
+                            <input type="text" name="gallery_item_${index}_category" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Item</label>
+                            <input type="text" name="gallery_item_${index}_title" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                        <textarea name="gallery_item_${index}_desc" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Link Video (YouTube / Dll - Opsional)</label>
+                        <input type="text" name="gallery_item_${index}_video_url" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Galeri</label>
+                        <input type="file" name="gallery_item_${index}_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                </div>
+            `;
+        }
+
+        function getFaqHtml(index) {
+            return `
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm faq-card" data-index="${index}">
+                    <span class="text-[10px] font-bold text-blue-650 uppercase tracking-widest">FAQ #${index}</span>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pertanyaan</label>
+                        <input type="text" name="faq_${index}_q" value="" placeholder="Tulis pertanyaan..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jawaban</label>
+                        <textarea name="faq_${index}_a" rows="2" placeholder="Tulis jawaban..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none font-semibold"></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getStepHtml(index) {
+            return `
+                <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 step-card" data-index="${index}">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">Langkah ${index}</label>
+                    <input type="text" name="step_${index}_title" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                </div>
+            `;
+        }
+
+        function getFeatureHtml(index) {
+            return `
+                <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 feature-card" data-index="${index}">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">Fitur ${index}</span>
+                    <div>
+                        <label class="block text-[9px] font-bold text-slate-450 uppercase mb-0.5">Judul</label>
+                        <input type="text" name="feature_${index}_title" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-bold text-slate-450 uppercase mb-0.5">Deskripsi</label>
+                        <textarea name="feature_${index}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getStatHtml(index) {
+            return `
+                <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-3 stat-card" data-index="${index}">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Statistik ${index}</div>
+                    <div>
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Nilai</label>
+                        <input type="text" name="stat_${index}_val" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Label</label>
+                        <input type="text" name="stat_${index}_lbl" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+            `;
+        }
+
+        function adjustCount(type, delta) {
+            const input = document.getElementById(type + '_count_input');
+            const container = document.getElementById(type + '-container');
+            if (!input || !container) return;
+
+            let count = parseInt(input.value) || 0;
+            let newCount = count + delta;
+
+            if (newCount < 1) return;
+
+            if (delta > 0) {
+                let html = '';
+                if (type === 'instruktur') html = getInstrukturHtml(newCount);
+                else if (type === 'gallery') html = getGalleryHtml(newCount);
+                else if (type === 'faq') html = getFaqHtml(newCount);
+                else if (type === 'step') html = getStepHtml(newCount);
+                else if (type === 'feature') html = getFeatureHtml(newCount);
+                else if (type === 'stat') html = getStatHtml(newCount);
+
+                container.insertAdjacentHTML('beforeend', html);
+            } else {
+                const cards = container.querySelectorAll('.' + type + '-card');
+                if (cards.length > 0) {
+                    cards[cards.length - 1].remove();
+                }
+            }
+
+            input.value = newCount;
+        }
+
+        function editUser(user) {
+            const editDiv = document.getElementById('form-edit-user');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-user-username').value = user.username;
+            document.getElementById('edit-user-email').value = user.email;
+            document.getElementById('edit-user-role').value = user.role;
+            document.getElementById('edit-user-form-action').action = `/dashboard/superadmin/users/${user.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditUser() {
+            document.getElementById('form-edit-user').classList.add('hidden');
+        }
+
+        function editArticle(art) {
+            const editDiv = document.getElementById('form-edit-article');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-article-title').value = art.title;
+            document.getElementById('edit-article-content').value = art.content;
+            document.getElementById('edit-article-form-action').action = `/dashboard/superadmin/articles/${art.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditArticle() {
+            document.getElementById('form-edit-article').classList.add('hidden');
+        }
+
+        function editTrainee(t) {
+            const editDiv = document.getElementById('form-edit-trainee');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-trainee-name').value = t.name;
+            document.getElementById('edit-trainee-nik').value = t.nik;
+            document.getElementById('edit-trainee-email').value = t.email;
+            document.getElementById('edit-trainee-phone').value = t.phone;
+            document.getElementById('edit-trainee-status').value = t.status;
+            document.getElementById('edit-trainee-payment-status').value = t.payment_status;
+            document.getElementById('edit-trainee-form-action').action = `/dashboard/superadmin/trainees/${t.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditTrainee() {
+            document.getElementById('form-edit-trainee').classList.add('hidden');
+        }
+
         // Trainee search filter
         function filterTrainees() {
             const input = document.getElementById('trainee-search');
@@ -1459,6 +1808,54 @@
             }
         }
 
+        let currentDetailUser = null;
+        let isPassVisible = false;
+
+        function showUserDetail(user) {
+            currentDetailUser = user;
+            isPassVisible = false;
+            
+            const modal = document.getElementById('user-detail-modal');
+            const badge = document.getElementById('detail-user-role-badge');
+            const username = document.getElementById('detail-user-username');
+            const email = document.getElementById('detail-user-email');
+            const passSpan = document.getElementById('detail-user-password');
+            const created = document.getElementById('detail-user-created');
+
+            badge.textContent = user.role.toUpperCase();
+            username.textContent = user.username || user.name;
+            email.textContent = user.email;
+            
+            const rawPass = user.password_plain || '• • • • • • • • (Hashed)';
+            passSpan.setAttribute('data-raw', rawPass);
+            passSpan.textContent = '• • • • • • • •';
+            
+            created.textContent = new Date(user.created_at).toLocaleString('id-ID', {
+                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeUserDetailModal() {
+            const modal = document.getElementById('user-detail-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function togglePasswordVisibility() {
+            const passSpan = document.getElementById('detail-user-password');
+            const raw = passSpan.getAttribute('data-raw');
+            if (isPassVisible) {
+                passSpan.textContent = '• • • • • • • •';
+                isPassVisible = false;
+            } else {
+                passSpan.textContent = raw;
+                isPassVisible = true;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const openPanel = urlParams.get('open') || localStorage.getItem('superadmin_active_panel') || 'panel-dasbor';
@@ -1478,5 +1875,46 @@
             }
         });
     </script>
+
+    <!-- User Detail Modal -->
+    <div id="user-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-sm p-6 space-y-6 shadow-2xl relative animate-fade-in">
+            <button onclick="closeUserDetailModal()" class="absolute top-4 right-4 text-slate-450 hover:text-slate-655 dark:hover:text-white transition duration-205 text-lg font-bold">
+                ✕
+            </button>
+            <div class="space-y-1">
+                <span id="detail-user-role-badge" class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px] inline-block">Role</span>
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white font-heading">Detail Akun Pengguna</h3>
+            </div>
+            
+            <div class="space-y-4 text-xs">
+                <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Username</span>
+                    <span id="detail-user-username" class="font-semibold text-slate-800 dark:text-white font-mono text-sm">username</span>
+                </div>
+                <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Email</span>
+                    <span id="detail-user-email" class="font-semibold text-slate-800 dark:text-white font-mono">email@gmail.com</span>
+                </div>
+                <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Password Terdaftar</span>
+                    <div class="flex items-center justify-between mt-1">
+                        <span id="detail-user-password" class="font-bold text-slate-800 dark:text-white font-mono bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded select-all">password</span>
+                        <button onclick="togglePasswordVisibility()" class="text-blue-600 hover:underline font-bold uppercase text-[10px]">Tampilkan/Sembunyikan</button>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Akun Dibuat Pada</span>
+                    <span id="detail-user-created" class="font-semibold text-slate-600 dark:text-slate-350">date</span>
+                </div>
+            </div>
+            
+            <div class="flex justify-end pt-2">
+                <button onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -357,8 +357,11 @@
                 </p>
             </div>
 
+            @php
+                $instrukturCount = (int) ($settings['instruktur_count'] ?? 3);
+            @endphp
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                @for($i = 1; $i <= 3; $i++)
+                @for($i = 1; $i <= $instrukturCount; $i++)
                     @php
                         $iNameKey = "instruktur_{$i}_nama";
                         $iJabKey  = "instruktur_{$i}_jabatan";
@@ -379,7 +382,7 @@
                     @endphp
 
                     @if(!empty($name))
-                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-300">
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-300 {{ $i > 3 ? 'hidden instruktur-card-extra' : '' }}">
                             <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-600/20 mb-6 shrink-0 relative bg-white dark:bg-slate-850 flex items-center justify-center">
                                 @if($foto)
                                     <img src="{{ asset('storage/' . $foto) }}" class="w-full h-full object-cover" alt="{{ $name }}">
@@ -407,6 +410,17 @@
                     @endif
                 @endfor
             </div>
+
+            @if($instrukturCount > 3)
+                <div class="flex justify-center mt-12">
+                    <button id="btn-toggle-instruktur" onclick="toggleInstrukturExtra()" class="px-6 py-3 bg-[#155dfc] hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-300 shadow-lg shadow-blue-500/10 flex items-center gap-2">
+                        <span>Lihat Semua</span>
+                        <svg id="arrow-instruktur" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -495,16 +509,21 @@
                 </p>
             </div>
 
-            <!-- YouTube Featured Video -->
+              <!-- YouTube Featured Video -->
             <div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm mb-16">
                 <div class="grid grid-cols-1 md:grid-cols-12 items-stretch">
-                    <div class="md:col-span-7 bg-slate-950 aspect-video relative flex items-center justify-center group cursor-pointer" onclick="openVideoModal('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">
+                    <div class="md:col-span-7 bg-transparent aspect-video relative flex items-center justify-center group cursor-pointer" onclick="openVideoModal('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">
                         <!-- Play Overlay -->
                         <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/10 transition z-10"></div>
                         <div class="w-16 h-16 rounded-full bg-[#155dfc] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition z-20">
                             <span class="ml-1 text-lg">▶</span>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover absolute inset-0" alt="Video Cover">
+                        @php $siteLogo = $settings['site_logo'] ?? ''; @endphp
+                        @if($siteLogo)
+                            <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain absolute inset-0 p-4" alt="Video Cover">
+                        @else
+                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover absolute inset-0" alt="Video Cover">
+                        @endif
                     </div>
                     <div class="md:col-span-5 p-6 flex flex-col justify-between text-left">
                         <div>
@@ -531,11 +550,19 @@
                         <!-- Instagram post cards -->
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://instagram.com/p/123')">
                             <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
-                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="IG 1">
+                            @if($siteLogo)
+                                <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="IG 1">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="IG 1">
+                            @endif
                         </div>
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://instagram.com/p/456')">
                             <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
-                            <img src="https://images.unsplash.com/photo-1531535934200-873499955726?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="IG 2">
+                            @if($siteLogo)
+                                <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="IG 2">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1531535934200-873499955726?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="IG 2">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -550,11 +577,19 @@
                         <!-- YouTube post cards -->
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://youtube.com/watch?v=1')">
                             <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
-                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="YT 1">
+                            @if($siteLogo)
+                                <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="YT 1">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="YT 1">
+                            @endif
                         </div>
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://youtube.com/watch?v=2')">
                             <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="YT 2">
+                            @if($siteLogo)
+                                <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="YT 2">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover" alt="YT 2">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -741,38 +776,44 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-6xl mx-auto text-left">
                 <!-- FAQ Accordion List -->
                 <div class="lg:col-span-7 space-y-4">
-                    <!-- FAQ 1 -->
-                    <div id="faq-item-1" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300">
-                        <button onclick="toggleAccordion('faq-item-1')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
-                            <span>Bagaimana prosedur pendaftaran untuk program pemagangan ke Jepang?</span>
-                            <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
-                        </button>
-                        <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
-                            Calon peserta mendaftar online melalui portal pendaftaran, mengunggah scan KTP &amp; Ijazah, kemudian admin LPK akan melakukan verifikasi berkas dan menjadwalkan wawancara awal. Setelah lolos seleksi berkas, peserta mengikuti diklat bahasa Jepang di pusdiklat LPK Manajemen Pendidikan Islam.
-                        </div>
-                    </div>
+                    @php
+                        $faqCount = (int) ($settings['faq_count'] ?? 3);
+                    @endphp
+                    @for($i = 1; $i <= $faqCount; $i++)
+                        @php
+                            $qKey = "faq_{$i}_q";
+                            $aKey = "faq_{$i}_a";
 
-                    <!-- FAQ 2 -->
-                    <div id="faq-item-2" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300">
-                        <button onclick="toggleAccordion('faq-item-2')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
-                            <span>Berapa lama durasi pelatihan bahasa Jepang pra-keberangkatan?</span>
-                            <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
-                        </button>
-                        <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
-                            Pelatihan bahasa Jepang pra-keberangkatan berlangsung selama 3 hingga 6 bulan (tergantung kesiapan peserta) untuk mencapai kompetensi setingkat N4/N5 yang dipersyaratkan oleh COE/Imigrasi Jepang.
-                        </div>
-                    </div>
+                            $defQ = $i == 1 ? 'Bagaimana prosedur pendaftaran untuk program pemagangan ke Jepang?' : ($i == 2 ? 'Berapa lama durasi pelatihan bahasa Jepang pra-keberangkatan?' : ($i == 3 ? 'Apakah ada batasan usia untuk mendaftar program Tokutei Ginou?' : ''));
+                            $defA = $i == 1 ? 'Calon peserta mendaftar online melalui portal pendaftaran, mengunggah scan KTP &amp; Ijazah, kemudian admin LPK akan melakukan verifikasi berkas dan menjadwalkan wawancara awal. Setelah lolos seleksi berkas, peserta mengikuti diklat bahasa Jepang di pusdiklat LPK Manajemen Pendidikan Islam.' : ($i == 2 ? 'Pelatihan bahasa Jepang pra-keberangkatan berlangsung selama 3 hingga 6 bulan (tergantung kesiapan peserta) untuk mencapai kompetensi setingkat N4/N5 yang dipersyaratkan oleh COE/Imigrasi Jepang.' : ($i == 3 ? 'Program Tokutei Ginou (Specified Skilled Worker - SSW) menerima pendaftar dengan batas usia produktif berkisar antara 18 hingga 35 tahun pada saat pendaftaran, berbadan sehat, serta bebas tato/tindik.' : ''));
 
-                    <!-- FAQ 3 -->
-                    <div id="faq-item-3" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300">
-                        <button onclick="toggleAccordion('faq-item-3')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
-                            <span>Apakah ada batasan usia untuk mendaftar program Tokutei Ginou?</span>
-                            <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
-                        </button>
-                        <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
-                            Program Tokutei Ginou (Specified Skilled Worker - SSW) menerima pendaftar dengan batas usia produktif berkisar antara 18 hingga 35 tahun pada saat pendaftaran, berbadan sehat, serta bebas tato/tindik.
+                            $qVal = $settings[$qKey] ?? $defQ;
+                            $aVal = $settings[$aKey] ?? $defA;
+                        @endphp
+
+                        @if(!empty($qVal))
+                            <div id="faq-item-{{ $i }}" class="accordion-item border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden transition duration-300 {{ $i > 3 ? 'hidden faq-card-extra' : '' }}">
+                                <button onclick="toggleAccordion('faq-item-{{ $i }}')" class="accordion-header w-full px-6 py-5 font-bold text-slate-900 dark:text-white flex justify-between items-center text-left text-sm gap-4">
+                                    <span>{{ $qVal }}</span>
+                                    <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
+                                </button>
+                                <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
+                                    {!! nl2br(e($aVal)) !!}
+                                </div>
+                            </div>
+                        @endif
+                    @endfor
+
+                    @if($faqCount > 3)
+                        <div class="flex justify-start mt-6">
+                            <button id="btn-toggle-faq" onclick="toggleFaqExtra()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-300 flex items-center gap-2">
+                                <span>Lihat Semua FAQ</span>
+                                <svg id="arrow-faq" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
                 <!-- FAQ Illustration -->
@@ -951,17 +992,115 @@
             modal.classList.remove('flex');
         }
 
-        // On DOM Load setup
-        document.addEventListener('DOMContentLoaded', () => {
-            // Placeholder for initial setup if needed
-        });
+        function toggleInstrukturExtra() {
+            const btn = document.getElementById('btn-toggle-instruktur');
+            const arrow = document.getElementById('arrow-instruktur');
+            const extras = document.querySelectorAll('.instruktur-card-extra');
+            if (!btn || extras.length === 0) return;
+
+            const isHidden = extras[0].classList.contains('hidden');
+            extras.forEach(el => {
+                if (isHidden) {
+                    el.classList.remove('hidden');
+                    el.classList.add('animate-fade-in');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            if (isHidden) {
+                btn.querySelector('span').textContent = 'Sembunyikan';
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+            } else {
+                btn.querySelector('span').textContent = 'Lihat Semua';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function toggleFaqExtra() {
+            const btn = document.getElementById('btn-toggle-faq');
+            const arrow = document.getElementById('arrow-faq');
+            const extras = document.querySelectorAll('.faq-card-extra');
+            if (!btn || extras.length === 0) return;
+
+            const isHidden = extras[0].classList.contains('hidden');
+            extras.forEach(el => {
+                if (isHidden) {
+                    el.classList.remove('hidden');
+                    el.classList.add('animate-fade-in');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            if (isHidden) {
+                btn.querySelector('span').textContent = 'Sembunyikan';
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+            } else {
+                btn.querySelector('span').textContent = 'Lihat Semua FAQ';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        }
 
 
         // ==========================================
-        // 💬 FLOATING WHATSAPP CHAT WIDGET LOGIC
+        // 💬 LIVE CHAT WIDGET LOGIC
         // ==========================================
-        let floatUserName = 'Tamu LPK MPI';
-        let floatUserEmail = 'tamu@lpk-mpi.org';
+        let floatUserName = localStorage.getItem('chat_name') || '';
+        let floatUserEmail = localStorage.getItem('chat_email') || '';
+        let floatSessionId = localStorage.getItem('chat_session_id') || '';
+        let floatPollInterval = null;
+
+        if (!floatSessionId) {
+            floatSessionId = 'sess_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+            localStorage.setItem('chat_session_id', floatSessionId);
+        }
+
+        function initFloatChatUI() {
+            const setupForm = document.getElementById('float-setup-form');
+            const messagesContainer = document.getElementById('float-messages-container');
+            const inputBar = document.getElementById('float-input-bar');
+
+            if (floatUserName && floatUserEmail) {
+                setupForm.classList.add('hidden');
+                messagesContainer.classList.remove('hidden');
+                inputBar.classList.remove('hidden');
+                
+                loadFloatMessages();
+                
+                if (floatPollInterval) clearInterval(floatPollInterval);
+                floatPollInterval = setInterval(loadFloatMessages, 3000);
+            } else {
+                setupForm.classList.remove('hidden');
+                messagesContainer.classList.add('hidden');
+                inputBar.classList.add('hidden');
+            }
+        }
+
+        function submitFloatSetup() {
+            const nameInput = document.getElementById('float-setup-name');
+            const emailInput = document.getElementById('float-setup-email');
+            
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (!name) {
+                alert('Silakan masukkan nama Anda.');
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                alert('Silakan masukkan alamat email yang valid.');
+                return;
+            }
+
+            floatUserName = name;
+            floatUserEmail = email;
+
+            localStorage.setItem('chat_name', name);
+            localStorage.setItem('chat_email', email);
+
+            initFloatChatUI();
+        }
 
         function toggleFloatingChat() {
             const popup = document.getElementById('floating-chat-popup');
@@ -973,6 +1112,9 @@
                 popup.classList.add('flex');
                 iconMsg.classList.add('hidden');
                 iconClose.classList.remove('hidden');
+                
+                const messagesContainer = document.getElementById('float-messages-container');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             } else {
                 popup.classList.add('hidden');
                 popup.classList.remove('flex');
@@ -981,63 +1123,70 @@
             }
         }
 
-        function appendFloatBubble(sender, text, type) {
-            const container = document.getElementById('float-messages-container');
-            const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            
-            let bubbleHtml = '';
-            if (type === 'user') {
-                bubbleHtml = `
-                    <div class="bg-[#d9fdd3] dark:bg-emerald-950 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tr-none p-3 text-xs max-w-[85%] self-end shadow-sm leading-relaxed relative animate-fade-in">
-                        <p class="font-semibold text-[10px] text-[#128c7e] mb-1">Anda</p>
-                        ${text}
-                        <div class="flex items-center justify-end gap-1 mt-1">
-                            <span class="text-[8px] text-slate-400 font-mono">${time}</span>
-                            <span class="text-[10px] text-blue-500 font-bold leading-none">✓✓</span>
-                        </div>
-                    </div>
-                `;
-            } else {
-                bubbleHtml = `
-                    <div class="bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative animate-fade-in">
-                        <p class="font-semibold text-[10px] text-[#155dfc] mb-1">${sender}</p>
-                        ${text}
-                        <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">${time}</span>
-                    </div>
-                `;
-            }
-            
-            const indicator = document.getElementById('float-typing-indicator');
-            if (indicator) {
-                indicator.insertAdjacentHTML('beforebegin', bubbleHtml);
-            } else {
-                container.insertAdjacentHTML('beforeend', bubbleHtml);
-            }
-            
-            container.scrollTop = container.scrollHeight;
-        }
+        function loadFloatMessages() {
+            if (!floatSessionId) return;
 
-        function showFloatTypingIndicator() {
-            const container = document.getElementById('float-messages-container');
-            if (document.getElementById('float-typing-indicator')) return;
-            
-            const html = `
-                <div id="float-typing-indicator" class="bg-white/80 dark:bg-slate-800/80 text-slate-550 dark:text-slate-400 rounded-2xl rounded-tl-none px-3 py-2.5 text-[10px] max-w-[85%] self-start shadow-sm italic flex items-center gap-1.5 animate-pulse">
-                    <span>Admin sedang mengetik</span>
-                    <span class="flex gap-0.5 items-center">
-                        <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms">.</span>
-                        <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms">.</span>
-                        <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms">.</span>
-                    </span>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
-            container.scrollTop = container.scrollHeight;
-        }
+            fetch(`/api/chat/messages?session_id=${floatSessionId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const container = document.getElementById('float-messages-container');
+                        
+                        const statusEl = document.getElementById('float-chat-status');
+                        if (data.claimed_by) {
+                            statusEl.innerHTML = `<span class="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span> Online (Admin: ${data.claimed_by})`;
+                        } else {
+                            statusEl.innerHTML = `<span class="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span> Online`;
+                        }
 
-        function removeFloatTypingIndicator() {
-            const el = document.getElementById('float-typing-indicator');
-            if (el) el.remove();
+                        if (data.messages.length === 0) {
+                            container.innerHTML = `
+                                <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative">
+                                    <p class="font-semibold text-[10px] text-[#155dfc] mb-1">Admin</p>
+                                    Halo ${floatUserName}! Ada yang bisa kami bantu? Silakan kirim pesan Anda di sini.
+                                    <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">Sekarang</span>
+                                </div>
+                            `;
+                            return;
+                        }
+
+                        let html = '';
+                        data.messages.forEach(msg => {
+                            const isUser = msg.sender_role === 'visitor';
+                            if (isUser) {
+                                html += `
+                                    <div class="bg-[#d9fdd3] dark:bg-emerald-950 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tr-none p-3 text-xs max-w-[85%] self-end shadow-sm leading-relaxed relative animate-fade-in">
+                                        <p class="font-semibold text-[10px] text-[#128c7e] mb-1">Anda</p>
+                                        ${msg.message}
+                                        <div class="flex items-center justify-end gap-1 mt-1">
+                                            <span class="text-[8px] text-slate-400 font-mono">${msg.time}</span>
+                                            <span class="text-[10px] text-blue-500 font-bold leading-none">✓✓</span>
+                                        </div>
+                                    </div>
+                                `;
+                            } else {
+                                const senderName = msg.admin_name || 'Admin';
+                                html += `
+                                    <div class="bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative animate-fade-in">
+                                        <p class="font-semibold text-[10px] text-[#155dfc] mb-1">${senderName}</p>
+                                        ${msg.message}
+                                        <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">${msg.time}</span>
+                                    </div>
+                                `;
+                            }
+                        });
+
+                        const isNearBottom = container.scrollHeight - container.clientHeight - container.scrollTop < 100;
+                        const originalHtml = container.innerHTML;
+
+                        container.innerHTML = html;
+
+                        if (isNearBottom || originalHtml.includes('Halo! Ada yang bisa kami bantu?')) {
+                            container.scrollTop = container.scrollHeight;
+                        }
+                    }
+                })
+                .catch(err => console.error("Error loading chat messages:", err));
         }
 
         function handleFloatKeyPress(event) {
@@ -1052,39 +1201,37 @@
             if (!message) return;
             
             input.value = '';
-            appendFloatBubble('Anda', message, 'user');
-            
-            showFloatTypingIndicator();
-            
-            fetch("{{ route('contact.send') }}", {
+
+            fetch("{{ route('api.chat.send') }}", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
                 body: JSON.stringify({
-                    contact_name: floatUserName,
-                    contact_email: floatUserEmail,
-                    contact_message: message
+                    session_id: floatSessionId,
+                    name: floatUserName,
+                    email: floatUserEmail,
+                    message: message
                 })
             })
             .then(res => res.json())
             .then(data => {
-                setTimeout(() => {
-                    removeFloatTypingIndicator();
-                    appendFloatBubble('Bantuan LPK MPI', `Terima kasih! Pesan Anda: "${message}" telah kami catat. Kami akan membalas secepatnya. 👍`, 'admin');
-                }, 1200);
+                if (data.success) {
+                    loadFloatMessages();
+                }
             })
-            .catch(err => {
-                setTimeout(() => {
-                    removeFloatTypingIndicator();
-                    appendFloatBubble('Bantuan LPK MPI', `Maaf, terjadi kesalahan pengiriman. Silakan coba lagi nanti.`, 'admin');
-                }, 1000);
-            });
+            .catch(err => console.error("Error sending float message:", err));
         }
+
+        // Initialize after all DOM is ready — script is inside body so HTML below is not yet parsed
+        // Use window.onload or defer via setTimeout to ensure widget HTML is available
+        window.addEventListener('load', function() {
+            initFloatChatUI();
+        });
     </script>
 
-    <!-- ======= FLOATING WHATSAPP CHAT WIDGET HTML ======= -->
+    <!-- ======= FLOATING CHAT WIDGET HTML ======= -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 font-sans">
         <!-- Floating Chat Popup -->
         <div id="floating-chat-popup" class="hidden w-[330px] h-[440px] bg-[#efeae2] dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex-col animate-fade-in">
@@ -1099,7 +1246,7 @@
                     </div>
                     <div>
                         <h4 class="text-xs font-black tracking-wide">Bantuan LPK MPI</h4>
-                        <p class="text-[9px] text-blue-100 font-bold flex items-center gap-1">
+                        <p id="float-chat-status" class="text-[9px] text-blue-100 font-bold flex items-center gap-1">
                             <span class="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span> Online
                         </p>
                     </div>
@@ -1107,17 +1254,32 @@
                 <button onclick="toggleFloatingChat()" class="text-white hover:text-slate-200 text-lg font-extrabold">&times;</button>
             </div>
 
-            <!-- Messages Container -->
-            <div id="float-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3.5 flex flex-col min-h-0" style="background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); background-size: cover; background-repeat: repeat; background-blend-mode: overlay; background-color: rgba(239, 234, 226, 0.95);">
-                <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative">
-                    <p class="font-semibold text-[10px] text-[#155dfc] mb-1">Admin</p>
-                    Halo! Ada yang bisa kami bantu? Silakan sampaikan pesan Anda di bawah ya.
-                    <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">Sekarang</span>
+            <!-- Setup Form -->
+            <div id="float-setup-form" class="flex-1 p-6 flex flex-col justify-center space-y-4 bg-white dark:bg-slate-900 hidden">
+                <div class="text-center space-y-1">
+                    <h5 class="text-xs font-black text-slate-800 dark:text-white uppercase tracking-wider">Mulai Obrolan</h5>
+                    <p class="text-[10px] text-slate-400 font-semibold">Silakan isi nama dan email Anda untuk memulai chat bantuan.</p>
                 </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Nama Lengkap</label>
+                        <input type="text" id="float-setup-name" placeholder="Contoh: Ahmad" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Alamat Email</label>
+                        <input type="email" id="float-setup-email" placeholder="Contoh: ahmad@gmail.com" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                    </div>
+                </div>
+                <button onclick="submitFloatSetup()" class="w-full bg-[#155dfc] hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-2.5 rounded-xl shadow-md transition-all">Mulai Obrolan</button>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="float-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3.5 flex flex-col min-h-0 hidden" style="background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); background-size: cover; background-repeat: repeat; background-blend-mode: overlay; background-color: rgba(239, 234, 226, 0.95);">
+                <!-- Initial messages will be dynamically injected here -->
             </div>
 
             <!-- Input Bar -->
-            <div id="float-input-bar" class="bg-[#f0f0f0] dark:bg-slate-950 p-2.5 flex items-center gap-2 border-t border-slate-200 dark:border-slate-800 shrink-0">
+            <div id="float-input-bar" class="bg-[#f0f0f0] dark:bg-slate-950 p-2.5 flex items-center gap-2 border-t border-slate-200 dark:border-slate-800 shrink-0 hidden">
                 <input type="text" id="float-input-field" onkeypress="handleFloatKeyPress(event)" placeholder="Ketik pesan..." class="flex-1 bg-white dark:bg-slate-900 border-0 rounded-full px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none shadow-sm font-semibold">
                 <button onclick="sendFloatMessage()" class="w-9 h-9 rounded-full bg-[#155dfc] hover:bg-blue-700 text-white flex items-center justify-center shrink-0 shadow-md">
                     <svg class="w-4 h-4 transform rotate-45 -translate-x-0.5 translate-y-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
@@ -1125,13 +1287,11 @@
             </div>
         </div>
 
-        <!-- Floating Chat Button (Matches user image exactly) -->
+        <!-- Floating Chat Button -->
         <button onclick="toggleFloatingChat()" class="w-14 h-14 rounded-full bg-[#155dfc] hover:bg-blue-700 text-white flex items-center justify-center shadow-2xl relative transition-all active:scale-95 border-2 border-white/20">
-            <!-- Closed state: Chat Bubble icon -->
             <svg id="float-chat-icon-msg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
             </svg>
-            <!-- Open state: Cross icon (matches user screenshot with cross symbol overlaying bubble) -->
             <div id="float-chat-icon-close" class="hidden items-center justify-center gap-0.5">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>

@@ -202,4 +202,74 @@ class LandingController extends Controller
             'message' => 'Pesan mailable Anda telah terkirim ke Admin!'
         ]);
     }
+
+    public function sendChatMessage(Request $request)
+    {
+        $validated = $request->validate([
+            'session_id' => 'required|string',
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|email|max:255',
+            'message'    => 'required|string',
+        ]);
+
+        $lastMessage = \App\Models\ChatMessage::where('session_id', $validated['session_id'])
+            ->whereNotNull('claimed_by_admin_id')
+            ->latest()
+            ->first();
+        
+        $claimedBy = $lastMessage ? $lastMessage->claimed_by_admin_id : null;
+
+        $chatMessage = \App\Models\ChatMessage::create([
+            'session_id'          => $validated['session_id'],
+            'name'                => $validated['name'],
+            'email'               => $validated['email'],
+            'message'             => $validated['message'],
+            'sender_role'         => 'visitor',
+            'claimed_by_admin_id' => $claimedBy,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pesan terkirim!',
+            'data'    => $chatMessage
+        ]);
+    }
+
+    public function getChatMessages(Request $request)
+    {
+        $sessionId = $request->query('session_id');
+        if (empty($sessionId)) {
+            return response()->json(['success' => false, 'messages' => []], 400);
+        }
+
+        $messages = \App\Models\ChatMessage::with('claimedByAdmin')
+            ->where('session_id', $sessionId)
+            ->oldest()
+            ->get()
+            ->map(function($msg) {
+                return [
+                    'id'          => $msg->id,
+                    'message'     => $msg->message,
+                    'sender_role' => $msg->sender_role,
+                    'admin_name'  => $msg->claimedByAdmin ? $msg->claimedByAdmin->name : null,
+                    'time'        => $msg->created_at->format('H:i'),
+                ];
+            });
+
+        $claimedAdmin = null;
+        $lastClaimed = \App\Models\ChatMessage::where('session_id', $sessionId)
+            ->whereNotNull('claimed_by_admin_id')
+            ->with('claimedByAdmin')
+            ->latest()
+            ->first();
+        if ($lastClaimed && $lastClaimed->claimedByAdmin) {
+            $claimedAdmin = $lastClaimed->claimedByAdmin->name;
+        }
+
+        return response()->json([
+            'success' => true,
+            'messages' => $messages,
+            'claimed_by' => $claimedAdmin,
+        ]);
+    }
 }

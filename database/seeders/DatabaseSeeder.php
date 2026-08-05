@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Hamidun',
                 'username' => 'hamidun',
                 'password' => Hash::make('hamidun123'),
+                'password_plain' => 'hamidun123',
                 'role' => 'superadmin'
             ]
         );
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Admin LPK',
                 'username' => 'admin_lpk',
                 'password' => Hash::make('password123'),
+                'password_plain' => 'password123',
                 'role' => 'admin'
             ]
         );
@@ -39,6 +41,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Asesor LPK',
                 'username' => 'asesor_lpk',
                 'password' => Hash::make('password123'),
+                'password_plain' => 'password123',
                 'role' => 'asesor'
             ]
         );
@@ -50,6 +53,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Asesi LPK',
                 'username' => 'asesi_lpk',
                 'password' => Hash::make('password123'),
+                'password_plain' => 'password123',
                 'role' => 'asesi'
             ]
         );

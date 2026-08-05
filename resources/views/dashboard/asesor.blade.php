@@ -64,7 +64,7 @@
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
             <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -123,7 +123,11 @@
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
                         <button onclick="showPanel('kelola')" id="btn-kelola" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                            Kelola Ujian & Silabus
+                            Kelola Ujian
+                        </button>
+                        <button onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Jadwal & Silabus
                         </button>
                     </div>
                 </div>
@@ -158,7 +162,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -375,6 +379,150 @@
                 </div>
             </div>
 
+            <!-- PANEL: JADWAL & SILABUS -->
+            <div id="panel-jadwal" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Jadwal & Silabus Pelatihan</h2>
+                    <p class="text-slate-500 text-xs">Kelola jadwal pertemuan diklat dan silabus program pelatihan LPK.</p>
+                </div>
+
+                <!-- Form Edit Jadwal (Hidden by Default) -->
+                <div id="form-edit-schedule" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Jadwal Kelas</h3>
+                    <form id="edit-schedule-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Program Pelatihan</label>
+                                <select name="training_program_id" id="edit-schedule-program-id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                                    @foreach($programs as $p)
+                                        <option value="{{ $p->id }}">{{ $p->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Topik / Materi Pembahasan</label>
+                                <input type="text" name="topic" id="edit-schedule-topic" required placeholder="Contoh: Pengantar Tata Usaha" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tanggal & Waktu</label>
+                                <input type="datetime-local" name="scheduled_at" id="edit-schedule-scheduled-at" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Lokasi / Tautan Media</label>
+                                <input type="text" name="location" id="edit-schedule-location" required placeholder="Contoh: Ruang Kelas B / Zoom Meeting" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelEditSchedule()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Form Tambah Jadwal Baru -->
+                    <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Tambah Jadwal Pertemuan Baru</h3>
+                        <form action="{{ route('asesor.schedule.store') }}" method="POST" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Program Pelatihan</label>
+                                <select name="training_program_id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    @foreach($programs as $p)
+                                        <option value="{{ $p->id }}">{{ $p->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Topik / Materi Pembahasan</label>
+                                <input type="text" name="topic" required placeholder="Contoh: Pengantar Administrasi Sekolah" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tanggal & Waktu</label>
+                                    <input type="datetime-local" name="scheduled_at" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Lokasi / Tautan Zoom</label>
+                                    <input type="text" name="location" required placeholder="Contoh: Ruang 3 / Zoom Link" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Buat Jadwal Baru</button>
+                        </form>
+                    </div>
+
+                    <!-- Form Edit Silabus / Deskripsi Program -->
+                    <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Perbarui Silabus Program</h3>
+                        <form id="update-syllabus-form" method="POST" class="space-y-4">
+                            @csrf
+                            @method('PUT')
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pilih Program Pelatihan</label>
+                                <select id="syllabus-program-selector" onchange="loadProgramSyllabus(this.value)" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    <option value="">-- Pilih Program --</option>
+                                    @foreach($programs as $p)
+                                        <option value="{{ $p->id }}" data-desc="{{ $p->description }}" data-benefits="{{ is_array($p->benefits) ? implode("\n", $p->benefits) : '' }}">{{ $p->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi Silabus</label>
+                                <textarea name="description" id="syllabus-description" required rows="3" placeholder="Deskripsi materi program..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi / Manfaat (Satu baris per item)</label>
+                                <textarea name="benefits" id="syllabus-benefits" rows="3" placeholder="Contoh:&#10;Sertifikat Kompetensi Resmi&#10;Modul Pembelajaran Praktis" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Simpan Perubahan Silabus</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- List Jadwal Kelas Aktif -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+                    <h3 class="p-4 font-extrabold text-xs text-slate-450 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">Daftar Pertemuan Kelas Saya</h3>
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
+                                    <th class="px-5 py-3 text-left">Program Pelatihan</th>
+                                    <th class="px-5 py-3 text-left">Topik / Materi</th>
+                                    <th class="px-5 py-3 text-left">Waktu</th>
+                                    <th class="px-5 py-3 text-left">Lokasi / Media</th>
+                                    <th class="px-5 py-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                @forelse($schedules as $sched)
+                                    <tr>
+                                        <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">{{ $sched->trainingProgram?->title ?? '-' }}</td>
+                                        <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-350">{{ $sched->topic }}</td>
+                                        <td class="px-5 py-4 text-xs font-mono text-slate-500">{{ \Carbon\Carbon::parse($sched->scheduled_at)->format('d M Y, H:i') }} WIB</td>
+                                        <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-400 font-semibold">{{ $sched->location }}</td>
+                                        <td class="px-5 py-4">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <button type="button" onclick='editSchedule({!! json_encode($sched) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <form action="{{ route('asesor.schedule.delete', $sched->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">Belum ada jadwal kelas dibuat.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- PANEL: PROFIL -->
             <div id="panel-profil" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
@@ -412,7 +560,47 @@
 
     <!-- SCRIPTS -->
     <script>
-        const panels = ['dasbor', 'apl02', 'penilaian', 'kelola', 'profil'];
+        const panels = ['dasbor', 'apl02', 'penilaian', 'kelola', 'jadwal', 'profil'];
+
+        function editSchedule(sched) {
+            const editDiv = document.getElementById('form-edit-schedule');
+            editDiv.classList.remove('hidden');
+            document.getElementById('edit-schedule-program-id').value = sched.training_program_id;
+            document.getElementById('edit-schedule-topic').value = sched.topic;
+            
+            if(sched.scheduled_at) {
+                const date = new Date(sched.scheduled_at);
+                const localISODate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+                                      .toISOString().slice(0, 16);
+                document.getElementById('edit-schedule-scheduled-at').value = localISODate;
+            }
+            
+            document.getElementById('edit-schedule-location').value = sched.location;
+            document.getElementById('edit-schedule-form-action').action = `/dashboard/asesor/schedules/${sched.id}`;
+            editDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditSchedule() {
+            document.getElementById('form-edit-schedule').classList.add('hidden');
+        }
+
+        function loadProgramSyllabus(programId) {
+            const selector = document.getElementById('syllabus-program-selector');
+            const selectedOpt = selector.options[selector.selectedIndex];
+            
+            if (programId) {
+                const desc = selectedOpt.getAttribute('data-desc') || '';
+                const benefits = selectedOpt.getAttribute('data-benefits') || '';
+                
+                document.getElementById('syllabus-description').value = desc;
+                document.getElementById('syllabus-benefits').value = benefits;
+                document.getElementById('update-syllabus-form').action = `/dashboard/asesor/syllabus/${programId}`;
+            } else {
+                document.getElementById('syllabus-description').value = '';
+                document.getElementById('syllabus-benefits').value = '';
+                document.getElementById('update-syllabus-form').action = '';
+            }
+        }
 
         function showPanel(id) {
             panels.forEach(p => {
@@ -478,7 +666,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const activePanel = localStorage.getItem('asesor_active_panel') || 'dasbor';
+            const urlParams = new URLSearchParams(window.location.search);
+            const activePanel = urlParams.get('open') || localStorage.getItem('asesor_active_panel') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
             const activeBtn = document.getElementById('btn-' + activePanel);

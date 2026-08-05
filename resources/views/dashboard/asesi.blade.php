@@ -65,7 +65,7 @@
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
             <!-- Sidebar Header with Islamic Pattern Aspect -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -147,7 +147,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
         
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -572,7 +572,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const activePanel = localStorage.getItem('asesi_active_panel') || 'dasbor';
+            const urlParams = new URLSearchParams(window.location.search);
+            const activePanel = urlParams.get('open') || localStorage.getItem('asesi_active_panel') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
 

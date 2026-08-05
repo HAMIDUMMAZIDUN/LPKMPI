@@ -196,10 +196,12 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email',
         ]);
 
+        $plainPass = 'sso-only-' . rand(1000, 9999);
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make('sso-only-' . rand(1000, 9999)),
+            'password' => Hash::make($plainPass),
+            'password_plain' => $plainPass,
             'role' => 'admin',
         ]);
 
