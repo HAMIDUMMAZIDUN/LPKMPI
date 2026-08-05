@@ -78,7 +78,7 @@
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Asesi Panel</div>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -87,19 +87,19 @@
             <!-- Navigation Links -->
             <nav class="p-4 space-y-1" id="sidebar-nav">
 
-                <button onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
                     <span>Dasbor</span>
                 </button>
 
-                <button onclick="showPanel('profil')" id="btn-profil" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('profil')" id="btn-profil" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     <span>Profil & Dokumen</span>
                 </button>
 
                 <!-- Accordion: Pelatihan -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             <span>Pelatihan & Ujian</span>
@@ -107,15 +107,15 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('skema')" id="btn-skema" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('skema')" id="btn-skema" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Skema Pelatihan
                         </button>
-                        <button onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Jadwal & Ujian
                         </button>
-                        <button onclick="showPanel('sertifikat')" id="btn-sertifikat" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('sertifikat')" id="btn-sertifikat" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             E-Sertifikat
                         </button>
@@ -126,12 +126,12 @@
 
         <!-- Sidebar Footer -->
         <div class="p-4 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
             </button>
             
-            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span>🏠</span>
                 <span>Beranda Utama</span>
             </a>
@@ -152,7 +152,7 @@
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">MANAJEMEN PENDIDIKAN ISLAM</span>
@@ -160,7 +160,7 @@
             
             <!-- User Status & Notification -->
             <div class="flex items-center gap-4">
-                <div class="relative cursor-pointer text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <div class="relative cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                     <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-blue-500 rounded-full ring-2 ring-white dark:ring-slate-950"></span>
                 </div>
@@ -236,7 +236,7 @@
                         <div class="w-full bg-white dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                             <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full" style="width: 70%"></div>
                         </div>
-                        <p class="text-[11px] text-slate-500 leading-relaxed">Anda telah menyelesaikan 7 dari 10 kompetensi dasar dalam kurikulum Manajemen Pendidikan Islam.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Anda telah menyelesaikan 7 dari 10 kompetensi dasar dalam kurikulum Manajemen Pendidikan Islam.</p>
                     </div>
                 </div>
 
@@ -248,9 +248,9 @@
                             <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-sm">📅</span>
                             <h3 class="font-bold text-sm text-slate-800 dark:text-white">Jadwal Terdekat</h3>
                         </div>
-                        <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-150 dark:border-slate-800 rounded-xl space-y-1">
+                        <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1">
                             <div class="text-xs font-bold text-slate-800 dark:text-slate-100">Pra-Asesmen Tata Usaha Pendidikan Islam</div>
-                            <div class="text-[11px] text-slate-500 font-mono">Selasa, 11 Agustus 2026 (09:00 - 11:30 WIB)</div>
+                            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Selasa, 11 Agustus 2026 (09:00 - 11:30 WIB)</div>
                             <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">Metode: Daring via Zoom</div>
                         </div>
                     </div>
@@ -259,13 +259,13 @@
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex flex-col justify-between gap-4">
                         <div class="space-y-1">
                             <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest block">AKSES CEPAT</span>
-                            <h3 class="text-sm font-bold text-slate-850 dark:text-white">Aktivitas Belajar Mandiri</h3>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-white">Aktivitas Belajar Mandiri</h3>
                         </div>
                         <div class="flex flex-wrap gap-3">
-                            <button onclick="showPanel('skema')" class="flex-1 min-w-[120px] bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">
+                            <button type="button" onclick="showPanel('skema')" class="flex-1 min-w-[120px] bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">
                                 Lanjutkan Modul
                             </button>
-                            <button onclick="showPanel('jadwal')" class="flex-1 min-w-[120px] bg-white hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-800 dark:text-white font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition-all border border-slate-200 dark:border-slate-700">
+                            <button type="button" onclick="showPanel('jadwal')" class="flex-1 min-w-[120px] bg-white hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-800 dark:text-white font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition-all border border-slate-200 dark:border-slate-700">
                                 Lihat Hasil Ujian
                             </button>
                         </div>
@@ -277,7 +277,7 @@
             <div id="panel-profil" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Profil & Pengaturan Akun</h2>
-                    <p class="text-slate-500 text-xs">Ubah data login dan kelola data profil terdaftar Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah data login dan kelola data profil terdaftar Anda.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-2xl shadow-sm">
                     <form action="{{ route('asesi.profile.update') }}" method="POST" class="space-y-4">
@@ -315,12 +315,12 @@
             <div id="panel-skema" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Skema Pelatihan &amp; Modul</h2>
-                    <p class="text-slate-500 text-xs">Unduh modul pembelajaran kurikulum manajemen pendidikan Islam.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unduh modul pembelajaran kurikulum manajemen pendidikan Islam.</p>
                 </div>
 
                 @if($enrollments->isEmpty())
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center shadow-sm">
-                        <p class="text-slate-450 text-sm">Anda belum terdaftar pada program pelatihan apapun.</p>
+                        <p class="text-slate-400 text-sm">Anda belum terdaftar pada program pelatihan apapun.</p>
                     </div>
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -332,20 +332,20 @@
                                 </div>
                                 
                                 <div class="space-y-2">
-                                    <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-150 dark:border-slate-800 rounded-xl">
+                                    <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
                                         <div>
                                             <div class="text-xs font-bold text-slate-800 dark:text-white">Buku Panduan Tata Kelola Administrasi Madrasah</div>
                                             <div class="text-[10px] text-slate-400 font-mono">PDF — 4.2 MB</div>
                                         </div>
-                                        <button onclick="alert('Mengunduh Modul Teori...');" class="bg-blue-50 dark:bg-blue-950/20 hover:bg-blue-600 hover:text-white border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg transition-all shrink-0">Unduh</button>
+                                        <button type="button" onclick="alert('Mengunduh Modul Teori...');" class="bg-blue-50 dark:bg-blue-950/20 hover:bg-blue-600 hover:text-white border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg transition-all shrink-0">Unduh</button>
                                     </div>
 
-                                    <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-150 dark:border-slate-800 rounded-xl">
+                                    <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
                                         <div>
                                             <div class="text-xs font-bold text-slate-800 dark:text-white">SOP Kepemimpinan dan Manajemen Mutu Sekolah</div>
                                             <div class="text-[10px] text-slate-400 font-mono">PDF — 2.8 MB</div>
                                         </div>
-                                        <button onclick="alert('Mengunduh SOP...');" class="bg-blue-50 dark:bg-blue-950/20 hover:bg-blue-600 hover:text-white border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg transition-all shrink-0">Unduh</button>
+                                        <button type="button" onclick="alert('Mengunduh SOP...');" class="bg-blue-50 dark:bg-blue-950/20 hover:bg-blue-600 hover:text-white border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1.5 rounded-lg transition-all shrink-0">Unduh</button>
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +358,7 @@
             <div id="panel-jadwal" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Jadwal Kelas &amp; Ujian Evaluasi</h2>
-                    <p class="text-slate-500 text-xs">Ikuti kelas dan kerjakan evaluasi kompetensi skema Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ikuti kelas dan kerjakan evaluasi kompetensi skema Anda.</p>
                 </div>
 
                 <!-- Ujian Evaluasi -->
@@ -380,7 +380,7 @@
                                     <div class="flex justify-between items-start">
                                         <div>
                                             <h4 class="font-extrabold text-sm text-slate-800 dark:text-white leading-tight">{{ $scheme->title }}</h4>
-                                            <p class="text-slate-450 text-[11px] mt-1">{{ $scheme->description }}</p>
+                                            <p class="text-slate-400 text-[11px] mt-1">{{ $scheme->description }}</p>
                                         </div>
                                         @if($isDone)
                                             <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase">
@@ -390,7 +390,7 @@
                                     </div>
                                     <div class="flex gap-2">
                                         @if($isDone)
-                                            <a href="{{ route('asesi.result', $attempt->id) }}" class="flex-1 text-center bg-white hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-850 dark:text-white font-extrabold text-xs uppercase py-2.5 rounded-xl transition-all">Lihat Hasil</a>
+                                            <a href="{{ route('asesi.result', $attempt->id) }}" class="flex-1 text-center bg-white hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-extrabold text-xs uppercase py-2.5 rounded-xl transition-all">Lihat Hasil</a>
                                         @elseif($isInProgress)
                                             <a href="{{ route('asesi.exam.start', $scheme->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs uppercase py-2.5 rounded-xl transition-all">Lanjutkan Ujian</a>
                                         @else
@@ -428,7 +428,7 @@
                                             <td class="px-5 py-4 text-slate-600 dark:text-slate-300 text-xs font-mono">{{ $sch->scheduled_at->format('d M Y H:i') }} WIB</td>
                                             <td class="px-5 py-4 text-center">
                                                 <div id="attendance-status-{{ $sch->id }}">
-                                                    <button onclick="recordLocalAttendance({{ $sch->id }})" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Presensi</button>
+                                                    <button type="button" onclick="recordLocalAttendance({{ $sch->id }})" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Presensi</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -446,7 +446,7 @@
             <div id="panel-sertifikat" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">E-Sertifikat Kelulusan</h2>
-                    <p class="text-slate-500 text-xs">Unduh sertifikat kelulusan resmi kompetensi Manajemen Pendidikan Islam Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unduh sertifikat kelulusan resmi kompetensi Manajemen Pendidikan Islam Anda.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -461,7 +461,7 @@
                                     @if($enr->status === 'LULUS')
                                         <span class="bg-blue-55/20 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0">LULUS</span>
                                     @else
-                                        <span class="bg-white text-slate-500 border border-slate-200 dark:bg-slate-800 dark:border-slate-700 px-2 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0">DIKLAT AKTIF</span>
+                                        <span class="bg-white text-slate-500 dark:text-slate-400 border border-slate-200 dark:bg-slate-800 dark:border-slate-700 px-2 py-0.5 rounded-full text-[9px] font-black uppercase shrink-0">DIKLAT AKTIF</span>
                                     @endif
                                 </div>
                                 <p class="text-slate-400 text-xs mt-2 font-mono">NIK: {{ $enr->nik }}</p>
@@ -471,7 +471,7 @@
                                 @if($enr->status === 'LULUS')
                                     <div>
                                         <div class="text-[9px] text-slate-400 uppercase font-extrabold">Nomor Sertifikat</div>
-                                        <div class="text-xs font-mono font-bold text-slate-850 dark:text-slate-100">{{ $enr->certificate_number }}</div>
+                                        <div class="text-xs font-mono font-bold text-slate-800 dark:text-slate-100">{{ $enr->certificate_number }}</div>
                                     </div>
                                     <a href="{{ route('asesi.certificate.download', $enr->id) }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-2 rounded-xl transition-all shadow-md shadow-blue-500/10">Unduh PDF</a>
                                 @else
@@ -481,7 +481,7 @@
                         </div>
                     @empty
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center shadow-sm md:col-span-2">
-                            <p class="text-slate-450 text-sm">Belum ada riwayat diklat.</p>
+                            <p class="text-slate-400 text-sm">Belum ada riwayat diklat.</p>
                         </div>
                     @endforelse
                 </div>

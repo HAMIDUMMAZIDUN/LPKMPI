@@ -77,7 +77,7 @@
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Asesor Panel</div>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -85,14 +85,14 @@
             <!-- Navigation Links -->
             <nav class="p-4 space-y-1" id="sidebar-nav">
 
-                <button onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
                     <span>Dasbor</span>
                 </button>
 
                 <!-- Accordion: Asesmen -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                             <span>Asesmen & Penilaian</span>
@@ -100,11 +100,11 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('apl02')" id="btn-apl02" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('apl02')" id="btn-apl02" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Review Pra-Asesmen (APL-02)
                         </button>
-                        <button onclick="showPanel('penilaian')" id="btn-penilaian" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('penilaian')" id="btn-penilaian" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Penilaian CBT & Praktik
                         </button>
@@ -113,7 +113,7 @@
 
                 <!-- Accordion: Kelola -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
                             <span>Manajemen Ujian</span>
@@ -121,18 +121,18 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('kelola')" id="btn-kelola" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('kelola')" id="btn-kelola" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Kelola Ujian
                         </button>
-                        <button onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Jadwal & Silabus
                         </button>
                     </div>
                 </div>
 
-                <button onclick="showPanel('profil')" id="btn-profil" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('profil')" id="btn-profil" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     <span>Profil Saya</span>
                 </button>
@@ -141,12 +141,12 @@
 
         <!-- Sidebar Footer -->
         <div class="p-4 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
             </button>
 
-            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span>🏠</span>
                 <span>Beranda Utama</span>
             </a>
@@ -167,7 +167,7 @@
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">MPI ASSESSMENT CENTER</span>
@@ -175,7 +175,7 @@
 
             <!-- Profile & Notifications -->
             <div class="flex items-center gap-4">
-                <div class="relative cursor-pointer text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <div class="relative cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                     <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-blue-500 rounded-full ring-2 ring-white dark:ring-slate-950"></span>
                 </div>
@@ -217,16 +217,16 @@
                         <span class="text-xl">⚠️</span>
                         <span class="text-xs font-bold uppercase tracking-wider">Ada 5 Portofolio (APL-02) Asesi menunggu di-review.</span>
                     </div>
-                    <button onclick="showPanel('apl02')" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-[10px] uppercase px-4 py-2 rounded-xl transition-all shadow-sm">Review Sekarang</button>
+                    <button type="button" onclick="showPanel('apl02')" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-[10px] uppercase px-4 py-2 rounded-xl transition-all shadow-sm">Review Sekarang</button>
                 </div>
 
                 <!-- Schedule Card & Summary -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                     <div class="md:col-span-7 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Jadwal Ujian/Observasi Praktik Hari Ini</h3>
-                        <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-150 dark:border-slate-800 rounded-xl space-y-1">
+                        <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1">
                             <div class="text-xs font-bold text-slate-800 dark:text-slate-100">Observasi Mandiri Kompetensi Tata Usaha MPI</div>
-                            <div class="text-[11px] text-slate-450 font-mono">Hari ini, 09:00 - selesai WIB</div>
+                            <div class="text-[11px] text-slate-400 font-mono">Hari ini, 09:00 - selesai WIB</div>
                             <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">Tempat: Ruang Asesmen LPK MPI</div>
                         </div>
                     </div>
@@ -234,11 +234,11 @@
                     <div class="md:col-span-5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Ringkasan Evaluasi CBT</h3>
                         <div class="grid grid-cols-2 gap-4 text-center">
-                            <div class="bg-white dark:bg-slate-950/60 rounded-xl p-3 border border-slate-150 dark:border-slate-800">
+                            <div class="bg-white dark:bg-slate-950/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
                                 <div class="text-2xl font-black text-slate-800 dark:text-white">{{ $schemes->count() }}</div>
                                 <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Skema Dibuat</div>
                             </div>
-                            <div class="bg-white dark:bg-slate-950/60 rounded-xl p-3 border border-slate-150 dark:border-slate-800">
+                            <div class="bg-white dark:bg-slate-950/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
                                 <div class="text-2xl font-black text-slate-800 dark:text-white">{{ $attempts->count() }}</div>
                                 <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Ujian Selesai</div>
                             </div>
@@ -251,7 +251,7 @@
             <div id="panel-apl02" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Review Mandiri Portofolio (APL-02)</h2>
-                    <p class="text-slate-500 text-xs">Periksa kelengkapan bukti mandiri / portofolio asesi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Periksa kelengkapan bukti mandiri / portofolio asesi.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
                     <div class="overflow-x-auto w-full">
@@ -266,11 +266,11 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 <tr>
-                                    <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">Ahmad Faisal</td>
+                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">Ahmad Faisal</td>
                                     <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">Tata Usaha Pendidikan Islam</td>
-                                    <td class="px-5 py-4 text-xs text-slate-500 font-mono">APL02-Faisal.pdf</td>
+                                    <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400 font-mono">APL02-Faisal.pdf</td>
                                     <td class="px-5 py-4 text-center">
-                                        <button onclick="alert('Membuka review APL-02...');" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg">Review</button>
+                                        <button type="button" onclick="alert('Membuka review APL-02...');" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg">Review</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -283,7 +283,7 @@
             <div id="panel-penilaian" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Hasil Ujian &amp; Penilaian Ujian</h2>
-                    <p class="text-slate-500 text-xs">Daftar asesi yang telah mengerjakan ujian CBT dan perlu dinilai keputusannya.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Daftar asesi yang telah mengerjakan ujian CBT dan perlu dinilai keputusannya.</p>
                 </div>
 
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
@@ -300,15 +300,15 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 @forelse($attempts as $att)
                                     <tr>
-                                        <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">{{ $att->asesi?->name ?? '-' }}</td>
-                                        <td class="px-5 py-4 text-xs text-slate-650 dark:text-slate-350 font-semibold">{{ $att->scheme?->title ?? '-' }}</td>
+                                        <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $att->asesi?->name ?? '-' }}</td>
+                                        <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-300 font-semibold">{{ $att->scheme?->title ?? '-' }}</td>
                                         <td class="px-5 py-4 text-xs font-mono font-bold">{{ $att->score }}%</td>
                                         <td class="px-5 py-4 text-center">
-                                            <button onclick="alert('Membuka form penilaian praktikum & keputusan kelulusan...');" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg shadow-sm">Input Nilai &amp; Keputusan</button>
+                                            <button type="button" onclick="alert('Membuka form penilaian praktikum & keputusan kelulusan...');" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg shadow-sm">Input Nilai &amp; Keputusan</button>
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500">Belum ada pengerjaan ujian.</td></tr>
+                                    <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada pengerjaan ujian.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -337,7 +337,7 @@
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi (Menit)</label>
                                 <input type="number" name="duration_minutes" required value="60" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                             </div>
-                            <button type="submit" class="w-full bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl shadow-md shadow-blue-500/10">Buat Skema Ujian</button>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl shadow-md shadow-blue-500/10">Buat Skema Ujian</button>
                         </form>
                     </div>
 
@@ -356,7 +356,7 @@
                                 <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                     @forelse($schemes as $sch)
                                         <tr>
-                                            <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">{{ $sch->title }}</td>
+                                            <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $sch->title }}</td>
                                             <td class="px-5 py-4 text-xs font-mono">{{ $sch->duration_minutes }} menit</td>
                                             <td class="px-5 py-4 text-xs font-mono font-bold">{{ $sch->questions_count }} Soal</td>
                                             <td class="px-5 py-4 text-center">
@@ -370,7 +370,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500">Belum ada skema ujian dibuat.</td></tr>
+                                        <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada skema ujian dibuat.</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -383,7 +383,7 @@
             <div id="panel-jadwal" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Jadwal & Silabus Pelatihan</h2>
-                    <p class="text-slate-500 text-xs">Kelola jadwal pertemuan diklat dan silabus program pelatihan LPK.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola jadwal pertemuan diklat dan silabus program pelatihan LPK.</p>
                 </div>
 
                 <!-- Form Edit Jadwal (Hidden by Default) -->
@@ -451,7 +451,7 @@
                                     <input type="text" name="location" required placeholder="Contoh: Ruang 3 / Zoom Link" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Buat Jadwal Baru</button>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Buat Jadwal Baru</button>
                         </form>
                     </div>
 
@@ -478,14 +478,14 @@
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi / Manfaat (Satu baris per item)</label>
                                 <textarea name="benefits" id="syllabus-benefits" rows="3" placeholder="Contoh:&#10;Sertifikat Kompetensi Resmi&#10;Modul Pembelajaran Praktis" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
                             </div>
-                            <button type="submit" class="w-full bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Simpan Perubahan Silabus</button>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Simpan Perubahan Silabus</button>
                         </form>
                     </div>
                 </div>
 
                 <!-- List Jadwal Kelas Aktif -->
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-                    <h3 class="p-4 font-extrabold text-xs text-slate-450 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">Daftar Pertemuan Kelas Saya</h3>
+                    <h3 class="p-4 font-extrabold text-xs text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">Daftar Pertemuan Kelas Saya</h3>
                     <div class="overflow-x-auto w-full">
                         <table class="w-full text-sm">
                             <thead>
@@ -500,9 +500,9 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 @forelse($schedules as $sched)
                                     <tr>
-                                        <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">{{ $sched->trainingProgram?->title ?? '-' }}</td>
-                                        <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-350">{{ $sched->topic }}</td>
-                                        <td class="px-5 py-4 text-xs font-mono text-slate-500">{{ \Carbon\Carbon::parse($sched->scheduled_at)->format('d M Y, H:i') }} WIB</td>
+                                        <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $sched->trainingProgram?->title ?? '-' }}</td>
+                                        <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">{{ $sched->topic }}</td>
+                                        <td class="px-5 py-4 text-xs font-mono text-slate-500 dark:text-slate-400">{{ \Carbon\Carbon::parse($sched->scheduled_at)->format('d M Y, H:i') }} WIB</td>
                                         <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-400 font-semibold">{{ $sched->location }}</td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
@@ -515,7 +515,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">Belum ada jadwal kelas dibuat.</td></tr>
+                                    <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada jadwal kelas dibuat.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -527,7 +527,7 @@
             <div id="panel-profil" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Profil Saya</h2>
-                    <p class="text-slate-500 text-xs">Perbarui data login dan kredensial asesor Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Perbarui data login dan kredensial asesor Anda.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-2xl shadow-sm">
                     <form action="{{ route('asesor.profile.update') }}" method="POST" class="space-y-4">
@@ -684,3 +684,4 @@
     </script>
 </body>
 </html>
+

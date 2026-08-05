@@ -156,7 +156,7 @@ $t = [
 
                     <!-- Validation Errors -->
                     @if ($errors->any())
-                    <div class="mb-5 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-455 rounded-xl text-xs space-y-1">
+                    <div class="mb-5 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-400 rounded-xl text-xs space-y-1">
                         @foreach ($errors->all() as $error)
                         <p>• {{ $error }}</p>
                         @endforeach
@@ -167,14 +167,14 @@ $t = [
                         @csrf
                         <div class="flex flex-col gap-1.5">
                             <label for="login-username" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['login_username_label'] }}</label>
-                            <input type="text" id="login-username" name="username" value="{{ old('username') }}" placeholder="Contoh: admin" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
+                            <input type="text" id="login-username" name="username" value="{{ old('username') }}" placeholder="Contoh: admin" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
                         </div>
 
                         <div class="flex flex-col gap-1.5">
                             <label for="login-password" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['login_password_label'] }}</label>
                             <div class="relative w-full">
-                                <input type="password" id="login-password" name="password" placeholder="••••••••" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-4 pr-11 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
-                                <button type="button" onclick="togglePasswordVisibility(this)" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 transition-colors">
+                                <input type="password" id="login-password" name="password" placeholder="••••••••" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md pl-4 pr-11 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
+                                <button type="button" onclick="togglePasswordVisibility(this)" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
                                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -231,7 +231,7 @@ $t = [
                         @csrf
                         <div class="flex flex-col gap-1.5">
                             <label for="enroll-program" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_program'] }}</label>
-                            <select id="enroll-program" name="program_id" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all">
+                            <select id="enroll-program" name="program_id" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all">
                                 <option value="" disabled selected class="dark:bg-slate-900">{{ $t['reg_choose_program'] }}</option>
                                 @foreach($programs as $prog)
                                 <option value="{{ $prog->id }}" class="dark:bg-slate-900">{{ $prog->title }} ({{ $prog->price }})</option>
@@ -242,29 +242,29 @@ $t = [
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-name" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_name'] }}</label>
-                                <input type="text" id="enroll-name" name="name" placeholder="Contoh: Dr. Hamidun, M.Pd" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-semibold">
+                                <input type="text" id="enroll-name" name="name" placeholder="Contoh: Dr. Hamidun, M.Pd" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-semibold">
                             </div>
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-nik" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_nik'] }}</label>
-                                <input type="text" id="enroll-nik" name="nik" maxlength="16" placeholder="16 Digit NIK" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-mono">
+                                <input type="text" id="enroll-nik" name="nik" maxlength="16" placeholder="16 Digit NIK" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-mono">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-email" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_email'] }}</label>
-                                <input type="email" id="enroll-email" name="email" placeholder="nama@gmail.com" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
+                                <input type="email" id="enroll-email" name="email" placeholder="nama@gmail.com" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
                             </div>
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-phone" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_phone'] }}</label>
-                                <input type="text" id="enroll-phone" name="phone" placeholder="08xxxxxxxxx" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
+                                <input type="text" id="enroll-phone" name="phone" placeholder="08xxxxxxxxx" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-education" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_education'] }}</label>
-                                <select id="enroll-education" name="education" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all">
+                                <select id="enroll-education" name="education" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all">
                                     <option value="" disabled selected class="dark:bg-slate-900">{{ $t['reg_choose_edu'] }}</option>
                                     <option value="S3" class="dark:bg-slate-900">{{ $t['reg_edu_s3'] }}</option>
                                     <option value="S2" class="dark:bg-slate-900">{{ $t['reg_edu_s2'] }}</option>
@@ -276,7 +276,7 @@ $t = [
                             </div>
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-category" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_job_cat'] }}</label>
-                                <select id="enroll-category" name="category" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all">
+                                <select id="enroll-category" name="category" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all">
                                     <option value="" disabled selected class="dark:bg-slate-900">{{ $t['reg_choose_cat'] }}</option>
                                     <option value="guru" class="dark:bg-slate-900">{{ $t['reg_cat_guru'] }}</option>
                                     <option value="mahasiswa" class="dark:bg-slate-900">{{ $t['reg_cat_mhs'] }}</option>
@@ -288,11 +288,11 @@ $t = [
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-company" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_company'] }}</label>
-                                <input type="text" id="enroll-company" name="company" placeholder="{{ $t['reg_company_placeholder'] }}" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
+                                <input type="text" id="enroll-company" name="company" placeholder="{{ $t['reg_company_placeholder'] }}" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
                             </div>
                             <div class="flex flex-col gap-1.5">
                                 <label for="enroll-position" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ $t['reg_position'] }}</label>
-                                <input type="text" id="enroll-position" name="position" placeholder="{{ $t['reg_position_placeholder'] }}" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
+                                <input type="text" id="enroll-position" name="position" placeholder="{{ $t['reg_position_placeholder'] }}" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-4 py-3 text-base text-slate-900 dark:text-slate-200 focus:outline-none focus:border-[#1e5afb] dark:focus:border-blue-400 focus:bg-white dark:focus:bg-slate-900 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600">
                             </div>
                         </div>
 
@@ -358,18 +358,18 @@ $t = [
                         <h2 class="outfit-font text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
                             Checkout Pembayaran
                         </h2>
-                        <p class="text-slate-505 dark:text-slate-400 text-xs mt-1 leading-relaxed">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">
                             Silakan pilih metode pembayaran Anda untuk menyelesaikan proses registrasi program pelatihan.
                         </p>
                     </div>
 
                     <div class="bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-white/5 rounded-xl p-4 mb-5">
                         <div class="flex justify-between items-center text-xs border-b border-slate-200 dark:border-white/5 pb-2.5 mb-2.5">
-                            <span class="text-slate-500 font-medium">Program Pelatihan:</span>
+                            <span class="text-slate-500 dark:text-slate-400 font-medium">Program Pelatihan:</span>
                             <span class="font-bold text-slate-900 dark:text-white text-right" id="checkout-program-title">-</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-slate-500 font-medium">Total Tagihan:</span>
+                            <span class="text-slate-500 dark:text-slate-400 font-medium">Total Tagihan:</span>
                             <span class="text-lg font-black text-blue-700 dark:text-blue-400" id="checkout-amount">-</span>
                         </div>
                     </div>
@@ -378,7 +378,7 @@ $t = [
                         <input type="hidden" id="checkout-enrollment-id" name="enrollment_id">
 
                         <div class="flex flex-col gap-1.5">
-                            <label class="text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider">Pilih Metode Pembayaran</label>
+                            <label class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Pilih Metode Pembayaran</label>
 
                             <div class="grid grid-cols-1 gap-2.5 max-h-[220px] overflow-y-auto pr-1.5 custom-scrollbar">
                                 <!-- Bank Transfer -->
@@ -387,7 +387,7 @@ $t = [
                                         <input type="radio" name="payment_method" value="Bank Transfer (Virtual Account)" checked class="text-[#1e5afb] focus:ring-[#1e5afb]">
                                         <div class="flex flex-col text-left">
                                             <span class="text-xs font-bold text-slate-900 dark:text-white">Transfer Bank (VA)</span>
-                                            <span class="text-[10px] text-slate-450">BCA, Mandiri, BNI, BRI</span>
+                                            <span class="text-[10px] text-slate-400">BCA, Mandiri, BNI, BRI</span>
                                         </div>
                                     </div>
                                     <span class="text-[10px] bg-blue-500/10 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded font-bold">Instan</span>
@@ -399,7 +399,7 @@ $t = [
                                         <input type="radio" name="payment_method" value="E-Wallet (QRIS/GoPay/OVO/DANA)" class="text-[#1e5afb] focus:ring-[#1e5afb]">
                                         <div class="flex flex-col text-left">
                                             <span class="text-xs font-bold text-slate-900 dark:text-white">E-Wallet (QRIS)</span>
-                                            <span class="text-[10px] text-slate-450">GoPay, OVO, DANA, LinkAja</span>
+                                            <span class="text-[10px] text-slate-400">GoPay, OVO, DANA, LinkAja</span>
                                         </div>
                                     </div>
                                     <span class="text-[10px] bg-blue-500/10 text-blue-600 px-2 py-0.5 rounded font-bold">Otomatis</span>
@@ -411,7 +411,7 @@ $t = [
                                         <input type="radio" name="payment_method" value="Gerai Retail (Alfamart/Indomaret)" class="text-[#1e5afb] focus:ring-[#1e5afb]">
                                         <div class="flex flex-col text-left">
                                             <span class="text-xs font-bold text-slate-900 dark:text-white">Gerai Retail Modern</span>
-                                            <span class="text-[10px] text-slate-450">Alfamart, Indomaret</span>
+                                            <span class="text-[10px] text-slate-400">Alfamart, Indomaret</span>
                                         </div>
                                     </div>
                                     <span class="text-[10px] bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded font-bold">Manual Code</span>
@@ -453,7 +453,7 @@ $t = [
                         </div>
                         <div class="flex justify-between py-1.5 border-b border-slate-200/50 dark:border-white/5">
                             <span class="text-slate-400">Skema / Program</span>
-                            <span class="font-semibold text-slate-900 dark:text-slate-250 text-right" id="receipt-program">-</span>
+                            <span class="font-semibold text-slate-900 dark:text-slate-200 text-right" id="receipt-program">-</span>
                         </div>
                         <div class="flex justify-between py-1.5 border-b border-slate-200/50 dark:border-white/5">
                             <span class="text-slate-400">Jumlah Dibayar</span>

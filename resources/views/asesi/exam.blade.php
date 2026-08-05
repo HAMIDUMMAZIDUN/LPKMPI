@@ -86,11 +86,11 @@
         </div>
         <div class="flex items-center gap-4">
             <div class="glass rounded-xl px-4 py-1.5 text-center">
-                <div class="text-[10px] text-slate-500 font-bold uppercase">Waktu</div>
+                <div class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Waktu</div>
                 <div id="timer" class="text-lg font-black text-white">{{ sprintf('%02d:%02d', intdiv($scheme->duration_minutes, 60), $scheme->duration_minutes % 60) }}:00</div>
             </div>
             <div class="glass rounded-xl px-4 py-1.5 text-center">
-                <div class="text-[10px] text-slate-500 font-bold uppercase">Soal</div>
+                <div class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Soal</div>
                 <div class="text-lg font-black text-white">{{ $scheme->questions->count() }}</div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                     </span>
                     <div class="flex-1">
                         <p class="font-medium text-white text-sm leading-relaxed">{{ $q->question_text }}</p>
-                        <span class="text-[9px] text-slate-500 font-bold uppercase mt-1 block">
+                        <span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase mt-1 block">
                             {{ $q->question_type === 'multiple_choice' ? 'Pilihan Ganda' : 'Esai' }} · {{ $q->points }} poin
                         </span>
                     </div>
@@ -139,7 +139,7 @@
                 @endif
             </div>
             @empty
-                <div class="glass rounded-2xl p-10 text-center text-slate-500">Skema ini belum memiliki soal.</div>
+                <div class="glass rounded-2xl p-10 text-center text-slate-500 dark:text-slate-400">Skema ini belum memiliki soal.</div>
             @endforelse
         </div>
 

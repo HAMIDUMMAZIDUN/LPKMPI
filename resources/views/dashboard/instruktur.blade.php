@@ -77,7 +77,7 @@
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Instruktur</div>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -86,14 +86,14 @@
             <nav class="p-4 space-y-1" id="sidebar-nav">
 
                 <!-- Dasbor (standalone) -->
-                <button onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
                     <span>Dasbor</span>
                 </button>
 
                 <!-- Accordion: Pengajaran -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                             <span>Pengajaran</span>
@@ -101,15 +101,15 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('kelas')" id="btn-kelas" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('kelas')" id="btn-kelas" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Kelas Saya
                         </button>
-                        <button onclick="showPanel('modul')" id="btn-modul" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('modul')" id="btn-modul" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Manajemen Modul
                         </button>
-                        <button onclick="showPanel('evaluasi')" id="btn-evaluasi" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('evaluasi')" id="btn-evaluasi" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Evaluasi Tugas
                         </button>
@@ -120,12 +120,12 @@
 
         <!-- Sidebar Footer -->
         <div class="p-4 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
             </button>
 
-            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span>🏠</span>
                 <span>Beranda Utama</span>
             </a>
@@ -146,7 +146,7 @@
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">MANAJEMEN PENDIDIKAN ISLAM</span>
@@ -154,7 +154,7 @@
 
             <!-- Profile & Notifications -->
             <div class="flex items-center gap-4">
-                <div class="relative cursor-pointer text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <div class="relative cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                     <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-blue-500 rounded-full ring-2 ring-white dark:ring-slate-950"></span>
                 </div>
@@ -182,7 +182,7 @@
                         <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">🏫</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Kelas Aktif</div>
-                            <div class="text-2xl font-black text-slate-850 dark:text-white mt-1">4 Kelas</div>
+                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">4 Kelas</div>
                         </div>
                     </div>
 
@@ -190,7 +190,7 @@
                         <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 flex items-center justify-center text-2xl">✍️</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tugas Menunggu Penilaian</div>
-                            <div class="text-2xl font-black text-slate-850 dark:text-white mt-1">12 Tugas</div>
+                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">12 Tugas</div>
                         </div>
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                     <!-- Schedule Card -->
                     <div class="md:col-span-6 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Jadwal Mengajar Terdekat</h3>
-                        <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-150 dark:border-slate-800 rounded-xl space-y-3">
+                        <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-3">
                             <div>
                                 <div class="text-xs font-bold text-slate-800 dark:text-white">Manajemen Mutu &amp; Kepemimpinan Madrasah</div>
                                 <div class="text-[11px] text-slate-550 font-mono mt-0.5">Hari ini, 13:30 - 15:30 WIB</div>
@@ -216,7 +216,7 @@
                     <div class="md:col-span-6 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Modul &amp; Materi Terbaru yang Diunggah</h3>
                         <div class="space-y-2">
-                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-150 dark:border-slate-800 rounded-xl">
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
                                 <div>
                                     <div class="text-xs font-bold text-slate-800 dark:text-white">Buku Panduan Tata Kelola Administrasi Madrasah</div>
                                     <div class="text-[10px] text-slate-400 font-mono">PDF — 4.2 MB</div>
@@ -224,7 +224,7 @@
                                 <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Teori</span>
                             </div>
 
-                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-150 dark:border-slate-800 rounded-xl">
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
                                 <div>
                                     <div class="text-xs font-bold text-slate-800 dark:text-white">SOP Kepemimpinan Madrasah Modern</div>
                                     <div class="text-[10px] text-slate-400 font-mono">PDF — 2.8 MB</div>
@@ -240,19 +240,19 @@
             <div id="panel-kelas" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Kelas Pengajaran Aktif</h2>
-                    <p class="text-slate-500 text-xs">Kelola asesi dan jadwal di dalam kelas Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola asesi dan jadwal di dalam kelas Anda.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-4 bg-white dark:bg-slate-950/60 border border-slate-150 dark:border-slate-800 rounded-2xl space-y-2">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white">Kelas Tata Usaha MPI A</h3>
+                        <div class="p-4 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2">
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">Kelas Tata Usaha MPI A</h3>
                             <p class="text-xs text-slate-400">Total Siswa: 35 Asesi</p>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Kelola Kelas</button>
+                            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Kelola Kelas</button>
                         </div>
-                        <div class="p-4 bg-white dark:bg-slate-950/60 border border-slate-150 dark:border-slate-800 rounded-2xl space-y-2">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white">Kelas Keuangan Madrasah B</h3>
+                        <div class="p-4 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2">
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">Kelas Keuangan Madrasah B</h3>
                             <p class="text-xs text-slate-400">Total Siswa: 28 Asesi</p>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Kelola Kelas</button>
+                            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Kelola Kelas</button>
                         </div>
                     </div>
                 </div>
@@ -262,17 +262,17 @@
             <div id="panel-modul" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Manajemen Modul &amp; Bahan Ajar</h2>
-                    <p class="text-slate-500 text-xs">Unggah modul pembelajaran baru bagi asesi LPK.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unggah modul pembelajaran baru bagi asesi LPK.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-xl shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-sm text-slate-850 dark:text-white uppercase tracking-wider">Unggah Materi Baru</h3>
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Unggah Materi Baru</h3>
                     <form onsubmit="alert('Modul berhasil diunggah!'); return false;" class="space-y-4">
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-450 uppercase mb-1">Judul Materi</label>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Materi</label>
                             <input type="text" required placeholder="Contoh: Modul Evaluasi Kurikulum" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-450 uppercase mb-1">File Modul (PDF)</label>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">File Modul (PDF)</label>
                             <input type="file" required class="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Unggah Materi</button>
@@ -284,7 +284,7 @@
             <div id="panel-evaluasi" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Evaluasi Tugas &amp; Portofolio</h2>
-                    <p class="text-slate-500 text-xs">Beri penilaian pada tugas-tugas asesi yang telah dikumpulkan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Beri penilaian pada tugas-tugas asesi yang telah dikumpulkan.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
                     <div class="overflow-x-auto w-full">
@@ -299,11 +299,11 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 <tr>
-                                    <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">Ahmad Faisal</td>
+                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">Ahmad Faisal</td>
                                     <td class="px-5 py-4 text-xs">Penyusunan Rencana Anggaran Sekolah</td>
-                                    <td class="px-5 py-4 text-xs font-mono text-slate-500">04 Agt 2026</td>
+                                    <td class="px-5 py-4 text-xs font-mono text-slate-500 dark:text-slate-400">04 Agt 2026</td>
                                     <td class="px-5 py-4 text-center">
-                                        <button onclick="alert('Membuka penilaian...');" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Beri Nilai</button>
+                                        <button type="button" onclick="alert('Membuka penilaian...');" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Beri Nilai</button>
                                     </td>
                                 </tr>
                             </tbody>

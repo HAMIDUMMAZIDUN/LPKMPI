@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\InstrukturController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -107,6 +108,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/asesi/result/{attemptId}', [AsesiController::class, 'result'])->name('asesi.result');
     Route::post('/dashboard/asesi/profile', [AsesiController::class, 'updateProfile'])->name('asesi.profile.update');
     Route::get('/dashboard/asesi/certificate/{id}', [AsesiController::class, 'downloadCertificate'])->name('asesi.certificate.download');
+
+    // ── Instruktur Dashboard ──────────────────────────────────────────────────
+    Route::get('/dashboard/instruktur', [InstrukturController::class, 'index'])->name('instruktur.dashboard');
+    Route::post('/dashboard/instruktur/materi', [InstrukturController::class, 'storeMateri'])->name('instruktur.materi.store');
+    Route::post('/dashboard/instruktur/task', [InstrukturController::class, 'storeTask'])->name('instruktur.task.store');
 
     // ── Legacy admin routes (backward compat for existing views) ──────────
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.legacy.dashboard');

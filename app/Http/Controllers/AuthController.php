@@ -18,6 +18,7 @@ class AuthController extends Controller
             'admin'      => redirect()->route('admin.dashboard'),
             'asesor'     => redirect()->route('asesor.dashboard'),
             'asesi'      => redirect()->route('asesi.dashboard'),
+            'instruktur' => redirect()->route('instruktur.dashboard'),
             default      => redirect()->route('home'),
         };
     }
@@ -136,3 +137,4 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 }
+

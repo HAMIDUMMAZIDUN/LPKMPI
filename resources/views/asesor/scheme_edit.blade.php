@@ -70,7 +70,7 @@
         <a href="{{ route('asesor.dashboard') }}" class="text-slate-400 hover:text-white text-sm font-bold transition-all">← Kembali</a>
         <div class="flex-1">
             <h1 class="font-black text-white text-sm">{{ $scheme->title }}</h1>
-            <p class="text-[10px] text-slate-500">Editor Skema Penilaian</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">Editor Skema Penilaian</p>
         </div>
         <form action="{{ route('asesor.scheme.toggle-publish', $scheme->id) }}" method="POST">
             @csrf
@@ -174,9 +174,9 @@
 
         {{-- Question List --}}
         <div>
-            <h2 class="text-lg font-black mb-4">Daftar Soal <span class="text-slate-500 text-sm font-normal">({{ $scheme->questions->count() }} soal)</span></h2>
+            <h2 class="text-lg font-black mb-4">Daftar Soal <span class="text-slate-500 dark:text-slate-400 text-sm font-normal">({{ $scheme->questions->count() }} soal)</span></h2>
             @if($scheme->questions->isEmpty())
-                <div class="glass rounded-2xl p-10 text-center text-slate-500 text-sm">Belum ada soal. Tambahkan soal di atas.</div>
+                <div class="glass rounded-2xl p-10 text-center text-slate-500 dark:text-slate-400 text-sm">Belum ada soal. Tambahkan soal di atas.</div>
             @else
                 <div class="space-y-4">
                     @foreach($scheme->questions as $idx => $q)
@@ -184,11 +184,11 @@
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-[10px] font-black text-slate-500 uppercase">Soal {{ $idx + 1 }}</span>
+                                    <span class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Soal {{ $idx + 1 }}</span>
                                     <span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded-full {{ $q->question_type === 'multiple_choice' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20' }}">
                                         {{ $q->question_type === 'multiple_choice' ? 'Pilihan Ganda' : 'Esai' }}
                                     </span>
-                                    <span class="text-[9px] font-bold text-slate-500">{{ $q->points }} poin</span>
+                                    <span class="text-[9px] font-bold text-slate-500 dark:text-slate-400">{{ $q->points }} poin</span>
                                 </div>
                                 <p class="text-white text-sm font-medium mb-3">{{ $q->question_text }}</p>
 
@@ -205,7 +205,7 @@
                                         @endforeach
                                     </div>
                                 @else
-                                    <div class="text-xs text-slate-500 italic">[ Jawaban Esai — penilaian manual ]</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400 italic">[ Jawaban Esai — penilaian manual ]</div>
                                 @endif
                             </div>
                             <form action="{{ route('asesor.question.delete', [$scheme->id, $q->id]) }}" method="POST" onsubmit="return confirm('Hapus soal ini?')" class="shrink-0">

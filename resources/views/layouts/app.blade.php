@@ -324,7 +324,7 @@
 
     <!-- Footer -->
     @if(!$isAuthPage)
-    <footer class="w-full bg-slate-900 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-850/80 py-16 mt-20 text-xs text-slate-400 transition-colors duration-300 @auth @if(auth()->user()->role === 'superadmin' && !request()->has('preview')) hidden @endif @endauth">
+    <footer class="w-full bg-slate-900 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/80 py-16 mt-20 text-xs text-slate-400 transition-colors duration-300 @auth @if(auth()->user()->role === 'superadmin' && !request()->has('preview')) hidden @endif @endauth">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 text-left">
             <div>
                 <div class="flex items-center gap-2 mb-4">
@@ -364,9 +364,9 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-6 border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-            <p class="text-slate-500">&copy; 2026 LPK Manajemen Pendidikan Islam. All Rights Reserved.</p>
+            <p class="text-slate-500 dark:text-slate-400">&copy; 2026 LPK Manajemen Pendidikan Islam. All Rights Reserved.</p>
             <div class="flex gap-4">
-                <span class="font-medium text-slate-500 text-[10px]">VERIFIKASI RESMI LEMBAGA PELATIHAN KERJA (LPK)</span>
+                <span class="font-medium text-slate-500 dark:text-slate-400 text-[10px]">VERIFIKASI RESMI LEMBAGA PELATIHAN KERJA (LPK)</span>
             </div>
         </div>
     </footer>

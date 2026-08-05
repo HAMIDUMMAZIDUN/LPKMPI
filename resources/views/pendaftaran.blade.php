@@ -189,20 +189,20 @@
             <div class="certificate-badge rounded-2xl p-6 sm:p-10 text-center shadow-lg mb-8">
                 <div class="cert-header mb-6">
                     <h4 class="text-blue-800 dark:text-blue-300 text-sm sm:text-base font-bold tracking-[3px] uppercase">Sertifikat Kelulusan Pelatihan</h4>
-                    <span class="text-[9px] sm:text-xs text-slate-500 uppercase tracking-widest block mt-1">LPK Manajemen Industri &amp; Kompetensi (LPK-MI)</span>
+                    <span class="text-[9px] sm:text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest block mt-1">LPK Manajemen Industri &amp; Kompetensi (LPK-MI)</span>
                 </div>
                 <div class="cert-body my-8">
-                    <p class="text-[10px] sm:text-xs text-slate-500 italic">Diberikan Kepada:</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 italic">Diberikan Kepada:</p>
                     <h2 id="cert-holder-name" class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white my-3 tracking-wide uppercase font-black">-</h2>
                     <p class="text-[10px] sm:text-xs text-slate-400 max-w-md mx-auto leading-relaxed">Telah menyelesaikan pelatihan kompetensi dengan predikat <strong class="text-blue-600 dark:text-blue-400">KOMPETEN</strong> pada program:</p>
                     <h3 id="cert-program-name" class="text-base sm:text-xl text-blue-700 dark:text-teal-400 font-bold mt-3 mb-6 tracking-wide">-</h3>
                     <div class="flex justify-center gap-8 sm:gap-12 text-xs border-t border-slate-200 dark:border-white/5 pt-6 max-w-sm mx-auto">
                         <div class="flex flex-col text-left">
-                            <span class="text-[10px] text-slate-500">No. Sertifikat:</span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400">No. Sertifikat:</span>
                             <span class="font-semibold text-slate-800 dark:text-slate-200 font-mono" id="cert-number-val">-</span>
                         </div>
                         <div class="flex flex-col text-left">
-                            <span class="text-[10px] text-slate-500">Tanggal Terbit:</span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400">Tanggal Terbit:</span>
                             <span class="font-semibold text-slate-800 dark:text-slate-200" id="cert-date-val">-</span>
                         </div>
                     </div>

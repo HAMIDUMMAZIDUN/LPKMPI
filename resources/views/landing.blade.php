@@ -140,7 +140,7 @@
     <!-- ========================================== -->
     <!-- SECTION 2: COMPARISON TABLE (sec-tentang)  -->
     <!-- ========================================== -->
-    <section id="sec-tentang" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-white border-b border-slate-100 dark:border-slate-800/60">
+    <section id="sec-tentang" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Jalur Karir</span>
@@ -172,7 +172,7 @@
                             <!-- Row 1: Biaya -->
                             <tr class="align-top">
                                 <td class="p-4 sm:p-6 font-bold text-slate-800 dark:text-slate-200 bg-white/50 dark:bg-slate-900/20">Biaya-biaya</td>
-                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-650 dark:text-slate-400 leading-relaxed font-semibold">
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">
                                     <div class="flex items-start gap-2">
                                         <span class="text-[#155dfc] font-bold">✔</span>
                                         <span>Biaya pelatihan bahasa dan keterampilan sebelum keberangkatan ditanggung mandiri/dana talangan.</span>
@@ -183,7 +183,7 @@
                                     </div>
                                 </td>
                                 <!-- Highlighted Column cell -->
-                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-655 dark:text-slate-400 leading-relaxed bg-[#eef2ff] dark:bg-blue-950/20 border-x border-blue-200 dark:border-blue-900/30 font-semibold">
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-600 dark:text-slate-400 leading-relaxed bg-[#eef2ff] dark:bg-blue-950/20 border-x border-blue-200 dark:border-blue-900/30 font-semibold">
                                     <div class="flex items-start gap-2">
                                         <span class="text-[#155dfc] font-bold">✔</span>
                                         <span>Biaya pengurusan dokumen kerja & visa ditanggung oleh perusahaan penerima (Accepting Organization) di Jepang.</span>
@@ -193,7 +193,7 @@
                                         <span>Pemeriksaan medis awal (Medical Check-up) ditanggung mandiri.</span>
                                     </div>
                                 </td>
-                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-655 dark:text-slate-400 leading-relaxed font-semibold">
+                                <td class="p-4 sm:p-6 space-y-2.5 text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">
                                     <div class="flex items-start gap-2">
                                         <span class="text-[#155dfc] font-bold">✔</span>
                                         <span>Biaya penempatan magang/internship ditanggung mandiri oleh mahasiswa atau disubsidi kampus asal.</span>
@@ -298,7 +298,7 @@
                 </div>
 
                 <!-- Program 2: Internship -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div class="space-y-6">
                         <!-- Custom illustration -->
                         <div class="w-full h-36 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
@@ -319,7 +319,7 @@
                 </div>
 
                 <!-- Program 3: Mandiri -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div class="space-y-6">
                         <!-- Custom illustration -->
                         <div class="w-full h-36 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
@@ -383,7 +383,7 @@
 
                     @if(!empty($name))
                         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition duration-300 {{ $i > 3 ? 'hidden instruktur-card-extra' : '' }}">
-                            <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-600/20 mb-6 shrink-0 relative bg-white dark:bg-slate-850 flex items-center justify-center">
+                            <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-600/20 mb-6 shrink-0 relative bg-white dark:bg-slate-800 flex items-center justify-center">
                                 @if($foto)
                                     <img src="{{ asset('storage/' . $foto) }}" class="w-full h-full object-cover" alt="{{ $name }}">
                                 @else
@@ -399,11 +399,11 @@
                             <div class="border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-2 w-full text-left space-y-3">
                                 <div>
                                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Keahlian</span>
-                                    <p class="text-xs text-slate-650 dark:text-slate-400 mt-0.5 leading-relaxed">{{ $keah }}</p>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{{ $keah }}</p>
                                 </div>
                                 <div>
                                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pengalaman</span>
-                                    <p class="text-xs text-slate-655 dark:text-slate-400 mt-0.5 leading-relaxed font-semibold">{{ $peng }}</p>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed font-semibold">{{ $peng }}</p>
                                 </div>
                             </div>
                         </div>
@@ -441,7 +441,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
                 <!-- Fasilitas 1: Ruang Belajar -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -458,7 +458,7 @@
                 </div>
 
                 <!-- Fasilitas 2: Perpustakaan -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -475,7 +475,7 @@
                 </div>
 
                 <!-- Fasilitas 3: Asrama -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div>
                         <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -497,7 +497,7 @@
     <!-- ========================================== -->
     <!-- SECTION 6: PUBLICATIONS (sec-berita)       -->
     <!-- ========================================== -->
-    <section id="sec-berita" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-white border-b border-slate-100 dark:border-slate-800/60">
+    <section id="sec-berita" class="tab-content block animate-fade-in scroll-mt-section py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-xs font-extrabold tracking-widest text-[#155dfc] uppercase mb-3 block">Kabar & Publikasi</span>
@@ -549,7 +549,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <!-- Instagram post cards -->
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://instagram.com/p/123')">
-                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
                             @if($siteLogo)
                                 <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="IG 1">
                             @else
@@ -557,7 +557,7 @@
                             @endif
                         </div>
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://instagram.com/p/456')">
-                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Lihat Postingan </div>
                             @if($siteLogo)
                                 <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="IG 2">
                             @else
@@ -576,7 +576,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <!-- YouTube post cards -->
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://youtube.com/watch?v=1')">
-                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
                             @if($siteLogo)
                                 <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="YT 1">
                             @else
@@ -584,7 +584,7 @@
                             @endif
                         </div>
                         <div class="aspect-square bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative group cursor-pointer" onclick="openVideoModal('https://youtube.com/watch?v=2')">
-                            <div class="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white font-extrabold text-xs z-10"> Putar Video </div>
                             @if($siteLogo)
                                 <img src="{{ asset('storage/' . $siteLogo) }}" class="w-full h-full object-contain p-4" alt="YT 2">
                             @else
@@ -614,11 +614,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
                 <!-- Alumni 1 -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed mb-6 font-semibold">
                         "Pelatihan di LPK Manajemen Pendidikan Islam sangat ketat tapi sangat membantu membentuk mental disiplin yang dibutuhkan di Jepang. Sekarang saya bekerja sebagai CNC Programmer di Prefektur Chiba dengan gaji yang sangat baik."
                     </p>
-                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-850 pt-4">
+                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-4">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#155dfc] to-blue-700 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 font-extrabold">
                             HW
                         </div>
@@ -630,11 +630,11 @@
                 </div>
 
                 <!-- Alumni 2 -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed mb-6 font-semibold">
                         "Saya bersyukur mengikuti program Visa Kerja Khusus (Tokutei Ginou) melalui LPK Manajemen Pendidikan Islam. Selain diajarkan bahasa Jepang tingkat N4, kami juga diberikan sertifikat SSW Caregiver sehingga penempatan kerjanya lancar."
                     </p>
-                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-850 pt-4">
+                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-4">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#155dfc] to-blue-700 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 font-extrabold">
                             NS
                         </div>
@@ -646,11 +646,11 @@
                 </div>
 
                 <!-- Alumni 3 -->
-                <div class="bg-white dark:bg-white border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
+                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-300">
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed mb-6 font-semibold">
                         "Program Internship LPK membantu saya melakukan magang sambil kuliah. Hubungan kerjasama LPK Manajemen Pendidikan Islam dengan perusahaan manufaktur di Nagoya sangat kuat sehingga kepastian kontrak kerjanya terjamin."
                     </p>
-                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-850 pt-4">
+                    <div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-4">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#155dfc] to-blue-700 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 font-extrabold">
                             AS
                         </div>
@@ -667,19 +667,19 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                     <div>
                         <span class="block text-3xl font-black text-[#155dfc] font-extrabold">120+</span>
-                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Perusahaan Mitra</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">Perusahaan Mitra</span>
                     </div>
                     <div>
                         <span class="block text-3xl font-black text-[#155dfc] font-extrabold">3,000+</span>
-                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Alumni di Jepang</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">Alumni di Jepang</span>
                     </div>
                     <div>
                         <span class="block text-3xl font-black text-[#155dfc] font-extrabold">98%</span>
-                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Tingkat Kelulusan</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">Tingkat Kelulusan</span>
                     </div>
                     <div>
                         <span class="block text-3xl font-black text-[#155dfc] font-extrabold">24/7</span>
-                        <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Support di Jepang</span>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">Support di Jepang</span>
                     </div>
                 </div>
             </div>
@@ -797,7 +797,7 @@
                                     <span>{{ $qVal }}</span>
                                     <span class="accordion-icon text-xs text-slate-400 transition-transform">▼</span>
                                 </button>
-                                <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-655 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
+                                <div class="accordion-content hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-50 dark:border-slate-800/50 pt-4">
                                     {!! nl2br(e($aVal)) !!}
                                 </div>
                             </div>
@@ -888,8 +888,8 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-6 border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p class="text-slate-500 font-semibold">&copy; Copyright 2010 - LPK Manajemen Pendidikan Islam All Rights Reserved.</p>
-            <div class="flex gap-4 text-slate-500 font-semibold">
+            <p class="text-slate-500 dark:text-slate-400 font-semibold">&copy; Copyright 2010 - LPK Manajemen Pendidikan Islam All Rights Reserved.</p>
+            <div class="flex gap-4 text-slate-500 dark:text-slate-400 font-semibold">
                 <a href="#" class="hover:text-[#155dfc] transition">Terms</a>
                 <span>•</span>
                 <a href="#" class="hover:text-[#155dfc] transition">Privacy</a>
@@ -900,11 +900,11 @@
     </footer>
 
     <!-- Video Modal -->
-    <div id="video-modal" class="fixed inset-0 z-50 overflow-y-auto hidden items-center justify-center p-4 bg-slate-955/85 backdrop-blur-sm transition-all duration-300">
+    <div id="video-modal" class="fixed inset-0 z-50 overflow-y-auto hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm transition-all duration-300">
         <div class="bg-white dark:bg-slate-900 w-full max-w-3xl border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
             <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900/60">
                 <h3 class="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-heading">Video Preview</h3>
-                <button onclick="closeVideoModal()" class="text-slate-450 hover:text-slate-600 dark:hover:text-white font-black text-xl">&times;</button>
+                <button onclick="closeVideoModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white font-black text-xl">&times;</button>
             </div>
             <div class="p-2 bg-black aspect-video relative">
                 <iframe id="video-modal-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -1167,7 +1167,7 @@
                             } else {
                                 const senderName = msg.admin_name || 'Admin';
                                 html += `
-                                    <div class="bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative animate-fade-in">
+                                    <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none p-3 text-xs max-w-[85%] self-start shadow-sm leading-relaxed relative animate-fade-in">
                                         <p class="font-semibold text-[10px] text-[#155dfc] mb-1">${senderName}</p>
                                         ${msg.message}
                                         <span class="block text-[8px] text-slate-400 text-right mt-1 font-mono">${msg.time}</span>
@@ -1301,3 +1301,4 @@
         </button>
     </div>
 @endsection
+

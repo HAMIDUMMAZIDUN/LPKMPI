@@ -59,6 +59,47 @@
                 transform: translateX(0);
             }
         }
+
+        /* ── Dark mode global fixes ─────────────────────────── */
+        /* select & option inherit correct dark bg */
+        .dark select option {
+            background-color: #020617; /* slate-950 */
+            color: #f1f5f9; /* slate-100 */
+        }
+
+        /* table row hover in dark mode */
+        .dark tbody tr:hover {
+            background-color: rgba(51, 65, 85, 0.25);
+        }
+
+        /* Input placeholder contrast */
+        .dark input::placeholder,
+        .dark textarea::placeholder {
+            color: #475569; /* slate-600 */
+        }
+
+        /* Scrollbar tinting for dark mode chat panels */
+        .dark #admin-chat-threads-container,
+        .dark #admin-chat-messages-container {
+            scrollbar-color: #334155 transparent;
+        }
+
+        /* Ensure sidebar active state dot is visible in dark */
+        .dark .accordion-content .sidebar-btn:hover .rounded-full {
+            background-color: #3b82f6;
+        }
+
+        /* NIK / secondary mono text in dark tables */
+        .dark .font-mono { color: #94a3b8; } /* slate-400 */
+        .dark td .font-mono { color: #94a3b8; }
+
+        /* Badge bg fixes in dark: avoid near-invisible light badges */
+        .dark .bg-blue-50 { background-color: rgba(8, 75, 227, 0.15) !important; }
+        .dark .bg-amber-50 { background-color: rgba(180, 83, 9, 0.15) !important; }
+        .dark .bg-emerald-50 { background-color: rgba(5, 150, 105, 0.15) !important; }
+        .dark .bg-rose-50 { background-color: rgba(225, 29, 72, 0.15) !important; }
+        .dark .bg-slate-50 { background-color: rgba(51, 65, 85, 0.3) !important; }
+        .dark .bg-slate-100 { background-color: rgba(51, 65, 85, 0.4) !important; }
     </style>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
@@ -77,7 +118,7 @@
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Sekretariat</div>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -86,14 +127,14 @@
             <nav class="p-4 space-y-1" id="sidebar-nav">
 
                 <!-- Dasbor (standalone) -->
-                <button onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
                     <span>Dasbor</span>
                 </button>
 
                 <!-- Accordion: Manajemen Peserta -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             <span>Manajemen Peserta</span>
@@ -101,11 +142,11 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('verifikasi')" id="btn-verifikasi" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('verifikasi')" id="btn-verifikasi" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Verifikasi Pendaftaran
                         </button>
-                        <button onclick="showPanel('plotting')" id="btn-plotting" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('plotting')" id="btn-plotting" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Plotting & Skema
                         </button>
@@ -114,7 +155,7 @@
 
                 <!-- Accordion: Administrasi & Data -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             <span>Administrasi & Data</span>
@@ -122,23 +163,23 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('sertifikat')" id="btn-sertifikat" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('sertifikat')" id="btn-sertifikat" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Penerbitan Sertifikat
                         </button>
-                        <button onclick="showPanel('users')" id="btn-users" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('users')" id="btn-users" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Kelola Pengguna
                         </button>
-                        <button onclick="showPanel('programs-db')" id="btn-programs-db" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('programs-db')" id="btn-programs-db" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Data Program Pelatihan
                         </button>
-                        <button onclick="showPanel('trainees-db')" id="btn-trainees-db" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('trainees-db')" id="btn-trainees-db" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Data Pendaftaran Peserta
                         </button>
-                        <button onclick="showPanel('chats')" id="btn-chats" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('chats')" id="btn-chats" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Live Chat Bantuan
                         </button>
@@ -147,7 +188,7 @@
 
                 <!-- Accordion: CMS Landing Page -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4a2 2 0 012 2v6a2 2 0 01-2 2h-2m-4-6l3-3m0 0l3 3m-3-3v12"/></svg>
                             <span>CMS Landing Page</span>
@@ -155,19 +196,19 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('program')" id="btn-program" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('program')" id="btn-program" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Program Pelatihan
                         </button>
-                        <button onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('jadwal')" id="btn-jadwal" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Jadwal Pelatihan
                         </button>
-                        <button onclick="showPanel('fasilitas')" id="btn-fasilitas" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('fasilitas')" id="btn-fasilitas" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Fasilitas LPK
                         </button>
-                        <button onclick="showPanel('articles')" id="btn-articles" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                        <button type="button" onclick="showPanel('articles')" id="btn-articles" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Kabar & Artikel
                         </button>
@@ -175,7 +216,7 @@
                 </div>
 
                 <!-- Profil (standalone) -->
-                <button onclick="showPanel('profil')" id="btn-profil" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('profil')" id="btn-profil" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
                     <span>Pengaturan Profil</span>
                 </button>
@@ -184,12 +225,12 @@
 
         <!-- Sidebar Footer -->
         <div class="p-4 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
             </button>
 
-            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span>🏠</span>
                 <span>Beranda Utama</span>
             </a>
@@ -210,7 +251,7 @@
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">ADMINISTRATOR LPK MPI</span>
@@ -223,7 +264,7 @@
                     📥 Ekspor CSV
                 </a>
                 
-                <div class="relative cursor-pointer text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <div class="relative cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                     <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-blue-500 rounded-full ring-2 ring-white dark:ring-slate-900"></span>
                 </div>
@@ -265,7 +306,7 @@
                         <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">👥</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Pendaftar (Bulan Ini)</div>
-                            <div class="text-2xl font-black text-slate-850 dark:text-white mt-1">{{ $traineesCount }}</div>
+                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ $traineesCount }}</div>
                         </div>
                     </div>
 
@@ -273,7 +314,7 @@
                         <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 flex items-center justify-center text-2xl">📝</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Menunggu Verifikasi (APL-01)</div>
-                            <div class="text-2xl font-black text-slate-850 dark:text-white mt-1">{{ $trainees->where('payment_status', '!=', 'PAID')->count() }}</div>
+                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ $trainees->where('payment_status', '!=', 'PAID')->count() }}</div>
                         </div>
                     </div>
 
@@ -281,7 +322,7 @@
                         <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">🎓</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sertifikat Siap Cetak</div>
-                            <div class="text-2xl font-black text-slate-850 dark:text-white mt-1">{{ $certCount }}</div>
+                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ $certCount }}</div>
                         </div>
                     </div>
                 </div>
@@ -313,15 +354,17 @@
                             <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest block font-bold">AKSI CEPAT</span>
                             <h3 class="text-sm font-bold text-slate-800 dark:text-white">Data Laporan Excel</h3>
                         </div>
-                        <a href="{{ route('admin.report') }}" class="w-full block text-center bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3.5 rounded-xl transition-all shadow-md shadow-blue-500/10">
+                        <a href="{{ route('admin.report') }}" class="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3.5 rounded-xl transition-all shadow-md shadow-blue-500/10">
                             Ekspor Data Pendaftar
                         </a>
                     </div>
+                </div>
+            </div>
                           <!-- PANEL: VERIFIKASI PENDAFTARAN -->
             <div id="panel-verifikasi" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Verifikasi Berkas &amp; Pembayaran Asesi</h2>
-                    <p class="text-slate-500 text-xs">Verifikasi pembayaran dan berkas data pendaftaran (APL-01) asesi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Verifikasi pembayaran dan berkas data pendaftaran (APL-01) asesi.</p>
                 </div>
 
                 <!-- Form Edit Peserta -->
@@ -367,8 +410,8 @@
                             </div>
                         </div>
                         <div class="flex gap-3">
-                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
@@ -390,13 +433,13 @@
                                 @forelse($trainees as $t)
                                     <tr>
                                         <td class="px-5 py-4">
-                                            <div class="font-bold text-slate-850 dark:text-white">{{ $t->name }}</div>
-                                            <div class="text-slate-455 text-xs font-mono mt-0.5">NIK: {{ $t->nik }}</div>
+                                            <div class="font-bold text-slate-800 dark:text-white">{{ $t->name }}</div>
+                                            <div class="text-slate-500 dark:text-slate-400 text-xs font-mono mt-0.5">NIK: {{ $t->nik }}</div>
                                         </td>
-                                        <td class="px-5 py-4 text-xs font-bold text-slate-705 dark:text-slate-300">
+                                        <td class="px-5 py-4 text-xs font-bold text-slate-700 dark:text-slate-300">
                                             {{ $t->trainingProgram?->title ?? '-' }}
                                         </td>
-                                        <td class="px-5 py-4 text-xs text-slate-500 font-mono">
+                                        <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400 font-mono">
                                             {{ $t->created_at->format('d M Y') }}
                                         </td>
                                         <td class="px-5 py-4 text-xs">
@@ -407,7 +450,7 @@
                                                 @if($t->payment_status !== 'PAID')
                                                     <form action="{{ route('admin.trainees.verify-payment', $t->id) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Verifikasi</button>
+                                                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Verifikasi</button>
                                                     </form>
                                                 @else
                                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2.5 py-1 rounded-lg text-xs font-extrabold uppercase">✓ Lunas</span>
@@ -425,7 +468,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="6" class="px-5 py-8 text-center text-slate-500">Belum ada asesi mendaftar.</td></tr>
+                                    <tr><td colspan="6" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada asesi mendaftar.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -437,7 +480,7 @@
             <div id="panel-plotting" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Plotting &amp; Distribusi Asesor</h2>
-                    <p class="text-slate-500 text-xs">Tugaskan skema ujian kompetensi ke penilai (Asesor).</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Tugaskan skema ujian kompetensi ke penilai (Asesor).</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -481,7 +524,7 @@
                                     @forelse($assignments as $asg)
                                         <tr>
                                             <td class="px-5 py-4 font-bold text-slate-800 dark:text-white text-xs">{{ $asg->scheme?->title ?? '-' }}</td>
-                                            <td class="px-5 py-4 text-xs text-slate-650 dark:text-slate-300 font-semibold">{{ $asg->asesor?->name ?? '-' }}</td>
+                                            <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-300 font-semibold">{{ $asg->asesor?->name ?? '-' }}</td>
                                             <td class="px-5 py-4 text-center">
                                                 <form action="{{ route('admin.scheme.revoke', $asg->id) }}" method="POST">
                                                     @csrf @method('DELETE')
@@ -490,7 +533,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr><td colspan="3" class="px-5 py-8 text-center text-slate-500">Belum ada plotting asesor.</td></tr>
+                                        <tr><td colspan="3" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada plotting asesor.</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -503,7 +546,7 @@
             <div id="panel-sertifikat" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Penerbitan Sertifikat Kelulusan</h2>
-                    <p class="text-slate-500 text-xs">Konfirmasi kelulusan asesi dan terbitkan nomor sertifikat resmi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Konfirmasi kelulusan asesi dan terbitkan nomor sertifikat resmi.</p>
                 </div>
 
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
@@ -520,8 +563,8 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 @forelse($trainees as $t)
                                     <tr>
-                                        <td class="px-5 py-4 font-bold text-slate-850 dark:text-white">{{ $t->name }}</td>
-                                        <td class="px-5 py-4 text-xs text-slate-650 dark:text-slate-300 font-semibold">{{ $t->trainingProgram?->title ?? '-' }}</td>
+                                        <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $t->name }}</td>
+                                        <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-300 font-semibold">{{ $t->trainingProgram?->title ?? '-' }}</td>
                                         <td class="px-5 py-4 text-xs font-mono font-bold text-blue-600 dark:text-blue-400">{{ $t->certificate_number ?? 'Belum Terbit' }}</td>
                                         <td class="px-5 py-4 text-center">
                                             @if($t->status !== 'LULUS')
@@ -535,7 +578,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500">Belum ada data asesi.</td></tr>
+                                    <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada data asesi.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -564,7 +607,7 @@
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kata Sandi</label>
                                 <input type="password" name="password" required placeholder="Minimal 6 karakter" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                             </div>
-                            <button type="submit" class="w-full bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Daftarkan Asesi</button>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Daftarkan Asesi</button>
                         </form>
                     </div>
 
@@ -583,6 +626,8 @@
                             </div>
                             <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Daftarkan Asesor</button>
                         </form>
+                    </div>
+                </div>
                                     <!-- Form Edit User -->
                 <div id="form-edit-user" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Akun Pengguna</h3>
@@ -604,8 +649,8 @@
                             <input type="password" name="password" placeholder="Minimal 6 karakter" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                         </div>
                         <div class="flex gap-3">
-                            <button type="button" onclick="cancelEditUser()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                            <button type="button" onclick="cancelEditUser()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
@@ -676,9 +721,9 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Cover (Opsional)</label>
-                            <input type="file" name="image" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <input type="file" name="image" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
-                        <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Terbitkan Artikel</button>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Terbitkan Artikel</button>
                     </form>
                 </div>
 
@@ -698,11 +743,11 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Cover Baru (Opsional)</label>
-                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
                         <div class="flex justify-end gap-3">
-                            <button type="button" onclick="cancelEditArticle()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                            <button type="button" onclick="cancelEditArticle()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
@@ -714,13 +759,13 @@
                         @forelse($articles as $art)
                             <div class="bg-white dark:bg-slate-950 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col justify-between p-4">
                                 <div class="space-y-2">
-                                    <h4 class="font-bold text-slate-850 dark:text-white text-xs">{{ $art->title }}</h4>
-                                    <p class="text-slate-500 text-[11px] line-clamp-2">{{ Str::limit(strip_tags($art->content), 80) }}</p>
+                                    <h4 class="font-bold text-slate-800 dark:text-white text-xs">{{ $art->title }}</h4>
+                                    <p class="text-slate-500 dark:text-slate-400 text-[11px] line-clamp-2">{{ Str::limit(strip_tags($art->content), 80) }}</p>
                                 </div>
                                 <div class="flex items-center justify-between border-t border-slate-200/55 dark:border-slate-800/80 pt-3 mt-3">
                                     <span class="text-[10px] text-slate-400 font-mono">{{ $art->created_at->format('d M Y') }}</span>
                                     <div class="flex items-center gap-2">
-                                        <button onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-850 text-[10px] font-bold uppercase font-bold">Edit</button>
+                                        <button type="button" onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-800 text-[10px] font-bold uppercase font-bold">Edit</button>
                                         <form action="{{ route('admin.articles.destroy', $art->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase font-bold">Hapus</button>
@@ -729,7 +774,7 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-slate-500 text-xs py-4 font-semibold">Belum ada artikel diterbitkan.</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs py-4 font-semibold">Belum ada artikel diterbitkan.</p>
                         @endforelse
                     </div>
                 </div>
@@ -739,7 +784,7 @@
             <div id="panel-program" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">CMS Program Pelatihan</h2>
-                    <p class="text-slate-500 text-xs">Ubah judul, harga, durasi, dan materi program pelatihan yang tampil di halaman depan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah judul, harga, durasi, dan materi program pelatihan yang tampil di halaman depan.</p>
                 </div>
                 <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
@@ -750,7 +795,7 @@
                         ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
                     ] as $prog)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
@@ -791,14 +836,14 @@
             <div id="panel-jadwal" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">CMS Jadwal Pelatihan</h2>
-                    <p class="text-slate-500 text-xs">Atur jadwal pelatihan terdekat, kuota, dan metode pelaksanaan yang tampil di halaman depan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Atur jadwal pelatihan terdekat, kuota, dan metode pelaksanaan yang tampil di halaman depan.</p>
                 </div>
                 <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-jadwal">
                     @for($i = 1; $i <= 3; $i++)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
@@ -835,7 +880,7 @@
             <div id="panel-fasilitas" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">CMS Fasilitas LPK</h2>
-                    <p class="text-slate-500 text-xs">Ubah rincian fasilitas belajar, perpustakaan, dan asrama yang tampil di halaman depan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah rincian fasilitas belajar, perpustakaan, dan asrama yang tampil di halaman depan.</p>
                 </div>
                 <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
@@ -846,7 +891,7 @@
                         ['key'=>'asrama','label'=>'Asrama / Penginapan'],
                     ] as $fas)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Fasilitas</label>
                                 <input type="text" name="fasilitas_{{ $fas['key'] }}_judul" value="{{ $settings['fasilitas_'.$fas['key'].'_judul'] ?? $fas['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
@@ -860,7 +905,7 @@
                                 @if(!empty($settings['fasilitas_'.$fas['key'].'_foto']))
                                     <img src="{{ asset('storage/' . $settings['fasilitas_'.$fas['key'].'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                                 @endif
-                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                             </div>
                         </div>
                     @endforeach
@@ -875,9 +920,9 @@
                 <div class="flex items-center justify-between">
                     <div class="space-y-1">
                         <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Program Pelatihan</h2>
-                        <p class="text-slate-500 text-xs">Kelola data program pelatihan yang aktif di database.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola data program pelatihan yang aktif di database.</p>
                     </div>
-                    <button onclick="toggleAddProgramForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md shadow-blue-500/10 font-bold">
+                    <button type="button" onclick="toggleAddProgramForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md shadow-blue-500/10 font-bold">
                         + Tambah Program
                     </button>
                 </div>
@@ -926,8 +971,8 @@
                             <input type="text" name="benefits" placeholder="Sertifikat LPK, Modul Pembelajaran, Konsultasi" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                         </div>
                         <div class="flex justify-end gap-3">
-                            <button type="button" onclick="toggleAddProgramForm()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10 font-bold">Simpan Program</button>
+                            <button type="button" onclick="toggleAddProgramForm()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10 font-bold">Simpan Program</button>
                         </div>
                     </form>
                 </div>
@@ -941,7 +986,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">ID (Tidak Dapat Diubah)</label>
-                                <input type="text" id="edit-program-id" disabled class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-450 font-bold font-mono">
+                                <input type="text" id="edit-program-id" disabled class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-400 font-bold font-mono">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
@@ -977,8 +1022,8 @@
                             <input type="text" name="benefits" id="edit-program-benefits" placeholder="Sertifikat LPK, Modul Pembelajaran, Konsultasi" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                         </div>
                         <div class="flex justify-end gap-3">
-                            <button type="button" onclick="cancelEditProgram()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                            <button type="button" onclick="cancelEditProgram()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
@@ -999,16 +1044,16 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
                                 @forelse($programs as $prog)
                                     <tr>
-                                        <td class="px-5 py-4 font-mono font-bold text-slate-500">{{ $prog->id }}</td>
+                                        <td class="px-5 py-4 font-mono font-bold text-slate-500 dark:text-slate-400">{{ $prog->id }}</td>
                                         <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $prog->title }}</td>
-                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-350">{{ $prog->category }}</td>
-                                        <td class="px-5 py-4 text-slate-650 dark:text-slate-300">
+                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-300">{{ $prog->category }}</td>
+                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-300">
                                             <div class="font-bold text-blue-600 dark:text-blue-400 font-bold">{{ $prog->price }}</div>
                                             <div class="text-[10px] text-slate-400 font-semibold">{{ $prog->duration }}</div>
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('admin.programs.destroy', $prog->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1018,7 +1063,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-5 py-8 text-center text-slate-500 font-semibold">Belum ada program pelatihan di database.</td>
+                                        <td colspan="5" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400 font-semibold">Belum ada program pelatihan di database.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -1031,7 +1076,7 @@
             <div id="panel-trainees-db" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Pendaftaran &amp; Peserta</h2>
-                    <p class="text-slate-500 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
                 </div>
 
                 <!-- Form Edit Peserta -->
@@ -1077,8 +1122,8 @@
                             </div>
                         </div>
                         <div class="flex gap-3">
-                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
+                            <button type="button" onclick="cancelEditTrainee()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
@@ -1109,7 +1154,7 @@
                                             <div class="text-[10px] text-slate-400 font-mono trainee-nik">NIK: {{ $t->nik }}</div>
                                         </td>
                                         <td class="px-5 py-4">
-                                            <div class="text-slate-600 dark:text-slate-350 font-semibold">{{ $t->email }}</div>
+                                            <div class="text-slate-600 dark:text-slate-300 font-semibold">{{ $t->email }}</div>
                                             <div class="text-[10px] text-slate-400 font-mono">{{ $t->phone }}</div>
                                         </td>
                                         <td class="px-5 py-4 trainee-program">
@@ -1130,9 +1175,9 @@
                                         <td class="px-5 py-4">
                                             @if($t->status === 'LULUS')
                                                 <span class="bg-blue-50 text-blue-605 border border-blue-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Kompeten (Lulus)</span>
-                                                <div class="text-[9px] text-slate-455 mt-1 font-mono font-bold">{{ $t->certificate_number }}</div>
+                                                <div class="text-[9px] text-slate-500 dark:text-slate-400 mt-1 font-mono font-bold">{{ $t->certificate_number }}</div>
                                             @else
-                                                <span class="bg-slate-105 text-slate-655 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
+                                                <span class="bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
                                                 <form action="{{ route('admin.trainees.approve', $t->id) }}" method="POST" class="mt-2">
                                                     @csrf
                                                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[9px] uppercase px-2 py-1 rounded transition-all shadow-md font-bold">Terbitkan Sertifikat</button>
@@ -1151,7 +1196,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-5 py-8 text-center text-slate-500 font-semibold">Belum ada data pendaftaran di database.</td>
+                                        <td colspan="6" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400 font-semibold">Belum ada data pendaftaran di database.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -1164,7 +1209,7 @@
             <div id="panel-profil" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Profil Saya</h2>
-                    <p class="text-slate-500 text-xs">Perbarui kredensial administrasi akun LPK Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Perbarui kredensial administrasi akun LPK Anda.</p>
                 </div>
 
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-2xl shadow-sm">
@@ -1187,7 +1232,7 @@
                             <input type="password" name="password_confirmation" placeholder="Ulangi kata sandi baru" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Perbarui Profil</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Perbarui Profil</button>
                         </div>
                     </form>
                 </div>
@@ -1197,13 +1242,13 @@
             <div id="panel-chats" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Live Chat Bantuan</h2>
-                    <p class="text-slate-500 text-xs">Kelola dan tangani pesan bantuan/pertanyaan masuk dari calon asesi secara real-time.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola dan tangani pesan bantuan/pertanyaan masuk dari calon asesi secara real-time.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch min-h-[500px]">
                     <!-- Left: Chat List (4 cols) -->
                     <div class="lg:col-span-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-sm">
-                        <div class="p-4 border-b border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
                             <span class="font-extrabold text-slate-900 dark:text-white text-xs uppercase tracking-wider">Daftar Percakapan</span>
                         </div>
                         <div id="admin-chat-threads-container" class="flex-1 divide-y divide-slate-100 dark:divide-slate-800 overflow-y-auto max-h-[480px]">
@@ -1214,14 +1259,14 @@
                     <!-- Right: Chat Box (8 cols) -->
                     <div class="lg:col-span-8 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-sm relative">
                         <!-- Chat Box Header -->
-                        <div id="admin-chat-header" class="p-4 border-b border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 flex justify-between items-center hidden">
+                        <div id="admin-chat-header" class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 flex justify-between items-center hidden">
                             <div>
                                 <h4 id="admin-chat-header-name" class="font-bold text-slate-900 dark:text-white text-sm">Nama Tamu</h4>
                                 <p id="admin-chat-header-email" class="text-[10px] text-slate-400 font-mono">email@gmail.com</p>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span id="admin-chat-header-status-badge" class="px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-wide">Status</span>
-                                <button id="btn-admin-claim-chat" onclick="claimActiveChat()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[9px] uppercase px-3 py-1.5 rounded-lg transition-all hidden">Ambil Chat</button>
+                                <button type="button" id="btn-admin-claim-chat" onclick="claimActiveChat()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[9px] uppercase px-3 py-1.5 rounded-lg transition-all hidden">Ambil Chat</button>
                             </div>
                         </div>
 
@@ -1235,9 +1280,9 @@
                         </div>
 
                         <!-- Chat Box Input Bar -->
-                        <div id="admin-chat-input-bar" class="p-3 border-t border-slate-150 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-955/20 flex gap-2 items-center hidden">
+                        <div id="admin-chat-input-bar" class="p-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-950/20 flex gap-2 items-center hidden">
                             <input type="text" id="admin-chat-input-field" onkeypress="handleAdminChatKeyPress(event)" placeholder="Ketik balasan Anda..." class="flex-1 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
-                            <button onclick="sendAdminChatMessage()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md transition-all">Kirim</button>
+                            <button type="button" onclick="sendAdminChatMessage()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md transition-all">Kirim</button>
                         </div>
                     </div>
                 </div>
@@ -1499,7 +1544,7 @@
                             const isAdmin = msg.sender_role === 'admin';
                             const bubbleClass = isAdmin 
                                 ? 'bg-blue-600 text-white rounded-l-2xl rounded-tr-2xl ml-auto text-right' 
-                                : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-150 rounded-r-2xl rounded-tl-2xl mr-auto';
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-r-2xl rounded-tl-2xl mr-auto';
                             
                             html += `
                                 <div class="max-w-[75%] p-3.5 shadow-sm text-xs leading-relaxed ${bubbleClass}">
@@ -1682,7 +1727,7 @@
     <!-- User Detail Modal -->
     <div id="user-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-sm p-6 space-y-6 shadow-2xl relative animate-fade-in">
-            <button onclick="closeUserDetailModal()" class="absolute top-4 right-4 text-slate-450 hover:text-slate-655 dark:hover:text-white transition duration-205 text-lg font-bold">
+            <button type="button" onclick="closeUserDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition duration-205 text-lg font-bold">
                 ✕
             </button>
             <div class="space-y-1">
@@ -1703,17 +1748,17 @@
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Password Terdaftar</span>
                     <div class="flex items-center justify-between mt-1">
                         <span id="detail-user-password" class="font-bold text-slate-800 dark:text-white font-mono bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded select-all font-semibold">password</span>
-                        <button onclick="togglePasswordVisibility()" class="text-blue-600 hover:underline font-bold uppercase text-[10px]">Tampilkan/Sembunyikan</button>
+                        <button type="button" onclick="togglePasswordVisibility()" class="text-blue-600 hover:underline font-bold uppercase text-[10px]">Tampilkan/Sembunyikan</button>
                     </div>
                 </div>
                 <div>
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Akun Dibuat Pada</span>
-                    <span id="detail-user-created" class="font-semibold text-slate-600 dark:text-slate-350">date</span>
+                    <span id="detail-user-created" class="font-semibold text-slate-600 dark:text-slate-300">date</span>
                 </div>
             </div>
             
             <div class="flex justify-end pt-2">
-                <button onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
+                <button type="button" onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
                     Tutup
                 </button>
             </div>
@@ -1721,3 +1766,6 @@
     </div>
 </body>
 </html>
+
+
+

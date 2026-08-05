@@ -77,7 +77,7 @@
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Super Admin</div>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="lg:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="lg:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -85,14 +85,14 @@
             <!-- Navigation Links -->
             <nav class="p-4 space-y-2" id="sidebar-nav">
                 <!-- Dasbor Utama (standalone) -->
-                <button onclick="showPanel('panel-dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                <button type="button" onclick="showPanel('panel-dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
                     <span>Dasbor Utama</span>
                 </button>
 
                 <!-- Accordion: CMS Landing Page -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4a2 2 0 012 2v6a2 2 0 01-2 2h-2m-4-6l3-3m0 0l3 3m-3-3v12"/></svg>
                             <span>CMS Landing Page</span>
@@ -100,67 +100,67 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('panel-identity')" id="btn-identity" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-identity')" id="btn-identity" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Identitas & Logo
                         </button>
-                        <button onclick="showPanel('panel-login-branding')" id="btn-login-branding" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-login-branding')" id="btn-login-branding" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Halaman Login
                         </button>
-                        <button onclick="showPanel('panel-hero')" id="btn-hero" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-hero')" id="btn-hero" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Banner Depan (Hero)
                         </button>
-                        <button onclick="showPanel('panel-stats')" id="btn-stats" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-stats')" id="btn-stats" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Statistik
                         </button>
-                        <button onclick="showPanel('panel-steps')" id="btn-steps" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-steps')" id="btn-steps" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Alur Registrasi
                         </button>
-                        <button onclick="showPanel('panel-features')" id="btn-features" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-features')" id="btn-features" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Keunggulan Fitur
                         </button>
-                        <button onclick="showPanel('panel-gallery')" id="btn-gallery" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-gallery')" id="btn-gallery" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Galeri Foto
                         </button>
-                        <button onclick="showPanel('panel-tentang')" id="btn-tentang" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-tentang')" id="btn-tentang" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Tentang Kami
                         </button>
-                        <button onclick="showPanel('panel-program')" id="btn-program" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-program')" id="btn-program" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Program Pelatihan
                         </button>
-                        <button onclick="showPanel('panel-jadwal')" id="btn-jadwal" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-jadwal')" id="btn-jadwal" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Jadwal Diklat
                         </button>
-                        <button onclick="showPanel('panel-instruktur-landing')" id="btn-instruktur-landing" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-instruktur-landing')" id="btn-instruktur-landing" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Instruktur
                         </button>
-                        <button onclick="showPanel('panel-fasilitas')" id="btn-fasilitas" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-fasilitas')" id="btn-fasilitas" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Fasilitas
                         </button>
-                        <button onclick="showPanel('panel-faq')" id="btn-faq" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-faq')" id="btn-faq" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             FAQ
                         </button>
-                        <button onclick="showPanel('panel-articles')" id="btn-articles" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-articles')" id="btn-articles" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Kabar & Artikel
                         </button>
-                        <button onclick="showPanel('panel-kontak')" id="btn-kontak" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-kontak')" id="btn-kontak" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Kontak LPK
                         </button>
-                        <button onclick="showPanel('panel-preview')" id="btn-preview" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-bold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-preview')" id="btn-preview" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-bold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-blue-300 shrink-0"></span>
                             👁️ Live Preview Website
                         </button>
@@ -169,7 +169,7 @@
 
                 <!-- Accordion: Pengaturan Sistem -->
                 <div class="accordion-group">
-                    <button class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
+                    <button type="button" class="accordion-trigger w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left" onclick="toggleAccordion(this)">
                         <span class="flex items-center gap-3">
                             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             <span>Pengaturan Sistem</span>
@@ -177,19 +177,19 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
-                        <button onclick="showPanel('panel-programs-db')" id="btn-programs-db" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-programs-db')" id="btn-programs-db" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Data Program Pelatihan
                         </button>
-                        <button onclick="showPanel('panel-trainees-db')" id="btn-trainees-db" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-trainees-db')" id="btn-trainees-db" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Data Pendaftaran Peserta
                         </button>
-                        <button onclick="showPanel('panel-users')" id="btn-users" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-users')" id="btn-users" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Manajemen User
                         </button>
-                        <button onclick="showPanel('panel-profile')" id="btn-profile" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-450 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
+                        <button type="button" onclick="showPanel('panel-profile')" id="btn-profile" class="sidebar-btn w-full text-left px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Profil Superadmin
                         </button>
@@ -200,12 +200,12 @@
 
         <!-- Sidebar Footer -->
         <div class="p-4 border-t border-slate-100 dark:border-slate-800 shrink-0">
-            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
             </button>
 
-            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
+            <a href="{{ route('home') }}" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span>🏠</span>
                 <span>Beranda Utama</span>
             </a>
@@ -226,7 +226,7 @@
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="lg:hidden text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                <button type="button" onclick="toggleSidebar()" class="lg:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">SYSTEM CONSOLE</span>
@@ -234,12 +234,12 @@
 
             <!-- Profile & Notifications -->
             <div class="flex items-center gap-4">
-                <div class="flex items-center gap-3 pl-3 border-l border-slate-250 dark:border-slate-800">
+                <div class="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-800">
                     <div class="text-right hidden sm:block">
-                        <div class="text-xs font-bold text-slate-850 dark:text-slate-200">{{ auth()->user()->name }}</div>
+                        <div class="text-xs font-bold text-slate-800 dark:text-slate-200">{{ auth()->user()->name }}</div>
                         <div class="text-[9px] font-bold text-slate-400 uppercase">Super Admin / IT</div>
                     </div>
-                    <div class="w-8 h-8 rounded-full bg-blue-650 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/10">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/10">
                         SA
                     </div>
                 </div>
@@ -268,18 +268,18 @@
                 <!-- System Status Widgets -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-650 flex items-center justify-center text-2xl">🖥️</div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">🖥️</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Server Uptime</div>
-                            <div class="text-xl font-black text-slate-850 dark:text-white mt-1">99.98% (Online)</div>
+                            <div class="text-xl font-black text-slate-800 dark:text-white mt-1">99.98% (Online)</div>
                         </div>
                     </div>
 
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-650 flex items-center justify-center text-2xl">🛢️</div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">🛢️</div>
                         <div>
                             <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Database Status</div>
-                            <div class="text-xl font-black text-slate-850 dark:text-white mt-1">Connected (Active)</div>
+                            <div class="text-xl font-black text-slate-800 dark:text-white mt-1">Connected (Active)</div>
                         </div>
                     </div>
                 </div>
@@ -288,15 +288,15 @@
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Aksi Cepat CMS</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <button onclick="showPanel('panel-hero')" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl p-4 text-left transition-all">
+                        <button type="button" onclick="showPanel('panel-hero')" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl p-4 text-left transition-all">
                             <span class="block text-lg mb-1">🖼️</span>
                             <span class="block text-xs font-bold text-slate-800 dark:text-white">Ubah Banner Depan</span>
                         </button>
-                        <button onclick="showPanel('panel-faq')" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl p-4 text-left transition-all">
+                        <button type="button" onclick="showPanel('panel-faq')" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl p-4 text-left transition-all">
                             <span class="block text-lg mb-1">❓</span>
                             <span class="block text-xs font-bold text-slate-800 dark:text-white">Update FAQ</span>
                         </button>
-                        <button onclick="showPanel('panel-articles')" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl p-4 text-left transition-all">
+                        <button type="button" onclick="showPanel('panel-articles')" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500 rounded-xl p-4 text-left transition-all">
                             <span class="block text-lg mb-1">📰</span>
                             <span class="block text-xs font-bold text-slate-800 dark:text-white">Kelola Artikel</span>
                         </button>
@@ -308,19 +308,19 @@
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Statistik Pengguna</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-850 dark:text-white">{{ $admins->count() }}</div>
+                            <div class="text-xl font-bold text-slate-800 dark:text-white">{{ $admins->count() }}</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Admin</div>
                         </div>
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-850 dark:text-white">10</div>
+                            <div class="text-xl font-bold text-slate-800 dark:text-white">10</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Instruktur</div>
                         </div>
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-850 dark:text-white">{{ $asesors->count() }}</div>
+                            <div class="text-xl font-bold text-slate-800 dark:text-white">{{ $asesors->count() }}</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Asesor</div>
                         </div>
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-850 dark:text-white">150</div>
+                            <div class="text-xl font-bold text-slate-800 dark:text-white">150</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Asesi</div>
                         </div>
                     </div>
@@ -342,14 +342,14 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
                                 <tr>
-                                    <td class="px-5 py-3 text-slate-450 font-mono">Baru saja</td>
+                                    <td class="px-5 py-3 text-slate-400 font-mono">Baru saja</td>
                                     <td class="px-5 py-3 font-bold text-slate-800 dark:text-white">superadmin</td>
-                                    <td class="px-5 py-3 text-slate-600 dark:text-slate-350">Update konfigurasi branding website LPK Manajemen Pendidikan Islam.</td>
+                                    <td class="px-5 py-3 text-slate-600 dark:text-slate-300">Update konfigurasi branding website LPK Manajemen Pendidikan Islam.</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-5 py-3 text-slate-450 font-mono">10 menit lalu</td>
+                                    <td class="px-5 py-3 text-slate-400 font-mono">10 menit lalu</td>
                                     <td class="px-5 py-3 font-bold text-slate-800 dark:text-white">admin_lpk</td>
-                                    <td class="px-5 py-3 text-slate-600 dark:text-slate-350">Verifikasi dokumen registrasi (APL-01) asesi Ahmad Faisal.</td>
+                                    <td class="px-5 py-3 text-slate-600 dark:text-slate-300">Verifikasi dokumen registrasi (APL-01) asesi Ahmad Faisal.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -361,7 +361,7 @@
             <div id="panel-identity" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Identitas &amp; Branding</h2>
-                    <p class="text-slate-500 text-xs">Atur nama singkat dan logo resmi LPK Manajemen Pendidikan Islam.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Atur nama singkat dan logo resmi LPK Manajemen Pendidikan Islam.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
@@ -376,7 +376,7 @@
                                 <img src="{{ asset('storage/' . $settings['site_logo']) }}" class="h-10 w-auto object-contain rounded-xl border border-slate-200 dark:border-slate-800 p-2 bg-white dark:bg-slate-950" alt="Site Logo">
                             </div>
                         @endif
-                        <input type="file" name="site_logo" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <input type="file" name="site_logo" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
                     <div class="flex justify-end pt-2">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
@@ -388,7 +388,7 @@
             <div id="panel-login-branding" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Halaman Login</h2>
-                    <p class="text-slate-500 text-xs">Sesuaikan informasi teks branding dan latar belakang halaman masuk.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Sesuaikan informasi teks branding dan latar belakang halaman masuk.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
@@ -425,7 +425,7 @@
                                 <img src="{{ asset('storage/' . $settings['login_bg_image']) }}" class="h-20 w-auto object-contain rounded-xl border border-slate-200 dark:border-slate-800" alt="Login Background">
                             </div>
                         @endif
-                        <input type="file" name="login_bg_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <input type="file" name="login_bg_image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
                     <div class="flex justify-end pt-2">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
@@ -437,7 +437,7 @@
             <div id="panel-hero" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Banner Utama (Hero)</h2>
-                    <p class="text-slate-500 text-xs">Ubah judul, sub-judul, dan gambar banner utama di halaman beranda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah judul, sub-judul, dan gambar banner utama di halaman beranda.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
@@ -456,7 +456,7 @@
                                 <img src="{{ asset('storage/' . $settings['hero_image']) }}" class="h-28 w-auto object-contain rounded-xl border border-slate-200 dark:border-slate-800" alt="Hero Image">
                             </div>
                         @endif
-                        <input type="file" name="hero_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <input type="file" name="hero_image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
                     <div class="flex justify-end pt-2">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
@@ -468,7 +468,7 @@
             <div id="panel-stats" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Statistik Halaman Utama</h2>
-                    <p class="text-slate-500 text-xs">Ubah data angka dan pencapaian instansi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah data angka dan pencapaian instansi.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 shadow-sm">
                     @csrf
@@ -503,7 +503,7 @@
             <div id="panel-steps" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Alur Langkah Registrasi</h2>
-                    <p class="text-slate-500 text-xs">Ubah rincian judul tahapan pendaftaran asesi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah rincian judul tahapan pendaftaran asesi.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
@@ -531,7 +531,7 @@
             <div id="panel-features" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Keunggulan &amp; Fitur</h2>
-                    <p class="text-slate-500 text-xs">Ubah detail keunggulan LPK Manajemen Pendidikan Islam.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah detail keunggulan LPK Manajemen Pendidikan Islam.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 shadow-sm">
                     @csrf
@@ -550,11 +550,11 @@
                             <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 feature-card" data-index="{{ $i }}">
                                 <span class="text-[10px] font-bold text-slate-400 uppercase">Fitur {{ $i }}</span>
                                 <div>
-                                    <label class="block text-[9px] font-bold text-slate-450 uppercase mb-0.5">Judul</label>
+                                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-0.5">Judul</label>
                                     <input type="text" name="feature_{{ $i }}_title" value="{{ $settings['feature_' . $i . '_title'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
-                                    <label class="block text-[9px] font-bold text-slate-450 uppercase mb-0.5">Deskripsi</label>
+                                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-0.5">Deskripsi</label>
                                     <textarea name="feature_{{ $i }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['feature_' . $i . '_desc'] ?? '' }}</textarea>
                                 </div>
                             </div>
@@ -570,7 +570,7 @@
             <div id="panel-gallery" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Galeri Kegiatan</h2>
-                    <p class="text-slate-500 text-xs">Ubah judul, sub-judul, dan item galeri (foto/video) beranda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah judul, sub-judul, dan item galeri (foto/video) beranda.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
@@ -619,7 +619,7 @@
                                     @if(!empty($settings['gallery_item_'.$i.'_image']))
                                         <img src="{{ asset('storage/' . $settings['gallery_item_'.$i.'_image']) }}" class="h-16 w-24 object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                                     @endif
-                                    <input type="file" name="gallery_item_{{ $i }}_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                    <input type="file" name="gallery_item_{{ $i }}_image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                 </div>
                             </div>
                         @endfor
@@ -634,7 +634,7 @@
             <div id="panel-tentang" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Tentang Kami</h2>
-                    <p class="text-slate-500 text-xs">Edit teks profil, visi, misi, legalitas, dan struktur organisasi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Edit teks profil, visi, misi, legalitas, dan struktur organisasi.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
@@ -678,7 +678,7 @@
                             @if(!empty($settings['org_image']))
                                 <img src="{{ asset('storage/' . $settings['org_image']) }}" class="max-w-md h-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                             @endif
-                            <input type="file" name="org_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <input type="file" name="org_image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
                     </div>
                     <div class="flex justify-end">
@@ -691,7 +691,7 @@
             <div id="panel-program" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Program Pelatihan</h2>
-                    <p class="text-slate-500 text-xs">Ubah judul, harga, durasi, dan materi program pelatihan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah judul, harga, durasi, dan materi program pelatihan.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
@@ -702,7 +702,7 @@
                         ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
                     ] as $prog)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
@@ -743,14 +743,14 @@
             <div id="panel-jadwal" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Jadwal Pelatihan &amp; Pendaftaran</h2>
-                    <p class="text-slate-500 text-xs">Atur jadwal pelatihan terdekat, kuota, dan metode pelaksanaan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Atur jadwal pelatihan terdekat, kuota, dan metode pelaksanaan.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-jadwal">
                     @for($i = 1; $i <= 3; $i++)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
@@ -787,7 +787,7 @@
             <div id="panel-instruktur-landing" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Instruktur Publik</h2>
-                    <p class="text-slate-500 text-xs">Edit data pengajar yang tertera di halaman depan.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Edit data pengajar yang tertera di halaman depan.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
@@ -827,7 +827,7 @@
                                     @if(!empty($settings['instruktur_'.$i.'_foto']))
                                         <img src="{{ asset('storage/'.$settings['instruktur_'.$i.'_foto']) }}" class="h-16 w-16 object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                                     @endif
-                                    <input type="file" name="instruktur_{{ $i }}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                    <input type="file" name="instruktur_{{ $i }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                 </div>
                             </div>
                         @endfor
@@ -842,7 +842,7 @@
             <div id="panel-fasilitas" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Fasilitas LPK</h2>
-                    <p class="text-slate-500 text-xs">Ubah rincian fasilitas belajar, perpustakaan, dan asrama.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah rincian fasilitas belajar, perpustakaan, dan asrama.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
@@ -853,7 +853,7 @@
                         ['key'=>'asrama','label'=>'Asrama / Penginapan'],
                     ] as $fas)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-850 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Fasilitas</label>
                                 <input type="text" name="fasilitas_{{ $fas['key'] }}_judul" value="{{ $settings['fasilitas_'.$fas['key'].'_judul'] ?? $fas['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
@@ -867,7 +867,7 @@
                                 @if(!empty($settings['fasilitas_'.$fas['key'].'_foto']))
                                     <img src="{{ asset('storage/' . $settings['fasilitas_'.$fas['key'].'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                                 @endif
-                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                             </div>
                         </div>
                     @endforeach
@@ -881,7 +881,7 @@
             <div id="panel-faq" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Pertanyaan Umum (FAQ)</h2>
-                    <p class="text-slate-500 text-xs">Edit pertanyaan dan jawaban bantuan yang terbit di halaman muka.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Edit pertanyaan dan jawaban bantuan yang terbit di halaman muka.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-4">
                     @csrf
@@ -895,7 +895,7 @@
                         @php $faqCount = (int) ($settings['faq_count'] ?? 6); @endphp
                         @for($i = 1; $i <= $faqCount; $i++)
                             <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm faq-card" data-index="{{ $i }}">
-                                <span class="text-[10px] font-bold text-blue-650 uppercase tracking-widest">FAQ #{{ $i }}</span>
+                                <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">FAQ #{{ $i }}</span>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pertanyaan</label>
                                     <input type="text" name="faq_{{ $i }}_q" value="{{ $settings['faq_'.$i.'_q'] ?? '' }}" placeholder="Tulis pertanyaan..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
@@ -917,7 +917,7 @@
             <div id="panel-articles" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Kabar &amp; Artikel Publik</h2>
-                    <p class="text-slate-500 text-xs">Unggah atau hapus artikel berita pengembangan kompetensi madrasah.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unggah atau hapus artikel berita pengembangan kompetensi madrasah.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 mb-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Tulis Artikel Baru</h3>
@@ -933,10 +933,10 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Cover (Opsional)</label>
-                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Terbitkan Artikel</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Terbitkan Artikel</button>
                         </div>
                     </form>
                 </div>
@@ -957,11 +957,11 @@
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Cover Baru (Opsional, kosongkan jika tidak diubah)</label>
-                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
                         <div class="flex justify-end gap-3">
                             <button type="button" onclick="cancelEditArticle()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
-                            <button type="submit" class="bg-blue-650 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
@@ -972,13 +972,13 @@
                         @forelse($articles as $art)
                             <div class="bg-white dark:bg-slate-950 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col justify-between p-4">
                                 <div class="space-y-2">
-                                    <h4 class="font-bold text-slate-850 dark:text-white text-xs">{{ $art->title }}</h4>
-                                    <p class="text-slate-500 text-[11px] line-clamp-2">{{ Str::limit(strip_tags($art->content), 80) }}</p>
+                                    <h4 class="font-bold text-slate-800 dark:text-white text-xs">{{ $art->title }}</h4>
+                                    <p class="text-slate-500 dark:text-slate-400 text-[11px] line-clamp-2">{{ Str::limit(strip_tags($art->content), 80) }}</p>
                                 </div>
                                 <div class="flex items-center justify-between border-t border-slate-200/55 dark:border-slate-800/80 pt-3 mt-3">
                                     <span class="text-[10px] text-slate-400 font-mono">{{ $art->created_at->format('d M Y') }}</span>
                                     <div class="flex items-center gap-2">
-                                        <button onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-850 text-[10px] font-bold uppercase">Edit</button>
+                                        <button type="button" onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-800 text-[10px] font-bold uppercase">Edit</button>
                                         <form action="{{ route('superadmin.articles.destroy', $art->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase">Hapus</button>
@@ -987,7 +987,7 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-slate-500 text-xs py-4">Belum ada artikel diterbitkan.</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs py-4">Belum ada artikel diterbitkan.</p>
                         @endforelse
                     </div>
                 </div>
@@ -997,7 +997,7 @@
             <div id="panel-kontak" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Kontak Publik</h2>
-                    <p class="text-slate-500 text-xs">Ubah alamat kantor, nomor telepon, dan jam operasional LPK.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah alamat kantor, nomor telepon, dan jam operasional LPK.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
@@ -1028,7 +1028,7 @@
             <div id="panel-preview" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Pratinjau Langsung Website</h2>
-                    <p class="text-slate-500 text-xs">Simulasi pratinjau halaman beranda utama.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Simulasi pratinjau halaman beranda utama.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden h-[500px] shadow-sm relative">
                     <iframe id="preview-iframe" src="{{ route('home', ['preview' => 1]) }}" class="w-full h-full border-0 bg-white"></iframe>
@@ -1039,7 +1039,7 @@
             <div id="panel-users" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Kelola Akun Pengguna</h2>
-                    <p class="text-slate-500 text-xs">Buat dan hapus hak akses user administrator atau asesor.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Buat dan hapus hak akses user administrator atau asesor.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Registrasi Akun Baru</h3>
@@ -1163,9 +1163,9 @@
                 <div class="flex items-center justify-between">
                     <div class="space-y-1">
                         <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Program Pelatihan</h2>
-                        <p class="text-slate-500 text-xs">Kelola data program pelatihan yang aktif di database.</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola data program pelatihan yang aktif di database.</p>
                     </div>
-                    <button onclick="toggleAddProgramForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md shadow-blue-500/10">
+                    <button type="button" onclick="toggleAddProgramForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md shadow-blue-500/10">
                         + Tambah Program
                     </button>
                 </div>
@@ -1229,7 +1229,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">ID (Tidak Dapat Diubah)</label>
-                                <input type="text" id="edit-program-id" disabled class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-450 font-semibold font-mono">
+                                <input type="text" id="edit-program-id" disabled class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-400 font-semibold font-mono">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
@@ -1287,16 +1287,16 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
                                 @forelse($programs as $prog)
                                     <tr>
-                                        <td class="px-5 py-4 font-mono font-bold text-slate-500">{{ $prog->id }}</td>
+                                        <td class="px-5 py-4 font-mono font-bold text-slate-500 dark:text-slate-400">{{ $prog->id }}</td>
                                         <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $prog->title }}</td>
-                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-350">{{ $prog->category }}</td>
-                                        <td class="px-5 py-4 text-slate-650 dark:text-slate-300">
+                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-300">{{ $prog->category }}</td>
+                                        <td class="px-5 py-4 text-slate-600 dark:text-slate-300">
                                             <div class="font-bold text-blue-600 dark:text-blue-400">{{ $prog->price }}</div>
                                             <div class="text-[10px] text-slate-400">{{ $prog->duration }}</div>
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('superadmin.programs.destroy', $prog->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1306,7 +1306,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-5 py-8 text-center text-slate-500">Belum ada program pelatihan di database.</td>
+                                        <td colspan="5" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada program pelatihan di database.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -1316,7 +1316,7 @@
             <div id="panel-trainees-db" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Data Pendaftaran &amp; Peserta</h2>
-                    <p class="text-slate-500 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
                 </div>
 
                 <!-- Form Edit Peserta -->
@@ -1394,7 +1394,7 @@
                                             <div class="text-[10px] text-slate-400 font-mono trainee-nik">NIK: {{ $t->nik }}</div>
                                         </td>
                                         <td class="px-5 py-4">
-                                            <div class="text-slate-600 dark:text-slate-350">{{ $t->email }}</div>
+                                            <div class="text-slate-600 dark:text-slate-300">{{ $t->email }}</div>
                                             <div class="text-[10px] text-slate-400">{{ $t->phone }}</div>
                                         </td>
                                         <td class="px-5 py-4 trainee-program">
@@ -1415,9 +1415,9 @@
                                         <td class="px-5 py-4">
                                             @if($t->status === 'LULUS')
                                                 <span class="bg-blue-50 text-blue-605 border border-blue-500/25 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Kompeten (Lulus)</span>
-                                                <div class="text-[9px] text-slate-450 mt-1 font-mono font-bold">{{ $t->certificate_number }}</div>
+                                                <div class="text-[9px] text-slate-400 mt-1 font-mono font-bold">{{ $t->certificate_number }}</div>
                                             @else
-                                                <span class="bg-slate-100 text-slate-655 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
+                                                <span class="bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Menunggu Ujian / Kelulusan</span>
                                                 <form action="{{ route('superadmin.trainees.approve', $t->id) }}" method="POST" class="mt-2">
                                                     @csrf
                                                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[9px] uppercase px-2 py-1 rounded">Terbitkan Sertifikat</button>
@@ -1436,7 +1436,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-5 py-8 text-center text-slate-500">Belum ada data pendaftaran di database.</td>
+                                        <td colspan="6" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada data pendaftaran di database.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -1449,7 +1449,7 @@
             <div id="panel-profile" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Profil IT Superadmin</h2>
-                    <p class="text-slate-500 text-xs">Perbarui kredensial administrasi konsol Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Perbarui kredensial administrasi konsol Anda.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-2xl shadow-sm">
                     <form action="{{ route('superadmin.profile.update') }}" method="POST" class="space-y-4">
@@ -1549,7 +1549,7 @@
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Instruktur</label>
-                        <input type="file" name="instruktur_${index}_foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <input type="file" name="instruktur_${index}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
                 </div>
             `;
@@ -1579,7 +1579,7 @@
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Galeri</label>
-                        <input type="file" name="gallery_item_${index}_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <input type="file" name="gallery_item_${index}_image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
                 </div>
             `;
@@ -1588,7 +1588,7 @@
         function getFaqHtml(index) {
             return `
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm faq-card" data-index="${index}">
-                    <span class="text-[10px] font-bold text-blue-650 uppercase tracking-widest">FAQ #${index}</span>
+                    <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">FAQ #${index}</span>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pertanyaan</label>
                         <input type="text" name="faq_${index}_q" value="" placeholder="Tulis pertanyaan..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
@@ -1615,11 +1615,11 @@
                 <div class="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 feature-card" data-index="${index}">
                     <span class="text-[10px] font-bold text-slate-400 uppercase">Fitur ${index}</span>
                     <div>
-                        <label class="block text-[9px] font-bold text-slate-450 uppercase mb-0.5">Judul</label>
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-0.5">Judul</label>
                         <input type="text" name="feature_${index}_title" value="" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                     </div>
                     <div>
-                        <label class="block text-[9px] font-bold text-slate-450 uppercase mb-0.5">Deskripsi</label>
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-0.5">Deskripsi</label>
                         <textarea name="feature_${index}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none"></textarea>
                     </div>
                 </div>
@@ -1879,7 +1879,7 @@
     <!-- User Detail Modal -->
     <div id="user-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-sm p-6 space-y-6 shadow-2xl relative animate-fade-in">
-            <button onclick="closeUserDetailModal()" class="absolute top-4 right-4 text-slate-450 hover:text-slate-655 dark:hover:text-white transition duration-205 text-lg font-bold">
+            <button type="button" onclick="closeUserDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition duration-205 text-lg font-bold">
                 ✕
             </button>
             <div class="space-y-1">
@@ -1900,17 +1900,17 @@
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Password Terdaftar</span>
                     <div class="flex items-center justify-between mt-1">
                         <span id="detail-user-password" class="font-bold text-slate-800 dark:text-white font-mono bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded select-all">password</span>
-                        <button onclick="togglePasswordVisibility()" class="text-blue-600 hover:underline font-bold uppercase text-[10px]">Tampilkan/Sembunyikan</button>
+                        <button type="button" onclick="togglePasswordVisibility()" class="text-blue-600 hover:underline font-bold uppercase text-[10px]">Tampilkan/Sembunyikan</button>
                     </div>
                 </div>
                 <div>
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Akun Dibuat Pada</span>
-                    <span id="detail-user-created" class="font-semibold text-slate-600 dark:text-slate-350">date</span>
+                    <span id="detail-user-created" class="font-semibold text-slate-600 dark:text-slate-300">date</span>
                 </div>
             </div>
             
             <div class="flex justify-end pt-2">
-                <button onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200">
+                <button type="button" onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200">
                     Tutup
                 </button>
             </div>
@@ -1918,3 +1918,4 @@
     </div>
 </body>
 </html>
+

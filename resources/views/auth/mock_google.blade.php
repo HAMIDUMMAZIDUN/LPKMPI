@@ -64,19 +64,19 @@
                                     {{ $admin->role }}
                                 </span>
                             </div>
-                            <span class="block text-[10px] text-slate-500 truncate">{{ $admin->email }}</span>
+                            <span class="block text-[10px] text-slate-500 dark:text-slate-400 truncate">{{ $admin->email }}</span>
                         </div>
                         <svg class="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </form>
             @empty
-                <div class="text-center py-8 text-slate-500 text-xs">
+                <div class="text-center py-8 text-slate-500 dark:text-slate-400 text-xs">
                     Tidak ada akun terdaftar di database.
                 </div>
             @endforelse
         </div>
 
-        <div class="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+        <div class="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
             <span>Mock SSO — Development Only</span>
             <a href="{{ route('home') }}" class="text-blue-400 font-semibold hover:underline">Kembali</a>
         </div>
