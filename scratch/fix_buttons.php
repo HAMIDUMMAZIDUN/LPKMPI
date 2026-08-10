@@ -1,0 +1,1 @@
+<?php $files = glob("resources/views/dashboard/*.blade.php"); foreach ($files as $f) { $c = file_get_contents($f); $c = preg_replace("/<button(?![^>]*\btype=)/i", "<button type=\"button\"", $c); file_put_contents($f, $c); } echo "Fixed!";

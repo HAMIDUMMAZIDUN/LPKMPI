@@ -30,7 +30,7 @@ class LandingController extends Controller
     {
         $programs = TrainingProgram::all();
         $settings = LandingSetting::pluck('value', 'key');
-        $siteTitle = LandingSetting::getValue('site_title', 'LPK-MI');
+        $siteTitle = LandingSetting::getValue('site_title', 'LPK MPI');
         $siteLogo  = LandingSetting::getValue('site_logo');
         return view('pendaftaran', compact('programs', 'settings', 'siteTitle', 'siteLogo'));
     }
@@ -85,7 +85,7 @@ class LandingController extends Controller
 
         // Landing settings with fallback defaults
         $heroTitle    = LandingSetting::getValue('hero_title',    'Persiapkan Kompetensi Anda Untuk Sertifikasi Profesional');
-        $heroSubtitle = LandingSetting::getValue('hero_subtitle', 'LPK-MI membantu calon asesi, guru, dosen, dan praktisi menguasai standar kompetensi nasional sebelum menempuh ujian sertifikasi resmi di LSP.');
+        $heroSubtitle = LandingSetting::getValue('hero_subtitle', 'LPK MPI membantu calon asesi, guru, dosen, dan praktisi menguasai standar kompetensi nasional sebelum menempuh ujian sertifikasi resmi di LSP.');
         $heroImage    = LandingSetting::getValue('hero_image');
 
         $statCount = (int) LandingSetting::getValue('stat_count', 3);
@@ -105,13 +105,13 @@ class LandingController extends Controller
             ];
         }
 
-        $whyChooseTitle = LandingSetting::getValue('why_choose_title', 'Mengapa Memilih LPK-MI?');
+        $whyChooseTitle = LandingSetting::getValue('why_choose_title', 'Mengapa Memilih LPK MPI?');
         $featureCount = (int) LandingSetting::getValue('feature_count', 3);
         $features = [];
         for ($i = 1; $i <= $featureCount; $i++) {
             $features[] = [
                 'title' => LandingSetting::getValue("feature_{$i}_title", $i == 1 ? 'Instruktur Praktisi' : ($i == 2 ? 'Kurikulum Sinkron LSP' : ($i == 3 ? 'Sertifikat Terverifikasi' : "Fitur {$i}"))),
-                'desc'  => LandingSetting::getValue("feature_{$i}_desc", $i == 1 ? 'Belajar langsung dari asesor kompetensi aktif dan praktisi berpengalaman di bidangnya.' : ($i == 2 ? 'Silabus materi pelatihan disesuaikan 100% dengan skema SKKNI pada LSPMI mitra.' : ($i == 3 ? 'Lulusan mendapatkan sertifikat digital dengan QR Code unik yang terintegrasi langsung dengan database LSP.' : 'Deskripsi fitur baru.'))),
+                'desc'  => LandingSetting::getValue("feature_{$i}_desc", $i == 1 ? 'Belajar langsung dari asesor kompetensi aktif dan praktisi berpengalaman di bidangnya.' : ($i == 2 ? 'Silabus materi pelatihan disesuaikan 100% dengan skema SKKNI pada LSP-MPI mitra.' : ($i == 3 ? 'Lulusan mendapatkan sertifikat digital dengan QR Code unik yang terintegrasi langsung dengan database LSP.' : 'Deskripsi fitur baru.'))),
             ];
         }
 

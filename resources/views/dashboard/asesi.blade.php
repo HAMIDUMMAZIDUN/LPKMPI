@@ -62,16 +62,16 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
-            <!-- Sidebar Header with Islamic Pattern Aspect -->
+            <!-- Sidebar Header with MPI Pattern Aspect -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
-                        🕌
+                        🎓
                     </div>
                     <div>
                         <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LPK MPI</div>
@@ -150,12 +150,12 @@
     <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
         
         <!-- TOPBAR -->
-        <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
+        <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">MANAJEMEN PENDIDIKAN ISLAM</span>
+                <span class="text-xs font-black uppercase tracking-widest text-blue-600 block">MANAJEMEN PENDIDIKAN INDONESIA</span>
             </div>
             
             <!-- User Status & Notification -->
@@ -193,11 +193,11 @@
                 <!-- Welcome Greeting -->
                 <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 md:p-8 text-white relative overflow-hidden shadow-lg shadow-blue-600/10">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-blue-500/20 rounded-full"></div>
-                    <div class="absolute right-12 top-4 text-6xl opacity-10 font-serif">🕌</div>
+                    <div class="absolute right-12 top-4 text-6xl opacity-10 font-serif">🎓</div>
                     <div class="relative z-10 space-y-2 max-w-xl">
                         <span class="text-[10px] bg-white/20 px-3 py-1 rounded-full font-bold uppercase tracking-wider">MARHABAN</span>
                         <h2 class="text-2xl md:text-3xl font-extrabold font-heading">Selamat datang, {{ auth()->user()->name }}</h2>
-                        <p class="text-blue-100 text-xs md:text-sm">Selamat datang di portal asesi Manajemen Pendidikan Islam. Akses materi, kuis, dan kelola portofolio sertifikasi Anda secara terpadu di sini.</p>
+                        <p class="text-blue-100 text-xs md:text-sm">Selamat datang di portal asesi Manajemen Pendidikan Indonesia. Akses materi, kuis, dan kelola portofolio sertifikasi Anda secara terpadu di sini.</p>
                     </div>
                 </div>
 
@@ -236,7 +236,7 @@
                         <div class="w-full bg-white dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                             <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full" style="width: 70%"></div>
                         </div>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Anda telah menyelesaikan 7 dari 10 kompetensi dasar dalam kurikulum Manajemen Pendidikan Islam.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Anda telah menyelesaikan 7 dari 10 kompetensi dasar dalam kurikulum Manajemen Pendidikan Indonesia.</p>
                     </div>
                 </div>
 
@@ -249,7 +249,7 @@
                             <h3 class="font-bold text-sm text-slate-800 dark:text-white">Jadwal Terdekat</h3>
                         </div>
                         <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-slate-800 dark:text-slate-100">Pra-Asesmen Tata Usaha Pendidikan Islam</div>
+                            <div class="text-xs font-bold text-slate-800 dark:text-slate-100">Pra-Asesmen Tata Usaha Pendidikan Indonesia</div>
                             <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Selasa, 11 Agustus 2026 (09:00 - 11:30 WIB)</div>
                             <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">Metode: Daring via Zoom</div>
                         </div>
@@ -315,7 +315,7 @@
             <div id="panel-skema" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Skema Pelatihan &amp; Modul</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unduh modul pembelajaran kurikulum manajemen pendidikan Islam.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unduh modul pembelajaran kurikulum manajemen pendidikan Indonesia.</p>
                 </div>
 
                 @if($enrollments->isEmpty())
@@ -428,7 +428,7 @@
                                             <td class="px-5 py-4 text-slate-600 dark:text-slate-300 text-xs font-mono">{{ $sch->scheduled_at->format('d M Y H:i') }} WIB</td>
                                             <td class="px-5 py-4 text-center">
                                                 <div id="attendance-status-{{ $sch->id }}">
-                                                    <button type="button" onclick="recordLocalAttendance({{ $sch->id }})" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Presensi</button>
+                                                    <button type="button" onclick="recordLocalAttendance('{{ $sch->id }}')" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Presensi</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -446,7 +446,7 @@
             <div id="panel-sertifikat" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">E-Sertifikat Kelulusan</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unduh sertifikat kelulusan resmi kompetensi Manajemen Pendidikan Islam Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unduh sertifikat kelulusan resmi kompetensi Manajemen Pendidikan Indonesia Anda.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

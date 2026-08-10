@@ -186,7 +186,7 @@
             <div class="inner-border">
                 <div class="header">
                     <h1 class="org-title">LPK MULTI PRIMA INDONESIA</h1>
-                    <div class="subtitle">Lembaga Pelatihan Kerja Terakreditasi</div>
+                    <div class="subtitle">Lembaga Pendidikan Kerja Terakreditasi</div>
                 </div>
 
                 <div>
@@ -194,7 +194,7 @@
                     <div class="cert-to">Diberikan kepada</div>
                     <div class="student-name">{{ $enrollment->name }}</div>
                     <p class="cert-text">
-                        telah dinyatakan <span style="font-weight:700; color:#10b981;">LULUS / KOMPETEN</span> pada Program Pelatihan Kerja:<br>
+                        telah dinyatakan <span style="font-weight:700; color:#10b981;">LULUS / KOMPETEN</span> pada Program Pendidikan Kerja:<br>
                         <span class="program-title">"{{ $enrollment->trainingProgram?->title }}"</span><br>
                         yang diselenggarakan oleh LPK Multi Prima Indonesia dengan hasil evaluasi teori & praktik yang memenuhi standar kelulusan lembaga.
                     </p>

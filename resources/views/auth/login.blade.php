@@ -3,7 +3,7 @@ $isIndo = (app()->getLocale() === 'id' || true); // Default to Indonesian
 
 // Translations
 $t = [
-'title' => $isIndo ? 'Portal Masuk | ' . ($siteTitle ?? 'LPK MMI') : 'Login Portal | ' . ($siteTitle ?? 'LPK MMI'),
+'title' => $isIndo ? 'Portal Masuk | ' . ($siteTitle ?? 'LPK MPI') : 'Login Portal | ' . ($siteTitle ?? 'LPK MPI'),
 'login_title' => $isIndo ? 'PORTAL MASUK' : 'LOGIN PORTAL',
 'login_subtitle' => $isIndo ? 'Silakan masuk menggunakan nama pengguna dan kata sandi Anda.' : 'Please sign in using your username and password.',
 'login_username_label' => $isIndo ? 'Nama Pengguna (Username)' : 'Username',
@@ -15,10 +15,10 @@ $t = [
 
 // Register Card
 'reg_badge' => $isIndo ? 'Formulir Registrasi' : 'Registration Form',
-'reg_title' => $isIndo ? 'PENDAFTARAN PELATIHAN' : 'TRAINING ENROLLMENT',
-'reg_subtitle' => $isIndo ? 'Lengkapi formulir di bawah ini untuk mendaftar program pelatihan kerja.' : 'Fill in the form below to register for a training program.',
-'reg_program' => $isIndo ? 'Program Pelatihan' : 'Training Program',
-'reg_choose_program' => $isIndo ? 'Pilih Program Pelatihan...' : 'Select Training Program...',
+'reg_title' => $isIndo ? 'PENDAFTARAN PROGRAM PENDIDIKAN KERJA' : 'TRAINING ENROLLMENT',
+'reg_subtitle' => $isIndo ? 'Lengkapi formulir di bawah ini untuk mendaftar program pendidikan kerja.' : 'Fill in the form below to register for a training program.',
+'reg_program' => $isIndo ? 'Program Pendidikan' : 'Training Program',
+'reg_choose_program' => $isIndo ? 'Pilih Program Pendidikan...' : 'Select Training Program...',
 'reg_name' => $isIndo ? 'Nama Lengkap (Sesuai KTP)' : 'Full Name (as in Identity Card)',
 'reg_nik' => $isIndo ? 'NIK (16 Digit)' : 'National ID / NIK (16 Digits)',
 'reg_email' => $isIndo ? 'Email Aktif' : 'Active Email Address',
@@ -47,7 +47,7 @@ $t = [
 
 // Success Card
 'success_title' => $isIndo ? 'Pendaftaran Berhasil!' : 'Registration Successful!',
-'success_desc' => $isIndo ? 'Selamat! Anda telah terdaftar dan sistem telah menerbitkan Sertifikat Kelulusan Pelatihan LPK MMI.' : 'Congratulations! You have successfully registered and the system has issued a LPK MMI Training Graduation Certificate.',
+'success_desc' => $isIndo ? 'Selamat! Anda telah terdaftar dan sistem telah menerbitkan Sertifikat Kelulusan Pelatihan LPK MPI.' : 'Congratulations! You have successfully registered and the system has issued a LPK MPI Training Graduation Certificate.',
 'cert_title' => $isIndo ? 'Sertifikat Kelulusan Pelatihan' : 'Training Graduation Certificate',
 'cert_awarded' => $isIndo ? 'Diberikan Kepada:' : 'Awarded To:',
 'cert_competent' => $isIndo ? 'Telah menyelesaikan pelatihan kompetensi dengan predikat KOMPETEN pada program:' : 'Has successfully completed the competency training with a COMPETENT rating in:',
@@ -119,13 +119,13 @@ $t = [
 
             <div class="relative z-10">
                 <h2 class="outfit-font text-[#facc15] font-black text-3xl tracking-wide uppercase leading-tight">
-                    {{ $settings['login_left_title_1'] ?? 'LEMBAGA PELATIHAN' }}<br>{{ $settings['login_left_title_2'] ?? 'KERJA' }}
+                    {{ $settings['login_left_title_1'] ?? 'LEMBAGA PENDIDIKAN' }}<br>{{ $settings['login_left_title_2'] ?? 'KERJA' }}
                 </h2>
                 <span class="text-white/90 font-bold text-sm uppercase tracking-widest block mt-2">
                     {{ $settings['login_left_sub'] ?? 'LPK MPI' }}
                 </span>
                 <h1 class="outfit-font text-white font-black text-4xl md:text-5xl mt-8 leading-none tracking-tight uppercase">
-                    {!! nl2br(e($settings['login_left_main'] ?? "MANAJEMEN\nPENDIDIKAN\nISLAM")) !!}
+                    {!! nl2br(e($settings['login_left_main'] ?? "MANAJEMEN\nPENDIDIKAN\nINDONESIA")) !!}
                 </h1>
             </div>
 
@@ -134,7 +134,7 @@ $t = [
                     {{ $settings['login_left_footer_title'] ?? 'LPK MPI' }}
                 </h3>
                 <p class="text-white/80 text-xs mt-1.5 leading-relaxed font-medium">
-                    {{ $settings['login_left_footer_desc'] ?? 'Pusat Pelatihan & Sertifikasi Kerja Manajemen Pendidikan Islam Terintegrasi' }}
+                    {{ $settings['login_left_footer_desc'] ?? 'Pusat Pendidikan & Sertifikasi Kerja Manajemen Pendidikan Indonesia Terintegrasi' }}
                 </p>
             </div>
         </div>

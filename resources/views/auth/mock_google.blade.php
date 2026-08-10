@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pilih Akun - LPK-MI</title>
+    <title>Pilih Akun - LPK MPI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,15 +18,20 @@
         <!-- Logo -->
         <div class="flex justify-center mb-6">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                    <span class="text-white font-black text-sm">L</span>
-                </div>
-                <span class="font-black text-white text-lg tracking-tight">LPK-MI</span>
+                @php $siteLogo = \App\Models\LandingSetting::getValue('site_logo'); @endphp
+                @if($siteLogo)
+                    <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" class="w-8 h-8 object-contain" alt="LPK MPI">
+                @else
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                        <span class="text-white font-black text-sm">L</span>
+                    </div>
+                @endif
+                <span class="font-black text-white text-lg tracking-tight">LPK MPI</span>
             </div>
         </div>
 
         <h1 class="text-center font-black text-white text-lg mb-1">Pilih Akun</h1>
-        <p class="text-center text-xs text-slate-400 mb-6">untuk melanjutkan ke <strong class="text-blue-400">lpk-mi.com</strong></p>
+        <p class="text-center text-xs text-slate-400 mb-6">untuk melanjutkan ke <strong class="text-blue-400">lpk-mpi.com</strong></p>
 
         <!-- Errors -->
         @if ($errors->any())

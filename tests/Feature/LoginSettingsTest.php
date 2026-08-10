@@ -18,14 +18,13 @@ class LoginSettingsTest extends TestCase
         $response = $this->get(route('login'));
 
         $response->assertStatus(200);
-        $response->assertSee('LEMBAGA SERTIFIKASI');
-        $response->assertSee('PROFESI');
-        $response->assertSee('(lsp) p3');
+        $response->assertSee('LEMBAGA PENDIDIKAN');
+        $response->assertSee('KERJA');
+        $response->assertSee('LPK MPI');
         $response->assertSee('MANAJEMEN');
         $response->assertSee('PENDIDIKAN');
-        $response->assertSee('ISLAM');
-        $response->assertSee('SKKNI');
-        $response->assertSee('Standar Kompetensi Kerja Khusus Manajemen Pendidikan Islam');
+        $response->assertSee('INDONESIA');
+        $response->assertSee('Pusat Pendidikan & Sertifikasi Kerja Manajemen Pendidikan Indonesia Terintegrasi');
     }
 
     public function test_superadmin_can_update_login_settings_and_see_them_on_login_page()
@@ -55,7 +54,7 @@ class LoginSettingsTest extends TestCase
             'login_bg_image' => $fakeBgImage,
         ]);
 
-        $response->assertRedirect(route('superadmin.dashboard'));
+        $response->assertRedirect(route('superadmin.dashboard', ['open' => 'panel-landing']));
 
         // Assert database values
         $this->assertEquals('LSP BARU 1', LandingSetting::getValue('login_left_title_1'));

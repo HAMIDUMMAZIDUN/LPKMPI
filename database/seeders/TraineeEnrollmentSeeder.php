@@ -20,10 +20,10 @@ class TraineeEnrollmentSeeder extends Seeder
                 'phone' => '081234567890',
                 'education' => 'S3',
                 'category' => 'mahasiswa',
-                'company' => 'Universitas Islam Negeri Sunan Kalijaga',
+                'company' => 'Universitas Negeri Sunan Kalijaga',
                 'position' => 'Dosen Kepala',
                 'training_program_id' => 'ptki_prog',
-                'certificate_number' => 'LPK-MI-2026-9042',
+                'certificate_number' => 'LPK-MPI-2026-9042',
                 'certificate_date' => '2026-07-05',
                 'status' => 'LULUS'
             ],
@@ -37,7 +37,7 @@ class TraineeEnrollmentSeeder extends Seeder
                 'company' => 'MI Al-Hidayah Bandung',
                 'position' => 'Waka Kurikulum',
                 'training_program_id' => 'mi_prog',
-                'certificate_number' => 'LPK-MI-2026-1024',
+                'certificate_number' => 'LPK-MPI-2026-1024',
                 'certificate_date' => '2026-06-01',
                 'status' => 'LULUS'
             ],
@@ -51,7 +51,7 @@ class TraineeEnrollmentSeeder extends Seeder
                 'company' => 'MTs Negeri 1 Yogyakarta',
                 'position' => 'Guru Utama',
                 'training_program_id' => 'mts_prog',
-                'certificate_number' => 'LPK-MI-2026-5819',
+                'certificate_number' => 'LPK-MPI-2026-5819',
                 'certificate_date' => '2026-05-12',
                 'status' => 'LULUS'
             ],

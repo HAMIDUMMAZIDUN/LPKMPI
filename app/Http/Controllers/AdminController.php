@@ -12,6 +12,7 @@ use Database\Seeders\TrainingProgramSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -134,10 +135,10 @@ class AdminController extends Controller
     /**
      * Approve trainee enrollment and issue certificate (Admin role only).
      */
-    public function approveTrainee(Request $request, $id)
+    public function approveTrainee(Request $request, int $id)
     {
         // Enforce that only 'admin' role can approve
-        if (auth()->user()->role !== 'admin') {
+        if (Auth::user()->role !== 'admin') {
             return redirect()->to('/#admin-panel')->with('error', 'Akses Ditolak: Hanya pengguna dengan role Admin yang diizinkan untuk menyetujui pendaftaran (Superadmin tidak diperbolehkan).');
         }
 
@@ -147,7 +148,7 @@ class AdminController extends Controller
             // Generate unique certificate number
             do {
                 $randomDigits = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
-                $certNumber = 'LPK-MI-' . date('Y') . '-' . $randomDigits;
+                $certNumber = 'LPK-MPI-' . date('Y') . '-' . $randomDigits;
             } while (TraineeEnrollment::where('certificate_number', $certNumber)->exists());
 
             $trainee->update([
@@ -165,16 +166,17 @@ class AdminController extends Controller
      */
     public function updateProfile(Request $request)
     {
-        if (auth()->user()->role !== 'superadmin') {
+        if (Auth::user()->role !== 'superadmin') {
             return redirect()->to('/#admin-panel')->with('error', 'Akses Ditolak: Hanya Superadmin yang diizinkan mengubah email ini.');
         }
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
         ]);
 
-        auth()->user()->update([
+        $user = User::find(Auth::id());
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
         ]);
@@ -187,7 +189,7 @@ class AdminController extends Controller
      */
     public function storeAdmin(Request $request)
     {
-        if (auth()->user()->role !== 'superadmin') {
+        if (Auth::user()->role !== 'superadmin') {
             return redirect()->to('/#admin-panel')->with('error', 'Akses Ditolak: Hanya Superadmin yang diizinkan mendaftarkan Admin baru.');
         }
 
@@ -211,9 +213,9 @@ class AdminController extends Controller
     /**
      * Revoke/Delete Admin role user (Superadmin only).
      */
-    public function destroyAdmin(Request $request, $id)
+    public function destroyAdmin(Request $request, int $id)
     {
-        if (auth()->user()->role !== 'superadmin') {
+        if (Auth::user()->role !== 'superadmin') {
             return redirect()->to('/#admin-panel')->with('error', 'Akses Ditolak: Hanya Superadmin yang diizinkan mencabut akses Admin.');
         }
 

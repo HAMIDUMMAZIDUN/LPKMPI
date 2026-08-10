@@ -37,11 +37,11 @@
                     <ol class="space-y-4 text-sm text-slate-600 dark:text-slate-400 list-decimal list-inside pl-1">
                         <li class="leading-relaxed">Pilih program pelatihan yang sesuai dengan kompetensi yang ingin Anda sertifikasi.</li>
                         <li class="leading-relaxed">Lengkapi data diri, instansi, dan kontak aktif Anda.</li>
-                        <li class="leading-relaxed">Kirim pendaftaran. Anda akan langsung menerima <strong class="text-blue-700 dark:text-blue-400">Sertifikat Kompetensi Pelatihan LPK MMI</strong> secara otomatis.</li>
+                        <li class="leading-relaxed">Kirim pendaftaran. Anda akan langsung menerima <strong class="text-blue-700 dark:text-blue-400">Sertifikat Kompetensi Pelatihan LPK-MPI</strong> secara otomatis.</li>
                     </ol>
                     <div class="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/40 rounded-xl p-4 flex gap-3 mt-6">
                         <p class="text-xs text-blue-800 dark:text-blue-200 leading-relaxed font-semibold">
-                            <strong>Note Integrasi:</strong> Sertifikat dari LPK MMI ini dapat digunakan sebagai bukti kelayakan program pemagangan kerja ke Jepang.
+                            <strong>Note Integrasi:</strong> Sertifikat dari LPK-MPI ini terintegrasi langsung dengan Lembaga Sertifikasi Profesi (LSP-MPI) untuk verifikasi kompetensi lulusan secara real-time.
                         </p>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
             <div class="certificate-badge rounded-2xl p-6 sm:p-10 text-center shadow-lg mb-8">
                 <div class="cert-header mb-6">
                     <h4 class="text-blue-800 dark:text-blue-300 text-sm sm:text-base font-bold tracking-[3px] uppercase">Sertifikat Kelulusan Pelatihan</h4>
-                    <span class="text-[9px] sm:text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest block mt-1">LPK Manajemen Industri &amp; Kompetensi (LPK-MI)</span>
+                    <span class="text-[9px] sm:text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest block mt-1">LPK Lembaga Pendidikan Kerja Manajemen Pendidikan Indonesia</span>
                 </div>
                 <div class="cert-body my-8">
                     <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 italic">Diberikan Kepada:</p>
@@ -387,5 +387,15 @@
                 alert(error.message || 'Terjadi kesalahan jaringan.');
             }
         });
+
+        // Auto-select program if query parameter 'program' is present
+        const urlParams = new URLSearchParams(window.location.search);
+        const programId = urlParams.get('program');
+        if (programId) {
+            const selectEl = document.getElementById('enroll-program');
+            if (selectEl) {
+                selectEl.value = programId;
+            }
+        }
     </script>
 @endsection

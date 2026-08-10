@@ -31,7 +31,7 @@ class AuthController extends Controller
         }
         $programs = \App\Models\TrainingProgram::all();
         $settings = \App\Models\LandingSetting::pluck('value', 'key');
-        $siteTitle = \App\Models\LandingSetting::getValue('site_title', 'LPK-MI');
+        $siteTitle = \App\Models\LandingSetting::getValue('site_title', 'LPK MPI');
         $siteLogo  = \App\Models\LandingSetting::getValue('site_logo');
         return view('auth.login', compact('programs', 'settings', 'siteTitle', 'siteLogo'));
     }
@@ -87,7 +87,7 @@ class AuthController extends Controller
 
         if (!$user) {
             return redirect()->route('login')->withErrors([
-                'email' => 'Akses ditolak. Email Google Anda (' . $email . ') tidak terdaftar di sistem LPK-MI.'
+                'email' => 'Akses ditolak. Email Google Anda (' . $email . ') tidak terdaftar di sistem LPK MPI.'
             ]);
         }
 
@@ -118,7 +118,7 @@ class AuthController extends Controller
 
         if (!$user) {
             return redirect()->route('auth.mock-google')->withErrors([
-                'email' => 'Akun tersebut tidak terdaftar di sistem LPK-MI.'
+                'email' => 'Akun tersebut tidak terdaftar di sistem LPK MPI.'
             ]);
         }
 

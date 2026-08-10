@@ -61,10 +61,10 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sa-sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
+    <aside id="sa-sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div class="flex flex-col">
             <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -224,7 +224,7 @@
     <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden lg:pl-[280px]">
 
         <!-- TOPBAR -->
-        <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
+        <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleSidebar()" class="lg:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -344,7 +344,7 @@
                                 <tr>
                                     <td class="px-5 py-3 text-slate-400 font-mono">Baru saja</td>
                                     <td class="px-5 py-3 font-bold text-slate-800 dark:text-white">superadmin</td>
-                                    <td class="px-5 py-3 text-slate-600 dark:text-slate-300">Update konfigurasi branding website LPK Manajemen Pendidikan Islam.</td>
+                                    <td class="px-5 py-3 text-slate-600 dark:text-slate-300">Update konfigurasi branding website LPK Manajemen Pendidikan Indonesia.</td>
                                 </tr>
                                 <tr>
                                     <td class="px-5 py-3 text-slate-400 font-mono">10 menit lalu</td>
@@ -361,13 +361,13 @@
             <div id="panel-identity" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Identitas &amp; Branding</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Atur nama singkat dan logo resmi LPK Manajemen Pendidikan Islam.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Atur nama singkat dan logo resmi LPK Manajemen Pendidikan Indonesia.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
                     @csrf
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Singkat / Judul Situs (Site Title)</label>
-                        <input type="text" name="site_title" value="{{ $settings['site_title'] ?? 'LPK-MI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        <input type="text" name="site_title" value="{{ $settings['site_title'] ?? 'LPK MPI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Logo Website (Site Logo)</label>
@@ -395,28 +395,28 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Branding Kiri: Judul 1 (Blue Bold)</label>
-                            <input type="text" name="login_left_title_1" value="{{ $settings['login_left_title_1'] ?? 'LEMBAGA SERTIFIKASI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            <input type="text" name="login_left_title_1" value="{{ $settings['login_left_title_1'] ?? 'LEMBAGA PENDIDIKAN' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Branding Kiri: Judul 2 (Blue Bold)</label>
-                            <input type="text" name="login_left_title_2" value="{{ $settings['login_left_title_2'] ?? 'PROFESI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            <input type="text" name="login_left_title_2" value="{{ $settings['login_left_title_2'] ?? 'KERJA' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                         </div>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Branding Kiri: Subtitle Kecil</label>
-                        <input type="text" name="login_left_sub" value="{{ $settings['login_left_sub'] ?? '(lpk) p3' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        <input type="text" name="login_left_sub" value="{{ $settings['login_left_sub'] ?? 'LPK MPI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Branding Kiri: Judul Utama Besar</label>
-                        <textarea name="login_left_main" rows="3" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">{{ $settings['login_left_main'] ?? 'MANAJEMEN PENDIDIKAN ISLAM' }}</textarea>
+                        <textarea name="login_left_main" rows="3" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">{{ $settings['login_left_main'] ?? "MANAJEMEN\nPENDIDIKAN\nINDONESIA" }}</textarea>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Branding Kiri: Label Kaki</label>
-                        <input type="text" name="login_left_footer_title" value="{{ $settings['login_left_footer_title'] ?? 'SKKNI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        <input type="text" name="login_left_footer_title" value="{{ $settings['login_left_footer_title'] ?? 'LPK MPI' }}" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Branding Kiri: Deskripsi Kaki</label>
-                        <textarea name="login_left_footer_desc" rows="3" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">{{ $settings['login_left_footer_desc'] ?? 'Standar Kompetensi Kerja Khusus Manajemen Pendidikan Islam' }}</textarea>
+                        <textarea name="login_left_footer_desc" rows="3" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">{{ $settings['login_left_footer_desc'] ?? 'Pusat Pendidikan & Sertifikasi Kerja Manajemen Pendidikan Indonesia Terintegrasi' }}</textarea>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Gambar Latar Belakang Login</label>
@@ -531,14 +531,14 @@
             <div id="panel-features" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Keunggulan &amp; Fitur</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah detail keunggulan LPK Manajemen Pendidikan Islam.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Ubah detail keunggulan LPK Manajemen Pendidikan Indonesia.</p>
                 </div>
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 shadow-sm">
                     @csrf
                     <input type="hidden" name="feature_count" id="feature_count_input" value="{{ $settings['feature_count'] ?? 3 }}">
                     <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Utama Seksi Keunggulan</label>
-                        <input type="text" name="why_choose_title" value="{{ $settings['why_choose_title'] ?? 'Mengapa Memilih LPK-MI?' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        <input type="text" name="why_choose_title" value="{{ $settings['why_choose_title'] ?? 'Mengapa Memilih LPK MPI?' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                     </div>
                     <div class="flex items-center gap-3 mb-4">
                         <button type="button" onclick="adjustCount('feature', 1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-xl transition shadow">＋ Tambah Fitur</button>
@@ -698,7 +698,7 @@
                     <input type="hidden" name="active_panel" value="panel-program">
                     @foreach([
                         ['key'=>'manajemen','label'=>'Program Manajemen Yayasan/Pesantren'],
-                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Islam'],
+                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Indonesia'],
                         ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
                     ] as $prog)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
@@ -978,7 +978,7 @@
                                 <div class="flex items-center justify-between border-t border-slate-200/55 dark:border-slate-800/80 pt-3 mt-3">
                                     <span class="text-[10px] text-slate-400 font-mono">{{ $art->created_at->format('d M Y') }}</span>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-800 text-[10px] font-bold uppercase">Edit</button>
+                                        <button type="button" data-article="{{ json_encode($art) }}" onclick="editArticle(JSON.parse(this.dataset.article))" class="text-blue-600 hover:text-blue-800 text-[10px] font-bold uppercase">Edit</button>
                                         <form action="{{ route('superadmin.articles.destroy', $art->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase">Hapus</button>
@@ -1124,8 +1124,8 @@
                                 <div class="flex items-center gap-3">
                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Admin</span>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" onclick='showUserDetail({!! json_encode($admin) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
-                                        <button type="button" onclick='editUser({!! json_encode($admin) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <button type="button" data-user="{{ json_encode($admin) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($admin) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                         <form action="{{ route('superadmin.user.destroy', $admin->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1144,8 +1144,8 @@
                                 <div class="flex items-center gap-3">
                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesor</span>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" onclick='showUserDetail({!! json_encode($asesor) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
-                                        <button type="button" onclick='editUser({!! json_encode($asesor) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <button type="button" data-user="{{ json_encode($asesor) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($asesor) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                         <form action="{{ route('superadmin.user.destroy', $asesor->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1296,7 +1296,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button type="button" onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" data-program="{{ json_encode($prog) }}" onclick="editProgram(JSON.parse(this.dataset.program))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('superadmin.programs.destroy', $prog->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1426,7 +1426,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button type="button" onclick='editTrainee({!! json_encode($t) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" data-trainee="{{ json_encode($t) }}" onclick="editTrainee(JSON.parse(this.dataset.trainee))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('superadmin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>

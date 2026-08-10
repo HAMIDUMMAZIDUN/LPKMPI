@@ -61,10 +61,10 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
             <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -165,7 +165,7 @@
     <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
 
         <!-- TOPBAR -->
-        <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
+        <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -267,7 +267,7 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 <tr>
                                     <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">Ahmad Faisal</td>
-                                    <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">Tata Usaha Pendidikan Islam</td>
+                                    <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">Tata Usaha Pendidikan Indonesia</td>
                                     <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400 font-mono">APL02-Faisal.pdf</td>
                                     <td class="px-5 py-4 text-center">
                                         <button type="button" onclick="alert('Membuka review APL-02...');" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg">Review</button>
@@ -506,7 +506,7 @@
                                         <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-400 font-semibold">{{ $sched->location }}</td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button type="button" onclick='editSchedule({!! json_encode($sched) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" data-schedule="{{ json_encode($sched) }}" onclick="editSchedule(JSON.parse(this.dataset.schedule))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('asesor.schedule.delete', $sched->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>

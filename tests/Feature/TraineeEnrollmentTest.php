@@ -6,6 +6,7 @@ use App\Models\TrainingProgram;
 use App\Models\TraineeEnrollment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class TraineeEnrollmentTest extends TestCase
@@ -148,12 +149,14 @@ class TraineeEnrollmentTest extends TestCase
             'company' => 'Madrasah Aliyah',
             'position' => 'Guru MPI',
             'otp_code' => (string) $otpCode,
+            'ktp' => UploadedFile::fake()->image('ktp.jpg'),
+            'ijazah' => UploadedFile::fake()->image('ijazah.jpg'),
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
             'success' => true,
-            'message' => 'Pendaftaran berhasil!',
+            'message' => 'Pendaftaran awal berhasil, silakan lakukan pembayaran.',
         ]);
 
         // Check if database contains enrollment

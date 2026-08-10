@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
                 'company' => 'Mandiri',
                 'position' => 'Peserta Didik',
                 'training_program_id' => 'mi_prog',
-                'certificate_number' => 'LPK-MI-2026-8899',
+                'certificate_number' => 'LPK-MPI-2026-8899',
                 'certificate_date' => '2026-08-01',
                 'status' => 'LULUS',
                 'payment_status' => 'PAID',
@@ -89,9 +89,9 @@ class DatabaseSeeder extends Seeder
         $asesor = User::where('role', 'asesor')->first();
         if ($asesor) {
             $scheme = \App\Models\AssessmentScheme::updateOrCreate(
-                ['title' => 'Uji Kompetensi Pemahaman Bahasa & Budaya Jepang Dasar'],
+                ['title' => 'Uji Kompetensi Kepemimpinan & Manajemen Madrasah'],
                 [
-                    'description' => 'Skema uji kompetensi untuk mengukur kemampuan komunikasi bahasa Jepang dasar (N5) dan pemahaman budaya kerja industri Jepang (5S/Kaizen).',
+                    'description' => 'Skema uji kompetensi untuk mengukur kemampuan manajerial, kewirausahaan, dan supervisi kepala madrasah sesuai standar LSP-MPI.',
                     'asesor_id' => $asesor->id,
                     'status' => 'published',
                     'duration_minutes' => 60
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
 
             // Seed questions for this scheme
             $q1 = \App\Models\Question::updateOrCreate(
-                ['scheme_id' => $scheme->id, 'question_text' => 'Huruf alfabet Jepang mana yang digunakan secara khusus untuk menulis kata-kata serapan dari bahasa asing?'],
+                ['scheme_id' => $scheme->id, 'question_text' => 'Manakah di bawah ini yang merupakan kompetensi utama kepala madrasah menurut standar nasional?'],
                 [
                     'question_type' => 'multiple_choice',
                     'order' => 1,
@@ -108,24 +108,24 @@ class DatabaseSeeder extends Seeder
                 ]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q1->id, 'option_text' => 'Hiragana'],
+                ['question_id' => $q1->id, 'option_text' => 'Kompetensi Kuliner'],
                 ['is_correct' => false, 'order' => 1]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q1->id, 'option_text' => 'Katakana'],
+                ['question_id' => $q1->id, 'option_text' => 'Kompetensi Manajerial, Kewirausahaan, dan Supervisi'],
                 ['is_correct' => true, 'order' => 2]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q1->id, 'option_text' => 'Kanji'],
+                ['question_id' => $q1->id, 'option_text' => 'Kompetensi Teknik Otomotif'],
                 ['is_correct' => false, 'order' => 3]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q1->id, 'option_text' => 'Romaji'],
+                ['question_id' => $q1->id, 'option_text' => 'Kompetensi Navigasi Pelayaran'],
                 ['is_correct' => false, 'order' => 4]
             );
 
             $q2 = \App\Models\Question::updateOrCreate(
-                ['scheme_id' => $scheme->id, 'question_text' => 'Manakah di bawah ini yang merupakan salah satu dari pilar konsep 5S dalam budaya disiplin kerja Jepang?'],
+                ['scheme_id' => $scheme->id, 'question_text' => 'Apa kepanjangan dari LSP-MPI dalam konteks sertifikasi kepemimpinan madrasah?'],
                 [
                     'question_type' => 'multiple_choice',
                     'order' => 2,
@@ -133,24 +133,24 @@ class DatabaseSeeder extends Seeder
                 ]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q2->id, 'option_text' => 'Seiri (Ringkas)'],
+                ['question_id' => $q2->id, 'option_text' => 'Lembaga Sertifikasi Profesi Manajemen Pendidikan Indonesia'],
                 ['is_correct' => true, 'order' => 1]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q2->id, 'option_text' => 'Shinsetsu (Ramah)'],
+                ['question_id' => $q2->id, 'option_text' => 'Lembaga Sertifikasi Pelatihan Mandiri Indonesia'],
                 ['is_correct' => false, 'order' => 2]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q2->id, 'option_text' => 'Sensei (Guru)'],
+                ['question_id' => $q2->id, 'option_text' => 'Layanan Sertifikasi Pendidikan Madrasah Internasional'],
                 ['is_correct' => false, 'order' => 3]
             );
             \App\Models\QuestionOption::updateOrCreate(
-                ['question_id' => $q2->id, 'option_text' => 'Suki (Suka)'],
+                ['question_id' => $q2->id, 'option_text' => 'Lembaga Swadaya Pemuda Indonesia'],
                 ['is_correct' => false, 'order' => 4]
             );
 
             $q3 = \App\Models\Question::updateOrCreate(
-                ['scheme_id' => $scheme->id, 'question_text' => 'Jelaskan pemahaman Anda mengenai pentingnya tata krama sapaan (Aisatsu) dan kedisiplinan kerja saat berada di pabrik atau lingkungan kerja di Jepang!'],
+                ['scheme_id' => $scheme->id, 'question_text' => 'Jelaskan rencana strategis Anda dalam meningkatkan mutu kelulusan dan akreditasi madrasah di bawah kepemimpinan Anda!'],
                 [
                     'question_type' => 'essay',
                     'order' => 3,

@@ -102,10 +102,10 @@
         .dark .bg-slate-100 { background-color: rgba(51, 65, 85, 0.4) !important; }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
             <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
@@ -249,7 +249,7 @@
     <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
 
         <!-- TOPBAR -->
-        <header class="h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
+        <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleSidebar()" class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -459,7 +459,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button type="button" onclick='editTrainee({!! json_encode($t) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" data-trainee="{{ json_encode($t) }}" onclick="editTrainee(JSON.parse(this.dataset.trainee))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('admin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -669,8 +669,8 @@
                                 <div class="flex items-center gap-3">
                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesor</span>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" onclick='showUserDetail({!! json_encode($asesor) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
-                                        <button type="button" onclick='editUser({!! json_encode($asesor) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <button type="button" data-user="{{ json_encode($asesor) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($asesor) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                         <form action="{{ route('admin.user.destroy', $asesor->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -690,8 +690,8 @@
                                 <div class="flex items-center gap-3">
                                     <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesi</span>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" onclick='showUserDetail({!! json_encode($asesi) !!})' class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
-                                        <button type="button" onclick='editUser({!! json_encode($asesi) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <button type="button" data-user="{{ json_encode($asesi) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($asesi) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                         <form action="{{ route('admin.user.destroy', $asesi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -765,7 +765,7 @@
                                 <div class="flex items-center justify-between border-t border-slate-200/55 dark:border-slate-800/80 pt-3 mt-3">
                                     <span class="text-[10px] text-slate-400 font-mono">{{ $art->created_at->format('d M Y') }}</span>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" onclick='editArticle({!! json_encode($art) !!})' class="text-blue-600 hover:text-blue-800 text-[10px] font-bold uppercase font-bold">Edit</button>
+                                        <button type="button" data-article="{{ json_encode($art) }}" onclick="editArticle(JSON.parse(this.dataset.article))" class="text-blue-600 hover:text-blue-800 text-[10px] font-bold uppercase font-bold">Edit</button>
                                         <form action="{{ route('admin.articles.destroy', $art->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold uppercase font-bold">Hapus</button>
@@ -791,7 +791,7 @@
                     <input type="hidden" name="active_panel" value="panel-program">
                     @foreach([
                         ['key'=>'manajemen','label'=>'Program Management Yayasan/Pesantren'],
-                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Islam'],
+                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Indonesia'],
                         ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
                     ] as $prog)
                         <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
@@ -1053,7 +1053,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button type="button" onclick='editProgram({!! json_encode($prog) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" data-program="{{ json_encode($prog) }}" onclick="editProgram(JSON.parse(this.dataset.program))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('admin.programs.destroy', $prog->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1186,7 +1186,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button type="button" onclick='editTrainee({!! json_encode($t) !!})' class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                                <button type="button" data-trainee="{{ json_encode($t) }}" onclick="editTrainee(JSON.parse(this.dataset.trainee))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('admin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
@@ -1451,7 +1451,7 @@
                             return;
                         }
                         
-                        const currentAdminId = Number({{ auth()->id() ?? 0 }});
+                        const currentAdminId = Number("{{ Auth::id() ?? 0 }}");
                         let html = '';
                         data.chats.forEach(chat => {
                             const isActive = chat.session_id === activeChatSessionId;

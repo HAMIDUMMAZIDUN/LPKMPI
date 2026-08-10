@@ -14,34 +14,44 @@ class TrainingProgramSeeder extends Seeder
     {
         $programs = [
             [
-                'id' => 'ginou_prog',
-                'title' => 'Ginou Jisshu (Program Pemagangan Teknik)',
-                'category' => 'Pemagangan Jepang',
-                'duration' => '6 Bulan Kelas Intensif',
-                'description' => 'Program magang resmi (Sending Organization) untuk mendapatkan keterampilan kerja di Jepang pada sektor konstruksi, pertanian, manufaktur, pengolahan makanan, dan industri pendukung.',
-                'benefits' => ['Sertifikat Kompetensi LPK MMI', 'Simulasi Wawancara (Mansetsu)', 'Pelatihan Fisik, Mental, dan Disiplin (FMD)'],
-                'price' => 'Rp 5.500.000',
-                'lsp_keyword' => 'Magang'
+                'id' => 'mi_prog',
+                'title' => 'Pelatihan Kepemimpinan Kepala Madrasah Ibtidaiyah (MI)',
+                'category' => 'Kategori Madrasah',
+                'duration' => '40 Jam Pelajaran (JP)',
+                'description' => 'Mempersiapkan kompetensi pedagogik, kepribadian, sosial, dan manajerial calon kepala madrasah tingkat Ibtidaiyah sesuai standar kelayakan sertifikasi LSP-MPI.',
+                'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Simulasi Soal Uji Kompetensi', 'Bimbingan Portofolio'],
+                'price' => 'Rp 1.500.000',
+                'lsp_keyword' => 'Ibtidaiyah'
             ],
             [
-                'id' => 'ssw_prog',
-                'title' => 'Tokutei Ginou (Specified Skilled Worker / SSW)',
-                'category' => 'Pekerja Profesional',
-                'duration' => '4 Bulan Kelas Intensif',
-                'description' => 'Program kerja formal bagi tenaga ahli spesifik dengan status visa Tokutei Ginou. Fokus persiapan ujian skill bidang, ujian JFT-Basic/JLPT N4, dan kontrak kerja langsung.',
-                'benefits' => ['Bimbingan Ujian JFT-Basic & SSW', 'Matching Wawancara Perusahaan Jepang', 'Pendampingan Berkas COE/Visa'],
-                'price' => 'Rp 7.000.000',
-                'lsp_keyword' => 'SSW'
+                'id' => 'mts_prog',
+                'title' => 'Pelatihan Kepemimpinan Kepala Madrasah Tsanawiyah (MTs)',
+                'category' => 'Kategori Madrasah',
+                'duration' => '48 Jam Pelajaran (JP)',
+                'description' => 'Pelatihan tingkat lanjut bagi guru dan waka madrasah untuk meningkatkan keterampilan manajemen sekolah, supervisi guru, dan kewirausahaan madrasah.',
+                'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Akses LMS 30 Hari', 'Modul Digital Lengkap'],
+                'price' => 'Rp 1.750.000',
+                'lsp_keyword' => 'Tsanawiyah'
             ],
             [
-                'id' => 'bahasa_prog',
-                'title' => 'Kelas Intensif Bahasa & Budaya Jepang (N5 - N4)',
-                'category' => 'Bahasa & Budaya',
-                'duration' => '3 Bulan Kelas',
-                'description' => 'Kursus komprehensif menguasai tata bahasa, huruf (Hiragana, Katakana, Kanji), pendengaran (Choukai), percakapan (Kaiwa), serta pemahaman budaya kerja Jepang.',
-                'benefits' => ['Modul Pembelajaran Minna no Nihongo', 'Sensei Eks-Japan Berpengalaman', 'Sertifikat Kelulusan Bahasa LPK'],
+                'id' => 'ma_prog',
+                'title' => 'Pelatihan Kepemimpinan Kepala Madrasah Aliyah (MA)',
+                'category' => 'Kategori Madrasah',
+                'duration' => '50 Jam Pelajaran (JP)',
+                'description' => 'Menghasilkan pemimpin madrasah aliyah yang berdaya saing global, menguasai TI pendidikan, tata kelola kurikulum merdeka, dan standarisasi akreditasi nasional.',
+                'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Bimbingan Penyusunan DIT', 'Review Portofolio oleh Asesor'],
+                'price' => 'Rp 2.000.000',
+                'lsp_keyword' => 'Aliyah'
+            ],
+            [
+                'id' => 'ptki_prog',
+                'title' => 'Pelatihan Kepemimpinan Pimpinan Perguruan Tinggi Keagamaan Indonesia (PTKI)',
+                'category' => 'Kategori Pendidikan Tinggi',
+                'duration' => '64 Jam Pelajaran (JP)',
+                'description' => 'Dirancang khusus bagi Dosen/Pimpinan PTKI untuk menguasai tata kelola universitas, penjaminan mutu BAN-PT, kepemimpinan transformatif, dan kerja sama akademik.',
+                'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Studi Kasus Internasional', 'Rekomendasi Akreditasi'],
                 'price' => 'Rp 3.500.000',
-                'lsp_keyword' => 'Bahasa'
+                'lsp_keyword' => 'Perguruan Tinggi'
             ]
         ];
 
