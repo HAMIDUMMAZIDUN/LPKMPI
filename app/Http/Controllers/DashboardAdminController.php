@@ -53,6 +53,23 @@ class DashboardAdminController extends Controller
         ));
     }
 
+    /** Live stats JSON – polled every 30 s by the dashboard */
+    public function stats()
+    {
+        $this->checkRole();
+        return response()->json([
+            'trainees' => TraineeEnrollment::count(),
+            'lulus'    => TraineeEnrollment::where('status', 'LULUS')->count(),
+            'pending'  => TraineeEnrollment::where('payment_status', 'PENDING')->count(),
+            'asesis'   => \App\Models\User::where('role', 'asesi')->count(),
+            'asesors'  => \App\Models\User::where('role', 'asesor')->count(),
+            'programs' => \App\Models\TrainingProgram::count(),
+            'articles' => \App\Models\Article::count(),
+            'chats'    => \App\Models\ChatMessage::selectRaw('COUNT(DISTINCT session_id) as cnt')->value('cnt') ?? 0,
+            'ts'       => now()->toDateTimeString(),
+        ]);
+    }
+
     /** Daftarkan akun Asesor baru */
     public function storeAsesor(Request $request)
     {

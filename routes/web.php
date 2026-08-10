@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
     // ── Superadmin Dashboard ──────────────────────────────────────────────
     Route::get('/dashboard/superadmin', [SuperadminController::class, 'index'])->name('superadmin.dashboard');
+    Route::get('/dashboard/superadmin/stats', [SuperadminController::class, 'stats'])->name('superadmin.stats');
     Route::post('/dashboard/superadmin/settings', [SuperadminController::class, 'updateSettings'])->name('superadmin.settings.update');
     Route::post('/dashboard/superadmin/profile', [SuperadminController::class, 'updateProfile'])->name('superadmin.profile.update');
     Route::post('/dashboard/superadmin/users', [SuperadminController::class, 'storeUser'])->name('superadmin.user.store');
@@ -62,6 +63,7 @@ Route::middleware('auth')->group(function () {
 
     // ── Admin Dashboard ───────────────────────────────────────────────────
     Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard/admin/stats', [DashboardAdminController::class, 'stats'])->name('admin.stats');
     Route::get('/dashboard/admin/report', [DashboardAdminController::class, 'generateReport'])->name('admin.report');
     Route::post('/dashboard/admin/asesor', [DashboardAdminController::class, 'storeAsesor'])->name('admin.asesor.store');
     Route::post('/dashboard/admin/asesi', [DashboardAdminController::class, 'storeAsesi'])->name('admin.asesi.store');
@@ -88,6 +90,7 @@ Route::middleware('auth')->group(function () {
 
     // ── Asesor Dashboard & Scheme Builder ────────────────────────────────
     Route::get('/dashboard/asesor', [AsesorController::class, 'index'])->name('asesor.dashboard');
+    Route::get('/dashboard/asesor/stats', [AsesorController::class, 'stats'])->name('asesor.stats');
     Route::post('/dashboard/asesor/schemes', [AsesorController::class, 'storeScheme'])->name('asesor.scheme.store');
     Route::get('/dashboard/asesor/schemes/{id}/edit', [AsesorController::class, 'editScheme'])->name('asesor.scheme.edit');
     Route::put('/dashboard/asesor/schemes/{id}', [AsesorController::class, 'updateScheme'])->name('asesor.scheme.update');
@@ -102,6 +105,7 @@ Route::middleware('auth')->group(function () {
 
     // ── Asesi Dashboard & Exam (LMS) ──────────────────────────────────────
     Route::get('/dashboard/asesi', [AsesiController::class, 'index'])->name('asesi.dashboard');
+    Route::get('/dashboard/asesi/stats', [AsesiController::class, 'stats'])->name('asesi.stats');
     Route::get('/asesi/exam/{schemeId}', [AsesiController::class, 'startScheme'])->name('asesi.exam.start');
     Route::post('/asesi/exam/{attemptId}/answer', [AsesiController::class, 'saveAnswer'])->name('asesi.exam.answer');
     Route::post('/asesi/exam/{attemptId}/finish', [AsesiController::class, 'finishScheme'])->name('asesi.exam.finish');
@@ -111,6 +115,7 @@ Route::middleware('auth')->group(function () {
 
     // ── Instruktur Dashboard ──────────────────────────────────────────────────
     Route::get('/dashboard/instruktur', [InstrukturController::class, 'index'])->name('instruktur.dashboard');
+    Route::get('/dashboard/instruktur/stats', [InstrukturController::class, 'stats'])->name('instruktur.stats');
     Route::post('/dashboard/instruktur/materi', [InstrukturController::class, 'storeMateri'])->name('instruktur.materi.store');
     Route::post('/dashboard/instruktur/task', [InstrukturController::class, 'storeTask'])->name('instruktur.task.store');
 

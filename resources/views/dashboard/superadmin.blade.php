@@ -308,20 +308,20 @@
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Statistik Pengguna</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-800 dark:text-white">{{ $admins->count() }}</div>
+                            <div id="stat-admins" class="text-xl font-bold text-slate-800 dark:text-white">{{ $admins->count() }}</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Admin</div>
                         </div>
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-800 dark:text-white">10</div>
+                            <div class="text-xl font-bold text-slate-800 dark:text-white font-mono">4</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Instruktur</div>
                         </div>
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-800 dark:text-white">{{ $asesors->count() }}</div>
+                            <div id="stat-asesors" class="text-xl font-bold text-slate-800 dark:text-white">{{ $asesors->count() }}</div>
                             <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Asesor</div>
                         </div>
                         <div class="bg-white dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                            <div class="text-xl font-bold text-slate-800 dark:text-white">150</div>
-                            <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Asesi</div>
+                            <div id="stat-users" class="text-xl font-bold text-slate-800 dark:text-white">{{ $users ?? \App\Models\User::count() }}</div>
+                            <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Total User</div>
                         </div>
                     </div>
                 </div>
@@ -1916,6 +1916,15 @@
             </div>
         </div>
     </div>
+
+    @include('layouts.partials.live_refresh', [
+        'statsUrl' => route('superadmin.stats'),
+        'statMap'  => [
+            'stat-admins'  => 'admins',
+            'stat-asesors' => 'asesors',
+            'stat-users'   => 'users',
+        ]
+    ])
 </body>
 </html>
 

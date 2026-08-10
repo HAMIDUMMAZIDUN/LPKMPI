@@ -45,6 +45,20 @@ class AsesorController extends Controller
         return view('dashboard.asesor', compact('schemes', 'attempts', 'schedules', 'programs'));
     }
 
+    /** Live stats JSON – polled every 30 s by the dashboard */
+    public function stats()
+    {
+        $this->checkRole();
+        $mySchemes = AssessmentScheme::where('asesor_id', auth()->id());
+        return response()->json([
+            'schemes'    => $mySchemes->count(),
+            'published'  => $mySchemes->clone()->where('status', 'published')->count(),
+            'schedules'  => ClassSchedule::where('asesor_id', auth()->id())->count(),
+            'attempts'   => AsesiSchemeAttempt::whereIn('scheme_id', AssessmentScheme::where('asesor_id', auth()->id())->pluck('id'))->count(),
+            'ts'         => now()->toDateTimeString(),
+        ]);
+    }
+
     /** Simpan skema baru */
     public function storeScheme(Request $request)
     {

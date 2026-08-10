@@ -201,6 +201,33 @@
                     </div>
                 </div>
 
+                <!-- Live Stats Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">📋</div>
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Skema Sertifikasi Aktif</div>
+                            <div id="stat-schemes" class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ $schemes->count() }}</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 flex items-center justify-center text-2xl">✍️</div>
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Ujian Diikuti</div>
+                            <div id="stat-attempts" class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ $attempts->count() }}</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">🎓</div>
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sertifikat Kelulusan</div>
+                            <div id="stat-lulus" class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ $enrollments->where('status', 'LULUS')->count() }}</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                     <!-- Status Card -->
                     <div class="md:col-span-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-sm">
@@ -597,5 +624,14 @@
             });
         });
     </script>
+
+    @include('layouts.partials.live_refresh', [
+        'statsUrl' => route('asesi.stats'),
+        'statMap'  => [
+            'stat-schemes'  => 'schemes',
+            'stat-attempts' => 'attempts',
+            'stat-lulus'    => 'lulus',
+        ]
+    ])
 </body>
 </html>

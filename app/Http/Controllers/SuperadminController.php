@@ -27,6 +27,25 @@ class SuperadminController extends Controller
         return view('dashboard.superadmin', compact('settings', 'admins', 'asesors', 'articles', 'programs', 'trainees'));
     }
 
+    /** Live stats endpoint — polled by the dashboard every 30 s */
+    public function stats()
+    {
+        if (auth()->user()->role !== 'superadmin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        return response()->json([
+            'users'    => \App\Models\User::count(),
+            'admins'   => \App\Models\User::where('role', 'admin')->count(),
+            'asesors'  => \App\Models\User::where('role', 'asesor')->count(),
+            'trainees' => \App\Models\TraineeEnrollment::count(),
+            'lulus'    => \App\Models\TraineeEnrollment::where('status', 'LULUS')->count(),
+            'pending'  => \App\Models\TraineeEnrollment::where('payment_status', 'PENDING')->count(),
+            'programs' => \App\Models\TrainingProgram::count(),
+            'articles' => \App\Models\Article::count(),
+            'ts'       => now()->toDateTimeString(),
+        ]);
+    }
+
     public function storeUser(Request $request)
     {
         if (auth()->user()->role !== 'superadmin') {

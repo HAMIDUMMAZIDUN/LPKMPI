@@ -181,16 +181,16 @@
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center text-2xl">🏫</div>
                         <div>
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Kelas Aktif</div>
-                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">4 Kelas</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Program Pelatihan</div>
+                            <div id="stat-programs" class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ \App\Models\TrainingProgram::count() }} Program</div>
                         </div>
                     </div>
 
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 flex items-center justify-center text-2xl">✍️</div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 flex items-center justify-center text-2xl">📅</div>
                         <div>
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tugas Menunggu Penilaian</div>
-                            <div class="text-2xl font-black text-slate-800 dark:text-white mt-1">12 Tugas</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Jadwal Mengajar Terdaftar</div>
+                            <div id="stat-schedules" class="text-2xl font-black text-slate-800 dark:text-white mt-1">{{ \App\Models\ClassSchedule::count() }} Sesi</div>
                         </div>
                     </div>
                 </div>
@@ -399,5 +399,13 @@
             }
         });
     </script>
+
+    @include('layouts.partials.live_refresh', [
+        'statsUrl' => route('instruktur.stats'),
+        'statMap'  => [
+            'stat-programs'  => 'programs',
+            'stat-schedules' => 'schedules',
+        ]
+    ])
 </body>
 </html>

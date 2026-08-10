@@ -235,11 +235,11 @@
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Ringkasan Evaluasi CBT</h3>
                         <div class="grid grid-cols-2 gap-4 text-center">
                             <div class="bg-white dark:bg-slate-950/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                                <div class="text-2xl font-black text-slate-800 dark:text-white">{{ $schemes->count() }}</div>
+                                <div id="stat-schemes" class="text-2xl font-black text-slate-800 dark:text-white">{{ $schemes->count() }}</div>
                                 <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Skema Dibuat</div>
                             </div>
                             <div class="bg-white dark:bg-slate-950/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
-                                <div class="text-2xl font-black text-slate-800 dark:text-white">{{ $attempts->count() }}</div>
+                                <div id="stat-attempts" class="text-2xl font-black text-slate-800 dark:text-white">{{ $attempts->count() }}</div>
                                 <div class="text-[9px] text-slate-400 font-bold uppercase mt-1">Ujian Selesai</div>
                             </div>
                         </div>
@@ -682,6 +682,14 @@
             }
         });
     </script>
+
+    @include('layouts.partials.live_refresh', [
+        'statsUrl' => route('asesor.stats'),
+        'statMap'  => [
+            'stat-schemes'  => 'schemes',
+            'stat-attempts' => 'attempts',
+        ]
+    ])
 </body>
 </html>
 

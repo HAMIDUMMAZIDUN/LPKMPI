@@ -49,6 +49,22 @@ class AsesiController extends Controller
         return view('dashboard.asesi', compact('schemes', 'attempts', 'enrollments', 'schedules'));
     }
 
+    /** Live stats JSON – polled every 30 s by the dashboard */
+    public function stats()
+    {
+        $this->checkRole();
+        $email = auth()->user()->email;
+        $myAttempts = AsesiSchemeAttempt::where('asesi_id', auth()->id());
+        return response()->json([
+            'enrollments' => \App\Models\TraineeEnrollment::where('email', $email)->count(),
+            'lulus'       => \App\Models\TraineeEnrollment::where('email', $email)->where('status', 'LULUS')->count(),
+            'schemes'     => AssessmentScheme::where('status', 'published')->count(),
+            'attempts'    => $myAttempts->count(),
+            'completed'   => $myAttempts->clone()->where('status', 'completed')->count(),
+            'ts'          => now()->toDateTimeString(),
+        ]);
+    }
+
     /** Mulai mengerjakan skema */
     public function startScheme($schemeId)
     {
