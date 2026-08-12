@@ -527,15 +527,6 @@
                 <!-- Program 1: Pelatihan Kompetensi Manajemen Pendidikan -->
                 <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div class="space-y-6">
-                        <!-- Custom illustration -->
-                        <div class="w-full h-32 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-20 h-20">
-                                <rect x="50" y="30" width="100" height="60" rx="6" fill="#155dfc" opacity="0.8"/>
-                                <path d="M70 50H130M70 70H130" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-                                <circle cx="100" cy="60" r="15" fill="#ea580c"/>
-                                <path d="M95 60L98 63L105 56" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
                         <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Pelatihan Kompetensi Manajemen</h3>
                         <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
                             Program pelatihan intensif bagi yayasan, kepala sekolah, madrasah, dan praktisi untuk menguasai perencanaan strategis, kepemimpinan, dan tata kelola modern.
@@ -549,15 +540,6 @@
                 <!-- Program 2: Bimbingan & Pendampingan Sertifikasi Profesi -->
                 <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div class="space-y-6">
-                        <!-- Custom illustration -->
-                        <div class="w-full h-32 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-20 h-20">
-                                <circle cx="100" cy="55" r="30" fill="#155dfc" opacity="0.85"/>
-                                <circle cx="100" cy="55" r="22" fill="#ffffff" opacity="0.2"/>
-                                <path d="M100 40V70M85 55H115" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-                                <polygon points="100,15 108,32 126,35 113,48 116,66 100,57 84,66 87,48 74,35 92,32" fill="#ea580c"/>
-                            </svg>
-                        </div>
                         <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Bimbingan Sertifikasi Profesi</h3>
                         <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
                             Bimbingan teknis dan simulasi bagi asesi untuk mempersiapkan portofolio kompetensi dan uji kelayakan sertifikasi profesi nasional (LSP).
@@ -571,14 +553,6 @@
                 <!-- Program 3: Konsultansi & Penjaminan Mutu Sekolah -->
                 <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div class="space-y-6">
-                        <!-- Custom illustration -->
-                        <div class="w-full h-32 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-20 h-20">
-                                <path d="M100 20L150 45V85L100 105L50 85V45L100 20Z" fill="#155dfc" opacity="0.8"/>
-                                <path d="M100 30L140 50V75L100 92L60 75V50L100 30Z" fill="#ffffff" opacity="0.2"/>
-                                <circle cx="100" cy="60" r="10" fill="#ea580c"/>
-                            </svg>
-                        </div>
                         <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Konsultansi Penjaminan Mutu</h3>
                         <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
                             Pendampingan persiapan akreditasi BAN-PDM, penyusunan kurikulum operasional, evaluasi diri sekolah (EDS), serta pengembangan SPMI.
@@ -592,15 +566,6 @@
                 <!-- Program 4: Pelatihan Teknologi Pembelajaran -->
                 <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
                     <div class="space-y-6">
-                        <!-- Custom illustration -->
-                        <div class="w-full h-32 bg-[#eef2ff] dark:bg-blue-950/15 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 dark:border-blue-900/20">
-                            <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-20 h-20">
-                                <rect x="40" y="30" width="120" height="60" rx="8" fill="#155dfc" opacity="0.8"/>
-                                <rect x="50" y="38" width="100" height="44" rx="4" fill="#ffffff"/>
-                                <circle cx="100" cy="74" r="3" fill="#ea580c"/>
-                                <path d="M80 82L60 90H140L120 82H80Z" fill="#155dfc"/>
-                            </svg>
-                        </div>
                         <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Teknologi &amp; Administrasi Digital</h3>
                         <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
                             Peningkatan kompetensi IT bagi pendidik dan tenaga kependidikan dalam mengelola e-learning, LMS, EMIS/DAPODIK, dan platform digital sekolah.

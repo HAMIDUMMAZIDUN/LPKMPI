@@ -117,9 +117,11 @@
                             <label for="enroll-category" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Kategori Pekerjaan</label>
                             <select id="enroll-category" name="category" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all">
                                 <option value="" disabled selected class="dark:bg-slate-900">Pilih Kategori...</option>
-                                <option value="guru" class="dark:bg-slate-900">Guru Madrasah</option>
-                                <option value="mahasiswa" class="dark:bg-slate-900">Mahasiswa / Dosen</option>
-                                <option value="kerja" class="dark:bg-slate-900">Praktisi / Umum</option>
+                                <option value="pimpinan" class="dark:bg-slate-900">Kepala Sekolah / Madrasah / Pimpinan Lembaga</option>
+                                <option value="pendidik" class="dark:bg-slate-900">Guru / Pendidik / Dosen / Praktisi Pendidikan</option>
+                                <option value="staff" class="dark:bg-slate-900">Tenaga Kependidikan / Staff IT / Administrasi</option>
+                                <option value="yayasan" class="dark:bg-slate-900">Pengurus Yayasan / Komite Lembaga</option>
+                                <option value="umum" class="dark:bg-slate-900">Umum / Profesional / Praktisi Manajemen</option>
                             </select>
                         </div>
                     </div>
@@ -127,11 +129,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-2">
                             <label for="enroll-company" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Nama Instansi / Perusahaan</label>
-                            <input type="text" id="enroll-company" name="company" placeholder="Nama Madrasah / Kampus" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="text" id="enroll-company" name="company" placeholder="Contoh: Yayasan Al-Iman, Madrasah, Kampus, Perusahaan" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                         <div class="flex flex-col gap-2">
                             <label for="enroll-position" class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Jabatan Saat Ini</label>
-                            <input type="text" id="enroll-position" name="position" placeholder="Contoh: Kepala Madrasah / Dosen" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
+                            <input type="text" id="enroll-position" name="position" placeholder="Contoh: Kepala Madrasah, Dosen, Ketua Yayasan, Staff IT" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700">
                         </div>
                     </div>
 

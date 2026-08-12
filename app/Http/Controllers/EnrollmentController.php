@@ -155,6 +155,47 @@ class EnrollmentController extends Controller
             'status' => 'PROSES',
         ]);
 
+        // Create user account if it doesn't exist
+        $user = \App\Models\User::where('email', $request->email)->first();
+        $plainPassword = null;
+        if (!$user) {
+            $plainPassword = 'mpi-' . rand(100000, 999999);
+            $user = \App\Models\User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => \Illuminate\Support\Facades\Hash::make($plainPassword),
+                'password_plain' => $plainPassword,
+                'role' => 'asesi',
+            ]);
+        }
+
+        // Send email with credentials/authentication details
+        try {
+            $loginUrl = route('login');
+            $passwordText = $plainPassword ?? $user->password_plain ?? '(Gunakan password Anda yang sudah terdaftar)';
+            
+            $emailContent = "Selamat! Pendaftaran Anda di LPK MPI telah berhasil.\n\n"
+                . "Detail Pendaftaran:\n"
+                . "- Nama: {$enrollment->name}\n"
+                . "- Program Pelatihan: {$program->title}\n"
+                . "- Biaya Pelatihan: Rp " . number_format($enrollment->payment_amount, 0, ',', '.') . "\n\n"
+                . "Sistem telah membuat/menghubungkan akun Asesi Anda agar dapat masuk ke Dashboard Ujian & LMS:\n"
+                . "- URL Login: {$loginUrl}\n"
+                . "- Username: {$user->username}\n"
+                . "- Email: {$user->email}\n"
+                . "- Password: {$passwordText}\n\n"
+                . "Silakan gunakan kredensial di atas untuk masuk ke akun Anda. Simpan informasi ini secara aman.\n\n"
+                . "Hormat kami,\n"
+                . "Administrasi LPK MPI";
+
+            Mail::raw($emailContent, function ($message) use ($enrollment) {
+                $message->to($enrollment->email)
+                        ->subject("Detail Akun & Pendaftaran LPK MPI - {$enrollment->name}");
+            });
+        } catch (\Exception $e) {
+            logger()->error("Failed to send enrollment authentication email: " . $e->getMessage());
+        }
+
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -167,6 +208,14 @@ class EnrollmentController extends Controller
                     'payment_amount' => $enrollment->payment_amount,
                     'payment_amount_formatted' => 'Rp ' . number_format($enrollment->payment_amount, 0, ',', '.'),
                     'program_title' => $program->title,
+                ],
+                'trainee' => [
+                    'name' => $enrollment->name,
+                    'program' => [
+                        'title' => $program->title,
+                    ],
+                    'cert_number' => $enrollment->certificate_number ?? 'PENDING (Belum Diverifikasi)',
+                    'cert_date' => $enrollment->certificate_date ? $enrollment->certificate_date->format('d M Y') : now()->format('d M Y'),
                 ]
             ]);
         }

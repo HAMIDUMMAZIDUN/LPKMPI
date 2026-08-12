@@ -11,6 +11,7 @@ use App\Models\LandingSetting;
 use App\Models\TrainingProgram;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -169,11 +170,60 @@ class DashboardAdminController extends Controller
             } while (TraineeEnrollment::where('certificate_number', $certNumber)->exists());
             $trainee->update([
                 'certificate_number' => $certNumber,
-                'certificate_date' => now()->toDateString(),
-                'status' => 'LULUS'
+                'certificate_date'   => now()->toDateString(),
+                'status'             => 'LULUS'
             ]);
         }
-        return redirect()->route('admin.dashboard', ['open' => 'panel-sertifikat'])->with('success', 'Sertifikat ' . $trainee->name . ' berhasil diterbitkan!');
+
+        // Create asesi user account if not already exists
+        $existingUser = User::where('email', $trainee->email)->first();
+        $plainPassword = null;
+        if (!$existingUser) {
+            $plainPassword = 'mpi-' . rand(100000, 999999);
+            $existingUser = User::create([
+                'name'           => $trainee->name,
+                'email'          => $trainee->email,
+                'password'       => Hash::make($plainPassword),
+                'password_plain' => $plainPassword,
+                'role'           => 'asesi',
+            ]);
+        }
+
+        // Send approval & credentials email
+        try {
+            $loginUrl     = route('login');
+            $passwordText = $plainPassword ?? $existingUser->password_plain ?? '(Gunakan password Anda yang sudah terdaftar)';
+            $freshTrainee = $trainee->fresh();
+            $certNum      = $freshTrainee->certificate_number;
+            $certDate     = $freshTrainee->certificate_date
+                                ? $freshTrainee->certificate_date->format('d M Y')
+                                : now()->format('d M Y');
+
+            $emailContent = "Selamat! Pendaftaran Anda di LPK MPI telah DISETUJUI dan sertifikat Anda telah diterbitkan.\n\n"
+                . "Detail Sertifikat:\n"
+                . "- Nama Peserta   : {$trainee->name}\n"
+                . "- No. Sertifikat : {$certNum}\n"
+                . "- Tanggal        : {$certDate}\n\n"
+                . "Akun Login Dashboard LPK MPI Anda:\n"
+                . "- URL Login  : {$loginUrl}\n"
+                . "- Username   : {$existingUser->username}\n"
+                . "- Email      : {$existingUser->email}\n"
+                . "- Password   : {$passwordText}\n\n"
+                . "Silakan login dengan kredensial di atas untuk melihat sertifikat dan mengikuti ujian kompetensi.\n"
+                . "Simpan informasi ini di tempat yang aman.\n\n"
+                . "Hormat kami,\n"
+                . "Admin LPK MPI";
+
+            Mail::raw($emailContent, function ($message) use ($trainee, $certNum) {
+                $message->to($trainee->email)
+                        ->subject("Selamat! Sertifikat LPK MPI Anda [{$certNum}] Telah Diterbitkan");
+            });
+        } catch (\Exception $e) {
+            logger()->error('Failed to send admin approval email: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.dashboard', ['open' => 'panel-sertifikat'])
+            ->with('success', 'Sertifikat ' . $trainee->name . ' berhasil diterbitkan & email notifikasi dikirim!');
     }
 
     public function updateProfile(Request $request)

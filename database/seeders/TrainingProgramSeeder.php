@@ -15,43 +15,43 @@ class TrainingProgramSeeder extends Seeder
         $programs = [
             [
                 'id' => 'mi_prog',
-                'title' => 'Pelatihan Kepemimpinan Kepala Madrasah Ibtidaiyah (MI)',
-                'category' => 'Kategori Madrasah',
+                'title' => 'Pelatihan Kompetensi Manajemen',
+                'category' => 'Pelatihan',
                 'duration' => '40 Jam Pelajaran (JP)',
-                'description' => 'Mempersiapkan kompetensi pedagogik, kepribadian, sosial, dan manajerial calon kepala madrasah tingkat Ibtidaiyah sesuai standar kelayakan sertifikasi LSP-MPI.',
+                'description' => 'Program pelatihan intensif bagi yayasan, kepala sekolah, madrasah, dan praktisi untuk menguasai perencanaan strategis, kepemimpinan, dan tata kelola modern.',
                 'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Simulasi Soal Uji Kompetensi', 'Bimbingan Portofolio'],
                 'price' => 'Rp 1.500.000',
-                'lsp_keyword' => 'Ibtidaiyah'
+                'lsp_keyword' => 'Manajemen'
             ],
             [
                 'id' => 'mts_prog',
-                'title' => 'Pelatihan Kepemimpinan Kepala Madrasah Tsanawiyah (MTs)',
-                'category' => 'Kategori Madrasah',
+                'title' => 'Teknologi & Administrasi Digital',
+                'category' => 'Pelatihan',
                 'duration' => '48 Jam Pelajaran (JP)',
-                'description' => 'Pelatihan tingkat lanjut bagi guru dan waka madrasah untuk meningkatkan keterampilan manajemen sekolah, supervisi guru, dan kewirausahaan madrasah.',
+                'description' => 'Peningkatan kompetensi IT bagi pendidik dan tenaga kependidikan dalam mengelola e-learning, LMS, EMIS/DAPODIK, dan platform digital sekolah.',
                 'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Akses LMS 30 Hari', 'Modul Digital Lengkap'],
                 'price' => 'Rp 1.750.000',
-                'lsp_keyword' => 'Tsanawiyah'
+                'lsp_keyword' => 'Teknologi'
             ],
             [
                 'id' => 'ma_prog',
-                'title' => 'Pelatihan Kepemimpinan Kepala Madrasah Aliyah (MA)',
-                'category' => 'Kategori Madrasah',
+                'title' => 'Bimbingan Sertifikasi Profesi',
+                'category' => 'Sertifikasi',
                 'duration' => '50 Jam Pelajaran (JP)',
-                'description' => 'Menghasilkan pemimpin madrasah aliyah yang berdaya saing global, menguasai TI pendidikan, tata kelola kurikulum merdeka, dan standarisasi akreditasi nasional.',
+                'description' => 'Bimbingan teknis dan simulasi bagi asesi untuk mempersiapkan portofolio kompetensi dan uji kelayakan sertifikasi profesi nasional (LSP).',
                 'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Bimbingan Penyusunan DIT', 'Review Portofolio oleh Asesor'],
                 'price' => 'Rp 2.000.000',
-                'lsp_keyword' => 'Aliyah'
+                'lsp_keyword' => 'Sertifikasi'
             ],
             [
                 'id' => 'ptki_prog',
-                'title' => 'Pelatihan Kepemimpinan Pimpinan Perguruan Tinggi Keagamaan Indonesia (PTKI)',
-                'category' => 'Kategori Pendidikan Tinggi',
+                'title' => 'Konsultansi Penjaminan Mutu',
+                'category' => 'Konsultansi',
                 'duration' => '64 Jam Pelajaran (JP)',
-                'description' => 'Dirancang khusus bagi Dosen/Pimpinan PTKI untuk menguasai tata kelola universitas, penjaminan mutu BAN-PT, kepemimpinan transformatif, dan kerja sama akademik.',
+                'description' => 'Pendampingan persiapan akreditasi BAN-PDM, penyusunan kurikulum operasional, evaluasi diri sekolah (EDS), serta pengembangan SPMI.',
                 'benefits' => ['Sertifikat Pelatihan LPK-MPI', 'Studi Kasus Internasional', 'Rekomendasi Akreditasi'],
                 'price' => 'Rp 3.500.000',
-                'lsp_keyword' => 'Perguruan Tinggi'
+                'lsp_keyword' => 'Mutu'
             ]
         ];
 
