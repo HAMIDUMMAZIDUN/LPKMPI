@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Superadmin — LPK MPI</title>
+    @php
+        $siteLogo = \App\Models\LandingSetting::getValue('site_logo');
+        $siteName = \App\Models\LandingSetting::getValue('site_name') ?? 'LPK MPI';
+    @endphp
+    @if($siteLogo)
+        <link rel="icon" type="image/{{ pathinfo($siteLogo, PATHINFO_EXTENSION) === 'svg' ? 'svg+xml' : 'png' }}" href="{{ asset('storage/' . $siteLogo) }}?v={{ file_exists(public_path('storage/' . $siteLogo)) ? filemtime(public_path('storage/' . $siteLogo)) : time() }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -51,6 +60,38 @@
             width: 280px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .content-wrapper {
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 1025px) {
+            #sa-sidebar {
+                width: 70px;
+                overflow-x: hidden;
+            }
+            #sa-sidebar:hover {
+                width: 280px;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            #sa-sidebar:hover ~ .content-wrapper {
+                padding-left: 280px !important;
+            }
+            /* Hide text elements when collapsed */
+            #sa-sidebar:not(:hover) .px-6 div > div:last-child,
+            #sa-sidebar:not(:hover) nav button:not(.accordion-trigger) > span,
+            #sa-sidebar:not(:hover) nav button.accordion-trigger span.flex > span:last-child,
+            #sa-sidebar:not(:hover) .accordion-arrow,
+            #sa-sidebar:not(:hover) .accordion-content,
+            #sa-sidebar:not(:hover) .p-4 button > span:last-child,
+            #sa-sidebar:not(:hover) .p-4 a > span:last-child {
+                opacity: 0 !important;
+                width: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
+                display: none !important;
+                pointer-events: none;
+            }
+        }
         @media (max-width: 1024px) {
             #sa-sidebar {
                 transform: translateX(-100%);
@@ -61,19 +102,22 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
     <aside id="sa-sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div class="flex flex-col">
-            <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
-                        ⚡
-                    </div>
+                    @if($siteLogo)
+                        <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
+                    @else
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
+                            ⚡
+                        </div>
+                    @endif
                     <div>
-                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LPK MPI</div>
+                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">{{ $siteName }}</div>
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Super Admin</div>
                     </div>
                 </div>
@@ -221,7 +265,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden lg:pl-[280px]">
+    <div class="content-wrapper flex-1 flex flex-col min-w-0 overflow-x-hidden overflow-y-auto lg:pl-[70px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -260,6 +304,20 @@
                 <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-sm flex items-center gap-3 shadow-sm animate-fade-in">
                     <span>✗</span>
                     <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-sm space-y-1 shadow-sm animate-fade-in">
+                    <div class="font-extrabold flex items-center gap-2">
+                        <span>✗</span>
+                        <span>Terjadi Kesalahan Input:</span>
+                    </div>
+                    <ul class="list-disc list-inside text-xs font-semibold pl-4">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -696,40 +754,48 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-program">
-                    @foreach([
-                        ['key'=>'manajemen','label'=>'Program Manajemen Yayasan/Pesantren'],
-                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Indonesia'],
-                        ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
-                    ] as $prog)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
+                    @php
+                        $cmsProgKeysStr = $settings['cms_program_keys'] ?? 'manajemen,administrasi,kepemimpinan';
+                        $cmsProgKeys = array_filter(explode(',', $cmsProgKeysStr));
+                    @endphp
+                    @foreach($cmsProgKeys as $pKey)
+                        @php
+                            $pTitle = $settings['prog_'.$pKey.'_title'] ?? ('Program ' . ucfirst($pKey));
+                        @endphp
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm relative">
+                            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
+                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">{{ $pTitle }}</h3>
+                                <button type="button" data-url="{{ route('superadmin.settings.update') }}" onclick="confirmDeleteCmsItem('program', '{{ $pKey }}', '{{ $pTitle }}', this.dataset.url)" class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border border-rose-100 dark:border-rose-900/40 px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition flex items-center gap-1.5">
+                                    🗑️ Hapus Program
+                                </button>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
-                                    <input type="text" name="prog_{{ $prog['key'] }}_title" value="{{ $settings['prog_'.$prog['key'].'_title'] ?? $prog['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="prog_{{ $pKey }}_title" value="{{ $settings['prog_'.$pKey.'_title'] ?? $pTitle }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div class="grid grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
-                                        <input type="text" name="prog_{{ $prog['key'] }}_durasi" value="{{ $settings['prog_'.$prog['key'].'_durasi'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                        <input type="text" name="prog_{{ $pKey }}_durasi" value="{{ $settings['prog_'.$pKey.'_durasi'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
-                                        <input type="text" name="prog_{{ $prog['key'] }}_harga" value="{{ $settings['prog_'.$prog['key'].'_harga'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                        <input type="text" name="prog_{{ $pKey }}_harga" value="{{ $settings['prog_'.$pKey.'_harga'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
-                                <textarea name="prog_{{ $prog['key'] }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_desc'] ?? '' }}</textarea>
+                                <textarea name="prog_{{ $pKey }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$pKey.'_desc'] ?? '' }}</textarea>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi Silabus</label>
-                                <textarea name="prog_{{ $prog['key'] }}_silabus" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_silabus'] ?? '' }}</textarea>
+                                <textarea name="prog_{{ $pKey }}_silabus" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$pKey.'_silabus'] ?? '' }}</textarea>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Prospek Karir / Output</label>
-                                <textarea name="prog_{{ $prog['key'] }}_prospek" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_prospek'] ?? '' }}</textarea>
+                                <textarea name="prog_{{ $pKey }}_prospek" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$pKey.'_prospek'] ?? '' }}</textarea>
                             </div>
                         </div>
                     @endforeach
@@ -737,6 +803,40 @@
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Program Pelatihan</button>
                     </div>
                 </form>
+
+                <!-- ADD PROGRAM CARD -->
+                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        ➕ Tambah Program Pelatihan Baru
+                    </h3>
+                    <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="active_panel" value="panel-program">
+                        <input type="hidden" name="add_cms_type" value="program">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program Baru</label>
+                                <input type="text" name="new_title" required placeholder="Contoh: Bimbingan Kelas Kreatif" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
+                                    <input type="text" name="new_durasi" placeholder="Contoh: 1 Bulan" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
+                                    <input type="text" name="new_harga" placeholder="Contoh: Rp 1.500.000" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 font-bold">
+                                + Tambah Program
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- PANEL: JADWAL DIKLAT -->
@@ -748,39 +848,93 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-jadwal">
-                    @for($i = 1; $i <= 3; $i++)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
+                    @php
+                        $cmsJadwalKeysStr = $settings['cms_jadwal_keys'] ?? '1,2,3';
+                        $cmsJadwalKeys = array_filter(explode(',', $cmsJadwalKeysStr));
+                    @endphp
+                    @foreach($cmsJadwalKeys as $jKey)
+                        @php
+                            $jName = $settings['jadwal_'.$jKey.'_nama'] ?? ('Jadwal #' . $jKey);
+                        @endphp
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm relative">
+                            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
+                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">{{ $jName }}</h3>
+                                <button type="button" data-url="{{ route('superadmin.settings.update') }}" onclick="confirmDeleteCmsItem('jadwal', '{{ $jKey }}', '{{ $jName }}', this.dataset.url)" class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border border-rose-100 dark:border-rose-900/40 px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition flex items-center gap-1.5">
+                                    🗑️ Hapus Jadwal
+                                </button>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
-                                    <input type="text" name="jadwal_{{ $i }}_nama" value="{{ $settings['jadwal_'.$i.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_nama" value="{{ $settings['jadwal_'.$jKey.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Batas Pendaftaran</label>
-                                    <input type="text" name="jadwal_{{ $i }}_batas" value="{{ $settings['jadwal_'.$i.'_batas'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_batas" value="{{ $settings['jadwal_'.$jKey.'_batas'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Waktu Pelaksanaan</label>
-                                    <input type="text" name="jadwal_{{ $i }}_waktu" value="{{ $settings['jadwal_'.$i.'_waktu'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_waktu" value="{{ $settings['jadwal_'.$jKey.'_waktu'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Metode Pelaksanaan</label>
-                                    <input type="text" name="jadwal_{{ $i }}_metode" value="{{ $settings['jadwal_'.$i.'_metode'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_metode" value="{{ $settings['jadwal_'.$jKey.'_metode'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Kuota / Batas</label>
-                                    <input type="text" name="jadwal_{{ $i }}_quota" value="{{ $settings['jadwal_'.$i.'_quota'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_quota" value="{{ $settings['jadwal_'.$jKey.'_quota'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Jadwal Diklat</button>
                     </div>
                 </form>
+
+                <!-- ADD SCHEDULE CARD -->
+                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        ➕ Tambah Jadwal Pelatihan Baru
+                    </h3>
+                    <form action="{{ route('superadmin.settings.update') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="active_panel" value="panel-jadwal">
+                        <input type="hidden" name="add_cms_type" value="jadwal">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
+                                <input type="text" name="new_nama" required placeholder="Contoh: Diklat Guru Kompeten" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Batas Pendaftaran</label>
+                                <input type="text" name="new_batas" placeholder="Contoh: 20 September 2026" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Waktu Pelaksanaan</label>
+                                <input type="text" name="new_waktu" placeholder="Contoh: Setiap Sabtu & Minggu" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Metode Pelaksanaan</label>
+                                <input type="text" name="new_metode" placeholder="Contoh: Blended Learning" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Kuota / Batas</label>
+                                <input type="text" name="new_quota" placeholder="Contoh: Terbatas (Sisa 5)" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 font-bold">
+                                + Tambah Jadwal
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- PANEL: INSTRUKTUR -->
@@ -847,27 +1001,35 @@
                 <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-fasilitas">
-                    @foreach([
-                        ['key'=>'belajar','label'=>'Ruang Belajar'],
-                        ['key'=>'perpustakaan','label'=>'Perpustakaan'],
-                        ['key'=>'asrama','label'=>'Asrama / Penginapan'],
-                    ] as $fas)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
+                    @php
+                        $cmsFasilitasKeysStr = $settings['cms_fasilitas_keys'] ?? 'belajar,perpustakaan,asrama';
+                        $cmsFasilitasKeys = array_filter(explode(',', $cmsFasilitasKeysStr));
+                    @endphp
+                    @foreach($cmsFasilitasKeys as $fKey)
+                        @php
+                            $fTitle = $settings['fasilitas_'.$fKey.'_judul'] ?? ('Fasilitas ' . ucfirst($fKey));
+                        @endphp
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm relative">
+                            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
+                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">{{ $fTitle }}</h3>
+                                <button type="button" data-url="{{ route('superadmin.settings.update') }}" onclick="confirmDeleteCmsItem('fasilitas', '{{ $fKey }}', '{{ $fTitle }}', this.dataset.url)" class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border border-rose-100 dark:border-rose-900/40 px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition flex items-center gap-1.5">
+                                    🗑️ Hapus Fasilitas
+                                </button>
+                            </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Fasilitas</label>
-                                <input type="text" name="fasilitas_{{ $fas['key'] }}_judul" value="{{ $settings['fasilitas_'.$fas['key'].'_judul'] ?? $fas['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                <input type="text" name="fasilitas_{{ $fKey }}_judul" value="{{ $settings['fasilitas_'.$fKey.'_judul'] ?? $fTitle }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
-                                <textarea name="fasilitas_{{ $fas['key'] }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['fasilitas_'.$fas['key'].'_desc'] ?? '' }}</textarea>
+                                <textarea name="fasilitas_{{ $fKey }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['fasilitas_'.$fKey.'_desc'] ?? '' }}</textarea>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto</label>
-                                @if(!empty($settings['fasilitas_'.$fas['key'].'_foto']))
-                                    <img src="{{ asset('storage/' . $settings['fasilitas_'.$fas['key'].'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
+                                @if(!empty($settings['fasilitas_'.$fKey.'_foto']))
+                                    <img src="{{ asset('storage/' . $settings['fasilitas_'.$fKey.'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                                 @endif
-                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <input type="file" name="fasilitas_{{ $fKey }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                             </div>
                         </div>
                     @endforeach
@@ -875,6 +1037,36 @@
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Fasilitas</button>
                     </div>
                 </form>
+
+                <!-- ADD FACILITIES CARD -->
+                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        ➕ Tambah Fasilitas Baru
+                    </h3>
+                    <form action="{{ route('superadmin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="active_panel" value="panel-fasilitas">
+                        <input type="hidden" name="add_cms_type" value="fasilitas">
+                        
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama / Judul Fasilitas Baru</label>
+                            <input type="text" name="new_judul" required placeholder="Contoh: Laboratorium Komputer Modern" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi Singkat</label>
+                            <textarea name="new_desc" rows="3" placeholder="Deskripsikan fasilitas baru..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none font-semibold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Fasilitas</label>
+                            <input type="file" name="new_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 font-bold">
+                                + Tambah Fasilitas
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- PANEL: FAQ -->
@@ -1475,7 +1667,13 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            <!-- Hidden Delete Form for CMS Items -->
+            <form id="delete-cms-item-form" action="" method="POST" style="display: none;">
+                @csrf
+                <input type="hidden" name="active_panel" id="delete-cms-active-panel">
+                <input type="hidden" name="delete_cms_type" id="delete-cms-type">
+                <input type="hidden" name="delete_cms_key" id="delete-cms-key">
+            </form>
 
         </main>
     </div>
@@ -1488,6 +1686,20 @@
             'panel-jadwal', 'panel-instruktur-landing', 'panel-fasilitas', 'panel-faq', 'panel-articles', 
             'panel-kontak', 'panel-preview', 'panel-users', 'panel-profile', 'panel-programs-db', 'panel-trainees-db'
         ];
+
+        // CMS Delete Helper
+        function confirmDeleteCmsItem(type, key, name, actionUrl) {
+            if (confirm('Apakah Anda yakin ingin menghapus ' + type + ' "' + name + '" dari CMS?')) {
+                const form = document.getElementById('delete-cms-item-form');
+                const activePanel = type === 'program' ? 'panel-program' : (type === 'jadwal' ? 'panel-jadwal' : 'panel-fasilitas');
+                
+                form.action = actionUrl;
+                document.getElementById('delete-cms-active-panel').value = activePanel;
+                document.getElementById('delete-cms-type').value = type;
+                document.getElementById('delete-cms-key').value = key;
+                form.submit();
+            }
+        }
 
         // Program DB panel helpers
         function toggleAddProgramForm() {
@@ -1735,7 +1947,41 @@
             });
         }
 
+        function updateDocumentTitle(panelId) {
+            const rawId = panelId.replace('panel-', '');
+            let sectionTitle = "";
+            switch(rawId) {
+                case 'dasbor': sectionTitle = "Dasbor Utama"; break;
+                case 'identity': sectionTitle = "Identitas Lembaga"; break;
+                case 'login-branding': sectionTitle = "Branding Login"; break;
+                case 'hero': sectionTitle = "Banner Hero"; break;
+                case 'stats': sectionTitle = "Statistik Sukses"; break;
+                case 'steps': sectionTitle = "Alur Pendaftaran"; break;
+                case 'features': sectionTitle = "Fitur Utama"; break;
+                case 'gallery': sectionTitle = "Galeri Kegiatan"; break;
+                case 'tentang': sectionTitle = "Tentang LPK"; break;
+                case 'program': sectionTitle = "Program Utama"; break;
+                case 'jadwal': sectionTitle = "Jadwal Landing"; break;
+                case 'instruktur-landing': sectionTitle = "Instruktur Landing"; break;
+                case 'fasilitas': sectionTitle = "Fasilitas Landing"; break;
+                case 'faq': sectionTitle = "FAQ Landing"; break;
+                case 'articles': sectionTitle = "Artikel Landing"; break;
+                case 'kontak': sectionTitle = "Hubungi Kami"; break;
+                case 'preview': sectionTitle = "Preview Landing"; break;
+                case 'users': sectionTitle = "Kelola Akun"; break;
+                case 'profile': sectionTitle = "Profil Superadmin"; break;
+                case 'programs-db': sectionTitle = "Database Program"; break;
+                case 'trainees-db': sectionTitle = "Database Pendaftaran"; break;
+                default: sectionTitle = "Dasbor";
+            }
+            const siteName = "{{ $siteName }}";
+            document.title = `${sectionTitle} — Superadmin — ${siteName}`;
+        }
+
         function showPanel(id) {
+            if (!id.startsWith('panel-')) {
+                id = 'panel-' + id;
+            }
             panels.forEach(p => {
                 const el = document.getElementById(p);
                 if (el) el.classList.add('hidden');
@@ -1757,6 +2003,8 @@
             }
 
             localStorage.setItem('superadmin_active_panel', id);
+            
+            updateDocumentTitle(id);
 
             if (window.innerWidth < 1024) {
                 document.getElementById('sa-sidebar').classList.remove('open');
@@ -1858,7 +2106,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const openPanel = urlParams.get('open') || localStorage.getItem('superadmin_active_panel') || 'panel-dasbor';
+            const openPanel = urlParams.get('open') || 'panel-dasbor';
             showPanel(openPanel);
             updateThemeUI();
 

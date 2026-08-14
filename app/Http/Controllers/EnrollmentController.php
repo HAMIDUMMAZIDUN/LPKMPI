@@ -70,14 +70,12 @@ class EnrollmentController extends Controller
             'category' => 'required|string',
             'company' => 'required|string|max:255',
             'position' => 'required|string|max:255',
-            'otp_code' => 'required',
             'ktp' => 'required|file|image|max:2048',
             'ijazah' => 'required|file|image|max:2048',
         ];
 
         $messages = [
             'email.regex' => 'Alamat email harus menggunakan domain @gmail.com.',
-            'otp_code.required' => 'Kode verifikasi email wajib diisi.',
             'ktp.required' => 'File KTP wajib diunggah.',
             'ktp.image' => 'File KTP harus berupa gambar (jpg, jpeg, png).',
             'ktp.max' => 'Ukuran file KTP maksimal 2MB.',
@@ -88,14 +86,6 @@ class EnrollmentController extends Controller
 
         if ($request->ajax() || $request->wantsJson()) {
             $validator = Validator::make($request->all(), $rules, $messages);
-            $validator->after(function ($validator) use ($request) {
-                $email = $request->email;
-                if (!$email) return;
-                $sessionOtp = session()->get("otp_{$email}");
-                if (!$sessionOtp || $sessionOtp['code'] != $request->otp_code || now()->greaterThan($sessionOtp['expires_at'])) {
-                    $validator->errors()->add('otp_code', 'Kode verifikasi salah atau telah kedaluwarsa.');
-                }
-            });
 
             if ($validator->fails()) {
                 return response()->json([
@@ -104,19 +94,8 @@ class EnrollmentController extends Controller
             }
         } else {
             $validator = Validator::make($request->all(), $rules, $messages);
-            $validator->after(function ($validator) use ($request) {
-                $email = $request->email;
-                if (!$email) return;
-                $sessionOtp = session()->get("otp_{$email}");
-                if (!$sessionOtp || $sessionOtp['code'] != $request->otp_code || now()->greaterThan($sessionOtp['expires_at'])) {
-                    $validator->errors()->add('otp_code', 'Kode verifikasi salah atau telah kedaluwarsa.');
-                }
-            });
             $validator->validate();
         }
-
-        // Clear OTP from session upon successful validation
-        session()->forget("otp_{$request->email}");
 
         // Store file uploads
         $ktpPath = null;

@@ -72,10 +72,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/admin/assign-scheme', [DashboardAdminController::class, 'assignScheme'])->name('admin.scheme.assign');
     Route::delete('/dashboard/admin/assignment/{id}', [DashboardAdminController::class, 'revokeAssignment'])->name('admin.scheme.revoke');
     Route::post('/dashboard/admin/profile', [DashboardAdminController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::post('/dashboard/admin/trainees/bulk-verify', [DashboardAdminController::class, 'bulkVerifyPayment'])->name('admin.trainees.bulk-verify');
+    Route::delete('/dashboard/admin/trainees/bulk-delete', [DashboardAdminController::class, 'bulkDestroyTrainees'])->name('admin.trainees.bulk-delete');
     Route::post('/dashboard/admin/trainees/{id}/approve', [DashboardAdminController::class, 'approveTrainee'])->name('admin.trainees.approve');
     Route::post('/dashboard/admin/trainees/{id}/verify-payment', [DashboardAdminController::class, 'verifyPayment'])->name('admin.trainees.verify-payment');
     Route::put('/dashboard/admin/trainees/{id}', [DashboardAdminController::class, 'updateTrainee'])->name('admin.trainees.update');
     Route::delete('/dashboard/admin/trainees/{id}', [DashboardAdminController::class, 'destroyTrainee'])->name('admin.trainees.destroy');
+    Route::post('/dashboard/admin/trainees/{id}/send-schedule', [DashboardAdminController::class, 'sendScheduleEmail'])->name('admin.trainees.send-schedule');
     Route::post('/dashboard/admin/articles', [DashboardAdminController::class, 'storeArticle'])->name('admin.articles.store');
     Route::put('/dashboard/admin/articles/{id}', [DashboardAdminController::class, 'updateArticle'])->name('admin.articles.update');
     Route::delete('/dashboard/admin/articles/{id}', [DashboardAdminController::class, 'destroyArticle'])->name('admin.articles.destroy');
@@ -123,7 +126,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.legacy.dashboard');
     Route::post('/admin/seed', [AdminController::class, 'seed'])->name('admin.seed');
     Route::post('/admin/reset', [AdminController::class, 'reset'])->name('admin.reset');
-    Route::post('/admin/settings', [AdminController::class, 'updateSettings'])->name('admin.settings.update');
+    Route::post('/admin/settings', [AdminController::class, 'updateSettings'])->name('admin.legacy.settings.update');
     Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
     Route::post('/admin/users', [AdminController::class, 'storeAdmin'])->name('admin.users.store');
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroyAdmin'])->name('admin.users.destroy');

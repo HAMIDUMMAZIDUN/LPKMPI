@@ -11,13 +11,36 @@
             default      => route('home'),
         };
     }
+
+    $siteLogo = \App\Models\LandingSetting::getValue('site_logo');
+    $siteTitle = \App\Models\LandingSetting::getValue('site_title', 'LPK MPI');
+
+    $routeTitle = match(true) {
+        Request::routeIs('home') => 'Beranda',
+        Request::routeIs('pendaftaran') => 'Pendaftaran Pelatihan',
+        Request::routeIs('login') => 'Masuk Akun',
+        Request::routeIs('register') => 'Daftar Akun',
+        Request::routeIs('password.*') => 'Reset Password',
+        Request::routeIs('*dashboard*') => 'Dashboard System',
+        default => null
+    };
+
+    $pageTitle = $routeTitle 
+        ? "$routeTitle | $siteTitle - LPK Manajemen Pendidikan Indonesia" 
+        : "$siteTitle | LPK Manajemen Pendidikan Indonesia – Lembaga Pendidikan Kerja";
 @endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ \App\Models\LandingSetting::getValue('site_title', 'LPK MPI') }} | LPK Manajemen Pendidikan Indonesia – Lembaga Pendidikan Kerja</title>
+    <title>{{ $pageTitle }}</title>
+    
+    @if($siteLogo)
+        <link rel="icon" type="image/{{ pathinfo($siteLogo, PATHINFO_EXTENSION) === 'svg' ? 'svg+xml' : 'png' }}" href="{{ asset('storage/' . $siteLogo) }}?v={{ file_exists(public_path('storage/' . $siteLogo)) ? filemtime(public_path('storage/' . $siteLogo)) : time() }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    @endif
     <!-- CSRF Token for JavaScript AJAX submissions -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
@@ -426,6 +449,28 @@
             apiHits: 0
         };
 
+        const baseTitle = "{{ \App\Models\LandingSetting::getValue('site_title', 'LPK MPI') }} - LPK Manajemen Pendidikan Indonesia";
+        const tabTitles = {
+            'beranda': 'Beranda',
+            'tentang': 'Profil Lembaga',
+            'program': 'Program Pelatihan',
+            'instruktur': 'Fasilitator & Instruktur',
+            'fasilitas': 'Sarana & Fasilitas',
+            'berita': 'Berita & Media',
+            'alumni': 'Testimoni & Alumni',
+            'pendaftaran': 'Pendaftaran',
+            'kontak': 'Kontak Kami',
+            'scan-qr': 'Verifikasi QR',
+            'faq': 'FAQ',
+            'admin-panel': 'Admin Panel'
+        };
+
+        function updateDocumentTitle(tabId) {
+            if (!document.getElementById('sec-beranda')) return;
+            const pageName = tabTitles[tabId] || 'Beranda';
+            document.title = `${pageName} | ${baseTitle}`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initApp();
         });
@@ -439,6 +484,9 @@
             if (document.getElementById('admin-stat-total')) {
                 await refreshStats();
             }
+
+            // Set initial document title based on state
+            updateDocumentTitle(STATE.currentTab);
 
             // Explore program CTA
             const exploreBtn = document.getElementById('explore-programs-btn');
@@ -616,6 +664,7 @@
                         if (scrollPosition >= top && scrollPosition < top + height) {
                             setActiveNavbarLink(secId);
                             STATE.currentTab = secId;
+                            updateDocumentTitle(secId);
                             break;
                         }
                     }
@@ -715,6 +764,7 @@
             
             // Update active nav styling
             setActiveNavbarLink(tabId);
+            updateDocumentTitle(tabId);
         }
 
         // Called from Program Cards

@@ -21,10 +21,27 @@ class InstrukturController extends Controller
      */
     public function index()
     {
-        // Jika perlu passing data, bisa dilakukan di sini
-        return view('dashboard.instruktur', [
-            'user' => Auth::user(),
-        ]);
+        $user = Auth::user();
+
+        // Jadwal mengajar instruktur ini (asesor_id = instruktur user id)
+        $schedules = \App\Models\ClassSchedule::where('asesor_id', $user->id)
+            ->with('trainingProgram')
+            ->orderBy('scheduled_at')
+            ->get();
+
+        // Jadwal terdekat yang belum lewat
+        $nextSchedule = $schedules->where('scheduled_at', '>=', now())->first();
+
+        // Semua program pelatihan
+        $programs = \App\Models\TrainingProgram::latest()->get();
+
+        // Attempt asesi yang perlu dievaluasi (untuk skema dari asesor ini)
+        $attempts = \App\Models\AsesiSchemeAttempt::whereHas('scheme', fn($q) => $q->where('asesor_id', $user->id))
+            ->with(['asesi', 'scheme'])
+            ->latest()
+            ->get();
+
+        return view('dashboard.instruktur', compact('user', 'schedules', 'nextSchedule', 'programs', 'attempts'));
     }
 
     /** Live stats JSON – polled every 30 s by the dashboard */

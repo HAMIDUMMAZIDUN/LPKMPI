@@ -28,7 +28,7 @@
      title="Live refresh aktif — data diperbarui otomatis setiap {{ $intervalSec }} detik"
      style="
         position:fixed;bottom:24px;left:80px;z-index:9990;
-        display:flex;align-items:center;gap:6px;
+        display:none;align-items:center;gap:6px;
         background:rgba(15,23,42,.85);backdrop-filter:blur(8px);
         border:1px solid rgba(255,255,255,.08);border-radius:999px;
         padding:5px 12px;cursor:default;user-select:none;

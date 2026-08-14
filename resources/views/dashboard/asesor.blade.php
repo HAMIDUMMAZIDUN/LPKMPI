@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Asesor — LPK MPI</title>
+    @php
+        $siteLogo = \App\Models\LandingSetting::getValue('site_logo');
+        $siteName = \App\Models\LandingSetting::getValue('site_name') ?? 'LPK MPI';
+    @endphp
+    @if($siteLogo)
+        <link rel="icon" type="image/{{ pathinfo($siteLogo, PATHINFO_EXTENSION) === 'svg' ? 'svg+xml' : 'png' }}" href="{{ asset('storage/' . $siteLogo) }}?v={{ file_exists(public_path('storage/' . $siteLogo)) ? filemtime(public_path('storage/' . $siteLogo)) : time() }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -51,6 +60,38 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .content-wrapper {
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 769px) {
+            #sidebar {
+                width: 70px;
+                overflow-x: hidden;
+            }
+            #sidebar:hover {
+                width: 260px;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            #sidebar:hover ~ .content-wrapper {
+                padding-left: 260px !important;
+            }
+            /* Hide text elements when collapsed */
+            #sidebar:not(:hover) .px-6 div > div:last-child,
+            #sidebar:not(:hover) nav button:not(.accordion-trigger) > span,
+            #sidebar:not(:hover) nav button.accordion-trigger span.flex > span:last-child,
+            #sidebar:not(:hover) .accordion-arrow,
+            #sidebar:not(:hover) .accordion-content,
+            #sidebar:not(:hover) .p-4 button > span:last-child,
+            #sidebar:not(:hover) .p-4 a > span:last-child {
+                opacity: 0 !important;
+                width: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
+                display: none !important;
+                pointer-events: none;
+            }
+        }
         @media (max-width: 768px) {
             #sidebar {
                 transform: translateX(-100%);
@@ -61,19 +102,22 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
-            <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
-                        ⚖️
-                    </div>
+                    @if($siteLogo)
+                        <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
+                    @else
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
+                            ⚖️
+                        </div>
+                    @endif
                     <div>
-                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LPK MPI</div>
+                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">{{ $siteName }}</div>
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Asesor Panel</div>
                     </div>
                 </div>
@@ -162,7 +206,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
+    <div class="content-wrapper flex-1 flex flex-col min-w-0 overflow-x-hidden overflow-y-auto md:pl-[70px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -186,7 +230,7 @@
                         <div class="text-[9px] font-bold text-slate-400 uppercase">Asesor Penilai</div>
                     </div>
                     <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/10">
-                        AS
+                        {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                     </div>
                 </div>
             </div>
@@ -211,24 +255,34 @@
 
             <!-- PANEL: DASBOR -->
             <div id="panel-dasbor" class="role-panel space-y-6">
-                <!-- Action Alert -->
-                <div class="p-4 bg-amber-500/10 border border-amber-500/25 rounded-2xl flex items-center justify-between text-amber-800 dark:text-amber-400 shadow-sm animate-pulse">
+                @php $pendingAttempts = $attempts->where('status', 'in_progress')->count(); @endphp
+                @if($pendingAttempts > 0)
+                <div class="p-4 bg-amber-500/10 border border-amber-500/25 rounded-2xl flex items-center justify-between text-amber-800 dark:text-amber-400 shadow-sm">
                     <div class="flex items-center gap-3">
                         <span class="text-xl">⚠️</span>
-                        <span class="text-xs font-bold uppercase tracking-wider">Ada 5 Portofolio (APL-02) Asesi menunggu di-review.</span>
+                        <span class="text-xs font-bold uppercase tracking-wider">Ada {{ $pendingAttempts }} Ujian Asesi sedang berlangsung dan belum selesai.</span>
                     </div>
-                    <button type="button" onclick="showPanel('apl02')" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-[10px] uppercase px-4 py-2 rounded-xl transition-all shadow-sm">Review Sekarang</button>
+                    <button type="button" onclick="showPanel('penilaian')" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-[10px] uppercase px-4 py-2 rounded-xl transition-all shadow-sm">Lihat Sekarang</button>
                 </div>
+                @endif
 
                 <!-- Schedule Card & Summary -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                     <div class="md:col-span-7 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
-                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Jadwal Ujian/Observasi Praktik Hari Ini</h3>
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Jadwal Ujian/Observasi Terdekat</h3>
+                        @php $nextSched = $schedules->where('scheduled_at', '>=', now())->first(); @endphp
+                        @if($nextSched)
                         <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-slate-800 dark:text-slate-100">Observasi Mandiri Kompetensi Tata Usaha MPI</div>
-                            <div class="text-[11px] text-slate-400 font-mono">Hari ini, 09:00 - selesai WIB</div>
-                            <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">Tempat: Ruang Asesmen LPK MPI</div>
+                            <div class="text-xs font-bold text-slate-800 dark:text-slate-100">{{ $nextSched->trainingProgram?->title ?? $nextSched->topic }}</div>
+                            <div class="text-[11px] text-slate-400 font-mono">{{ \Carbon\Carbon::parse($nextSched->scheduled_at)->translatedFormat('l, d M Y — H:i') }} WIB</div>
+                            <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">📍 {{ $nextSched->location }}</div>
                         </div>
+                        @else
+                        <div class="text-center py-6 text-slate-400 text-xs">
+                            <div class="text-3xl mb-2">📅</div>
+                            Tidak ada jadwal mendatang.
+                        </div>
+                        @endif
                     </div>
 
                     <div class="md:col-span-5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
@@ -260,19 +314,26 @@
                                 <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
                                     <th class="px-5 py-3 text-left">Nama Asesi</th>
                                     <th class="px-5 py-3 text-left">Skema Kompetensi</th>
-                                    <th class="px-5 py-3 text-left">Bukti Dokumen</th>
-                                    <th class="px-5 py-3 text-center">Tindakan</th>
+                                    <th class="px-5 py-3 text-left">Tgl. Mulai</th>
+                                    <th class="px-5 py-3 text-center">Status</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                @forelse($attempts as $att)
                                 <tr>
-                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">Ahmad Faisal</td>
-                                    <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">Tata Usaha Pendidikan Indonesia</td>
-                                    <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400 font-mono">APL02-Faisal.pdf</td>
+                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $att->asesi?->name ?? '-' }}</td>
+                                    <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">{{ $att->scheme?->title ?? '-' }}</td>
+                                    <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400 font-mono">{{ \Carbon\Carbon::parse($att->created_at)->format('d M Y') }}</td>
                                     <td class="px-5 py-4 text-center">
-                                        <button type="button" onclick="alert('Membuka review APL-02...');" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg">Review</button>
+                                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase
+                                            {{ $att->status === 'completed' ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600' : 'bg-amber-50 dark:bg-amber-950/20 text-amber-600' }}">
+                                            {{ $att->status === 'completed' ? 'Selesai' : 'Berlangsung' }}
+                                        </span>
                                     </td>
                                 </tr>
+                                @empty
+                                <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada pengerjaan ujian pada skema Anda.</td></tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -602,7 +663,25 @@
             }
         }
 
+        function updateDocumentTitle(panelId) {
+            let sectionTitle = "";
+            switch(panelId) {
+                case 'dasbor': sectionTitle = "Dasbor Evaluasi"; break;
+                case 'apl02': sectionTitle = "Review Pra-Asesmen (APL-02)"; break;
+                case 'penilaian': sectionTitle = "Penilaian Ujian"; break;
+                case 'kelola': sectionTitle = "Kelola Ujian"; break;
+                case 'jadwal': sectionTitle = "Jadwal & Silabus"; break;
+                case 'profil': sectionTitle = "Profil Saya"; break;
+                default: sectionTitle = "Dasbor";
+            }
+            const siteName = "{{ $siteName }}";
+            document.title = `${sectionTitle} — Asesor — ${siteName}`;
+        }
+
         function showPanel(id) {
+            if (id.startsWith('panel-')) {
+                id = id.substring(6);
+            }
             panels.forEach(p => {
                 const el = document.getElementById('panel-' + p);
                 if (el) el.classList.add('hidden');
@@ -622,6 +701,8 @@
             }
 
             localStorage.setItem('asesor_active_panel', id);
+            
+            updateDocumentTitle(id);
 
             if (window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.remove('open');
@@ -667,7 +748,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const activePanel = urlParams.get('open') || localStorage.getItem('asesor_active_panel') || 'dasbor';
+            const activePanel = urlParams.get('open') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
             const activeBtn = document.getElementById('btn-' + activePanel);

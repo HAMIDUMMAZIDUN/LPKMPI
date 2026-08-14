@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Asesi — LPK MPI</title>
+    @php
+        $siteLogo = \App\Models\LandingSetting::getValue('site_logo');
+        $siteName = \App\Models\LandingSetting::getValue('site_name') ?? 'LPK MPI';
+    @endphp
+    @if($siteLogo)
+        <link rel="icon" type="image/{{ pathinfo($siteLogo, PATHINFO_EXTENSION) === 'svg' ? 'svg+xml' : 'png' }}" href="{{ asset('storage/' . $siteLogo) }}?v={{ file_exists(public_path('storage/' . $siteLogo)) ? filemtime(public_path('storage/' . $siteLogo)) : time() }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -52,6 +61,38 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .content-wrapper {
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 769px) {
+            #sidebar {
+                width: 70px;
+                overflow-x: hidden;
+            }
+            #sidebar:hover {
+                width: 260px;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            #sidebar:hover ~ .content-wrapper {
+                padding-left: 260px !important;
+            }
+            /* Hide text elements when collapsed */
+            #sidebar:not(:hover) .px-6 div > div:last-child,
+            #sidebar:not(:hover) nav button:not(.accordion-trigger) > span,
+            #sidebar:not(:hover) nav button.accordion-trigger span.flex > span:last-child,
+            #sidebar:not(:hover) .accordion-arrow,
+            #sidebar:not(:hover) .accordion-content,
+            #sidebar:not(:hover) .p-4 button > span:last-child,
+            #sidebar:not(:hover) .p-4 a > span:last-child {
+                opacity: 0 !important;
+                width: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
+                display: none !important;
+                pointer-events: none;
+            }
+        }
         @media (max-width: 768px) {
             #sidebar {
                 transform: translateX(-100%);
@@ -62,19 +103,22 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
-            <!-- Sidebar Header with MPI Pattern Aspect -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
-                        🎓
-                    </div>
+                    @if($siteLogo)
+                        <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
+                    @else
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
+                            🎓
+                        </div>
+                    @endif
                     <div>
-                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LPK MPI</div>
+                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">{{ $siteName }}</div>
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Asesi Panel</div>
                     </div>
                 </div>
@@ -147,7 +191,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
+    <div class="content-wrapper flex-1 flex flex-col min-w-0 overflow-x-hidden overflow-y-auto md:pl-[70px]">
         
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -521,7 +565,24 @@
     <script>
         const panels = ['dasbor', 'profil', 'skema', 'jadwal', 'sertifikat'];
         
+        function updateDocumentTitle(panelId) {
+            let sectionTitle = "";
+            switch(panelId) {
+                case 'dasbor': sectionTitle = "Dasbor Asesi"; break;
+                case 'profil': sectionTitle = "Profil & Dokumen"; break;
+                case 'skema': sectionTitle = "Skema Pelatihan"; break;
+                case 'jadwal': sectionTitle = "Jadwal & Ujian"; break;
+                case 'sertifikat': sectionTitle = "E-Sertifikat"; break;
+                default: sectionTitle = "Dasbor";
+            }
+            const siteName = "{{ $siteName }}";
+            document.title = `${sectionTitle} — Asesi — ${siteName}`;
+        }
+
         function showPanel(id) {
+            if (id.startsWith('panel-')) {
+                id = id.substring(6);
+            }
             panels.forEach(p => {
                 const el = document.getElementById('panel-' + p);
                 if (el) el.classList.add('hidden');
@@ -541,6 +602,8 @@
             }
 
             localStorage.setItem('asesi_active_panel', id);
+            
+            updateDocumentTitle(id);
             
             // Auto close sidebar on mobile after clicking link
             if (window.innerWidth < 768) {
@@ -600,7 +663,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const activePanel = urlParams.get('open') || localStorage.getItem('asesi_active_panel') || 'dasbor';
+            const activePanel = urlParams.get('open') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
 

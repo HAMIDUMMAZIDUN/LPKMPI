@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Instruktur — LPK MPI</title>
+    @php
+        $siteLogo = \App\Models\LandingSetting::getValue('site_logo');
+        $siteName = \App\Models\LandingSetting::getValue('site_name') ?? 'LPK MPI';
+    @endphp
+    @if($siteLogo)
+        <link rel="icon" type="image/{{ pathinfo($siteLogo, PATHINFO_EXTENSION) === 'svg' ? 'svg+xml' : 'png' }}" href="{{ asset('storage/' . $siteLogo) }}?v={{ file_exists(public_path('storage/' . $siteLogo)) ? filemtime(public_path('storage/' . $siteLogo)) : time() }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -51,6 +60,38 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .content-wrapper {
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 769px) {
+            #sidebar {
+                width: 70px;
+                overflow-x: hidden;
+            }
+            #sidebar:hover {
+                width: 260px;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            #sidebar:hover ~ .content-wrapper {
+                padding-left: 260px !important;
+            }
+            /* Hide text elements when collapsed */
+            #sidebar:not(:hover) .px-6 div > div:last-child,
+            #sidebar:not(:hover) nav button:not(.accordion-trigger) > span,
+            #sidebar:not(:hover) nav button.accordion-trigger span.flex > span:last-child,
+            #sidebar:not(:hover) .accordion-arrow,
+            #sidebar:not(:hover) .accordion-content,
+            #sidebar:not(:hover) .p-4 button > span:last-child,
+            #sidebar:not(:hover) .p-4 a > span:last-child {
+                opacity: 0 !important;
+                width: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
+                display: none !important;
+                pointer-events: none;
+            }
+        }
         @media (max-width: 768px) {
             #sidebar {
                 transform: translateX(-100%);
@@ -61,19 +102,22 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
-            <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
-                        🎓
-                    </div>
+                    @if($siteLogo)
+                        <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
+                    @else
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
+                            🎓
+                        </div>
+                    @endif
                     <div>
-                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LPK MPI</div>
+                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">{{ $siteName }}</div>
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Instruktur</div>
                     </div>
                 </div>
@@ -141,7 +185,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
+    <div class="content-wrapper flex-1 flex flex-col min-w-0 overflow-x-hidden overflow-y-auto md:pl-[70px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -200,61 +244,71 @@
                     <!-- Schedule Card -->
                     <div class="md:col-span-6 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                         <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Jadwal Mengajar Terdekat</h3>
+                        @if($nextSchedule)
                         <div class="bg-white dark:bg-slate-950/60 p-4 border border-slate-200 dark:border-slate-800 rounded-xl space-y-3">
                             <div>
-                                <div class="text-xs font-bold text-slate-800 dark:text-white">Manajemen Mutu &amp; Kepemimpinan Madrasah</div>
-                                <div class="text-[11px] text-slate-550 font-mono mt-0.5">Hari ini, 13:30 - 15:30 WIB</div>
-                                <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">Status: Siap Dimulai</div>
+                                <div class="text-xs font-bold text-slate-800 dark:text-white">{{ $nextSchedule->trainingProgram->title ?? $nextSchedule->topic }}</div>
+                                <div class="text-[11px] text-slate-500 font-mono mt-0.5">{{ \Carbon\Carbon::parse($nextSchedule->scheduled_at)->translatedFormat('l, d M Y — H:i') }} WIB</div>
+                                <div class="text-[10px] text-slate-500 mt-1">📍 {{ $nextSchedule->location }}</div>
+                                <div class="text-[10px] text-blue-600 font-bold uppercase mt-1">
+                                    @if(\Carbon\Carbon::parse($nextSchedule->scheduled_at)->isToday())
+                                        Status: Hari Ini
+                                    @else
+                                        Status: Terjadwal
+                                    @endif
+                                </div>
                             </div>
-                            <a href="https://zoom.us" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-500/10">
-                                📹 Masuk Kelas Zoom
-                            </a>
                         </div>
+                        @else
+                        <div class="text-center py-6 text-slate-400 text-xs">
+                            <div class="text-3xl mb-2">📅</div>
+                            Belum ada jadwal mengajar mendatang.
+                        </div>
+                        @endif
                     </div>
 
-                    <!-- List View: Latest Modules -->
+                    <!-- List View: Real Programs/Schedules -->
                     <div class="md:col-span-6 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
-                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Modul &amp; Materi Terbaru yang Diunggah</h3>
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Program Pelatihan Terdaftar</h3>
                         <div class="space-y-2">
+                            @forelse($programs->take(4) as $prog)
                             <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
                                 <div>
-                                    <div class="text-xs font-bold text-slate-800 dark:text-white">Buku Panduan Tata Kelola Administrasi Madrasah</div>
-                                    <div class="text-[10px] text-slate-400 font-mono">PDF — 4.2 MB</div>
+                                    <div class="text-xs font-bold text-slate-800 dark:text-white">{{ $prog->title }}</div>
+                                    <div class="text-[10px] text-slate-400 font-mono">{{ $prog->duration }} · {{ $prog->category }}</div>
                                 </div>
-                                <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Teori</span>
+                                <span class="bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Aktif</span>
                             </div>
-
-                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl">
-                                <div>
-                                    <div class="text-xs font-bold text-slate-800 dark:text-white">SOP Kepemimpinan Madrasah Modern</div>
-                                    <div class="text-[10px] text-slate-400 font-mono">PDF — 2.8 MB</div>
-                                </div>
-                                <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">SOP</span>
-                            </div>
+                            @empty
+                            <p class="text-xs text-slate-400 text-center py-4">Belum ada program pelatihan.</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL: KELAS SAYA -->
             <div id="panel-kelas" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
                     <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Kelas Pengajaran Aktif</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola asesi dan jadwal di dalam kelas Anda.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Jadwal mengajar yang telah ditugaskan kepada Anda.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+                    @if($schedules->isEmpty())
+                    <p class="text-center text-slate-400 text-xs py-8">Belum ada jadwal kelas yang ditugaskan.</p>
+                    @else
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        @foreach($schedules as $sched)
                         <div class="p-4 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">Kelas Tata Usaha MPI A</h3>
-                            <p class="text-xs text-slate-400">Total Siswa: 35 Asesi</p>
-                            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Kelola Kelas</button>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">{{ $sched->trainingProgram->title ?? $sched->topic }}</h3>
+                            <p class="text-xs text-slate-500">📅 {{ \Carbon\Carbon::parse($sched->scheduled_at)->translatedFormat('d M Y, H:i') }} WIB</p>
+                            <p class="text-xs text-slate-500">📍 {{ $sched->location }}</p>
+                            <span class="inline-block text-[9px] font-bold uppercase px-2 py-0.5 rounded {{ \Carbon\Carbon::parse($sched->scheduled_at)->isPast() ? 'bg-slate-100 dark:bg-slate-800 text-slate-500' : 'bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400' }}">
+                                {{ \Carbon\Carbon::parse($sched->scheduled_at)->isPast() ? 'Selesai' : 'Mendatang' }}
+                            </span>
                         </div>
-                        <div class="p-4 bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white">Kelas Keuangan Madrasah B</h3>
-                            <p class="text-xs text-slate-400">Total Siswa: 28 Asesi</p>
-                            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Kelola Kelas</button>
-                        </div>
+                        @endforeach
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -283,29 +337,46 @@
             <!-- PANEL: EVALUASI -->
             <div id="panel-evaluasi" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
-                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Evaluasi Tugas &amp; Portofolio</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Beri penilaian pada tugas-tugas asesi yang telah dikumpulkan.</p>
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Evaluasi Ujian Asesi</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Hasil ujian kompetensi asesi pada skema yang Anda kelola.</p>
                 </div>
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
                     <div class="overflow-x-auto w-full">
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
-                                    <th class="px-5 py-3 text-left">Nama Siswa</th>
-                                    <th class="px-5 py-3 text-left">Tugas</th>
-                                    <th class="px-5 py-3 text-left">Tanggal Kumpul</th>
-                                    <th class="px-5 py-3 text-center">Tindakan</th>
+                                    <th class="px-5 py-3 text-left">Nama Asesi</th>
+                                    <th class="px-5 py-3 text-left">Skema Ujian</th>
+                                    <th class="px-5 py-3 text-left">Tanggal Selesai</th>
+                                    <th class="px-5 py-3 text-center">Skor</th>
+                                    <th class="px-5 py-3 text-center">Status</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                @forelse($attempts as $attempt)
                                 <tr>
-                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">Ahmad Faisal</td>
-                                    <td class="px-5 py-4 text-xs">Penyusunan Rencana Anggaran Sekolah</td>
-                                    <td class="px-5 py-4 text-xs font-mono text-slate-500 dark:text-slate-400">04 Agt 2026</td>
+                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $attempt->asesi->name ?? '-' }}</td>
+                                    <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-300">{{ $attempt->scheme->title ?? '-' }}</td>
+                                    <td class="px-5 py-4 text-xs font-mono text-slate-500 dark:text-slate-400">
+                                        {{ $attempt->completed_at ? \Carbon\Carbon::parse($attempt->completed_at)->format('d M Y') : '-' }}
+                                    </td>
                                     <td class="px-5 py-4 text-center">
-                                        <button type="button" onclick="alert('Membuka penilaian...');" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-1.5 rounded-lg">Beri Nilai</button>
+                                        <span class="font-black text-sm {{ ($attempt->score ?? 0) >= 75 ? 'text-emerald-600' : 'text-rose-500' }}">
+                                            {{ $attempt->score !== null ? $attempt->score . '%' : '-' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-5 py-4 text-center">
+                                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase
+                                            {{ $attempt->status === 'completed' ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600' : 'bg-amber-50 dark:bg-amber-950/20 text-amber-600' }}">
+                                            {{ $attempt->status === 'completed' ? 'Selesai' : 'Berlangsung' }}
+                                        </span>
                                     </td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="px-5 py-10 text-center text-slate-400 text-xs">Belum ada hasil ujian asesi.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -319,7 +390,23 @@
     <script>
         const panels = ['dasbor', 'kelas', 'modul', 'evaluasi'];
 
+        function updateDocumentTitle(panelId) {
+            let sectionTitle = "";
+            switch(panelId) {
+                case 'dasbor': sectionTitle = "Dasbor Pengajaran"; break;
+                case 'kelas': sectionTitle = "Kelas Saya"; break;
+                case 'modul': sectionTitle = "Manajemen Modul"; break;
+                case 'evaluasi': sectionTitle = "Evaluasi Tugas"; break;
+                default: sectionTitle = "Dasbor";
+            }
+            const siteName = "{{ $siteName }}";
+            document.title = `${sectionTitle} — Instruktur — ${siteName}`;
+        }
+
         function showPanel(id) {
+            if (id.startsWith('panel-')) {
+                id = id.substring(6);
+            }
             panels.forEach(p => {
                 const el = document.getElementById('panel-' + p);
                 if (el) el.classList.add('hidden');
@@ -339,6 +426,8 @@
             }
 
             localStorage.setItem('instruktur_active_panel', id);
+            
+            updateDocumentTitle(id);
 
             if (window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.remove('open');
@@ -384,7 +473,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const activePanel = urlParams.get('open') || localStorage.getItem('instruktur_active_panel') || 'dasbor';
+            const activePanel = urlParams.get('open') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
             const activeBtn = document.getElementById('btn-' + activePanel);

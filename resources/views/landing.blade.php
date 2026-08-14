@@ -158,7 +158,7 @@
             </div>
 
             <!-- Tab Buttons Container -->
-            <div class="flex flex-wrap justify-center gap-2 mb-12 max-w-4xl mx-auto border-b border-slate-100 dark:border-slate-800/60 pb-4">
+            <div class="flex flex-wrap justify-center gap-2 mb-12 max-w-6xl mx-auto border-b border-slate-100 dark:border-slate-800/60 pb-4">
                 <button type="button" onclick="switchTentangTab('profil')" id="tab-btn-profil" class="tentang-tab-btn px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition-all duration-300 btn-mpi">
                     Profil &amp; Legalitas
                 </button>
@@ -178,7 +178,7 @@
 
             <!-- TAB PANEL 1: PROFIL & LEGALITAS -->
             <div id="tab-panel-profil" class="tentang-tab-panel block space-y-8 animate-fade-in text-left">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl mx-auto">
                     <!-- Left: Profile paragraphs -->
                     <div class="lg:col-span-7 bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-center space-y-6">
                         <h3 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Profil LPK MPI</h3>
@@ -232,7 +232,7 @@
 
             <!-- TAB PANEL 2: VISI, MISI & NILAI -->
             <div id="tab-panel-visimisi" class="tentang-tab-panel hidden space-y-8 animate-fade-in text-left">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
                     <!-- Visi Card -->
                     <div class="bg-gradient-to-br from-blue-500/5 to-indigo-600/5 dark:from-blue-950/10 dark:to-slate-900/40 border border-blue-500/10 dark:border-blue-500/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
                         <div>
@@ -270,7 +270,7 @@
                 <!-- Nilai Perusahaan (M-P-I) -->
                 <div class="mt-8">
                     <h3 class="text-center text-lg font-bold text-slate-900 dark:text-white mb-6 font-heading">Nilai Perusahaan (M - P - I)</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                         <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-md transition">
                             <span class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-extrabold text-lg mb-4">M</span>
                             <h4 class="font-extrabold text-slate-900 dark:text-white text-sm mb-2">Mutu (Quality)</h4>
@@ -292,7 +292,7 @@
 
             <!-- TAB PANEL 3: STRUKTUR ORGANISASI -->
             <div id="tab-panel-struktur" class="tentang-tab-panel hidden space-y-8 animate-fade-in text-left">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
                     <!-- Komisaris Utama Card -->
                     <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex items-center gap-5 hover:shadow-md transition duration-300">
                         <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-600/5 text-amber-600 dark:text-amber-500 flex items-center justify-center font-bold text-xl uppercase shrink-0">
@@ -319,7 +319,7 @@
 
                 <!-- Bagan Organisasi Image -->
                 @if(!empty($settings['org_image']))
-                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-center max-w-4xl mx-auto mt-6">
+                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-center max-w-6xl mx-auto mt-6">
                         <h3 class="text-base font-bold text-slate-900 dark:text-white mb-6 font-heading">Struktur Kepengurusan &amp; Organogram LPK MPI</h3>
                         <div class="w-full flex justify-center overflow-hidden rounded-2xl">
                             <img src="{{ asset('storage/' . $settings['org_image']) }}" class="max-w-full h-auto object-contain" alt="Struktur Organisasi LPK MPI">
@@ -416,7 +416,7 @@
 
             <!-- TAB PANEL 5: ROADMAP PENGEMBANGAN (2026-2030) -->
             <div id="tab-panel-roadmap" class="tentang-tab-panel hidden space-y-8 animate-fade-in text-left">
-                <div class="max-w-4xl mx-auto relative">
+                <div class="max-w-6xl mx-auto relative">
                     <!-- Vertical Timeline Line -->
                     <div class="absolute left-4 sm:left-1/2 top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800"></div>
 
@@ -523,58 +523,28 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto text-left">
-                <!-- Program 1: Pelatihan Kompetensi Manajemen Pendidikan -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div class="space-y-6">
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Pelatihan Kompetensi Manajemen</h3>
-                        <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
-                            Program pelatihan intensif bagi yayasan, kepala sekolah, madrasah, dan praktisi untuk menguasai perencanaan strategis, kepemimpinan, dan tata kelola modern.
-                        </p>
+            @php
+                $cmsProgKeysStr = $settings['cms_program_keys'] ?? 'manajemen,administrasi,kepemimpinan';
+                $cmsProgKeys = array_filter(explode(',', $cmsProgKeysStr));
+            @endphp
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(4, count($cmsProgKeys)) }} gap-8 max-w-6xl mx-auto text-left">
+                @foreach($cmsProgKeys as $pKey)
+                    @php
+                        $pTitle = $settings['prog_'.$pKey.'_title'] ?? ('Program ' . ucfirst($pKey));
+                        $pDesc = $settings['prog_'.$pKey.'_desc'] ?? '';
+                    @endphp
+                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
+                        <div class="space-y-6">
+                            <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">{{ $pTitle }}</h3>
+                            <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
+                                {{ $pDesc }}
+                            </p>
+                        </div>
+                        <a href="{{ route('pendaftaran', ['program' => $pKey]) }}" class="w-full mt-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi block text-center">
+                            Daftar Sekarang
+                        </a>
                     </div>
-                    <a href="{{ route('pendaftaran', ['program' => 'mi_prog']) }}" class="w-full mt-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi block text-center">
-                        Daftar Sekarang
-                    </a>
-                </div>
-
-                <!-- Program 2: Bimbingan & Pendampingan Sertifikasi Profesi -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div class="space-y-6">
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Bimbingan Sertifikasi Profesi</h3>
-                        <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
-                            Bimbingan teknis dan simulasi bagi asesi untuk mempersiapkan portofolio kompetensi dan uji kelayakan sertifikasi profesi nasional (LSP).
-                        </p>
-                    </div>
-                    <a href="{{ route('pendaftaran', ['program' => 'ma_prog']) }}" class="w-full mt-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi block text-center">
-                        Daftar Sekarang
-                    </a>
-                </div>
-
-                <!-- Program 3: Konsultansi & Penjaminan Mutu Sekolah -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div class="space-y-6">
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Konsultansi Penjaminan Mutu</h3>
-                        <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
-                            Pendampingan persiapan akreditasi BAN-PDM, penyusunan kurikulum operasional, evaluasi diri sekolah (EDS), serta pengembangan SPMI.
-                        </p>
-                    </div>
-                    <a href="{{ route('pendaftaran', ['program' => 'ptki_prog']) }}" class="w-full mt-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi block text-center">
-                        Daftar Sekarang
-                    </a>
-                </div>
-
-                <!-- Program 4: Pelatihan Teknologi Pembelajaran -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div class="space-y-6">
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg font-heading leading-tight">Teknologi &amp; Administrasi Digital</h3>
-                        <p class="text-slate-650 dark:text-slate-400 text-xs leading-relaxed font-semibold">
-                            Peningkatan kompetensi IT bagi pendidik dan tenaga kependidikan dalam mengelola e-learning, LMS, EMIS/DAPODIK, dan platform digital sekolah.
-                        </p>
-                    </div>
-                    <a href="{{ route('pendaftaran', ['program' => 'mts_prog']) }}" class="w-full mt-6 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider btn-mpi block text-center">
-                        Daftar Sekarang
-                    </a>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -597,7 +567,7 @@
             @php
                 $instrukturCount = (int) ($settings['instruktur_count'] ?? 3);
             @endphp
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 @for($i = 1; $i <= $instrukturCount; $i++)
                     @php
                         $iNameKey = "instruktur_{$i}_nama";
@@ -676,57 +646,40 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
-                <!-- Fasilitas 1: Ruang Belajar -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                            </svg>
+            @php
+                $cmsFasilitasKeysStr = $settings['cms_fasilitas_keys'] ?? 'belajar,perpustakaan,asrama';
+                $cmsFasilitasKeys = array_filter(explode(',', $cmsFasilitasKeysStr));
+            @endphp
+            <div class="grid grid-cols-1 md:grid-cols-{{ min(3, count($cmsFasilitasKeys)) }} gap-8 max-w-6xl mx-auto text-left">
+                @foreach($cmsFasilitasKeys as $fKey)
+                    @php
+                        $fTitle = $settings['fasilitas_'.$fKey.'_judul'] ?? ('Fasilitas ' . ucfirst($fKey));
+                        $fDesc = $settings['fasilitas_'.$fKey.'_desc'] ?? '';
+                        $fFoto = $settings['fasilitas_'.$fKey.'_foto'] ?? '';
+                    @endphp
+                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:shadow-md transition duration-300 flex flex-col justify-between">
+                        <div>
+                            @if(!empty($fFoto))
+                                <div class="w-full h-48 overflow-hidden border-b border-slate-150 dark:border-slate-800">
+                                    <img src="{{ asset('storage/' . $fFoto) }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" alt="{{ $fTitle }}">
+                                </div>
+                            @endif
+                            <div class="p-6">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
+                                    {{ $fTitle }}
+                                </h3>
+                                <p class="text-slate-650 dark:text-slate-400 text-xs sm:text-sm leading-relaxed font-semibold">
+                                    {{ $fDesc }}
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
-                            {{ $settings['fasilitas_belajar_judul'] ?? 'Ruang Belajar & Teori Ergonomis' }}
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-                            {{ $settings['fasilitas_belajar_desc'] ?? 'Kami memiliki ruang kelas berkapasitas 25 orang yang sejuk (AC penuh) dengan tata pencahayaan yang nyaman, papan tulis interaktif, serta sound system nirkabel untuk presentasi materi ajar.' }}
-                        </p>
                     </div>
-                </div>
-
-                <!-- Fasilitas 2: Perpustakaan -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                            </svg>
-                        </div>
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
-                            {{ $settings['fasilitas_perpustakaan_judul'] ?? 'Pusat Referensi & E-Learning' }}
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-                            {{ $settings['fasilitas_perpustakaan_desc'] ?? 'Menyediakan koleksi lengkap buku manajemen pendidikan, modul kepemimpinan madrasah, panduan akreditasi BAN-PT, serta akses portal jurnal referensi ilmiah digital.' }}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Fasilitas 3: Asrama -->
-                <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition duration-300">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-[#155dfc] flex items-center justify-center mb-6 border border-blue-600/20">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                            </svg>
-                        </div>
-                        <h3 class="font-extrabold text-slate-900 dark:text-white text-lg mb-3">
-                            {{ $settings['fasilitas_asrama_judul'] ?? 'Asrama & Penginapan Peserta' }}
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
-                            {{ $settings['fasilitas_asrama_desc'] ?? 'Bagi peserta dari luar kota, tersedia asrama eksklusif ber-AC dengan fasilitas kamar mandi dalam, akses internet WiFi 100 Mbps, dapur bersama, serta area olahraga semi-outdoor.' }}
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -746,8 +699,51 @@
                 </p>
             </div>
 
+            <!-- DYNAMIC ARTICLES / KABAR TERBARU LPK -->
+            @if($articles && $articles->count() > 0)
+                <div class="mb-20 max-w-6xl mx-auto">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white text-xl font-heading flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-[#155dfc] rounded-full inline-block"></span>
+                            Kabar & Artikel LPK
+                        </h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        @foreach($articles as $art)
+                            <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between group">
+                                <div>
+                                    <div class="aspect-video w-full bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+                                        @if($art->image_path)
+                                            <img src="{{ asset('storage/' . $art->image_path) }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="{{ $art->title }}">
+                                        @else
+                                            <div class="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center">
+                                                <i class="far fa-newspaper text-[#155dfc]/30 text-4xl"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="p-6 space-y-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[10px] bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-extrabold px-2.5 py-0.5 rounded-full border border-blue-500/10 uppercase tracking-wider">{{ $art->author }}</span>
+                                            <span class="text-[10px] text-slate-400 font-semibold">{{ $art->created_at->format('d M Y') }}</span>
+                                        </div>
+                                        <h4 class="font-extrabold text-slate-900 dark:text-white text-base font-heading line-clamp-2 leading-snug group-hover:text-[#155dfc] transition duration-200">{{ $art->title }}</h4>
+                                        <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-3 font-semibold">{{ Str::limit(strip_tags($art->content), 120) }}</p>
+                                    </div>
+                                </div>
+                                <div class="px-6 pb-6 pt-2">
+                                    <button type="button" data-article="{{ e(json_encode($art)) }}" onclick="showArticleModal(JSON.parse(this.dataset.article))" class="text-[#155dfc] hover:text-blue-700 font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5 transition">
+                                        Baca Selengkapnya
+                                        <span>→</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
               <!-- YouTube Featured Video -->
-            <div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm mb-16">
+            <div class="max-w-6xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm mb-16">
                 <div class="grid grid-cols-1 md:grid-cols-12 items-stretch">
                     <div class="md:col-span-7 bg-transparent aspect-video relative flex items-center justify-center group cursor-pointer" onclick="openVideoModal('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">
                         <!-- Play Overlay -->
@@ -900,7 +896,7 @@
             </div>
 
             <!-- Stats grid -->
-            <div class="bg-[#eef2ff] dark:bg-blue-950/10 border border-blue-200 dark:border-blue-900/30 rounded-3xl p-8 max-w-5xl mx-auto">
+            <div class="bg-[#eef2ff] dark:bg-blue-950/10 border border-blue-200 dark:border-blue-900/30 rounded-3xl p-8 max-w-6xl mx-auto">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                     <div>
                         <span class="block text-3xl font-black text-[#155dfc] font-extrabold">120+</span>
@@ -1477,5 +1473,61 @@
             </div>
         </button>
     </div>
+
+    <!-- Article Detail Modal -->
+    <div id="article-modal" class="fixed inset-0 z-[100] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl animate-scale-in flex flex-col max-h-[85vh]">
+            <!-- Header -->
+            <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span class="text-xs bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-extrabold px-2.5 py-0.5 rounded-full border border-blue-500/10 uppercase tracking-wider" id="modal-article-author"></span>
+                <button type="button" onclick="closeArticleModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xl font-bold">&times;</button>
+            </div>
+            <!-- Content -->
+            <div class="p-6 overflow-y-auto space-y-4">
+                <div class="aspect-video w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 hidden" id="modal-article-image-container">
+                    <img id="modal-article-image" class="w-full h-full object-cover" src="" alt="">
+                </div>
+                <div class="space-y-2">
+                    <span class="text-[10px] text-slate-400 font-mono" id="modal-article-date"></span>
+                    <h3 class="font-extrabold text-xl text-slate-900 dark:text-white font-heading" id="modal-article-title"></h3>
+                </div>
+                <div class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-medium" id="modal-article-content"></div>
+            </div>
+            <!-- Footer -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+                <button type="button" onclick="closeArticleModal()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-extrabold text-xs uppercase px-5 py-2.5 rounded-xl transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showArticleModal(art) {
+            document.getElementById('modal-article-author').innerText = art.author || 'Admin';
+            
+            // Format date
+            const dateStr = art.created_at ? new Date(art.created_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}) : '';
+            document.getElementById('modal-article-date').innerText = dateStr;
+            
+            document.getElementById('modal-article-title').innerText = art.title;
+            document.getElementById('modal-article-content').innerText = art.content;
+            
+            const imgContainer = document.getElementById('modal-article-image-container');
+            const imgEl = document.getElementById('modal-article-image');
+            if (art.image_path) {
+                imgEl.src = "/storage/" + art.image_path;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+            
+            document.getElementById('article-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticleModal() {
+            document.getElementById('article-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    </script>
 @endsection
 

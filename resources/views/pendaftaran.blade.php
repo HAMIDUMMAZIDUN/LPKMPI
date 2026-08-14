@@ -4,7 +4,7 @@
     <div class="glow-bg glow-1"></div>
     <div class="glow-bg glow-2"></div>
 
-    <main class="max-w-5xl mx-auto my-12 px-6">
+    <main class="max-w-5xl mx-auto py-12">
 
         <!-- Page Title -->
         <div class="text-center mb-10">
@@ -149,145 +149,23 @@
                         </div>
                     </div>
 
-                    <!-- OTP Verification Section (Hidden initially) -->
-                    <div id="otp-section" class="hidden border border-blue-500/20 bg-blue-500/5 dark:bg-blue-950/20 p-5 rounded-lg space-y-4 transition-all duration-300">
-                        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5">
-                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Verifikasi Email Aktif</span>
-                            <span class="text-[10px] text-blue-700 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded font-black tracking-wider uppercase">OTP Required</span>
-                        </div>
-                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Kami telah mengirimkan 6-digit kode verifikasi ke email Anda. Silakan periksa kotak masuk (atau folder spam).
-                        </p>
-                        
-                        <!-- Local development debug helper -->
-                        <div id="otp-debug-helper" class="hidden text-xs bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 p-3 rounded font-semibold leading-relaxed"></div>
-                        
-                        <div class="flex flex-col sm:flex-row gap-3">
-                            <div class="flex-1">
-                                <input type="text" id="otp-code-input" name="otp_code" placeholder="Masukkan 6-digit kode" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/15 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-700 tracking-widest font-mono text-center text-lg">
-                            </div>
-                            <button type="button" id="btn-resend-otp" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition-all flex items-center justify-center gap-2">
-                                Kirim Ulang (<span id="otp-countdown">60</span>s)
-                            </button>
-                        </div>
-                    </div>
 
                     <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3.5 px-6 rounded-lg hover:brightness-110 shadow-lg shadow-blue-600/20 transition-all duration-300 flex items-center justify-center gap-2 text-xs uppercase tracking-wider mt-2">
-                        Daftar Sekarang &amp; Terbitkan Sertifikat Pelatihan
+                        Daftar Sekarang
                     </button>
                 </form>
             </div>
         </div>
-
-        <!-- Success Card -->
-        <div id="enrollment-success-card" class="glass-card rounded-2xl max-w-3xl mx-auto text-center p-8 sm:p-10 border border-slate-200 dark:border-slate-800 hidden animate-fade-in">
-            <div class="w-14 h-14 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/25 flex items-center justify-center mx-auto mb-5 shadow-sm">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </div>
-            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">Pendaftaran Pelatihan Berhasil!</h3>
-            <p class="text-slate-600 dark:text-slate-400 text-sm mb-8 max-w-lg mx-auto leading-relaxed">
-                Selamat! Anda telah terdaftar dan sistem telah menerbitkan <strong>Sertifikat Pelatihan LPK</strong> sebagai bukti kompetensi.
-            </p>
-            <div class="certificate-badge rounded-2xl p-6 sm:p-10 text-center shadow-lg mb-8">
-                <div class="cert-header mb-6">
-                    <h4 class="text-blue-800 dark:text-blue-300 text-sm sm:text-base font-bold tracking-[3px] uppercase">Sertifikat Kelulusan Pelatihan</h4>
-                    <span class="text-[9px] sm:text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest block mt-1">LPK Lembaga Pendidikan Kerja Manajemen Pendidikan Indonesia</span>
-                </div>
-                <div class="cert-body my-8">
-                    <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 italic">Diberikan Kepada:</p>
-                    <h2 id="cert-holder-name" class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white my-3 tracking-wide uppercase font-black">-</h2>
-                    <p class="text-[10px] sm:text-xs text-slate-400 max-w-md mx-auto leading-relaxed">Telah menyelesaikan pelatihan kompetensi dengan predikat <strong class="text-blue-600 dark:text-blue-400">KOMPETEN</strong> pada program:</p>
-                    <h3 id="cert-program-name" class="text-base sm:text-xl text-blue-700 dark:text-teal-400 font-bold mt-3 mb-6 tracking-wide">-</h3>
-                    <div class="flex justify-center gap-8 sm:gap-12 text-xs border-t border-slate-200 dark:border-white/5 pt-6 max-w-sm mx-auto">
-                        <div class="flex flex-col text-left">
-                            <span class="text-[10px] text-slate-500 dark:text-slate-400">No. Sertifikat:</span>
-                            <span class="font-semibold text-slate-800 dark:text-slate-200 font-mono" id="cert-number-val">-</span>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="text-[10px] text-slate-500 dark:text-slate-400">Tanggal Terbit:</span>
-                            <span class="font-semibold text-slate-800 dark:text-slate-200" id="cert-date-val">-</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all shadow-lg shadow-blue-600/10" id="copy-cert-num-btn">Salin Nomor Sertifikat</button>
-                <button class="bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 py-3 px-6 rounded-lg text-xs uppercase tracking-wider transition-all" id="reset-enrollment-btn">Daftar Lagi</button>
-            </div>
-        </div>
     </main>
+
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         // AJAX Form Submission
         const form = document.getElementById('enrollment-form');
-        const otpSection = document.getElementById('otp-section');
-        const otpCodeInput = document.getElementById('otp-code-input');
-        const otpDebugHelper = document.getElementById('otp-debug-helper');
-        const btnResendOtp = document.getElementById('btn-resend-otp');
-        const otpCountdown = document.getElementById('otp-countdown');
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalSubmitText = submitBtn.innerHTML;
-
-        let countdownInterval = null;
-
-        function startCountdown() {
-            let seconds = 60;
-            btnResendOtp.disabled = true;
-            otpCountdown.textContent = seconds;
-            clearInterval(countdownInterval);
-            countdownInterval = setInterval(() => {
-                seconds--;
-                otpCountdown.textContent = seconds;
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    btnResendOtp.disabled = false;
-                    btnResendOtp.innerHTML = 'Kirim Ulang';
-                } else {
-                    btnResendOtp.innerHTML = `Kirim Ulang (${seconds}s)`;
-                }
-            }, 1000);
-        }
-
-        async function sendOtpRequest(email, csrfToken) {
-            const response = await fetch("{{ route('enroll.send-otp') }}", {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': csrfToken 
-                },
-                body: JSON.stringify({ email: email })
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message || 'Gagal mengirim OTP.');
-            }
-            return data;
-        }
-
-        btnResendOtp.addEventListener('click', async () => {
-            const email = document.getElementById('enroll-email').value;
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            if (!email) return alert('Silakan isi email terlebih dahulu.');
-            
-            try {
-                btnResendOtp.disabled = true;
-                btnResendOtp.innerHTML = 'Mengirim...';
-                const data = await sendOtpRequest(email, csrfToken);
-                alert(data.message || 'OTP berhasil dikirim ulang.');
-                startCountdown();
-                
-                // Show OTP debug helper in local/dev environment
-                if (data.otp) {
-                    otpDebugHelper.classList.remove('hidden');
-                    otpDebugHelper.innerHTML = `<strong>[DEVELOPMENT MODE]</strong> OTP Code sent to email: <span class="font-mono text-sm underline font-black">${data.otp}</span>`;
-                }
-            } catch (err) {
-                alert(err.message);
-                btnResendOtp.disabled = false;
-                btnResendOtp.innerHTML = 'Kirim Ulang';
-            }
-        });
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -296,40 +174,7 @@
             errorBox.innerHTML = '';
             
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const email = document.getElementById('enroll-email').value;
 
-            // 1. If OTP section is not visible yet, send OTP first
-            if (otpSection.classList.contains('hidden')) {
-                try {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<span class="animate-spin mr-2">⚙</span> Mengirim OTP...';
-                    
-                    const data = await sendOtpRequest(email, csrfToken);
-                    
-                    // Show OTP section
-                    otpSection.classList.remove('hidden');
-                    otpCodeInput.required = true;
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Verifikasi &amp; Terbitkan Sertifikat';
-                    startCountdown();
-                    
-                    // Show OTP debug helper in local/dev environment
-                    if (data.otp) {
-                        otpDebugHelper.classList.remove('hidden');
-                        otpDebugHelper.innerHTML = `<strong>[DEVELOPMENT MODE]</strong> OTP Code sent to email: <span class="font-mono text-sm underline font-black">${data.otp}</span>`;
-                    }
-                } catch (error) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalSubmitText;
-                    errorBox.classList.remove('hidden');
-                    const p = document.createElement('p');
-                    p.innerHTML = `• ${error.message}`;
-                    errorBox.appendChild(p);
-                }
-                return;
-            }
-
-            // 3. Main submission (OTP section is visible)
             const formData = new FormData(form);
             try {
                 submitBtn.disabled = true;
@@ -356,37 +201,35 @@
                         throw new Error(data.message || 'Terjadi kesalahan sistem.');
                     }
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Verifikasi &amp; Terbitkan Sertifikat';
+                    submitBtn.innerHTML = originalSubmitText;
                     return;
                 }
                 
                 // Success flow
-                const trainee = data.trainee;
-                document.getElementById('cert-holder-name').textContent = trainee.name.toUpperCase();
-                document.getElementById('cert-program-name').textContent = trainee.program.title;
-                document.getElementById('cert-number-val').textContent = trainee.cert_number;
-                document.getElementById('cert-date-val').textContent = trainee.cert_date;
                 form.reset();
-                otpSection.classList.add('hidden');
-                otpCodeInput.required = false;
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalSubmitText;
+
+                Swal.fire({
+                    title: 'Pendaftaran Berhasil!',
+                    text: 'Data Anda telah tersimpan. Silakan periksa email Anda secara berkala untuk detail jadwal pelatihan dan petunjuk pembayaran selanjutnya.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#2563eb'
+                }).then(() => {
+                    window.location.href = "{{ url('/') }}";
+                });
                 
-                document.getElementById('enrollment-form-row').classList.add('hidden');
-                document.getElementById('enrollment-success-card').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                document.getElementById('copy-cert-num-btn').onclick = () => {
-                    navigator.clipboard.writeText(trainee.cert_number);
-                    alert(`Nomor sertifikat ${trainee.cert_number} berhasil disalin!`);
-                };
-                document.getElementById('reset-enrollment-btn').onclick = () => {
-                    document.getElementById('enrollment-success-card').classList.add('hidden');
-                    document.getElementById('enrollment-form-row').classList.remove('hidden');
-                };
             } catch (error) {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Verifikasi &amp; Terbitkan Sertifikat';
-                alert(error.message || 'Terjadi kesalahan jaringan.');
+                submitBtn.innerHTML = originalSubmitText;
+                Swal.fire({
+                    title: 'Terjadi Kesalahan',
+                    text: error.message || 'Terjadi kesalahan jaringan.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#ef4444'
+                });
             }
         });
 

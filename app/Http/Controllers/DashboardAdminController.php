@@ -278,7 +278,7 @@ class DashboardAdminController extends Controller
             'published_at' => now(),
         ]);
 
-        return redirect()->route('admin.dashboard', ['open' => 'panel-users'])->with('success', 'Artikel berhasil diterbitkan!');
+        return redirect()->route('admin.dashboard', ['open' => 'panel-articles'])->with('success', 'Artikel berhasil diterbitkan!');
     }
 
     /** Hapus artikel */
@@ -288,7 +288,7 @@ class DashboardAdminController extends Controller
         $article = Article::findOrFail($id);
         $article->delete();
 
-        return redirect()->route('admin.dashboard', ['open' => 'panel-users'])->with('success', 'Artikel berhasil dihapus!');
+        return redirect()->route('admin.dashboard', ['open' => 'panel-articles'])->with('success', 'Artikel berhasil dihapus!');
     }
 
     /** Verifikasi pembayaran peserta manually */
@@ -409,7 +409,7 @@ class DashboardAdminController extends Controller
 
         $article->update($data);
 
-        return redirect()->route('admin.dashboard', ['open' => 'panel-users'])->with('success', 'Artikel berhasil diperbarui!');
+        return redirect()->route('admin.dashboard', ['open' => 'panel-articles'])->with('success', 'Artikel berhasil diperbarui!');
     }
 
     public function updateTrainee(Request $request, $id)
@@ -440,260 +440,168 @@ class DashboardAdminController extends Controller
         return redirect()->route('admin.dashboard', ['open' => 'panel-verifikasi'])->with('success', 'Peserta berhasil dihapus!');
     }
 
+    public function bulkVerifyPayment(Request $request)
+    {
+        $this->checkRole();
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:trainee_enrollments,id',
+        ]);
+
+        $count = 0;
+        foreach ($request->ids as $id) {
+            $trainee = TraineeEnrollment::find($id);
+            if ($trainee && $trainee->payment_status !== 'PAID') {
+                $refNumber = 'MPI-PAY-' . strtoupper(Str::random(10));
+                $trainee->update([
+                    'payment_status' => 'PAID',
+                    'payment_method' => 'Manual Transfer (Verified Bulk)',
+                    'payment_reference' => $refNumber,
+                ]);
+                $count++;
+            }
+        }
+
+        return redirect()->route('admin.dashboard', ['open' => 'panel-verifikasi'])
+            ->with('success', $count . ' pembayaran asesi berhasil diverifikasi!');
+    }
+
+    public function bulkDestroyTrainees(Request $request)
+    {
+        $this->checkRole();
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:trainee_enrollments,id',
+        ]);
+
+        $count = 0;
+        foreach ($request->ids as $id) {
+            $trainee = TraineeEnrollment::find($id);
+            if ($trainee) {
+                $trainee->delete();
+                $count++;
+            }
+        }
+
+        return redirect()->route('admin.dashboard', ['open' => 'panel-verifikasi'])
+            ->with('success', $count . ' data pendaftaran asesi berhasil dihapus!');
+    }
+
     public function updateSettings(Request $request)
     {
         $this->checkRole();
 
-        $validationRules = [
-            'site_title'         => 'required|string|max:255',
-            'hero_title'         => 'required|string|max:255',
-            'hero_subtitle'      => 'required|string|max:1000',
-            'why_choose_title'   => 'required|string|max:255',
-            'gallery_title'      => 'required|string|max:255',
-            'gallery_subtitle'   => 'required|string|max:500',
-            'hero_image'         => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'site_logo'          => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'login_left_title_1' => 'nullable|string|max:255',
-            'login_left_title_2' => 'nullable|string|max:255',
-            'login_left_sub'     => 'nullable|string|max:255',
-            'login_left_main'    => 'nullable|string|max:1000',
-            'login_left_footer_title' => 'nullable|string|max:255',
-            'login_left_footer_desc'  => 'nullable|string|max:500',
-            'login_bg_image'     => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'stat_count'         => 'nullable|integer',
-            'step_count'         => 'nullable|integer',
-            'feature_count'      => 'nullable|integer',
-            'instruktur_count'   => 'nullable|integer',
-            'gallery_count'      => 'nullable|integer',
-            'faq_count'          => 'nullable|integer',
-            'org_image'          => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
-            'fasilitas_belajar_foto'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'fasilitas_perpustakaan_foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'fasilitas_asrama_foto'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ];
-
-        $instrukturCount = (int) $request->input('instruktur_count', 4);
-        for ($i = 1; $i <= $instrukturCount; $i++) {
-            $validationRules["instruktur_{$i}_foto"] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
+        // 1. Handle dynamic CMS item deletion
+        if ($request->has('delete_cms_type') && $request->has('delete_cms_key')) {
+            $type = $request->input('delete_cms_type'); // 'program', 'jadwal', or 'fasilitas'
+            $keyToRemove = $request->input('delete_cms_key');
+            
+            $settingKey = "cms_{$type}_keys";
+            $default = $type === 'program' ? 'manajemen,administrasi,kepemimpinan' : ($type === 'jadwal' ? '1,2,3' : 'belajar,perpustakaan,asrama');
+            $currentKeys = explode(',', LandingSetting::getValue($settingKey, $default));
+            
+            $newKeys = array_filter($currentKeys, function($k) use ($keyToRemove) {
+                return trim($k) !== trim($keyToRemove);
+            });
+            
+            LandingSetting::updateOrCreate(['key' => $settingKey], ['value' => implode(',', $newKeys)]);
+            
+            // Clean up from landing_settings table
+            LandingSetting::where('key', 'LIKE', "prog_{$keyToRemove}_%")->delete();
+            LandingSetting::where('key', 'LIKE', "jadwal_{$keyToRemove}_%")->delete();
+            LandingSetting::where('key', 'LIKE', "fasilitas_{$keyToRemove}_%")->delete();
+            
+            $activePanel = $request->input('active_panel', 'panel-program');
+            return redirect()->route('admin.dashboard', ['open' => $activePanel])
+                ->with('success', 'Item CMS berhasil dihapus!');
         }
 
-        $galleryCount = (int) $request->input('gallery_count', 6);
-        for ($i = 1; $i <= $galleryCount; $i++) {
-            $validationRules["gallery_item_{$i}_image"] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
+        // 2. Handle dynamic CMS item addition
+        if ($request->has('add_cms_type')) {
+            $type = $request->input('add_cms_type'); // 'program', 'jadwal', or 'fasilitas'
+            $newKey = $type . '_' . time();
+            
+            $settingKey = "cms_{$type}_keys";
+            $default = $type === 'program' ? 'manajemen,administrasi,kepemimpinan' : ($type === 'jadwal' ? '1,2,3' : 'belajar,perpustakaan,asrama');
+            $currentKeys = explode(',', LandingSetting::getValue($settingKey, $default));
+            $currentKeys[] = $newKey;
+            
+            LandingSetting::updateOrCreate(['key' => $settingKey], ['value' => implode(',', array_filter($currentKeys))]);
+            
+            if ($type === 'program') {
+                LandingSetting::updateOrCreate(['key' => "prog_{$newKey}_title"], ['value' => $request->input('new_title', 'Program Baru')]);
+                LandingSetting::updateOrCreate(['key' => "prog_{$newKey}_durasi"], ['value' => $request->input('new_durasi', '')]);
+                LandingSetting::updateOrCreate(['key' => "prog_{$newKey}_harga"], ['value' => $request->input('new_harga', '')]);
+                LandingSetting::updateOrCreate(['key' => "prog_{$newKey}_desc"], ['value' => $request->input('new_desc', '')]);
+                LandingSetting::updateOrCreate(['key' => "prog_{$newKey}_silabus"], ['value' => $request->input('new_silabus', '')]);
+                LandingSetting::updateOrCreate(['key' => "prog_{$newKey}_prospek"], ['value' => $request->input('new_prospek', '')]);
+            } elseif ($type === 'jadwal') {
+                LandingSetting::updateOrCreate(['key' => "jadwal_{$newKey}_nama"], ['value' => $request->input('new_nama', 'Jadwal Baru')]);
+                LandingSetting::updateOrCreate(['key' => "jadwal_{$newKey}_batas"], ['value' => $request->input('new_batas', '')]);
+                LandingSetting::updateOrCreate(['key' => "jadwal_{$newKey}_waktu"], ['value' => $request->input('new_waktu', '')]);
+                LandingSetting::updateOrCreate(['key' => "jadwal_{$newKey}_metode"], ['value' => $request->input('new_metode', '')]);
+                LandingSetting::updateOrCreate(['key' => "jadwal_{$newKey}_quota"], ['value' => $request->input('new_quota', '')]);
+            } elseif ($type === 'fasilitas') {
+                LandingSetting::updateOrCreate(['key' => "fasilitas_{$newKey}_judul"], ['value' => $request->input('new_judul', 'Fasilitas Baru')]);
+                LandingSetting::updateOrCreate(['key' => "fasilitas_{$newKey}_desc"], ['value' => $request->input('new_desc', '')]);
+                if ($request->hasFile('new_foto')) {
+                    $path = $request->file('new_foto')->store('landing/facilities', 'public');
+                    LandingSetting::updateOrCreate(['key' => "fasilitas_{$newKey}_foto"], ['value' => $path]);
+                }
+            }
+            
+            $activePanel = $request->input('active_panel', 'panel-program');
+            return redirect()->route('admin.dashboard', ['open' => $activePanel])
+                ->with('success', 'Item CMS baru berhasil ditambahkan!');
+        }
+
+        // 3. Normal update of setting keys (both static and dynamic)
+        $validationRules = [
+            'site_logo'      => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'hero_image'     => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'login_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'org_image'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+        ];
+
+        foreach ($request->allFiles() as $fileKey => $file) {
+            $validationRules[$fileKey] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
         }
 
         $request->validate($validationRules);
 
-        $keys = [
-            'site_title',
-            'hero_title',
-            'hero_subtitle',
-            'why_choose_title',
-            'gallery_title',
-            'gallery_subtitle',
-            'login_left_title_1',
-            'login_left_title_2',
-            'login_left_sub',
-            'login_left_main',
-            'login_left_footer_title',
-            'login_left_footer_desc',
-            'stat_count',
-            'step_count',
-            'feature_count',
-            'instruktur_count',
-            'gallery_count',
-            'faq_count',
-
-            // Tentang Kami
-            'tentang_profil_1',
-            'tentang_profil_2',
-            'tentang_visi',
-            'tentang_misi',
-            'org_director_dewan',
-            'org_director_lpk',
-            'org_manager_pelatihan',
-            'org_komite_program',
-            'org_manager_mutu',
-
-            // Program Pelatihan
-            'prog_manajemen_title',
-            'prog_manajemen_durasi',
-            'prog_manajemen_harga',
-            'prog_manajemen_desc',
-            'prog_manajemen_silabus',
-            'prog_manajemen_prospek',
-            'prog_administrasi_title',
-            'prog_administrasi_durasi',
-            'prog_administrasi_harga',
-            'prog_administrasi_desc',
-            'prog_administrasi_silabus',
-            'prog_administrasi_prospek',
-            'prog_kepemimpinan_title',
-            'prog_kepemimpinan_durasi',
-            'prog_kepemimpinan_harga',
-            'prog_kepemimpinan_desc',
-            'prog_kepemimpinan_silabus',
-            'prog_kepemimpinan_prospek',
-
-            // Jadwal Diklat
-            'jadwal_1_nama',
-            'jadwal_1_batas',
-            'jadwal_1_waktu',
-            'jadwal_1_metode',
-            'jadwal_1_quota',
-            'jadwal_2_nama',
-            'jadwal_2_batas',
-            'jadwal_2_waktu',
-            'jadwal_2_metode',
-            'jadwal_2_quota',
-            'jadwal_3_nama',
-            'jadwal_3_batas',
-            'jadwal_3_waktu',
-            'jadwal_3_metode',
-            'jadwal_3_quota',
-
-            // Fasilitas
-            'fasilitas_belajar_judul',
-            'fasilitas_belajar_desc',
-            'fasilitas_perpustakaan_judul',
-            'fasilitas_perpustakaan_desc',
-            'fasilitas_asrama_judul',
-            'fasilitas_asrama_desc',
-
-            // Kontak
-            'kontak_alamat',
-            'kontak_wa',
-            'kontak_email',
-            'kontak_jam',
-        ];
-
-        // Stats keys
-        $statCount = (int) $request->input('stat_count', 3);
-        for ($i = 1; $i <= $statCount; $i++) {
-            $keys[] = "stat_{$i}_val";
-            $keys[] = "stat_{$i}_lbl";
-        }
-
-        // Steps keys
-        $stepCount = (int) $request->input('step_count', 3);
-        for ($i = 1; $i <= $stepCount; $i++) {
-            $keys[] = "step_{$i}_title";
-        }
-
-        // Features keys
-        $featureCount = (int) $request->input('feature_count', 3);
-        for ($i = 1; $i <= $featureCount; $i++) {
-            $keys[] = "feature_{$i}_title";
-            $keys[] = "feature_{$i}_desc";
-        }
-
-        // Instruktur keys
-        for ($i = 1; $i <= $instrukturCount; $i++) {
-            $keys[] = "instruktur_{$i}_nama";
-            $keys[] = "instruktur_{$i}_jabatan";
-            $keys[] = "instruktur_{$i}_keahlian";
-            $keys[] = "instruktur_{$i}_pengalaman";
-        }
-
-        // FAQ keys
-        $faqCount = (int) $request->input('faq_count', 6);
-        for ($i = 1; $i <= $faqCount; $i++) {
-            $keys[] = "faq_{$i}_q";
-            $keys[] = "faq_{$i}_a";
-        }
-
-        // Gallery item text keys
-        for ($i = 1; $i <= $galleryCount; $i++) {
-            $keys[] = "gallery_item_{$i}_category";
-            $keys[] = "gallery_item_{$i}_title";
-            $keys[] = "gallery_item_{$i}_desc";
-            $keys[] = "gallery_item_{$i}_video_url";
-        }
-
-        foreach ($keys as $key) {
-            if ($request->has($key)) {
-                LandingSetting::updateOrCreate(['key' => $key], ['value' => $request->input($key)]);
+        foreach ($request->all() as $key => $value) {
+            if (in_array($key, ['_token', 'active_panel', 'delete_cms_type', 'delete_cms_key', 'add_cms_type']) || $request->hasFile($key)) {
+                continue;
             }
+            LandingSetting::updateOrCreate(['key' => $key], ['value' => $value]);
         }
 
-        // Hero image upload
-        if ($request->hasFile('hero_image')) {
-            $oldPath = LandingSetting::getValue('hero_image');
+        foreach ($request->allFiles() as $key => $file) {
+            $oldPath = LandingSetting::getValue($key);
             if ($oldPath && Storage::disk('public')->exists($oldPath)) {
                 Storage::disk('public')->delete($oldPath);
             }
-            $path = $request->file('hero_image')->store('landing', 'public');
-            LandingSetting::updateOrCreate(['key' => 'hero_image'], ['value' => $path]);
-        }
-
-        // Site logo upload
-        if ($request->hasFile('site_logo')) {
-            $oldPath = LandingSetting::getValue('site_logo');
-            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
+            
+            $dir = 'landing';
+            if (str_starts_with($key, 'fasilitas_')) {
+                $dir = 'landing/facilities';
+            } elseif (str_starts_with($key, 'instruktur_')) {
+                $dir = 'landing/instructors';
+            } elseif ($key === 'site_logo') {
+                $dir = 'landing/logo';
+            } elseif ($key === 'login_bg_image') {
+                $dir = 'landing/login';
+            } elseif ($key === 'org_image') {
+                $dir = 'landing/org';
             }
-            $path = $request->file('site_logo')->store('landing/logo', 'public');
-            LandingSetting::updateOrCreate(['key' => 'site_logo'], ['value' => $path]);
-        }
-
-        // Login background image upload
-        if ($request->hasFile('login_bg_image')) {
-            $oldPath = LandingSetting::getValue('login_bg_image');
-            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
-            }
-            $path = $request->file('login_bg_image')->store('landing/login', 'public');
-            LandingSetting::updateOrCreate(['key' => 'login_bg_image'], ['value' => $path]);
-        }
-
-        // Org chart image upload
-        if ($request->hasFile('org_image')) {
-            $oldPath = LandingSetting::getValue('org_image');
-            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
-            }
-            $path = $request->file('org_image')->store('landing/org', 'public');
-            LandingSetting::updateOrCreate(['key' => 'org_image'], ['value' => $path]);
-        }
-
-        // Instruktur photos upload
-        for ($i = 1; $i <= $instrukturCount; $i++) {
-            if ($request->hasFile("instruktur_{$i}_foto")) {
-                $oldPath = LandingSetting::getValue("instruktur_{$i}_foto");
-                if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                    Storage::disk('public')->delete($oldPath);
-                }
-                $path = $request->file("instruktur_{$i}_foto")->store('landing/instructors', 'public');
-                LandingSetting::updateOrCreate(['key' => "instruktur_{$i}_foto"], ['value' => $path]);
-            }
-        }
-
-        // Fasilitas photos upload
-        foreach (['belajar', 'perpustakaan', 'asrama'] as $fKey) {
-            if ($request->hasFile("fasilitas_{$fKey}_foto")) {
-                $oldPath = LandingSetting::getValue("fasilitas_{$fKey}_foto");
-                if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                    Storage::disk('public')->delete($oldPath);
-                }
-                $path = $request->file("fasilitas_{$fKey}_foto")->store('landing/facilities', 'public');
-                LandingSetting::updateOrCreate(['key' => "fasilitas_{$fKey}_foto"], ['value' => $path]);
-            }
-        }
-
-        // Gallery item image uploads
-        for ($i = 1; $i <= $galleryCount; $i++) {
-            if ($request->hasFile("gallery_item_{$i}_image")) {
-                $oldPath = LandingSetting::getValue("gallery_item_{$i}_image");
-                if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                    Storage::disk('public')->delete($oldPath);
-                }
-                $path = $request->file("gallery_item_{$i}_image")->store('landing/gallery', 'public');
-                LandingSetting::updateOrCreate(['key' => "gallery_item_{$i}_image"], ['value' => $path]);
-            }
+            
+            $path = $file->store($dir, 'public');
+            LandingSetting::updateOrCreate(['key' => $key], ['value' => $path]);
         }
 
         $activePanel = $request->input('active_panel', 'panel-landing');
-        return redirect()->route('admin.dashboard', ['open' => $activePanel])->with('success', 'Semua konten beranda berhasil diperbarui!');
+        return redirect()->route('admin.dashboard', ['open' => $activePanel])
+            ->with('success', 'Semua konten beranda berhasil diperbarui!');
     }
 
     public function storeProgram(Request $request)
@@ -911,5 +819,45 @@ class DashboardAdminController extends Controller
                 'time' => $reply->created_at->format('H:i'),
             ]
         ]);
+    }
+
+    public function sendScheduleEmail(Request $request, $id)
+    {
+        $this->checkRole();
+        
+        $request->validate([
+            'schedule_time' => 'required|string|max:255',
+            'bank_info'     => 'required|string|max:500',
+        ]);
+        
+        $trainee = TraineeEnrollment::findOrFail($id);
+        
+        try {
+            $programTitle = $trainee->trainingProgram?->title ?? '-';
+            $priceFormatted = $trainee->trainingProgram?->price ?? 'Rp 0';
+            
+            $emailContent = "Halo {$trainee->name},\n\n"
+                . "Terima kasih telah mendaftar di LPK MPI untuk program pelatihan:\n"
+                . "» {$programTitle}\n\n"
+                . "Berikut adalah informasi penting mengenai jadwal pelatihan Anda:\n"
+                . "» Hari/Tanggal: {$request->schedule_time}\n\n"
+                . "Untuk melanjutkan pendaftaran dan aktivasi akun Anda, silakan lakukan pembayaran sebesar {$priceFormatted} ke nomor rekening resmi kami berikut:\n"
+                . "» {$request->bank_info}\n\n"
+                . "Setelah melakukan transfer, harap kirimkan bukti transfer kepada admin kami melalui live chat di portal LPK MPI atau membalas email ini.\n\n"
+                . "Salam hangat,\n"
+                . "Sekretariat LPK MPI";
+
+            Mail::raw($emailContent, function ($message) use ($trainee) {
+                $message->to($trainee->email)
+                        ->subject("Jadwal Pelatihan & Informasi Pembayaran - LPK MPI");
+            });
+            
+        } catch (\Exception $e) {
+            logger()->error('Failed to send trainee schedule email: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal mengirim email: ' . $e->getMessage());
+        }
+        
+        return redirect()->route('admin.dashboard', ['open' => 'panel-trainees-db'])
+            ->with('success', 'Email jadwal pelatihan & info pembayaran untuk ' . $trainee->name . ' berhasil dikirim!');
     }
 }

@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin LPK — LPK MPI</title>
+    @php
+        $siteLogo = \App\Models\LandingSetting::getValue('site_logo');
+        $siteName = \App\Models\LandingSetting::getValue('site_name') ?? 'LPK MPI';
+    @endphp
+    @if($siteLogo)
+        <link rel="icon" type="image/{{ pathinfo($siteLogo, PATHINFO_EXTENSION) === 'svg' ? 'svg+xml' : 'png' }}" href="{{ asset('storage/' . $siteLogo) }}?v={{ file_exists(public_path('storage/' . $siteLogo)) ? filemtime(public_path('storage/' . $siteLogo)) : time() }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
+    @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -50,6 +59,38 @@
         #sidebar {
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .content-wrapper {
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 769px) {
+            #sidebar {
+                width: 70px;
+                overflow-x: hidden;
+            }
+            #sidebar:hover {
+                width: 260px;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+            }
+            #sidebar:hover ~ .content-wrapper {
+                padding-left: 260px !important;
+            }
+            /* Hide text elements when collapsed */
+            #sidebar:not(:hover) .px-6 div > div:last-child,
+            #sidebar:not(:hover) nav button:not(.accordion-trigger) > span,
+            #sidebar:not(:hover) nav button.accordion-trigger span.flex > span:last-child,
+            #sidebar:not(:hover) .accordion-arrow,
+            #sidebar:not(:hover) .accordion-content,
+            #sidebar:not(:hover) .p-4 button > span:last-child,
+            #sidebar:not(:hover) .p-4 a > span:last-child {
+                opacity: 0 !important;
+                width: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
+                display: none !important;
+                pointer-events: none;
+            }
         }
         @media (max-width: 768px) {
             #sidebar {
@@ -102,19 +143,22 @@
         .dark .bg-slate-100 { background-color: rgba(51, 65, 85, 0.4) !important; }
     </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
+<body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
         <div>
-            <!-- Sidebar Header -->
             <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
-                        🏛️
-                    </div>
+                    @if($siteLogo)
+                        <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
+                    @else
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-600/10">
+                            🏛️
+                        </div>
+                    @endif
                     <div>
-                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LPK MPI</div>
+                        <div class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">{{ $siteName }}</div>
                         <div class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">Sekretariat</div>
                     </div>
                 </div>
@@ -246,7 +290,7 @@
     </aside>
 
     <!-- CONTENT WRAPPER -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden md:pl-[260px]">
+    <div class="content-wrapper flex-1 flex flex-col min-w-0 overflow-x-hidden overflow-y-auto md:pl-[70px]">
 
         <!-- TOPBAR -->
         <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
@@ -295,6 +339,20 @@
                 <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-sm flex items-center gap-3 shadow-sm animate-fade-in">
                     <span>✗</span>
                     <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-sm space-y-1 shadow-sm animate-fade-in">
+                    <div class="font-extrabold flex items-center gap-2">
+                        <span>✗</span>
+                        <span>Terjadi Kesalahan Input:</span>
+                    </div>
+                    <ul class="list-disc list-inside text-xs font-semibold pl-4">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -416,11 +474,33 @@
                     </form>
                 </div>
 
+                <!-- Bulk Actions Bar -->
+                <div id="bulk-actions-verifikasi" class="hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl flex items-center justify-between gap-4 transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                        <span id="selected-count-verifikasi">0</span> asesi terpilih
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="bulkViewTrainee()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-2 rounded-lg transition-all shadow-md">
+                            👁️ Lihat Form
+                        </button>
+                        <button type="button" onclick="bulkVerifyTrainee()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[10px] uppercase px-3 py-2 rounded-lg transition-all shadow-md">
+                            ✓ Verifikasi / Lunas
+                        </button>
+                        <button type="button" onclick="bulkDeleteTrainee()" class="bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[10px] uppercase px-3 py-2 rounded-lg transition-all shadow-md">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                </div>
+
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
                     <div class="overflow-x-auto w-full">
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
+                                    <th class="px-5 py-3 text-left w-10">
+                                        <input type="checkbox" id="select-all-verifikasi" class="rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 bg-slate-50 dark:bg-slate-950" onclick="toggleSelectAllVerifikasi(this)">
+                                    </th>
                                     <th class="px-5 py-3 text-left">Nama</th>
                                     <th class="px-5 py-3 text-left">Skema / Program</th>
                                     <th class="px-5 py-3 text-left">Tanggal Daftar</th>
@@ -432,6 +512,9 @@
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 @forelse($trainees as $t)
                                     <tr>
+                                        <td class="px-5 py-4 w-10">
+                                            <input type="checkbox" class="trainee-checkbox rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 bg-slate-50 dark:bg-slate-950" value="{{ $t->id }}" data-trainee="{{ json_encode($t) }}" onclick="updateBulkActionsVerifikasi()">
+                                        </td>
                                         <td class="px-5 py-4">
                                             <div class="font-bold text-slate-800 dark:text-white">{{ $t->name }}</div>
                                             <div class="text-slate-500 dark:text-slate-400 text-xs font-mono mt-0.5">NIK: {{ $t->nik }}</div>
@@ -468,7 +551,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="6" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada asesi mendaftar.</td></tr>
+                                    <tr><td colspan="7" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada asesi mendaftar.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -789,40 +872,48 @@
                 <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-program">
-                    @foreach([
-                        ['key'=>'manajemen','label'=>'Program Management Yayasan/Pesantren'],
-                        ['key'=>'administrasi','label'=>'Program Administrasi Sekolah Indonesia'],
-                        ['key'=>'kepemimpinan','label'=>'Program Kepemimpinan Kepala Sekolah'],
-                    ] as $prog)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $prog['label'] }}</h3>
+                    @php
+                        $cmsProgKeysStr = $settings['cms_program_keys'] ?? 'manajemen,administrasi,kepemimpinan';
+                        $cmsProgKeys = array_filter(explode(',', $cmsProgKeysStr));
+                    @endphp
+                    @foreach($cmsProgKeys as $pKey)
+                        @php
+                            $pTitle = $settings['prog_'.$pKey.'_title'] ?? ('Program ' . ucfirst($pKey));
+                        @endphp
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm relative">
+                            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
+                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">{{ $pTitle }}</h3>
+                                <button type="button" data-url="{{ route('admin.settings.update') }}" onclick="confirmDeleteCmsItem('program', '{{ $pKey }}', '{{ $pTitle }}', this.dataset.url)" class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border border-rose-100 dark:border-rose-900/40 px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition flex items-center gap-1.5">
+                                    🗑️ Hapus Program
+                                </button>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program</label>
-                                    <input type="text" name="prog_{{ $prog['key'] }}_title" value="{{ $settings['prog_'.$prog['key'].'_title'] ?? $prog['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="prog_{{ $pKey }}_title" value="{{ $settings['prog_'.$pKey.'_title'] ?? $pTitle }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div class="grid grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
-                                        <input type="text" name="prog_{{ $prog['key'] }}_durasi" value="{{ $settings['prog_'.$prog['key'].'_durasi'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                        <input type="text" name="prog_{{ $pKey }}_durasi" value="{{ $settings['prog_'.$pKey.'_durasi'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
-                                        <input type="text" name="prog_{{ $prog['key'] }}_harga" value="{{ $settings['prog_'.$prog['key'].'_harga'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                        <input type="text" name="prog_{{ $pKey }}_harga" value="{{ $settings['prog_'.$pKey.'_harga'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
-                                <textarea name="prog_{{ $prog['key'] }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_desc'] ?? '' }}</textarea>
+                                <textarea name="prog_{{ $pKey }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$pKey.'_desc'] ?? '' }}</textarea>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi Silabus</label>
-                                <textarea name="prog_{{ $prog['key'] }}_silabus" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_silabus'] ?? '' }}</textarea>
+                                <textarea name="prog_{{ $pKey }}_silabus" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$pKey.'_silabus'] ?? '' }}</textarea>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Prospek Karir / Output</label>
-                                <textarea name="prog_{{ $prog['key'] }}_prospek" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$prog['key'].'_prospek'] ?? '' }}</textarea>
+                                <textarea name="prog_{{ $pKey }}_prospek" rows="2" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['prog_'.$pKey.'_prospek'] ?? '' }}</textarea>
                             </div>
                         </div>
                     @endforeach
@@ -830,6 +921,40 @@
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Program Pelatihan</button>
                     </div>
                 </form>
+
+                <!-- ADD PROGRAM CARD -->
+                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        ➕ Tambah Program Pelatihan Baru
+                    </h3>
+                    <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="active_panel" value="panel-program">
+                        <input type="hidden" name="add_cms_type" value="program">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Program Baru</label>
+                                <input type="text" name="new_title" required placeholder="Contoh: Bimbingan Kelas Kreatif" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Durasi</label>
+                                    <input type="text" name="new_durasi" placeholder="Contoh: 1 Bulan" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Harga</label>
+                                    <input type="text" name="new_harga" placeholder="Contoh: Rp 1.500.000" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 font-bold">
+                                + Tambah Program
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- PANEL: JADWAL DIKLAT (CMS) -->
@@ -841,39 +966,93 @@
                 <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-jadwal">
-                    @for($i = 1; $i <= 3; $i++)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 pb-2">Jadwal #{{ $i }}</h3>
+                    @php
+                        $cmsJadwalKeysStr = $settings['cms_jadwal_keys'] ?? '1,2,3';
+                        $cmsJadwalKeys = array_filter(explode(',', $cmsJadwalKeysStr));
+                    @endphp
+                    @foreach($cmsJadwalKeys as $jKey)
+                        @php
+                            $jName = $settings['jadwal_'.$jKey.'_nama'] ?? ('Jadwal #' . $jKey);
+                        @endphp
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm relative">
+                            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
+                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">{{ $jName }}</h3>
+                                <button type="button" data-url="{{ route('admin.settings.update') }}" onclick="confirmDeleteCmsItem('jadwal', '{{ $jKey }}', '{{ $jName }}', this.dataset.url)" class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border border-rose-100 dark:border-rose-900/40 px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition flex items-center gap-1.5">
+                                    🗑️ Hapus Jadwal
+                                </button>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
-                                    <input type="text" name="jadwal_{{ $i }}_nama" value="{{ $settings['jadwal_'.$i.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_nama" value="{{ $settings['jadwal_'.$jKey.'_nama'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Batas Pendaftaran</label>
-                                    <input type="text" name="jadwal_{{ $i }}_batas" value="{{ $settings['jadwal_'.$i.'_batas'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_batas" value="{{ $settings['jadwal_'.$jKey.'_batas'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Waktu Pelaksanaan</label>
-                                    <input type="text" name="jadwal_{{ $i }}_waktu" value="{{ $settings['jadwal_'.$i.'_waktu'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_waktu" value="{{ $settings['jadwal_'.$jKey.'_waktu'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Metode Pelaksanaan</label>
-                                    <input type="text" name="jadwal_{{ $i }}_metode" value="{{ $settings['jadwal_'.$i.'_metode'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_metode" value="{{ $settings['jadwal_'.$jKey.'_metode'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Kuota / Batas</label>
-                                    <input type="text" name="jadwal_{{ $i }}_quota" value="{{ $settings['jadwal_'.$i.'_quota'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <input type="text" name="jadwal_{{ $jKey }}_quota" value="{{ $settings['jadwal_'.$jKey.'_quota'] ?? '' }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Jadwal Diklat</button>
                     </div>
                 </form>
+
+                <!-- ADD SCHEDULE CARD -->
+                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        ➕ Tambah Jadwal Pelatihan Baru
+                    </h3>
+                    <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="active_panel" value="panel-jadwal">
+                        <input type="hidden" name="add_cms_type" value="jadwal">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Pelatihan</label>
+                                <input type="text" name="new_nama" required placeholder="Contoh: Diklat Guru Kompeten" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Batas Pendaftaran</label>
+                                <input type="text" name="new_batas" placeholder="Contoh: 20 September 2026" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Waktu Pelaksanaan</label>
+                                <input type="text" name="new_waktu" placeholder="Contoh: Setiap Sabtu & Minggu" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Metode Pelaksanaan</label>
+                                <input type="text" name="new_metode" placeholder="Contoh: Blended Learning" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Kuota / Batas</label>
+                                <input type="text" name="new_quota" placeholder="Contoh: Terbatas (Sisa 5)" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 font-bold">
+                                + Tambah Jadwal
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- PANEL: FASILITAS (CMS) -->
@@ -885,27 +1064,35 @@
                 <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <input type="hidden" name="active_panel" value="panel-fasilitas">
-                    @foreach([
-                        ['key'=>'belajar','label'=>'Ruang Belajar'],
-                        ['key'=>'perpustakaan','label'=>'Perpustakaan'],
-                        ['key'=>'asrama','label'=>'Asrama / Penginapan'],
-                    ] as $fas)
-                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-2 uppercase tracking-wider">{{ $fas['label'] }}</h3>
+                    @php
+                        $cmsFasilitasKeysStr = $settings['cms_fasilitas_keys'] ?? 'belajar,perpustakaan,asrama';
+                        $cmsFasilitasKeys = array_filter(explode(',', $cmsFasilitasKeysStr));
+                    @endphp
+                    @foreach($cmsFasilitasKeys as $fKey)
+                        @php
+                            $fLabel = $settings['fasilitas_'.$fKey.'_judul'] ?? ('Fasilitas ' . ucfirst($fKey));
+                        @endphp
+                        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm relative">
+                            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
+                                <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">{{ $fLabel }}</h3>
+                                <button type="button" data-url="{{ route('admin.settings.update') }}" onclick="confirmDeleteCmsItem('fasilitas', '{{ $fKey }}', '{{ $fLabel }}', this.dataset.url)" class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border border-rose-100 dark:border-rose-900/40 px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition flex items-center gap-1.5">
+                                    🗑️ Hapus Fasilitas
+                                </button>
+                            </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Judul Fasilitas</label>
-                                <input type="text" name="fasilitas_{{ $fas['key'] }}_judul" value="{{ $settings['fasilitas_'.$fas['key'].'_judul'] ?? $fas['label'] }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                <input type="text" name="fasilitas_{{ $fKey }}_judul" value="{{ $settings['fasilitas_'.$fKey.'_judul'] ?? $fLabel }}" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
-                                <textarea name="fasilitas_{{ $fas['key'] }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['fasilitas_'.$fas['key'].'_desc'] ?? '' }}</textarea>
+                                <textarea name="fasilitas_{{ $fKey }}_desc" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none">{{ $settings['fasilitas_'.$fKey.'_desc'] ?? '' }}</textarea>
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto</label>
-                                @if(!empty($settings['fasilitas_'.$fas['key'].'_foto']))
-                                    <img src="{{ asset('storage/' . $settings['fasilitas_'.$fas['key'].'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
+                                @if(!empty($settings['fasilitas_'.$fKey.'_foto']))
+                                    <img src="{{ asset('storage/' . $settings['fasilitas_'.$fKey.'_foto']) }}" class="max-w-xs h-auto object-cover rounded-xl border border-slate-200 dark:border-slate-800 mb-2">
                                 @endif
-                                <input type="file" name="fasilitas_{{ $fas['key'] }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <input type="file" name="fasilitas_{{ $fKey }}_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                             </div>
                         </div>
                     @endforeach
@@ -913,6 +1100,36 @@
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-8 py-3 rounded-xl shadow-md shadow-blue-500/10 font-bold">Simpan Fasilitas</button>
                     </div>
                 </form>
+
+                <!-- ADD FACILITY CARD -->
+                <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        ➕ Tambah Fasilitas Baru
+                    </h3>
+                    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="active_panel" value="panel-fasilitas">
+                        <input type="hidden" name="add_cms_type" value="fasilitas">
+                        
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama / Judul Fasilitas</label>
+                            <input type="text" name="new_judul" required placeholder="Contoh: Lab Komputer" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi</label>
+                            <textarea name="new_desc" rows="3" placeholder="Deskripsikan fasilitas..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 resize-none font-semibold"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Foto Fasilitas</label>
+                            <input type="file" name="new_foto" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 font-semibold">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 font-bold">
+                                + Tambah Fasilitas
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- PANEL: DATA PROGRAM PELATIHAN (DATABASE CRUD) -->
@@ -1128,6 +1345,38 @@
                     </form>
                 </div>
 
+                <!-- Form Kirim Jadwal & Rekening Pelatihan -->
+                <div id="form-send-schedule" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Kirim Jadwal Pelatihan &amp; Info Rekening</h3>
+                    <form id="send-schedule-form-action" method="POST" class="space-y-4">
+                        @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Peserta</label>
+                                <input type="text" id="schedule-trainee-name" readonly class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-500 dark:text-slate-400 font-semibold focus:outline-none cursor-not-allowed">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Program Pelatihan &amp; Biaya</label>
+                                <input type="text" id="schedule-program-title" readonly class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-500 dark:text-slate-400 font-semibold focus:outline-none cursor-not-allowed">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Hari, Tanggal &amp; Waktu Pelatihan</label>
+                                <input type="text" name="schedule_time" id="schedule-time-input" placeholder="Contoh: Senin, 17 Agustus 2026 jam 09:00 WIB" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Info Rekening Pembayaran</label>
+                                <textarea name="bank_info" id="schedule-bank-input" rows="2" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">Bank Mandiri Rek. 131-00-2244668-8 a/n LPK MPI</textarea>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cancelSendSchedule()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-emerald-500/10 font-bold">Kirim Email Informasi</button>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- Tabel List Pendaftaran -->
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
                     <div class="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
@@ -1186,6 +1435,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
+                                                <button type="button" data-trainee="{{ json_encode($t) }}" onclick="openSendScheduleModal(JSON.parse(this.dataset.trainee))" class="text-emerald-600 hover:text-emerald-800 font-bold uppercase text-[10px]">Kirim Jadwal</button>
                                                 <button type="button" data-trainee="{{ json_encode($t) }}" onclick="editTrainee(JSON.parse(this.dataset.trainee))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('admin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
                                                     @csrf @method('DELETE')
@@ -1286,7 +1536,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            <!-- Hidden Delete Form for CMS Items -->
+            <form id="delete-cms-item-form" action="" method="POST" style="display: none;">
+                @csrf
+                <input type="hidden" name="active_panel" id="delete-cms-active-panel">
+                <input type="hidden" name="delete_cms_type" id="delete-cms-type">
+                <input type="hidden" name="delete_cms_key" id="delete-cms-key">
+            </form>
 
         </main>
     </div>
@@ -1297,6 +1553,20 @@
             'dasbor', 'verifikasi', 'plotting', 'sertifikat', 'users', 'profil',
             'program', 'jadwal', 'fasilitas', 'programs-db', 'trainees-db', 'articles', 'chats'
         ];
+
+        // CMS Delete Helper
+        function confirmDeleteCmsItem(type, key, name, actionUrl) {
+            if (confirm('Apakah Anda yakin ingin menghapus ' + type + ' "' + name + '" dari CMS?')) {
+                const form = document.getElementById('delete-cms-item-form');
+                const activePanel = type === 'program' ? 'panel-program' : (type === 'jadwal' ? 'panel-jadwal' : 'panel-fasilitas');
+                
+                form.action = actionUrl;
+                document.getElementById('delete-cms-active-panel').value = activePanel;
+                document.getElementById('delete-cms-type').value = type;
+                document.getElementById('delete-cms-key').value = key;
+                form.submit();
+            }
+        }
 
         // Program DB panel helpers
         function toggleAddProgramForm() {
@@ -1376,6 +1646,7 @@
         }
 
         function editTrainee(t) {
+            document.getElementById('form-send-schedule').classList.add('hidden');
             const editDiv = document.getElementById('form-edit-trainee');
             editDiv.classList.remove('hidden');
             document.getElementById('edit-trainee-name').value = t.name;
@@ -1392,7 +1663,52 @@
             document.getElementById('form-edit-trainee').classList.add('hidden');
         }
 
+        function openSendScheduleModal(trainee) {
+            document.getElementById('form-edit-trainee').classList.add('hidden');
+            
+            const formAction = "{{ url('/dashboard/admin/trainees') }}/" + trainee.id + "/send-schedule";
+            document.getElementById('send-schedule-form-action').action = formAction;
+            
+            document.getElementById('schedule-trainee-name').value = trainee.name;
+            const programPrice = trainee.training_program ? trainee.training_program.price : 'Rp 0';
+            const programTitle = trainee.training_program ? trainee.training_program.title : '-';
+            document.getElementById('schedule-program-title').value = `${programTitle} (${programPrice})`;
+            
+            const scheduleDiv = document.getElementById('form-send-schedule');
+            scheduleDiv.classList.remove('hidden');
+            scheduleDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelSendSchedule() {
+            document.getElementById('form-send-schedule').classList.add('hidden');
+        }
+
+        function updateDocumentTitle(panelId) {
+            let sectionTitle = "";
+            switch(panelId) {
+                case 'dasbor': sectionTitle = "Dasbor Sekretariat"; break;
+                case 'verifikasi': sectionTitle = "Verifikasi Berkas"; break;
+                case 'plotting': sectionTitle = "Plotting Asesor"; break;
+                case 'sertifikat': sectionTitle = "Penerbitan Sertifikat"; break;
+                case 'users': sectionTitle = "Kelola Pengguna"; break;
+                case 'profil': sectionTitle = "Profil Saya"; break;
+                case 'program': sectionTitle = "Kelola Program"; break;
+                case 'jadwal': sectionTitle = "Jadwal Pelatihan"; break;
+                case 'fasilitas': sectionTitle = "Kelola Fasilitas"; break;
+                case 'programs-db': sectionTitle = "Database Program"; break;
+                case 'trainees-db': sectionTitle = "Database Peserta"; break;
+                case 'articles': sectionTitle = "Kabar & Artikel"; break;
+                case 'chats': sectionTitle = "Live Chat Bantuan"; break;
+                default: sectionTitle = "Dasbor";
+            }
+            const siteName = "{{ $siteName }}";
+            document.title = `${sectionTitle} — Admin — ${siteName}`;
+        }
+
         function showPanel(id) {
+            if (id.startsWith('panel-')) {
+                id = id.substring(6);
+            }
             panels.forEach(p => {
                 const el = document.getElementById('panel-' + p);
                 if (el) el.classList.add('hidden');
@@ -1412,6 +1728,8 @@
             }
 
             localStorage.setItem('admin_active_panel', id);
+            
+            updateDocumentTitle(id);
 
             if (id === 'chats') {
                 loadChatThreads();
@@ -1705,9 +2023,236 @@
             }
         }
 
+        function toggleSelectAllVerifikasi(selectAllCheckbox) {
+            const checkboxes = document.querySelectorAll('.trainee-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = selectAllCheckbox.checked;
+            });
+            updateBulkActionsVerifikasi();
+        }
+
+        function updateBulkActionsVerifikasi() {
+            const checkboxes = document.querySelectorAll('.trainee-checkbox');
+            const selectedIds = [];
+            
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedIds.push(cb.value);
+                }
+            });
+            
+            const bulkBar = document.getElementById('bulk-actions-verifikasi');
+            const countSpan = document.getElementById('selected-count-verifikasi');
+            
+            if (countSpan) countSpan.textContent = selectedIds.length;
+            
+            if (selectedIds.length > 0) {
+                bulkBar.classList.remove('hidden');
+                bulkBar.classList.add('flex');
+            } else {
+                bulkBar.classList.remove('flex');
+                bulkBar.classList.add('hidden');
+            }
+        }
+        
+        function getSelectedTraineeIds() {
+            const checkboxes = document.querySelectorAll('.trainee-checkbox');
+            const selectedIds = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedIds.push(cb.value);
+                }
+            });
+            return selectedIds;
+        }
+
+        function getSelectedTrainees() {
+            const checkboxes = document.querySelectorAll('.trainee-checkbox');
+            const selectedTrainees = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedTrainees.push(JSON.parse(cb.dataset.trainee));
+                }
+            });
+            return selectedTrainees;
+        }
+
+        function bulkViewTrainee() {
+            const trainees = getSelectedTrainees();
+            if (trainees.length === 0) return;
+            showTraineeDetail(trainees, 0);
+        }
+
+        function bulkVerifyTrainee() {
+            const ids = getSelectedTraineeIds();
+            if (ids.length === 0) return;
+            if (confirm(`Apakah Anda yakin ingin memverifikasi pembayaran ${ids.length} asesi yang terpilih?`)) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = "{{ route('admin.trainees.bulk-verify') }}";
+                
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = "{{ csrf_token() }}";
+                form.appendChild(csrfInput);
+                
+                ids.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'ids[]';
+                    input.value = id;
+                    form.appendChild(input);
+                });
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function bulkDeleteTrainee() {
+            const ids = getSelectedTraineeIds();
+            if (ids.length === 0) return;
+            if (confirm(`Apakah Anda yakin ingin menghapus ${ids.length} data pendaftaran asesi yang terpilih?`)) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = "{{ route('admin.trainees.bulk-delete') }}";
+                
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = "{{ csrf_token() }}";
+                form.appendChild(csrfInput);
+                
+                const methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'DELETE';
+                form.appendChild(methodInput);
+                
+                ids.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'ids[]';
+                    input.value = id;
+                    form.appendChild(input);
+                });
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        let selectedTraineesForDetail = [];
+        let currentDetailTraineeIndex = 0;
+
+        function showTraineeDetail(trainees, startIndex = 0) {
+            selectedTraineesForDetail = trainees;
+            currentDetailTraineeIndex = startIndex;
+            
+            if (selectedTraineesForDetail.length === 0) return;
+            
+            const modal = document.getElementById('trainee-detail-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            renderDetailTraineeContent();
+        }
+
+        function renderDetailTraineeContent() {
+            const trainee = selectedTraineesForDetail[currentDetailTraineeIndex];
+            const badge = document.getElementById('detail-trainee-program-badge');
+            const contentArea = document.getElementById('trainee-detail-content-area');
+            const prevBtn = document.getElementById('btn-prev-detail');
+            const nextBtn = document.getElementById('btn-next-detail');
+            const navContainer = document.getElementById('detail-modal-nav-container');
+
+            badge.textContent = trainee.training_program ? trainee.training_program.title : 'Program Pelatihan';
+            
+            const fields = [
+                { label: 'Nama Lengkap', value: trainee.name },
+                { label: 'NIK (Nomor Induk Kependudukan)', value: trainee.nik, mono: true },
+                { label: 'Email', value: trainee.email, mono: true },
+                { label: 'No. Handphone / WhatsApp', value: trainee.phone, mono: true },
+                { label: 'Pendidikan Terakhir', value: trainee.education || '-' },
+                { label: 'Kategori / Pekerjaan', value: trainee.category || '-' },
+                { label: 'Instansi / Perusahaan', value: trainee.company || '-' },
+                { label: 'Jabatan / Posisi', value: trainee.position || '-' },
+                { label: 'Status Pendaftaran', value: trainee.status, statusBadge: true },
+                { label: 'Status Pembayaran', value: trainee.payment_status, paymentBadge: true },
+                { label: 'Metode Pembayaran', value: trainee.payment_method || '-' },
+                { label: 'Referensi Pembayaran', value: trainee.payment_reference || '-', mono: true }
+            ];
+
+            let html = '';
+            fields.forEach(field => {
+                let valueHtml = '';
+                if (field.statusBadge) {
+                    const isLulus = field.value === 'LULUS';
+                    const colorClass = isLulus ? 'bg-blue-50 text-blue-600 border-blue-500/20' : 'bg-amber-50 text-amber-600 border-amber-500/20';
+                    valueHtml = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${colorClass}">${field.value}</span>`;
+                } else if (field.paymentBadge) {
+                    const isPaid = field.value === 'PAID';
+                    const colorClass = isPaid ? 'bg-emerald-50 text-emerald-600 border-emerald-500/20' : 'bg-rose-50 text-rose-600 border-rose-500/20';
+                    valueHtml = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${colorClass}">${field.value === 'PAID' ? 'LUNAS' : 'BELUM LUNAS'}</span>`;
+                } else {
+                    valueHtml = `<span class="${field.mono ? 'font-mono font-semibold' : 'font-semibold'} text-slate-800 dark:text-white">${field.value}</span>`;
+                }
+
+                html += `
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">${field.label}</span>
+                        ${valueHtml}
+                    </div>
+                `;
+            });
+
+            let isComplete = trainee.name && trainee.nik && trainee.email && trainee.phone && trainee.education;
+            const completionStatusClass = isComplete ? 'bg-emerald-50 text-emerald-600 border-emerald-500/20' : 'bg-amber-50 text-amber-600 border-amber-500/20';
+            const completionStatusText = isComplete ? '✓ Formulir Komplit' : '⚠️ Formulir Kurang Lengkap';
+            html += `
+                <div class="col-span-1 md:col-span-2 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl flex items-center justify-between border border-slate-100 dark:border-slate-800/85">
+                    <div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status Kelengkapan Form</div>
+                        <div class="text-xs font-semibold text-slate-600 dark:text-slate-300 mt-1">Sistem memverifikasi kelengkapan berkas NIK, Data Kontak, & Pendidikan.</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase border ${completionStatusClass}">${completionStatusText}</span>
+                </div>
+            `;
+
+            contentArea.innerHTML = html;
+
+            if (selectedTraineesForDetail.length > 1) {
+                navContainer.classList.remove('hidden');
+                navContainer.classList.add('flex');
+                
+                prevBtn.disabled = currentDetailTraineeIndex === 0;
+                nextBtn.disabled = currentDetailTraineeIndex === selectedTraineesForDetail.length - 1;
+                
+                if (prevBtn.disabled) {
+                    prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                if (nextBtn.disabled) {
+                    nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            } else {
+                navContainer.classList.remove('flex');
+                navContainer.classList.add('hidden');
+            }
+        }
+
+        function closeTraineeDetailModal() {
+            document.getElementById('trainee-detail-modal').classList.add('hidden');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const activePanel = urlParams.get('open') || localStorage.getItem('admin_active_panel') || 'dasbor';
+            const activePanel = urlParams.get('open') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
             // Auto-open accordion group that contains the active panel button
@@ -1721,6 +2266,21 @@
                     if (arrow) arrow.style.transform = 'rotate(180deg)';
                 }
             }
+
+            // Register navigation click events for detail modal
+            document.getElementById('btn-prev-detail').addEventListener('click', () => {
+                if (currentDetailTraineeIndex > 0) {
+                    currentDetailTraineeIndex--;
+                    renderDetailTraineeContent();
+                }
+            });
+
+            document.getElementById('btn-next-detail').addEventListener('click', () => {
+                if (currentDetailTraineeIndex < selectedTraineesForDetail.length - 1) {
+                    currentDetailTraineeIndex++;
+                    renderDetailTraineeContent();
+                }
+            });
         });
     </script>
 
@@ -1759,6 +2319,37 @@
             
             <div class="flex justify-end pt-2">
                 <button type="button" onclick="closeUserDetailModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trainee Detail Modal -->
+    <div id="trainee-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-2xl p-6 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button type="button" onclick="closeTraineeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition duration-205 text-lg font-bold">
+                ✕
+            </button>
+            <div class="space-y-1">
+                <span id="detail-trainee-program-badge" class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px] inline-block">Program</span>
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white font-heading">Formulir Pendaftaran &amp; Berkas Peserta</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs" id="trainee-detail-content-area">
+                <!-- Data will be populated here -->
+            </div>
+            
+            <div class="flex justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <div class="flex gap-2" id="detail-modal-nav-container">
+                    <button type="button" id="btn-prev-detail" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">
+                        &larr; Sblmnya
+                    </button>
+                    <button type="button" id="btn-next-detail" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">
+                        Selanjutnya &rarr;
+                    </button>
+                </div>
+                <button type="button" onclick="closeTraineeDetailModal()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
                     Tutup
                 </button>
             </div>
