@@ -46,7 +46,15 @@ class AsesiController extends Controller
             ->latest()
             ->get();
 
-        return view('dashboard.asesi', compact('schemes', 'attempts', 'enrollments', 'schedules'));
+        $attendances = \App\Models\Attendance::where('user_id', auth()->id())
+            ->get()
+            ->keyBy('class_schedule_id');
+
+        $portfolios = \App\Models\AsesiPortfolio::where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('dashboard.asesi', compact('schemes', 'attempts', 'enrollments', 'schedules', 'attendances', 'portfolios'));
     }
 
     /** Live stats JSON – polled every 30 s by the dashboard */
@@ -211,5 +219,73 @@ class AsesiController extends Controller
             ->findOrFail($enrollmentId);
 
         return view('asesi.certificate', compact('enrollment'));
+    }
+
+    /** Mencatat presensi kehadiran asesi ke database */
+    public function recordAttendance(Request $request)
+    {
+        $this->checkRole();
+        $request->validate([
+            'class_schedule_id' => 'required|exists:class_schedules,id',
+        ]);
+
+        $attendance = \App\Models\Attendance::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'class_schedule_id' => $request->class_schedule_id,
+            ],
+            [
+                'status' => 'present',
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Presensi berhasil dicatat!',
+            'attendance' => $attendance
+        ]);
+    }
+
+    /** Menyimpan unggahan portofolio baru */
+    public function storePortfolio(Request $request)
+    {
+        $this->checkRole();
+        $request->validate([
+            'training_program_id' => 'required|string|exists:training_programs,id',
+            'document_name' => 'required|string|max:255',
+            'portfolio_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        if ($request->hasFile('portfolio_file')) {
+            $file = $request->file('portfolio_file');
+            $path = $file->store('portfolios/' . auth()->id(), 'public');
+
+            \App\Models\AsesiPortfolio::create([
+                'user_id' => auth()->id(),
+                'training_program_id' => $request->training_program_id,
+                'document_name' => $request->document_name,
+                'file_path' => $path,
+                'status' => 'pending',
+            ]);
+
+            return redirect()->back()->with('success', 'Dokumen portofolio berhasil diunggah!');
+        }
+
+        return redirect()->back()->with('error', 'Gagal mengunggah dokumen.');
+    }
+
+    /** Menghapus portofolio asesi */
+    public function deletePortfolio($id)
+    {
+        $this->checkRole();
+        $portfolio = \App\Models\AsesiPortfolio::where('user_id', auth()->id())->findOrFail($id);
+
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($portfolio->file_path)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($portfolio->file_path);
+        }
+
+        $portfolio->delete();
+
+        return redirect()->back()->with('success', 'Dokumen portofolio berhasil dihapus.');
     }
 }

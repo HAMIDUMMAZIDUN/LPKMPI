@@ -188,4 +188,57 @@ class LoginSettingsTest extends TestCase
             'username' => 'new_admin',
         ]);
     }
+
+    public function test_superadmin_can_update_profile_successfully()
+    {
+        $superadmin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'username' => 'superadmin',
+            'password' => bcrypt('password123'),
+            'role' => 'superadmin',
+        ]);
+
+        $this->actingAs($superadmin);
+
+        $response = $this->post(route('superadmin.profile.update'), [
+            'username' => 'superadmin_new',
+            'email' => 'superadmin_new@gmail.com',
+            'password' => 'newpassword123',
+            'password_confirmation' => 'newpassword123',
+        ]);
+
+        $response->assertRedirect(route('superadmin.dashboard', ['open' => 'panel-profile']));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $superadmin->id,
+            'username' => 'superadmin_new',
+            'email' => 'superadmin_new@gmail.com',
+        ]);
+    }
+
+    public function test_superadmin_cannot_update_profile_with_non_gmail_email()
+    {
+        $superadmin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'username' => 'superadmin',
+            'password' => bcrypt('password123'),
+            'role' => 'superadmin',
+        ]);
+
+        $this->actingAs($superadmin);
+
+        $response = $this->post(route('superadmin.profile.update'), [
+            'username' => 'superadmin_new',
+            'email' => 'superadmin_new@yahoo.com',
+        ]);
+
+        $response->assertSessionHasErrors('email');
+        $this->assertDatabaseHas('users', [
+            'id' => $superadmin->id,
+            'email' => 'superadmin@gmail.com',
+        ]);
+    }
 }

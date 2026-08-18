@@ -60,6 +60,13 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+        #sidebar-nav {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .content-wrapper {
             transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -105,9 +112,9 @@
 <body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
-        <div>
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-hidden h-screen">
+        <div class="flex flex-col flex-1 min-h-0">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
                     @if($siteLogo)
                         <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
@@ -127,7 +134,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <nav class="p-4 space-y-1" id="sidebar-nav">
+            <nav class="p-4 space-y-1 overflow-y-auto flex-1" id="sidebar-nav">
 
                 <!-- Dasbor (standalone) -->
                 <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
@@ -163,7 +170,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="p-4 border-t border-slate-100 dark:border-slate-800 shrink-0">
             <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>

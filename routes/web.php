@@ -10,6 +10,7 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\InstrukturController;
+use App\Http\Controllers\ImportExportController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -61,6 +62,26 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard/superadmin/trainees/{id}', [SuperadminController::class, 'updateTrainee'])->name('superadmin.trainees.update');
     Route::delete('/dashboard/superadmin/trainees/{id}', [SuperadminController::class, 'destroyTrainee'])->name('superadmin.trainees.destroy');
 
+    // ── Bulk Import/Export ────────────────────────────────────────────────
+    Route::get('/dashboard/export/users', [ImportExportController::class, 'exportUsers'])->name('export.users');
+    Route::post('/dashboard/import/users', [ImportExportController::class, 'importUsers'])->name('import.users');
+    Route::get('/dashboard/export/programs', [ImportExportController::class, 'exportPrograms'])->name('export.programs');
+    Route::post('/dashboard/import/programs', [ImportExportController::class, 'importPrograms'])->name('import.programs');
+    Route::get('/dashboard/export/trainees', [ImportExportController::class, 'exportTrainees'])->name('export.trainees');
+    Route::post('/dashboard/import/trainees', [ImportExportController::class, 'importTrainees'])->name('import.trainees');
+
+    Route::get('/dashboard/export/instrukturs', [ImportExportController::class, 'exportInstrukturs'])->name('export.instrukturs');
+    Route::post('/dashboard/import/instrukturs', [ImportExportController::class, 'importInstrukturs'])->name('import.instrukturs');
+    Route::get('/dashboard/export/asesors', [ImportExportController::class, 'exportAsesors'])->name('export.asesors');
+    Route::post('/dashboard/import/asesors', [ImportExportController::class, 'importAsesors'])->name('import.asesors');
+    Route::get('/dashboard/export/asesis', [ImportExportController::class, 'exportAsesis'])->name('export.asesis');
+    Route::post('/dashboard/import/asesis', [ImportExportController::class, 'importAsesis'])->name('import.asesis');
+
+    Route::get('/dashboard/export/schedules', [ImportExportController::class, 'exportSchedules'])->name('export.schedules');
+    Route::post('/dashboard/import/schedules', [ImportExportController::class, 'importSchedules'])->name('import.schedules');
+    Route::get('/dashboard/export/schemes', [ImportExportController::class, 'exportSchemes'])->name('export.schemes');
+    Route::post('/dashboard/import/schemes', [ImportExportController::class, 'importSchemes'])->name('import.schemes');
+
     // ── Admin Dashboard ───────────────────────────────────────────────────
     Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/dashboard/admin/stats', [DashboardAdminController::class, 'stats'])->name('admin.stats');
@@ -103,8 +124,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/asesor/schemes/{schemeId}/questions', [AsesorController::class, 'storeQuestion'])->name('asesor.question.store');
     Route::delete('/dashboard/asesor/schemes/{schemeId}/questions/{questionId}', [AsesorController::class, 'deleteQuestion'])->name('asesor.question.delete');
     Route::post('/dashboard/asesor/schedules', [AsesorController::class, 'storeSchedule'])->name('asesor.schedule.store');
-    Route::delete('/dashboard/asesor/schedules/{id}', [AsesorController::class, 'destroySchedule'])->name('asesor.schedule.destroy');
+    Route::put('/dashboard/asesor/schedules/{id}', [AsesorController::class, 'updateSchedule'])->name('asesor.schedule.update');
+    Route::delete('/dashboard/asesor/schedules/{id}', [AsesorController::class, 'destroySchedule'])->name('asesor.schedule.delete');
+    Route::delete('/dashboard/asesor/schedules/{id}/destroy', [AsesorController::class, 'destroySchedule'])->name('asesor.schedule.destroy');
     Route::post('/dashboard/asesor/syllabus/{id}', [AsesorController::class, 'updateSyllabus'])->name('asesor.syllabus.update');
+    Route::post('/dashboard/asesor/portfolio/{id}/review', [AsesorController::class, 'reviewPortfolio'])->name('asesor.portfolio.review');
 
     // ── Asesi Dashboard & Exam (LMS) ──────────────────────────────────────
     Route::get('/dashboard/asesi', [AsesiController::class, 'index'])->name('asesi.dashboard');
@@ -115,6 +139,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/asesi/result/{attemptId}', [AsesiController::class, 'result'])->name('asesi.result');
     Route::post('/dashboard/asesi/profile', [AsesiController::class, 'updateProfile'])->name('asesi.profile.update');
     Route::get('/dashboard/asesi/certificate/{id}', [AsesiController::class, 'downloadCertificate'])->name('asesi.certificate.download');
+    Route::post('/dashboard/asesi/attendance', [AsesiController::class, 'recordAttendance'])->name('asesi.attendance.record');
+    Route::post('/dashboard/asesi/portfolio', [AsesiController::class, 'storePortfolio'])->name('asesi.portfolio.store');
+    Route::delete('/dashboard/asesi/portfolio/{id}', [AsesiController::class, 'deletePortfolio'])->name('asesi.portfolio.delete');
 
     // ── Instruktur Dashboard ──────────────────────────────────────────────────
     Route::get('/dashboard/instruktur', [InstrukturController::class, 'index'])->name('instruktur.dashboard');

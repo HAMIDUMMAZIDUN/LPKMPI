@@ -61,6 +61,13 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+        #sidebar-nav {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .content-wrapper {
             transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -106,9 +113,9 @@
 <body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
-        <div>
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-hidden h-screen">
+        <div class="flex flex-col flex-1 min-h-0">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
                     @if($siteLogo)
                         <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
@@ -128,8 +135,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <!-- Navigation Links -->
-            <nav class="p-4 space-y-1" id="sidebar-nav">
+            <nav class="p-4 space-y-1 overflow-y-auto flex-1" id="sidebar-nav">
 
                 <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
@@ -151,6 +157,10 @@
                         <svg class="accordion-arrow w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="accordion-content hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 dark:border-blue-900 ml-6">
+                        <button type="button" onclick="showPanel('portofolio')" id="btn-portofolio" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                            Portofolio APL-02
+                        </button>
                         <button type="button" onclick="showPanel('skema')" id="btn-skema" class="sidebar-btn w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
                             Skema Pelatihan
@@ -169,7 +179,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="p-4 border-t border-slate-100 dark:border-slate-800 shrink-0">
             <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
@@ -382,6 +392,106 @@
                 </div>
             </div>
 
+            <!-- PANEL: PORTOFOLIO (APL-02) -->
+            <div id="panel-portofolio" class="role-panel hidden space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Portofolio Mandiri (APL-02)</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Unggah dokumen portofolio pendukung untuk persyaratan pra-asesmen sertifikasi.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Form Upload -->
+                    <div class="lg:col-span-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4 h-fit">
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Unggah Dokumen Baru</h3>
+                        @if($enrollments->isEmpty())
+                            <p class="text-xs text-rose-500 font-semibold">Anda harus terdaftar di program pelatihan aktif terlebih dahulu.</p>
+                        @else
+                            <form action="{{ route('asesi.portfolio.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                                @csrf
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Program Pelatihan</label>
+                                    <select name="training_program_id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                        @foreach($enrollments as $enr)
+                                            @if($enr->trainingProgram)
+                                                <option value="{{ $enr->trainingProgram->id }}">{{ $enr->trainingProgram->title }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Jenis Dokumen / Bukti</label>
+                                    <select name="document_name" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                        <option value="Curriculum Vitae (CV)">Curriculum Vitae (CV)</option>
+                                        <option value="Surat Pengalaman Kerja / SK">Surat Pengalaman Kerja / SK</option>
+                                        <option value="Sertifikat Diklat / Pelatihan">Sertifikat Diklat / Pelatihan</option>
+                                        <option value="Ijazah Terakhir">Ijazah Terakhir</option>
+                                        <option value="Dokumen Karya Mandiri / Portofolio">Dokumen Karya Mandiri / Portofolio</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">File Berkas (PDF, JPG, PNG - Max 5MB)</label>
+                                    <input type="file" name="portfolio_file" required class="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-950/20 dark:file:text-blue-400">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Unggah Portofolio</button>
+                            </form>
+                        @endif
+                    </div>
+
+                    <!-- List Uploaded Portfolios -->
+                    <div class="lg:col-span-8 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+                        <h3 class="p-4 font-extrabold text-xs text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">Berkas Portofolio Terunggah</h3>
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
+                                        <th class="px-4 py-3 text-left">Jenis Dokumen</th>
+                                        <th class="px-4 py-3 text-left">Program</th>
+                                        <th class="px-4 py-3 text-center">Berkas</th>
+                                        <th class="px-4 py-3 text-center">Status</th>
+                                        <th class="px-4 py-3 text-left">Catatan</th>
+                                        <th class="px-4 py-3 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                    @forelse($portfolios as $port)
+                                        <tr>
+                                            <td class="px-4 py-4 font-bold text-slate-800 dark:text-white text-xs">{{ $port->document_name }}</td>
+                                            <td class="px-4 py-4 text-xs text-slate-600 dark:text-slate-350">{{ $port->trainingProgram->title ?? '-' }}</td>
+                                            <td class="px-4 py-4 text-center">
+                                                <a href="{{ asset('storage/' . $port->file_path) }}" target="_blank" class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline text-xs font-bold font-mono">
+                                                    👁️ Lihat File
+                                                </a>
+                                            </td>
+                                            <td class="px-4 py-4 text-center">
+                                                @if($port->status === 'approved')
+                                                    <span class="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Disetujui</span>
+                                                @elseif($port->status === 'rejected')
+                                                    <span class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Ditolak</span>
+                                                @else
+                                                    <span class="bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Pending</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-4 text-xs text-slate-500 dark:text-slate-400">{{ $port->notes ?? '-' }}</td>
+                                            <td class="px-4 py-4 text-center">
+                                                <form action="{{ route('asesi.portfolio.delete', $port->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokumen ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="px-4 py-8 text-center text-slate-400 text-xs">Belum ada berkas portofolio diunggah.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- PANEL: SKEMA PELATIHAN -->
             <div id="panel-skema" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
@@ -499,7 +609,11 @@
                                             <td class="px-5 py-4 text-slate-600 dark:text-slate-300 text-xs font-mono">{{ $sch->scheduled_at->format('d M Y H:i') }} WIB</td>
                                             <td class="px-5 py-4 text-center">
                                                 <div id="attendance-status-{{ $sch->id }}">
-                                                    <button type="button" onclick="recordLocalAttendance('{{ $sch->id }}')" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Presensi</button>
+                                                    @if(isset($attendances[$sch->id]))
+                                                        <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-3 py-1.5 rounded-lg text-xs font-bold uppercase dark:bg-blue-950/20 dark:text-blue-400">✓ Hadir</span>
+                                                    @else
+                                                        <button type="button" onclick="recordServerAttendance('{{ $sch->id }}')" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-4 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Presensi</button>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -563,13 +677,14 @@
 
     <!-- SCRIPTS -->
     <script>
-        const panels = ['dasbor', 'profil', 'skema', 'jadwal', 'sertifikat'];
+        const panels = ['dasbor', 'profil', 'portofolio', 'skema', 'jadwal', 'sertifikat'];
         
         function updateDocumentTitle(panelId) {
             let sectionTitle = "";
             switch(panelId) {
                 case 'dasbor': sectionTitle = "Dasbor Asesi"; break;
                 case 'profil': sectionTitle = "Profil & Dokumen"; break;
+                case 'portofolio': sectionTitle = "Portofolio APL-02"; break;
                 case 'skema': sectionTitle = "Skema Pelatihan"; break;
                 case 'jadwal': sectionTitle = "Jadwal & Ujian"; break;
                 case 'sertifikat': sectionTitle = "E-Sertifikat"; break;
@@ -648,16 +763,34 @@
             if (label) label.textContent = isDark ? 'Mode Gelap' : 'Mode Terang';
         }
 
-        function recordLocalAttendance(id) {
-            localStorage.setItem('attendance_' + id, 'present');
-            updateAttendanceUI(id);
-            alert('Presensi kehadiran kelas berhasil dicatat!');
+        function recordServerAttendance(id) {
+            fetch("{{ route('asesi.attendance.record') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ class_schedule_id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    updateAttendanceUI(id);
+                    alert(data.message);
+                } else {
+                    alert("Gagal mencatat presensi.");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Terjadi kesalahan jaringan.");
+            });
         }
 
         function updateAttendanceUI(id) {
             const container = document.getElementById('attendance-status-' + id);
             if (container) {
-                container.innerHTML = '<span class="bg-blue-55 text-blue-600 border border-blue-500/20 px-3 py-1.5 rounded-lg text-xs font-bold uppercase">✓ Hadir</span>';
+                container.innerHTML = '<span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-3 py-1.5 rounded-lg text-xs font-bold uppercase dark:bg-blue-950/20 dark:text-blue-400">✓ Hadir</span>';
             }
         }
 
@@ -677,14 +810,6 @@
                     if (arrow) arrow.style.transform = 'rotate(180deg)';
                 }
             }
-
-            // Restore attendance status
-            document.querySelectorAll('[id^="attendance-status-"]').forEach(el => {
-                const id = el.id.replace('attendance-status-', '');
-                if (localStorage.getItem('attendance_' + id) === 'present') {
-                    updateAttendanceUI(id);
-                }
-            });
         });
     </script>
 

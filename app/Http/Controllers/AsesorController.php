@@ -42,7 +42,11 @@ class AsesorController extends Controller
 
         $programs = TrainingProgram::all();
 
-        return view('dashboard.asesor', compact('schemes', 'attempts', 'schedules', 'programs'));
+        $portfolios = \App\Models\AsesiPortfolio::with(['user', 'trainingProgram'])
+            ->latest()
+            ->get();
+
+        return view('dashboard.asesor', compact('schemes', 'attempts', 'schedules', 'programs', 'portfolios'));
     }
 
     /** Live stats JSON – polled every 30 s by the dashboard */
@@ -284,5 +288,24 @@ class AsesorController extends Controller
         ]);
 
         return redirect()->route('asesor.dashboard', ['open' => 'panel-kelola'])->with('success', 'Silabus program ' . $program->title . ' berhasil diperbarui!');
+    }
+
+    /** Meninjau portofolio asesi (APL-02) */
+    public function reviewPortfolio(Request $request, $id)
+    {
+        $this->checkRole();
+        $request->validate([
+            'status' => 'required|in:approved,rejected',
+            'notes'  => 'nullable|string',
+        ]);
+
+        $portfolio = \App\Models\AsesiPortfolio::findOrFail($id);
+        $portfolio->update([
+            'status' => $request->status,
+            'notes'  => $request->notes,
+        ]);
+
+        $statusMessage = $request->status === 'approved' ? 'Dokumen portofolio disetujui!' : 'Dokumen portofolio ditolak.';
+        return redirect()->route('asesor.dashboard', ['open' => 'panel-apl02'])->with('success', $statusMessage);
     }
 }

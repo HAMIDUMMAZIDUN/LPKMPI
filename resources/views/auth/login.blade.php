@@ -191,6 +191,23 @@ $t = [
                         </button>
                     </form>
 
+                    <!-- Google SSO Option -->
+                    <div class="relative flex py-4 items-center">
+                        <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+                        <span class="flex-shrink mx-4 text-slate-400 text-xs font-semibold uppercase tracking-wider">{{ $t['login_or_divider'] }}</span>
+                        <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+                    </div>
+
+                    <a href="{{ route('auth.google') }}" class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 font-bold py-3.5 px-8 rounded-md shadow-sm transition duration-300 flex items-center justify-center gap-3 uppercase text-sm tracking-wider outfit-font">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.54 14.98 1 12 1 7.35 1 3.37 3.67 1.39 7.56l3.85 2.99c.92-2.77 3.5-4.51 6.76-4.51z"/>
+                            <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.34H12v4.44h6.44c-.28 1.48-1.12 2.73-2.38 3.58l3.69 2.87c2.16-1.99 3.74-4.92 3.74-8.55z"/>
+                            <path fill="#FBBC05" d="M5.24 14.75c-.24-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29L1.39 7.18C.5 8.97 0 10.97 0 13s.5 4.03 1.39 5.82l3.85-3.07z"/>
+                            <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.69-2.87c-1.02.68-2.33 1.09-3.92 1.09-3.26 0-5.84-1.74-6.76-4.51l-3.85 3.07C3.37 20.33 7.35 23 12 23z"/>
+                        </svg>
+                        {{ $t['google_login'] }}
+                    </a>
+
 
                 </div>
 

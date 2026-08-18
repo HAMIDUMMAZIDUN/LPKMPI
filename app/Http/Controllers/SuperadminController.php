@@ -21,12 +21,17 @@ class SuperadminController extends Controller
         $settings = LandingSetting::pluck('value', 'key');
         $admins   = User::where('role', 'admin')->latest()->get();
         $asesors  = User::where('role', 'asesor')->latest()->get();
+        $superadmins = User::where('role', 'superadmin')->latest()->get();
+        $asesis   = User::where('role', 'asesi')->latest()->get();
+        $instrukturs = User::where('role', 'instruktur')->latest()->get();
         $articles = \App\Models\Article::latest()->get();
         
         $programs = \App\Models\TrainingProgram::all();
         $trainees = \App\Models\TraineeEnrollment::with('trainingProgram')->latest()->get();
 
-        return view('dashboard.superadmin', compact('settings', 'admins', 'asesors', 'articles', 'programs', 'trainees'));
+        return view('dashboard.superadmin', compact(
+            'settings', 'admins', 'asesors', 'superadmins', 'asesis', 'instrukturs', 'articles', 'programs', 'trainees'
+        ));
     }
 
     /** Live stats endpoint — polled by the dashboard every 30 s */
@@ -58,7 +63,7 @@ class SuperadminController extends Controller
             'username' => 'required|string|unique:users,username|max:255',
             'email'    => ['required', 'email', 'unique:users,email', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i'],
             'password' => 'required|string|min:8|confirmed',
-            'role'     => 'required|in:admin,asesor',
+            'role'     => 'required|in:superadmin,admin,asesor,asesi,instruktur',
         ], [
             'email.regex' => 'Alamat email harus menggunakan domain @gmail.com.',
         ]);
@@ -488,7 +493,7 @@ class SuperadminController extends Controller
             'username' => 'required|string|max:255|unique:users,username,' . $id,
             'email'    => ['required', 'email', 'unique:users,email,' . $id, 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i'],
             'password' => 'nullable|string|min:8',
-            'role'     => 'required|in:admin,asesor',
+            'role'     => 'required|in:superadmin,admin,asesor,asesi,instruktur',
         ], [
             'email.regex' => 'Alamat email harus menggunakan domain @gmail.com.',
         ]);

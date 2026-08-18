@@ -60,6 +60,13 @@
             width: 280px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #sa-sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+        #sa-sidebar-nav {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .content-wrapper {
             transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -105,9 +112,9 @@
 <body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sa-sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
-        <div class="flex flex-col">
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+    <aside id="sa-sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-hidden h-screen">
+        <div class="flex flex-col flex-1 min-h-0">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
                     @if($siteLogo)
                         <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
@@ -127,7 +134,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <nav class="p-4 space-y-2" id="sidebar-nav">
+            <nav class="p-4 space-y-2 overflow-y-auto flex-1" id="sa-sidebar-nav">
                 <!-- Dasbor Utama (standalone) -->
                 <button type="button" onclick="showPanel('panel-dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
@@ -1237,7 +1244,7 @@
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Registrasi Akun Baru</h3>
                     <form action="{{ route('superadmin.user.store') }}" method="POST" class="space-y-4">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Username</label>
                                 <input type="text" name="username" required placeholder="Contoh: admin_baru" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
@@ -1246,15 +1253,18 @@
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Email</label>
                                 <input type="email" name="email" required placeholder="email@gmail.com" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Role / Peran</label>
                                 <select name="role" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="superadmin">Super Admin</option>
                                     <option value="admin">Admin LPK</option>
                                     <option value="asesor">Asesor</option>
+                                    <option value="instruktur">Instruktur</option>
+                                    <option value="asesi">Asesi</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Password</label>
                                 <input type="password" name="password" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
@@ -1288,8 +1298,11 @@
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Role / Peran</label>
                                 <select name="role" id="edit-user-role" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                    <option value="superadmin">Super Admin</option>
                                     <option value="admin">Admin LPK</option>
                                     <option value="asesor">Asesor</option>
+                                    <option value="instruktur">Instruktur</option>
+                                    <option value="asesi">Asesi</option>
                                 </select>
                             </div>
                             <div>
@@ -1304,9 +1317,151 @@
                     </form>
                 </div>
 
+                <!-- Card Ekspor & Impor Data (CSV) -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <div>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Pusat Ekspor & Impor Data (CSV)</h3>
+                            <p class="text-[11px] text-slate-400 mt-1">Unduh template/data atau unggah berkas CSV untuk memperbarui basis data LPK secara instan.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- SECTION 1: Manajemen Akun Pengguna -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Manajemen Akun Pengguna</h4>
+                            
+                            <div class="space-y-3">
+                                <!-- Semua Akun -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Semua Akun Pengguna</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, role, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.users') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.users') }}" onclick="openImportModal(this.dataset.importUrl, 'Semua Akun Pengguna', 'username, email, role, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Instruktur -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Akun Instruktur</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.instrukturs') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.instrukturs') }}" onclick="openImportModal(this.dataset.importUrl, 'Akun Instruktur', 'username, email, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Asesor -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Akun Asesor</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.asesors') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.asesors') }}" onclick="openImportModal(this.dataset.importUrl, 'Akun Asesor', 'username, email, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Asesi -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Akun Asesi</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.asesis') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.asesis') }}" onclick="openImportModal(this.dataset.importUrl, 'Akun Asesi', 'username, email, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: Program, Pendaftaran & Akademik -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Program, Pendaftaran &amp; Akademik</h4>
+                            
+                            <div class="space-y-3">
+                                <!-- Program Pelatihan -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Program Pelatihan</h5>
+                                        <p class="text-[10px] text-slate-400">title, category, duration, description, price, lsp_keyword</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.programs') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.programs') }}" onclick="openImportModal(this.dataset.importUrl, 'Program Pelatihan', 'title, category, duration, description, price, lsp_keyword')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Pendaftaran Peserta -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Pendaftaran &amp; Peserta</h5>
+                                        <p class="text-[10px] text-slate-400">name, nik, email, phone, education, category, training_program_id</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.trainees') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.trainees') }}" onclick="openImportModal(this.dataset.importUrl, 'Pendaftaran Peserta', 'name, nik, email, phone, education, category, training_program_id')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Jadwal Kelas -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Jadwal Kelas / Diklat</h5>
+                                        <p class="text-[10px] text-slate-400">training_program_id, topic, scheduled_at, location, asesor_email</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.schedules') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.schedules') }}" onclick="openImportModal(this.dataset.importUrl, 'Jadwal Kelas', 'training_program_id, topic, scheduled_at, location, asesor_email')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Skema Sertifikasi -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Skema Sertifikasi / Ujian</h5>
+                                        <p class="text-[10px] text-slate-400">title, description, duration_minutes, asesor_email, status</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.schemes') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" data-import-url="{{ route('import.schemes') }}" onclick="openImportModal(this.dataset.importUrl, 'Skema Sertifikasi', 'title, description, duration_minutes, asesor_email, status')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Daftar Admin &amp; Asesor</h3>
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Daftar Pengguna Sistem</h3>
                     <div class="space-y-2">
+                        @foreach($superadmins as $sa)
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                                <div>
+                                    <div class="font-bold text-slate-800 dark:text-white">{{ $sa->name }}</div>
+                                    <div class="text-slate-400 font-mono">{{ $sa->email }}</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Super Admin</span>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" data-user="{{ json_encode($sa) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($sa) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('superadmin.user.destroy', $sa->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
                         @foreach($admins as $admin)
                             <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
                                 <div>
@@ -1314,7 +1469,7 @@
                                     <div class="text-slate-400 font-mono">{{ $admin->email }}</div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Admin</span>
+                                    <span class="bg-blue-100 text-blue-800 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Admin</span>
                                     <div class="flex items-center gap-2">
                                         <button type="button" data-user="{{ json_encode($admin) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
                                         <button type="button" data-user="{{ json_encode($admin) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
@@ -1334,11 +1489,51 @@
                                     <div class="text-slate-400 font-mono">{{ $asesor->email }}</div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesor</span>
+                                    <span class="bg-purple-100 text-purple-800 dark:bg-purple-950/40 dark:text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesor</span>
                                     <div class="flex items-center gap-2">
                                         <button type="button" data-user="{{ json_encode($asesor) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
                                         <button type="button" data-user="{{ json_encode($asesor) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                         <form action="{{ route('superadmin.user.destroy', $asesor->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        @foreach($instrukturs as $instruktur)
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                                <div>
+                                    <div class="font-bold text-slate-800 dark:text-white">{{ $instruktur->name }}</div>
+                                    <div class="text-slate-400 font-mono">{{ $instruktur->email }}</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Instruktur</span>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" data-user="{{ json_encode($instruktur) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($instruktur) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('superadmin.user.destroy', $instruktur->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        @foreach($asesis as $asesi)
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                                <div>
+                                    <div class="font-bold text-slate-800 dark:text-white">{{ $asesi->name }}</div>
+                                    <div class="text-slate-400 font-mono">{{ $asesi->email }}</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-slate-100 text-slate-800 dark:bg-slate-950/40 dark:text-slate-400 border border-slate-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px]">Asesi</span>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" data-user="{{ json_encode($asesi) }}" onclick="showUserDetail(JSON.parse(this.dataset.user))" class="text-[#155dfc] hover:underline font-bold uppercase text-[10px]">Detail</button>
+                                        <button type="button" data-user="{{ json_encode($asesi) }}" onclick="editUser(JSON.parse(this.dataset.user))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
+                                        <form action="{{ route('superadmin.user.destroy', $asesi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
                                         </form>
@@ -1360,6 +1555,31 @@
                     <button type="button" onclick="toggleAddProgramForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded-xl shadow-md shadow-blue-500/10">
                         + Tambah Program
                     </button>
+                </div>
+
+                <!-- CSV Import/Export Programs -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-800 dark:text-white">Ekspor Program</h4>
+                            <p class="text-[10px] text-slate-400">Unduh data program dalam format CSV.</p>
+                        </div>
+                        <a href="{{ route('export.programs') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                            Ekspor CSV
+                        </a>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <form action="{{ route('import.programs') }}" method="POST" enctype="multipart/form-data" class="flex items-center justify-between gap-3">
+                            @csrf
+                            <div>
+                                <h4 class="font-bold text-xs text-slate-800 dark:text-white">Impor Program</h4>
+                                <input type="file" name="csv_file" required accept=".csv" class="text-[10px] text-slate-400 mt-1 w-full max-w-[150px]">
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                                Impor CSV
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Form Tambah Program -->
@@ -1511,6 +1731,31 @@
                     <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
                 </div>
 
+                <!-- CSV Import/Export Trainees -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-800 dark:text-white">Ekspor Data Pendaftaran</h4>
+                            <p class="text-[10px] text-slate-400">Unduh data pendaftaran asesi ke CSV.</p>
+                        </div>
+                        <a href="{{ route('export.trainees') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                            Ekspor CSV
+                        </a>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <form action="{{ route('import.trainees') }}" method="POST" enctype="multipart/form-data" class="flex items-center justify-between gap-3">
+                            @csrf
+                            <div>
+                                <h4 class="font-bold text-xs text-slate-800 dark:text-white">Impor Data Pendaftaran</h4>
+                                <input type="file" name="csv_file" required accept=".csv" class="text-[10px] text-slate-400 mt-1 w-full max-w-[150px]">
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                                Impor CSV
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
                 <!-- Form Edit Peserta -->
                 <div id="form-edit-trainee" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Data Peserta</h3>
@@ -1618,6 +1863,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
+                                                <button type="button" data-trainee="{{ json_encode($t) }}" onclick="showTraineeDetail([JSON.parse(this.dataset.trainee)])" class="text-purple-600 hover:text-purple-800 font-bold uppercase text-[10px]">Detail</button>
                                                 <button type="button" data-trainee="{{ json_encode($t) }}" onclick="editTrainee(JSON.parse(this.dataset.trainee))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('superadmin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
                                                     @csrf @method('DELETE')
@@ -2104,9 +2350,150 @@
             }
         }
 
+        function openImportModal(actionUrl, title, headerFormat) {
+            const modal = document.getElementById('global-import-modal');
+            const form = document.getElementById('import-modal-form');
+            const titleEl = document.getElementById('import-modal-title');
+            const formatEl = document.getElementById('import-modal-format');
+            
+            form.action = actionUrl;
+            titleEl.textContent = 'Impor ' + title;
+            formatEl.textContent = 'Format header: ' + headerFormat;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeImportModal() {
+            const modal = document.getElementById('global-import-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        let selectedTraineesForDetail = [];
+        let currentDetailTraineeIndex = 0;
+
+        function showTraineeDetail(trainees, startIndex = 0) {
+            selectedTraineesForDetail = trainees;
+            currentDetailTraineeIndex = startIndex;
+            
+            if (selectedTraineesForDetail.length === 0) return;
+            
+            const modal = document.getElementById('trainee-detail-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            renderDetailTraineeContent();
+        }
+
+        function renderDetailTraineeContent() {
+            const trainee = selectedTraineesForDetail[currentDetailTraineeIndex];
+            const badge = document.getElementById('detail-trainee-program-badge');
+            const contentArea = document.getElementById('trainee-detail-content-area');
+            const prevBtn = document.getElementById('btn-prev-detail');
+            const nextBtn = document.getElementById('btn-next-detail');
+            const navContainer = document.getElementById('detail-modal-nav-container');
+
+            badge.textContent = trainee.training_program ? trainee.training_program.title : 'Program Pelatihan';
+            
+            const fields = [
+                { label: 'Nama Lengkap', value: trainee.name },
+                { label: 'NIK (Nomor Induk Kependudukan)', value: trainee.nik, mono: true },
+                { label: 'Email', value: trainee.email, mono: true },
+                { label: 'No. Handphone / WhatsApp', value: trainee.phone, mono: true },
+                { label: 'Pendidikan Terakhir', value: trainee.education || '-' },
+                { label: 'Kategori / Pekerjaan', value: trainee.category || '-' },
+                { label: 'Instansi / Perusahaan', value: trainee.company || '-' },
+                { label: 'Jabatan / Posisi', value: trainee.position || '-' },
+                { label: 'Status Pendaftaran', value: trainee.status, statusBadge: true },
+                { label: 'Status Pembayaran', value: trainee.payment_status, paymentBadge: true },
+                { label: 'Metode Pembayaran', value: trainee.payment_method || '-' },
+                { label: 'Referensi Pembayaran', value: trainee.payment_reference || '-', mono: true }
+            ];
+
+            if (trainee.ktp_path) {
+                fields.push({ label: 'Dokumen KTP', value: `<a href="/storage/${trainee.ktp_path}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">👁 Lihat KTP</a>`, isRawHtml: true });
+            } else {
+                fields.push({ label: 'Dokumen KTP', value: '<span class="text-slate-400 italic">Tidak ada file</span>', isRawHtml: true });
+            }
+
+            if (trainee.ijazah_path) {
+                fields.push({ label: 'Dokumen Ijazah', value: `<a href="/storage/${trainee.ijazah_path}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">👁 Lihat Ijazah</a>`, isRawHtml: true });
+            } else {
+                fields.push({ label: 'Dokumen Ijazah', value: '<span class="text-slate-400 italic">Tidak ada file</span>', isRawHtml: true });
+            }
+
+            let html = '';
+            fields.forEach(field => {
+                let valueHtml = '';
+                if (field.statusBadge) {
+                    const isLulus = field.value === 'LULUS';
+                    const colorClass = isLulus ? 'bg-blue-50 text-blue-600 border-blue-500/20' : 'bg-amber-50 text-amber-600 border-amber-500/20';
+                    valueHtml = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${colorClass}">${field.value}</span>`;
+                } else if (field.paymentBadge) {
+                    const isPaid = field.value === 'PAID';
+                    const colorClass = isPaid ? 'bg-emerald-50 text-emerald-600 border-emerald-500/20' : 'bg-rose-50 text-rose-600 border-rose-500/20';
+                    valueHtml = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${colorClass}">${field.value === 'PAID' ? 'LUNAS' : 'BELUM LUNAS'}</span>`;
+                } else if (field.isRawHtml) {
+                    valueHtml = field.value;
+                } else {
+                    valueHtml = `<span class="${field.mono ? 'font-mono font-semibold' : 'font-semibold'} text-slate-800 dark:text-white">${field.value}</span>`;
+                }
+
+                html += `
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-3">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">${field.label}</span>
+                        ${valueHtml}
+                    </div>
+                `;
+            });
+
+            let isComplete = trainee.name && trainee.nik && trainee.email && trainee.phone && trainee.education;
+            const completionStatusClass = isComplete ? 'bg-emerald-50 text-emerald-600 border-emerald-500/20' : 'bg-amber-50 text-amber-600 border-amber-500/20';
+            const completionStatusText = isComplete ? '✓ Formulir Komplit' : '⚠️ Formulir Kurang Lengkap';
+            html += `
+                <div class="col-span-1 md:col-span-2 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl flex items-center justify-between border border-slate-100 dark:border-slate-800/85">
+                    <div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status Kelengkapan Form</div>
+                        <div class="text-xs font-semibold text-slate-600 dark:text-slate-300 mt-1">Sistem memverifikasi kelengkapan berkas NIK, Data Kontak, & Pendidikan.</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase border ${completionStatusClass}">${completionStatusText}</span>
+                </div>
+            `;
+
+            contentArea.innerHTML = html;
+
+            if (selectedTraineesForDetail.length > 1) {
+                navContainer.classList.remove('hidden');
+                navContainer.classList.add('flex');
+                
+                prevBtn.disabled = currentDetailTraineeIndex === 0;
+                nextBtn.disabled = currentDetailTraineeIndex === selectedTraineesForDetail.length - 1;
+                
+                if (prevBtn.disabled) {
+                    prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                if (nextBtn.disabled) {
+                    nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            } else {
+                navContainer.classList.remove('flex');
+                navContainer.classList.add('hidden');
+            }
+        }
+
+        function closeTraineeDetailModal() {
+            document.getElementById('trainee-detail-modal').classList.add('hidden');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const openPanel = urlParams.get('open') || 'panel-dasbor';
+            const openPanel = urlParams.get('open') || localStorage.getItem('superadmin_active_panel') || 'panel-dasbor';
             showPanel(openPanel);
             updateThemeUI();
 
@@ -2121,8 +2508,54 @@
                     if (arrow) arrow.style.transform = 'rotate(180deg)';
                 }
             }
+
+            // Register navigation click events for detail modal
+            document.getElementById('btn-prev-detail').addEventListener('click', () => {
+                if (currentDetailTraineeIndex > 0) {
+                    currentDetailTraineeIndex--;
+                    renderDetailTraineeContent();
+                }
+            });
+
+            document.getElementById('btn-next-detail').addEventListener('click', () => {
+                if (currentDetailTraineeIndex < selectedTraineesForDetail.length - 1) {
+                    currentDetailTraineeIndex++;
+                    renderDetailTraineeContent();
+                }
+            });
         });
     </script>
+
+    <!-- Trainee Detail Modal -->
+    <div id="trainee-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-2xl p-6 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button type="button" onclick="closeTraineeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition duration-205 text-lg font-bold">
+                ✕
+            </button>
+            <div class="space-y-1">
+                <span id="detail-trainee-program-badge" class="bg-blue-50 text-blue-600 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px] inline-block">Program</span>
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white font-heading">Formulir Pendaftaran &amp; Berkas Peserta</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs" id="trainee-detail-content-area">
+                <!-- Data will be populated here -->
+            </div>
+            
+            <div class="flex justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <div class="flex gap-2" id="detail-modal-nav-container">
+                    <button type="button" id="btn-prev-detail" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">
+                        &larr; Sblmnya
+                    </button>
+                    <button type="button" id="btn-next-detail" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">
+                        Selanjutnya &rarr;
+                    </button>
+                </div>
+                <button type="button" onclick="closeTraineeDetailModal()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- User Detail Modal -->
     <div id="user-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
@@ -2162,6 +2595,42 @@
                     Tutup
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Global Import Modal -->
+    <div id="global-import-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-md p-6 space-y-6 shadow-2xl relative animate-fade-in">
+            <button type="button" onclick="closeImportModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition duration-205 text-lg font-bold">
+                ✕
+            </button>
+            <div class="space-y-1">
+                <span class="bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px] inline-block">IMPOR CSV</span>
+                <h3 id="import-modal-title" class="text-base font-extrabold text-slate-900 dark:text-white font-heading font-semibold">Impor Data</h3>
+            </div>
+            
+            <form id="import-modal-form" method="POST" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">File CSV Data</label>
+                    <div class="relative flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                        <input type="file" name="csv_file" required accept=".csv" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+                        <div class="text-center">
+                            <span class="text-xs text-blue-600 font-bold block">Pilih File CSV</span>
+                            <span id="import-modal-format" class="text-[9px] text-slate-400 block mt-1">Format header: ...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeImportModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 shadow-md shadow-blue-500/10">
+                        Unggah &amp; Impor
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

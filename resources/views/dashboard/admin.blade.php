@@ -60,6 +60,13 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+        #sidebar-nav {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .content-wrapper {
             transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -146,9 +153,9 @@
 <body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
-        <div>
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-hidden h-screen">
+        <div class="flex flex-col flex-1 min-h-0">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
                     @if($siteLogo)
                         <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
@@ -168,7 +175,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <nav class="p-4 space-y-1" id="sidebar-nav">
+            <nav class="p-4 space-y-1 overflow-y-auto flex-1" id="sidebar-nav">
 
                 <!-- Dasbor (standalone) -->
                 <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
@@ -268,7 +275,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="p-4 border-t border-slate-100 dark:border-slate-800 shrink-0">
             <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
@@ -738,6 +745,128 @@
                     </form>
                 </div>
 
+                <!-- Card Ekspor & Impor Data (CSV) -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <div>
+                            <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Pusat Ekspor & Impor Data (CSV)</h3>
+                            <p class="text-[11px] text-slate-400 mt-1">Unduh template/data atau unggah berkas CSV untuk memperbarui basis data LPK secara instan.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- SECTION 1: Manajemen Akun Pengguna -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Manajemen Akun Pengguna</h4>
+                            
+                            <div class="space-y-3">
+                                <!-- Semua Akun -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Semua Akun Pengguna</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, role, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.users') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.users') }}', 'Semua Akun Pengguna', 'username, email, role, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Instruktur -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Akun Instruktur</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.instrukturs') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.instrukturs') }}', 'Akun Instruktur', 'username, email, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Asesor -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Akun Asesor</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.asesors') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.asesors') }}', 'Akun Asesor', 'username, email, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Asesi -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Akun Asesi</h5>
+                                        <p class="text-[10px] text-slate-400">username, email, name, password_plain</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.asesis') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.asesis') }}', 'Akun Asesi', 'username, email, name, password_plain')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: Program, Pendaftaran & Akademik -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Program, Pendaftaran &amp; Akademik</h4>
+                            
+                            <div class="space-y-3">
+                                <!-- Program Pelatihan -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Program Pelatihan</h5>
+                                        <p class="text-[10px] text-slate-400">title, category, duration, description, price, lsp_keyword</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.programs') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.programs') }}', 'Program Pelatihan', 'title, category, duration, description, price, lsp_keyword')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Pendaftaran Peserta -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Pendaftaran &amp; Peserta</h5>
+                                        <p class="text-[10px] text-slate-400">name, nik, email, phone, education, category, training_program_id</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.trainees') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.trainees') }}', 'Pendaftaran Peserta', 'name, nik, email, phone, education, category, training_program_id')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Jadwal Kelas -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Jadwal Kelas / Diklat</h5>
+                                        <p class="text-[10px] text-slate-400">training_program_id, topic, scheduled_at, location, asesor_email</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.schedules') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.schedules') }}', 'Jadwal Kelas', 'training_program_id, topic, scheduled_at, location, asesor_email')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+
+                                <!-- Skema Sertifikasi -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                    <div>
+                                        <h5 class="font-bold text-xs text-slate-800 dark:text-white">Skema Sertifikasi / Ujian</h5>
+                                        <p class="text-[10px] text-slate-400">title, description, duration_minutes, asesor_email, status</p>
+                                    </div>
+                                    <div class="flex gap-2 shrink-0">
+                                        <a href="{{ route('export.schemes') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Ekspor</a>
+                                        <button type="button" onclick="openImportModal('{{ route('import.schemes') }}', 'Skema Sertifikasi', 'title, description, duration_minutes, asesor_email, status')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase px-3 py-2 rounded-xl transition">Impor</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Daftar Admin & Asesor & Asesi -->
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Daftar Akun Pengguna</h3>
@@ -1144,6 +1273,31 @@
                     </button>
                 </div>
 
+                <!-- CSV Import/Export Programs -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-800 dark:text-white">Ekspor Program</h4>
+                            <p class="text-[10px] text-slate-400">Unduh data program dalam format CSV.</p>
+                        </div>
+                        <a href="{{ route('export.programs') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                            Ekspor CSV
+                        </a>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <form action="{{ route('import.programs') }}" method="POST" enctype="multipart/form-data" class="flex items-center justify-between gap-3">
+                            @csrf
+                            <div>
+                                <h4 class="font-bold text-xs text-slate-800 dark:text-white">Impor Program</h4>
+                                <input type="file" name="csv_file" required accept=".csv" class="text-[10px] text-slate-400 mt-1 w-full max-w-[150px]">
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                                Impor CSV
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
                 <!-- Form Tambah Program -->
                 <div id="form-add-program" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Program Pelatihan Baru</h3>
@@ -1296,6 +1450,31 @@
                     <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola status pembayaran, penerbitan sertifikat, dan data pendaftaran asesi.</p>
                 </div>
 
+                <!-- CSV Import/Export Trainees -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-800 dark:text-white">Ekspor Data Pendaftaran</h4>
+                            <p class="text-[10px] text-slate-400">Unduh data pendaftaran asesi ke CSV.</p>
+                        </div>
+                        <a href="{{ route('export.trainees') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                            Ekspor CSV
+                        </a>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <form action="{{ route('import.trainees') }}" method="POST" enctype="multipart/form-data" class="flex items-center justify-between gap-3">
+                            @csrf
+                            <div>
+                                <h4 class="font-bold text-xs text-slate-800 dark:text-white">Impor Data Pendaftaran</h4>
+                                <input type="file" name="csv_file" required accept=".csv" class="text-[10px] text-slate-400 mt-1 w-full max-w-[150px]">
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-3 py-2 rounded-xl transition-all">
+                                Impor CSV
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
                 <!-- Form Edit Peserta -->
                 <div id="form-edit-trainee" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
                     <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Data Peserta</h3>
@@ -1435,6 +1614,7 @@
                                         </td>
                                         <td class="px-5 py-4">
                                             <div class="flex items-center justify-center gap-2">
+                                                <button type="button" data-trainee="{{ json_encode($t) }}" onclick="showTraineeDetail([JSON.parse(this.dataset.trainee)])" class="text-purple-600 hover:text-purple-800 font-bold uppercase text-[10px]">Detail</button>
                                                 <button type="button" data-trainee="{{ json_encode($t) }}" onclick="openSendScheduleModal(JSON.parse(this.dataset.trainee))" class="text-emerald-600 hover:text-emerald-800 font-bold uppercase text-[10px]">Kirim Jadwal</button>
                                                 <button type="button" data-trainee="{{ json_encode($t) }}" onclick="editTrainee(JSON.parse(this.dataset.trainee))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
                                                 <form action="{{ route('admin.trainees.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pendaftaran ini?')">
@@ -2184,6 +2364,18 @@
                 { label: 'Referensi Pembayaran', value: trainee.payment_reference || '-', mono: true }
             ];
 
+            if (trainee.ktp_path) {
+                fields.push({ label: 'Dokumen KTP', value: `<a href="/storage/${trainee.ktp_path}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">👁 Lihat KTP</a>`, isRawHtml: true });
+            } else {
+                fields.push({ label: 'Dokumen KTP', value: '<span class="text-slate-400 italic">Tidak ada file</span>', isRawHtml: true });
+            }
+
+            if (trainee.ijazah_path) {
+                fields.push({ label: 'Dokumen Ijazah', value: `<a href="/storage/${trainee.ijazah_path}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-[10px] uppercase rounded-xl transition duration-200">👁 Lihat Ijazah</a>`, isRawHtml: true });
+            } else {
+                fields.push({ label: 'Dokumen Ijazah', value: '<span class="text-slate-400 italic">Tidak ada file</span>', isRawHtml: true });
+            }
+
             let html = '';
             fields.forEach(field => {
                 let valueHtml = '';
@@ -2195,6 +2387,8 @@
                     const isPaid = field.value === 'PAID';
                     const colorClass = isPaid ? 'bg-emerald-50 text-emerald-600 border-emerald-500/20' : 'bg-rose-50 text-rose-600 border-rose-500/20';
                     valueHtml = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${colorClass}">${field.value === 'PAID' ? 'LUNAS' : 'BELUM LUNAS'}</span>`;
+                } else if (field.isRawHtml) {
+                    valueHtml = field.value;
                 } else {
                     valueHtml = `<span class="${field.mono ? 'font-mono font-semibold' : 'font-semibold'} text-slate-800 dark:text-white">${field.value}</span>`;
                 }
@@ -2250,9 +2444,29 @@
             document.getElementById('trainee-detail-modal').classList.add('hidden');
         }
 
+        function openImportModal(actionUrl, title, headerFormat) {
+            const modal = document.getElementById('global-import-modal');
+            const form = document.getElementById('import-modal-form');
+            const titleEl = document.getElementById('import-modal-title');
+            const formatEl = document.getElementById('import-modal-format');
+            
+            form.action = actionUrl;
+            titleEl.textContent = 'Impor ' + title;
+            formatEl.textContent = 'Format header: ' + headerFormat;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeImportModal() {
+            const modal = document.getElementById('global-import-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const activePanel = urlParams.get('open') || 'dasbor';
+            const activePanel = urlParams.get('open') || localStorage.getItem('admin_active_panel') || 'dasbor';
             showPanel(activePanel);
             updateThemeUI();
             // Auto-open accordion group that contains the active panel button
@@ -2353,6 +2567,42 @@
                     Tutup
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Global Import Modal -->
+    <div id="global-import-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-md p-6 space-y-6 shadow-2xl relative animate-fade-in">
+            <button type="button" onclick="closeImportModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition duration-205 text-lg font-bold">
+                ✕
+            </button>
+            <div class="space-y-1">
+                <span class="bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase text-[9px] inline-block">IMPOR CSV</span>
+                <h3 id="import-modal-title" class="text-base font-extrabold text-slate-900 dark:text-white font-heading font-semibold">Impor Data</h3>
+            </div>
+            
+            <form id="import-modal-form" method="POST" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">File CSV Data</label>
+                    <div class="relative flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                        <input type="file" name="csv_file" required accept=".csv" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+                        <div class="text-center">
+                            <span class="text-xs text-blue-600 font-bold block">Pilih File CSV</span>
+                            <span id="import-modal-format" class="text-[9px] text-slate-400 block mt-1">Format header: ...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeImportModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200 font-bold">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 shadow-md shadow-blue-500/10 font-bold">
+                        Unggah &amp; Impor
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

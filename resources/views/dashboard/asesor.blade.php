@@ -60,6 +60,13 @@
             width: 260px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+        #sidebar-nav {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .content-wrapper {
             transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -105,9 +112,9 @@
 <body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
-        <div>
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 overflow-hidden h-screen">
+        <div class="flex flex-col flex-1 min-h-0">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
                     @if($siteLogo)
                         <img src="{{ asset('storage/'.$siteLogo) }}?v={{ file_exists(public_path('storage/'.$siteLogo)) ? filemtime(public_path('storage/'.$siteLogo)) : time() }}" alt="Logo" class="w-9 h-9 rounded-xl object-contain shadow-md">
@@ -127,7 +134,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <nav class="p-4 space-y-1" id="sidebar-nav">
+            <nav class="p-4 space-y-1 overflow-y-auto flex-1" id="sidebar-nav">
 
                 <button type="button" onclick="showPanel('dasbor')" id="btn-dasbor" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-left">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
@@ -184,7 +191,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="p-4 border-t border-slate-100 dark:border-slate-800 shrink-0">
             <button type="button" onclick="toggleTheme()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all text-left">
                 <span id="theme-icon">🌙</span>
                 <span id="theme-label">Mode Gelap</span>
@@ -313,26 +320,48 @@
                             <thead>
                                 <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
                                     <th class="px-5 py-3 text-left">Nama Asesi</th>
-                                    <th class="px-5 py-3 text-left">Skema Kompetensi</th>
-                                    <th class="px-5 py-3 text-left">Tgl. Mulai</th>
+                                    <th class="px-5 py-3 text-left">Program</th>
+                                    <th class="px-5 py-3 text-left">Dokumen</th>
+                                    <th class="px-5 py-3 text-center">Berkas</th>
                                     <th class="px-5 py-3 text-center">Status</th>
+                                    <th class="px-5 py-3 text-left">Catatan Asesor</th>
+                                    <th class="px-5 py-3 text-center">Aksi Penilaian</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                                @forelse($attempts as $att)
+                                @forelse($portfolios as $port)
                                 <tr>
-                                    <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $att->asesi?->name ?? '-' }}</td>
-                                    <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">{{ $att->scheme?->title ?? '-' }}</td>
-                                    <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400 font-mono">{{ \Carbon\Carbon::parse($att->created_at)->format('d M Y') }}</td>
+                                    <td class="px-5 py-4">
+                                        <div class="font-bold text-slate-800 dark:text-white">{{ $port->user?->name ?? '-' }}</div>
+                                        <div class="text-[10px] text-slate-400 font-semibold">{{ $port->user?->email }}</div>
+                                    </td>
+                                    <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-350">{{ $port->trainingProgram?->title ?? '-' }}</td>
+                                    <td class="px-5 py-4 text-xs font-bold text-slate-800 dark:text-white">{{ $port->document_name }}</td>
                                     <td class="px-5 py-4 text-center">
-                                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase
-                                            {{ $att->status === 'completed' ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600' : 'bg-amber-50 dark:bg-amber-950/20 text-amber-600' }}">
-                                            {{ $att->status === 'completed' ? 'Selesai' : 'Berlangsung' }}
-                                        </span>
+                                        <a href="{{ asset('storage/' . $port->file_path) }}" target="_blank" class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline text-xs font-bold font-mono">
+                                            👁️ Lihat File
+                                        </a>
+                                    </td>
+                                    <td class="px-5 py-4 text-center">
+                                        @if($port->status === 'approved')
+                                            <span class="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Disetujui</span>
+                                        @elseif($port->status === 'rejected')
+                                            <span class="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Ditolak</span>
+                                        @else
+                                            <span class="bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Pending</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-5 py-4 text-xs text-slate-500 dark:text-slate-400">{{ $port->notes ?? '-' }}</td>
+                                    <td class="px-5 py-4 text-center">
+                                        @if($port->status === 'pending')
+                                            <button type="button" onclick="openReviewModal('{{ $port->id }}', '{{ addslashes($port->user?->name) }}', '{{ addslashes($port->document_name) }}')" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[10px] uppercase px-3 py-1.5 rounded-lg transition-all shadow-md shadow-blue-500/10">Review</button>
+                                        @else
+                                            <button type="button" onclick="openReviewModal('{{ $port->id }}', '{{ addslashes($port->user?->name) }}', '{{ addslashes($port->document_name) }}', '{{ $port->status }}', '{{ addslashes($port->notes) }}')" class="text-slate-400 hover:text-slate-600 text-xs font-semibold">Ubah Review</button>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty
-                                <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada pengerjaan ujian pada skema Anda.</td></tr>
+                                <tr><td colspan="7" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada berkas portofolio asesi yang diunggah.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -762,7 +791,88 @@
                 }
             }
         });
+
+        function openReviewModal(id, asesiName, docName, status = '', notes = '') {
+            const modal = document.getElementById('review-portfolio-modal');
+            const form = document.getElementById('review-portfolio-form');
+            const nameEl = document.getElementById('review-asesi-name');
+            const docEl = document.getElementById('review-doc-name');
+            const notesEl = document.getElementById('review-notes');
+
+            // Set action URL dynamically
+            let actionUrl = "{{ route('asesor.portfolio.review', ':id') }}";
+            form.action = actionUrl.replace(':id', id);
+
+            // Populate data
+            nameEl.textContent = asesiName;
+            docEl.textContent = docName;
+            notesEl.value = notes;
+
+            // Reset radio buttons
+            document.getElementById('status-approved').checked = false;
+            document.getElementById('status-rejected').checked = false;
+
+            if (status === 'approved') {
+                document.getElementById('status-approved').checked = true;
+            } else if (status === 'rejected') {
+                document.getElementById('status-rejected').checked = true;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('review-portfolio-modal').classList.add('hidden');
+        }
     </script>
+
+    <!-- MODAL REVIEW PORTOFOLIO (APL-02) -->
+    <div id="review-portfolio-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transition-all transform scale-95 duration-200">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between">
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Review Portofolio Asesi</h3>
+                <button type="button" onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors text-lg font-bold">&times;</button>
+            </div>
+            
+            <!-- Modal Body / Form -->
+            <form id="review-portfolio-form" method="POST" class="p-6 space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Nama Asesi</label>
+                    <div id="review-asesi-name" class="text-sm font-bold text-slate-800 dark:text-white"></div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Jenis Dokumen</label>
+                    <div id="review-doc-name" class="text-xs font-semibold text-slate-600 dark:text-slate-350"></div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Keputusan Review</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl flex-1 hover:border-emerald-500 transition-all">
+                            <input type="radio" name="status" value="approved" id="status-approved" required class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase">Setujui</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl flex-1 hover:border-rose-500 transition-all">
+                            <input type="radio" name="status" value="rejected" id="status-rejected" required class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase">Tolak</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Catatan / Alasan (Opsional)</label>
+                    <textarea name="notes" id="review-notes" rows="3" placeholder="Berikan catatan perbaikan atau alasan jika dokumen ditolak..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-all"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2 border-t border-slate-100 dark:border-slate-850">
+                    <button type="button" onclick="closeReviewModal()" class="border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-600 dark:text-slate-400 font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all">Batal</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-500/10">Simpan Keputusan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     @include('layouts.partials.live_refresh', [
         'statsUrl' => route('asesor.stats'),

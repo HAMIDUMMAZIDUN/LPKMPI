@@ -12,12 +12,12 @@ class DatabaseSeeder extends Seeder
     {
         // ─── Superadmin ────────────────────────────────────────────────────
         User::updateOrCreate(
-            ['email' => 'hamidun@gmail.com'],
+            ['email' => 'lspmanajemenpendidikanislam@gmail.com'],
             [
-                'name' => 'Hamidun',
-                'username' => 'hamidun',
-                'password' => Hash::make('hamidun123'),
-                'password_plain' => 'hamidun123',
+                'name' => 'Superadmin LPK',
+                'username' => 'superadmin',
+                'password' => Hash::make('superadmin123'),
+                'password_plain' => 'superadmin123',
                 'role' => 'superadmin'
             ]
         );
