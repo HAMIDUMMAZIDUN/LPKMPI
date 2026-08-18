@@ -108,6 +108,23 @@
                 transform: translateX(0);
             }
         }
+
+        /* Custom Global Text Color Sync Override */
+        /* Light Mode: Force slate/gray/neutral/indigo text to black */
+        .text-slate-950, .text-slate-900, .text-slate-800, .text-slate-700, .text-slate-650, .text-slate-600, .text-slate-500, .text-slate-400, .text-slate-350, .text-slate-300, .text-slate-200,
+        .text-indigo-950, .text-indigo-900, .text-indigo-800, .text-indigo-700, .text-indigo-600, .text-indigo-500, .text-indigo-400, .text-indigo-300, .text-indigo-200,
+        .text-gray-950, .text-gray-900, .text-gray-800, .text-gray-700, .text-gray-600, .text-gray-500, .text-gray-400, .text-gray-300, .text-gray-200,
+        .text-neutral-950, .text-neutral-900, .text-neutral-800, .text-neutral-700, .text-neutral-600, .text-neutral-500, .text-neutral-400, .text-neutral-300, .text-neutral-200 {
+            color: #000000 !important;
+        }
+
+        /* Dark Mode: Force slate/gray/neutral/indigo text to white */
+        .dark .text-slate-950, .dark .text-slate-900, .dark .text-slate-800, .dark .text-slate-700, .dark .text-slate-650, .dark .text-slate-600, .dark .text-slate-500, .dark .text-slate-400, .dark .text-slate-350, .dark .text-slate-300, .dark .text-slate-200,
+        .dark .text-indigo-950, .dark .text-indigo-900, .dark .text-indigo-800, .dark .text-indigo-700, .dark .text-indigo-600, .dark .text-indigo-500, .dark .text-indigo-400, .dark .text-indigo-300, .dark .text-indigo-200,
+        .dark .text-gray-950, .dark .text-gray-900, .dark .text-gray-800, .dark .text-gray-700, .dark .text-gray-600, .dark .text-gray-500, .dark .text-gray-400, .dark .text-gray-300, .dark .text-gray-200,
+        .dark .text-neutral-950, .dark .text-neutral-900, .dark .text-neutral-800, .dark .text-neutral-700, .dark .text-neutral-600, .dark .text-neutral-500, .dark .text-neutral-400, .dark .text-neutral-300, .dark .text-neutral-200 {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body class="h-screen overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 flex">
