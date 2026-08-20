@@ -489,42 +489,54 @@
             <!-- PANEL: JADWAL & SILABUS -->
             <div id="panel-jadwal" class="role-panel hidden space-y-6">
                 <div class="space-y-1">
-                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white font-heading">Jadwal & Silabus Pelatihan</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Kelola jadwal pertemuan diklat dan silabus program pelatihan LPK.</p>
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Jadwal & Pengiriman Notifikasi</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Buat jadwal pelatihan online/offline dan kirim notifikasi email ke seluruh pendaftar program.</p>
                 </div>
 
-                <!-- Form Edit Jadwal (Hidden by Default) -->
+                <!-- Form Edit Jadwal -->
                 <div id="form-edit-schedule" class="hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Edit Jadwal Kelas</h3>
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">✏️ Edit Jadwal</h3>
                     <form id="edit-schedule-form-action" method="POST" class="space-y-4">
-                        @csrf
-                        @method('PUT')
+                        @csrf @method('PUT')
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Program Pelatihan</label>
-                                <select name="training_program_id" id="edit-schedule-program-id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
-                                    @foreach($programs as $p)
-                                        <option value="{{ $p->id }}">{{ $p->title }}</option>
-                                    @endforeach
+                                <select name="training_program_id" id="edit-schedule-program-id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    @foreach($programs as $p)<option value="{{ $p->id }}">{{ $p->title }}</option>@endforeach
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Topik / Materi Pembahasan</label>
-                                <input type="text" name="topic" id="edit-schedule-topic" required placeholder="Contoh: Pengantar Tata Usaha" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Topik / Materi</label>
+                                <input type="text" name="topic" id="edit-schedule-topic" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tanggal & Waktu</label>
-                                <input type="datetime-local" name="scheduled_at" id="edit-schedule-scheduled-at" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                                <input type="datetime-local" name="scheduled_at" id="edit-schedule-scheduled-at" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Lokasi / Tautan Media</label>
-                                <input type="text" name="location" id="edit-schedule-location" required placeholder="Contoh: Ruang Kelas B / Zoom Meeting" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tipe Pelaksanaan</label>
+                                <select name="type" id="edit-schedule-type" onchange="toggleEditTypeFields()" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    <option value="offline">📍 Offline / Tatap Muka</option>
+                                    <option value="online">🌐 Online / Daring</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lokasi / Platform</label>
+                                <input type="text" name="location" id="edit-schedule-location" required placeholder="Ruang Kelas A / Zoom" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                             </div>
                         </div>
+                        <div id="edit-online-field" class="hidden">
+                            <label class="block text-[10px] font-bold text-blue-500 uppercase mb-1">🔗 Link Meeting Online (Zoom/Meet/dll)</label>
+                            <input type="url" name="online_link" id="edit-schedule-online-link" placeholder="https://zoom.us/j/..." class="w-full bg-blue-50 dark:bg-blue-950/20 border border-blue-300 dark:border-blue-700 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                        </div>
+                        <div id="edit-offline-field">
+                            <label class="block text-[10px] font-bold text-amber-600 uppercase mb-1">📍 Link Lokasi Google Maps (Opsional)</label>
+                            <input type="url" name="share_location" id="edit-schedule-share-location" placeholder="https://maps.google.com/..." class="w-full bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-700 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                        </div>
                         <div class="flex gap-3">
-                            <button type="button" onclick="cancelEditSchedule()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase px-4 py-2.5 rounded-xl font-bold">Batal</button>
+                            <button type="button" onclick="cancelEditSchedule()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase px-4 py-2.5 rounded-xl">Batal</button>
                             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase px-6 py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Perubahan</button>
                         </div>
                     </form>
@@ -533,43 +545,55 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Form Tambah Jadwal Baru -->
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
-                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Tambah Jadwal Pertemuan Baru</h3>
-                        <form action="{{ route('asesor.schedule.store') }}" method="POST" class="space-y-4">
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">➕ Tambah Jadwal Baru</h3>
+                        <form action="{{ route('asesor.schedule.store') }}" method="POST" class="space-y-4" id="add-schedule-form">
                             @csrf
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Program Pelatihan</label>
                                 <select name="training_program_id" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
-                                    @foreach($programs as $p)
-                                        <option value="{{ $p->id }}">{{ $p->title }}</option>
-                                    @endforeach
+                                    @foreach($programs as $p)<option value="{{ $p->id }}">{{ $p->title }}</option>@endforeach
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Topik / Materi Pembahasan</label>
-                                <input type="text" name="topic" required placeholder="Contoh: Pengantar Administrasi Sekolah" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Topik / Materi</label>
+                                <input type="text" name="topic" required placeholder="Contoh: Pengantar Administrasi" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                             </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tanggal & Waktu</label>
-                                    <input type="datetime-local" name="scheduled_at" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold font-mono">
+                                    <input type="datetime-local" name="scheduled_at" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Lokasi / Tautan Zoom</label>
-                                    <input type="text" name="location" required placeholder="Contoh: Ruang 3 / Zoom Link" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tipe</label>
+                                    <select name="type" id="add-schedule-type" onchange="toggleAddTypeFields()" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                                        <option value="offline">📍 Offline</option>
+                                        <option value="online">🌐 Online</option>
+                                    </select>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Buat Jadwal Baru</button>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama Lokasi / Platform</label>
+                                <input type="text" name="location" required placeholder="Ruang Kelas / Zoom" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+                            </div>
+                            <div id="add-online-field" class="hidden">
+                                <label class="block text-[10px] font-bold text-blue-500 uppercase mb-1">🔗 Link Meeting Online</label>
+                                <input type="url" name="online_link" id="add-online-link" placeholder="https://zoom.us/j/..." class="w-full bg-blue-50 dark:bg-blue-950/20 border border-blue-300 dark:border-blue-700 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                            </div>
+                            <div id="add-offline-field">
+                                <label class="block text-[10px] font-bold text-amber-600 uppercase mb-1">📍 Link Google Maps (Opsional)</label>
+                                <input type="url" name="share_location" placeholder="https://maps.google.com/..." class="w-full bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-700 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-mono">
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl shadow-md shadow-blue-500/10">Buat Jadwal Baru</button>
                         </form>
                     </div>
 
-                    <!-- Form Edit Silabus / Deskripsi Program -->
+                    <!-- Form Silabus -->
                     <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
-                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">Perbarui Silabus Program</h3>
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider">📋 Perbarui Silabus Program</h3>
                         <form id="update-syllabus-form" method="POST" class="space-y-4">
-                            @csrf
-                            @method('PUT')
+                            @csrf @method('PUT')
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pilih Program Pelatihan</label>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pilih Program</label>
                                 <select id="syllabus-program-selector" onchange="loadProgramSyllabus(this.value)" required class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
                                     <option value="">-- Pilih Program --</option>
                                     @foreach($programs as $p)
@@ -579,56 +603,85 @@
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Deskripsi Silabus</label>
-                                <textarea name="description" id="syllabus-description" required rows="3" placeholder="Deskripsi materi program..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                                <textarea name="description" id="syllabus-description" required rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi / Manfaat (Satu baris per item)</label>
-                                <textarea name="benefits" id="syllabus-benefits" rows="3" placeholder="Contoh:&#10;Sertifikat Kompetensi Resmi&#10;Modul Pembelajaran Praktis" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Materi / Manfaat (1 baris = 1 item)</label>
+                                <textarea name="benefits" id="syllabus-benefits" rows="3" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold"></textarea>
                             </div>
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl transition-all shadow-md shadow-blue-500/10">Simpan Perubahan Silabus</button>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase py-3 rounded-xl shadow-md shadow-blue-500/10">Simpan Silabus</button>
                         </form>
                     </div>
                 </div>
 
-                <!-- List Jadwal Kelas Aktif -->
+                <!-- List Jadwal -->
                 <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-                    <h3 class="p-4 font-extrabold text-xs text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">Daftar Pertemuan Kelas Saya</h3>
+                    <h3 class="p-4 font-extrabold text-xs text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">Daftar Jadwal & Kirim Notifikasi Email</h3>
                     <div class="overflow-x-auto w-full">
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="border-b border-slate-100 dark:border-slate-800 text-slate-400 text-[10px] uppercase font-extrabold">
-                                    <th class="px-5 py-3 text-left">Program Pelatihan</th>
-                                    <th class="px-5 py-3 text-left">Topik / Materi</th>
-                                    <th class="px-5 py-3 text-left">Waktu</th>
-                                    <th class="px-5 py-3 text-left">Lokasi / Media</th>
-                                    <th class="px-5 py-3 text-center">Aksi</th>
+                                    <th class="px-4 py-3 text-left">Program</th>
+                                    <th class="px-4 py-3 text-left">Topik</th>
+                                    <th class="px-4 py-3 text-left">Waktu</th>
+                                    <th class="px-4 py-3 text-center">Tipe</th>
+                                    <th class="px-4 py-3 text-left">Lokasi</th>
+                                    <th class="px-4 py-3 text-center">Notif</th>
+                                    <th class="px-4 py-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                                 @forelse($schedules as $sched)
                                     <tr>
-                                        <td class="px-5 py-4 font-bold text-slate-800 dark:text-white">{{ $sched->trainingProgram?->title ?? '-' }}</td>
-                                        <td class="px-5 py-4 text-xs font-semibold text-slate-700 dark:text-slate-300">{{ $sched->topic }}</td>
-                                        <td class="px-5 py-4 text-xs font-mono text-slate-500 dark:text-slate-400">{{ \Carbon\Carbon::parse($sched->scheduled_at)->format('d M Y, H:i') }} WIB</td>
-                                        <td class="px-5 py-4 text-xs text-slate-600 dark:text-slate-400 font-semibold">{{ $sched->location }}</td>
-                                        <td class="px-5 py-4">
-                                            <div class="flex items-center justify-center gap-2">
-                                                <button type="button" data-schedule="{{ json_encode($sched) }}" onclick="editSchedule(JSON.parse(this.dataset.schedule))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px]">Edit</button>
-                                                <form action="{{ route('asesor.schedule.delete', $sched->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
+                                        <td class="px-4 py-3 font-bold text-slate-800 dark:text-white text-xs">{{ $sched->trainingProgram?->title ?? '-' }}</td>
+                                        <td class="px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300">{{ $sched->topic }}</td>
+                                        <td class="px-4 py-3 text-xs font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap">{{ \Carbon\Carbon::parse($sched->scheduled_at)->format('d M Y, H:i') }}</td>
+                                        <td class="px-4 py-3 text-center">
+                                            @if(($sched->type ?? 'offline') === 'online')
+                                                <span class="bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 px-2 py-0.5 rounded text-[9px] font-bold uppercase">🌐 Online</span>
+                                            @else
+                                                <span class="bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 px-2 py-0.5 rounded text-[9px] font-bold uppercase">📍 Offline</span>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-slate-600 dark:text-slate-400 font-semibold max-w-[150px]">
+                                            {{ $sched->location }}
+                                            @if(($sched->type ?? 'offline') === 'online' && $sched->online_link)
+                                                <br><a href="{{ $sched->online_link }}" target="_blank" class="text-blue-500 underline text-[10px]">Buka Link</a>
+                                            @elseif($sched->share_location)
+                                                <br><a href="{{ $sched->share_location }}" target="_blank" class="text-amber-500 underline text-[10px]">Lihat Maps</a>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            @if($sched->notification_sent ?? false)
+                                                <span class="text-emerald-500 text-[10px] font-bold">✅ Terkirim</span>
+                                            @else
+                                                <span class="text-slate-400 text-[10px]">—</span>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-center gap-1 flex-wrap">
+                                                <button type="button" data-schedule="{{ json_encode($sched) }}" onclick="editSchedule(JSON.parse(this.dataset.schedule))" class="text-blue-600 hover:text-blue-800 font-bold uppercase text-[10px] px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-950/20">Edit</button>
+                                                <form action="{{ route('asesor.schedule.send-notification', $sched->id) }}" method="POST" onsubmit="return confirm('Kirim notifikasi jadwal ke semua pendaftar program {{ addslashes($sched->trainingProgram?->title ?? $sched->topic) }}?')">
+                                                    @csrf
+                                                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold uppercase text-[10px] px-2 py-1 rounded">📧 Kirim</button>
+                                                </form>
+                                                <form action="{{ route('asesor.schedule.delete', $sched->id) }}" method="POST" onsubmit="return confirm('Hapus jadwal ini?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px]">Hapus</button>
+                                                    <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold uppercase text-[10px] px-2 py-1 rounded hover:bg-rose-50 dark:hover:bg-rose-950/20">Hapus</button>
                                                 </form>
                                             </div>
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada jadwal kelas dibuat.</td></tr>
+                                    <tr><td colspan="7" class="px-5 py-8 text-center text-slate-500 dark:text-slate-400">Belum ada jadwal kelas dibuat.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            <!-- PANEL: PROFIL -->
 
             <!-- PANEL: PROFIL -->
             <div id="panel-profil" class="role-panel hidden space-y-6">
@@ -669,6 +722,34 @@
     <script>
         const panels = ['dasbor', 'apl02', 'penilaian', 'kelola', 'jadwal', 'profil'];
 
+        function toggleAddTypeFields() {
+            const type = document.getElementById('add-schedule-type').value;
+            const onlineBox = document.getElementById('add-online-field');
+            const offlineBox = document.getElementById('add-offline-field');
+            const onlineInput = document.getElementById('add-online-link');
+            if (type === 'online') {
+                onlineBox.classList.remove('hidden');
+                onlineInput.setAttribute('required', 'required');
+            } else {
+                onlineBox.classList.add('hidden');
+                onlineInput.removeAttribute('required');
+            }
+        }
+
+        function toggleEditTypeFields() {
+            const type = document.getElementById('edit-schedule-type').value;
+            const onlineBox = document.getElementById('edit-online-field');
+            const offlineBox = document.getElementById('edit-offline-field');
+            const onlineInput = document.getElementById('edit-schedule-online-link');
+            if (type === 'online') {
+                onlineBox.classList.remove('hidden');
+                onlineInput.setAttribute('required', 'required');
+            } else {
+                onlineBox.classList.add('hidden');
+                onlineInput.removeAttribute('required');
+            }
+        }
+
         function editSchedule(sched) {
             const editDiv = document.getElementById('form-edit-schedule');
             editDiv.classList.remove('hidden');
@@ -683,6 +764,11 @@
             }
             
             document.getElementById('edit-schedule-location').value = sched.location;
+            document.getElementById('edit-schedule-type').value = sched.type || 'offline';
+            document.getElementById('edit-schedule-online-link').value = sched.online_link || '';
+            document.getElementById('edit-schedule-share-location').value = sched.share_location || '';
+            toggleEditTypeFields();
+
             document.getElementById('edit-schedule-form-action').action = `/dashboard/asesor/schedules/${sched.id}`;
             editDiv.scrollIntoView({ behavior: 'smooth' });
         }

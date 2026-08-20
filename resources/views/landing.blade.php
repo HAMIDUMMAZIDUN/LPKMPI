@@ -14,13 +14,20 @@
         .border-mpi-blue { border-color: #155dfc; }
         
         .btn-mpi {
-            background-color: #155dfc;
-            color: #ffffff;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #4338ca 100%) !important;
+            background-size: 200% 200% !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 14px 0 rgba(29, 78, 216, 0.35) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
         .btn-mpi:hover {
-            background-color: #084be3;
-            transform: translateY(-1px);
+            background-position: right center !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 22px 0 rgba(29, 78, 216, 0.45) !important;
+        }
+        .btn-mpi:active {
+            transform: translateY(0) scale(0.97) !important;
         }
 
         /* Custom scroll offset */

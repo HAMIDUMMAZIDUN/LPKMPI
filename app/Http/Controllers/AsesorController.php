@@ -7,9 +7,13 @@ use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\ClassSchedule;
 use App\Models\TrainingProgram;
+use App\Models\TraineeEnrollment;
 use App\Models\AsesiSchemeAttempt;
+use App\Mail\ScheduleNotificationMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Models\LandingSetting;
 
 class AsesorController extends Controller
 {
@@ -219,6 +223,13 @@ class AsesorController extends Controller
             'topic'               => 'required|string|max:255',
             'scheduled_at'        => 'required|date',
             'location'            => 'required|string|max:255',
+            'type'                => 'required|in:online,offline',
+            'online_link'         => 'nullable|url|required_if:type,online',
+            'share_location'      => 'nullable|url',
+        ], [
+            'online_link.required_if' => 'Link meeting wajib diisi untuk pelatihan online.',
+            'online_link.url'         => 'Link meeting harus berupa URL yang valid.',
+            'share_location.url'      => 'Link lokasi harus berupa URL Google Maps yang valid.',
         ]);
 
         ClassSchedule::create([
@@ -227,6 +238,10 @@ class AsesorController extends Controller
             'topic'               => $request->topic,
             'scheduled_at'        => $request->scheduled_at,
             'location'            => $request->location,
+            'type'                => $request->type,
+            'online_link'         => $request->type === 'online' ? $request->online_link : null,
+            'share_location'      => $request->share_location,
+            'notification_sent'   => false,
         ]);
 
         return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', 'Jadwal kelas baru berhasil ditambahkan!');
@@ -243,6 +258,13 @@ class AsesorController extends Controller
             'topic'               => 'required|string|max:255',
             'scheduled_at'        => 'required|date',
             'location'            => 'required|string|max:255',
+            'type'                => 'required|in:online,offline',
+            'online_link'         => 'nullable|url|required_if:type,online',
+            'share_location'      => 'nullable|url',
+        ], [
+            'online_link.required_if' => 'Link meeting wajib diisi untuk pelatihan online.',
+            'online_link.url'         => 'Link meeting harus berupa URL yang valid.',
+            'share_location.url'      => 'Link lokasi harus berupa URL Google Maps yang valid.',
         ]);
 
         $schedule->update([
@@ -250,6 +272,9 @@ class AsesorController extends Controller
             'topic'               => $request->topic,
             'scheduled_at'        => $request->scheduled_at,
             'location'            => $request->location,
+            'type'                => $request->type,
+            'online_link'         => $request->type === 'online' ? $request->online_link : null,
+            'share_location'      => $request->share_location,
         ]);
 
         return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', 'Jadwal kelas berhasil diperbarui!');
@@ -263,6 +288,50 @@ class AsesorController extends Controller
         $schedule->delete();
 
         return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', 'Jadwal kelas berhasil dihapus.');
+    }
+
+    /** Kirim notifikasi jadwal via email ke seluruh pendaftar program */
+    public function sendScheduleNotification(Request $request, $id)
+    {
+        $this->checkRole();
+        $schedule = ClassSchedule::where('asesor_id', auth()->id())
+            ->with('trainingProgram')
+            ->findOrFail($id);
+
+        // Get all enrollees for the associated training program
+        $enrollees = TraineeEnrollment::where('training_program_id', $schedule->training_program_id)
+            ->whereNotNull('email')
+            ->get();
+
+        if ($enrollees->isEmpty()) {
+            return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])
+                ->with('error', 'Tidak ada pendaftar yang terdaftar untuk program ini. Email tidak terkirim.');
+        }
+
+        $siteName = LandingSetting::getValue('site_name') ?? 'LPK MPI';
+        $sentCount = 0;
+        $failedCount = 0;
+
+        foreach ($enrollees as $enrollee) {
+            try {
+                Mail::to($enrollee->email)
+                    ->send(new ScheduleNotificationMail($schedule, $enrollee->name, $siteName));
+                $sentCount++;
+            } catch (\Exception $e) {
+                $failedCount++;
+                \Log::error('Schedule email failed to ' . $enrollee->email . ': ' . $e->getMessage());
+            }
+        }
+
+        // Mark schedule as notified
+        $schedule->update(['notification_sent' => true]);
+
+        $msg = "Notifikasi jadwal berhasil dikirim ke {$sentCount} peserta.";
+        if ($failedCount > 0) {
+            $msg .= " ({$failedCount} gagal terkirim, periksa konfigurasi email Anda.)";
+        }
+
+        return redirect()->route('asesor.dashboard', ['open' => 'panel-jadwal'])->with('success', $msg);
     }
 
     /** Update silabus/program deskripsi */

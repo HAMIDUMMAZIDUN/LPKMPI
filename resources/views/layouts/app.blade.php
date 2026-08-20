@@ -57,6 +57,84 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+    <style>
+        /* Global Brand Logo Palette - Unified Button Styling System */
+        .btn-brand,
+        .btn-primary,
+        .btn-mpi,
+        button[type="submit"]:not(.btn-danger):not(.btn-secondary):not(.bg-rose-600):not(.bg-amber-600),
+        button.bg-blue-600,
+        button.bg-blue-700,
+        button.bg-indigo-600,
+        a.bg-blue-600,
+        a.bg-blue-700,
+        .bg-\[\#155dfc\],
+        .nav-btn-pendaftaran {
+            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #4338ca 100%) !important;
+            background-size: 200% 200% !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            border: none !important;
+            box-shadow: 0 4px 14px 0 rgba(29, 78, 216, 0.35) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .btn-brand:hover,
+        .btn-primary:hover,
+        .btn-mpi:hover,
+        button[type="submit"]:not(.btn-danger):not(.btn-secondary):not(.bg-rose-600):not(.bg-amber-600):hover,
+        button.bg-blue-600:hover,
+        button.bg-blue-700:hover,
+        button.bg-indigo-600:hover,
+        a.bg-blue-600:hover,
+        a.bg-blue-700:hover,
+        .bg-\[\#155dfc\]:hover,
+        .nav-btn-pendaftaran:hover {
+            background-position: right center !important;
+            box-shadow: 0 8px 22px 0 rgba(29, 78, 216, 0.45) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .btn-brand:active,
+        .btn-primary:active,
+        .btn-mpi:active,
+        button[type="submit"]:not(.btn-danger):not(.btn-secondary):not(.bg-rose-600):not(.bg-amber-600):active,
+        button.bg-blue-600:active,
+        button.bg-blue-700:active,
+        button.bg-indigo-600:active,
+        a.bg-blue-600:active,
+        a.bg-blue-700:active,
+        .bg-\[\#155dfc\]:active,
+        .nav-btn-pendaftaran:active {
+            transform: translateY(0) scale(0.97) !important;
+        }
+
+        /* Danger / Destructive Buttons */
+        .btn-danger,
+        button.bg-rose-600,
+        button.bg-red-600 {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #991b1b 100%) !important;
+            background-size: 200% 200% !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.35) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .btn-danger:hover,
+        button.bg-rose-600:hover,
+        button.bg-red-600:hover {
+            background-position: right center !important;
+            box-shadow: 0 8px 22px 0 rgba(220, 38, 38, 0.45) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Micro-animations for buttons */
+        button:not([class*="bg-"]):not(.btn-brand):not(.btn-mpi):not(.btn-primary):not(.pub-nav-item):not(.sidebar-btn) {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        button:not([class*="bg-"]):not(.btn-brand):not(.btn-mpi):not(.btn-primary):not(.pub-nav-item):not(.sidebar-btn):hover {
+            transform: translateY(-1px) !important;
+        }
+    </style>
     @auth
     @if(auth()->user()->role === 'superadmin')
     <style>

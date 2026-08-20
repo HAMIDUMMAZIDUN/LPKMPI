@@ -127,6 +127,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard/asesor/schedules/{id}', [AsesorController::class, 'updateSchedule'])->name('asesor.schedule.update');
     Route::delete('/dashboard/asesor/schedules/{id}', [AsesorController::class, 'destroySchedule'])->name('asesor.schedule.delete');
     Route::delete('/dashboard/asesor/schedules/{id}/destroy', [AsesorController::class, 'destroySchedule'])->name('asesor.schedule.destroy');
+    Route::post('/dashboard/asesor/schedules/{id}/send-notification', [AsesorController::class, 'sendScheduleNotification'])->name('asesor.schedule.send-notification');
     Route::post('/dashboard/asesor/syllabus/{id}', [AsesorController::class, 'updateSyllabus'])->name('asesor.syllabus.update');
     Route::post('/dashboard/asesor/portfolio/{id}/review', [AsesorController::class, 'reviewPortfolio'])->name('asesor.portfolio.review');
 
